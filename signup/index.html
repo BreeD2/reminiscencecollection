@@ -343,7 +343,8 @@ Accessibility<i class="fa fa-caret-down"></i>
         <div id="main-content" class="content">
           <div id="signupContainer">
         <h2>Signup</h2>
-        <form id="signupForm" action="signup_process.php" method="POST">
+        <form id="signupForm" method="POST">
+
             <div class="form-group">
                 <label for="signupEmail">Email:</label>
                 <input type="email" name="signupEmail" id="signupEmail" placeholder="Enter your email" required>
@@ -6040,6 +6041,47 @@ firebase.auth().onAuthStateChanged((user) => {
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
+</script>
+<script>
+document.getElementById('signupForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Signed up
+            var user = userCredential.user;
+            console.log('User created:', user);
+            // Redirect the user or show a success message
+        })
+        .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.error('Error signing up:', errorMessage);
+            // Show an error message to your user
+        });
+});
+</script>
+<script>
+document.getElementById('googleSignInButton').addEventListener('click', function() {
+    var provider = new firebase.auth.GoogleAuthProvider();
+
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+        // Google sign-in successful
+        var token = result.credential.accessToken;
+        var user = result.user;
+        console.log('Google sign-in user:', user);
+        // Redirect the user or show a success message
+    }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.error('Error signing in with Google:', errorMessage);
+        // Show an error message to your user
+    });
+});
 </script>
 
 </body>
