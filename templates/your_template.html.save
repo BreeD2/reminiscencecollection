@@ -1,0 +1,4 @@
+echo 'alias gotemplates="cd ~/Documents/GitHub/synthesis/templates"' >> ~/.bashrc
+source ~/.bashrc
+
+
