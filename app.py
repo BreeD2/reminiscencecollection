@@ -3,7 +3,7 @@ from models import db, User  # Make sure these imports are correct based on your
 from forms import LoginForm, RegistrationForm  # Adjust if using different names
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key'
+app.config['SECRET_KEY'] = '\x16vJ\x8c\x0ecg\xe7$\x0e\x8b\xd6\xab\x9b-['
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db.init_app(app)
 
