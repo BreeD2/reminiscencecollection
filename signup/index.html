@@ -6028,7 +6028,16 @@ firebase.auth().onAuthStateChanged((user) => {
   const analytics = getAnalytics(app);
 </script>
 
-
+<script>
+  // TODO: Replace the following with your app's Firebase project configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+    authDomain: "reminiscence-collection.firebaseapp.com",
+    // other config
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
 
 </body>
 </html>
