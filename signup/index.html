@@ -386,6 +386,91 @@ Accessibility<i class="fa fa-caret-down"></i>
 </div>
 
 
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+    authDomain: "reminiscence-collection.firebaseapp.com",
+    databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+    projectId: "reminiscence-collection",
+    storageBucket: "reminiscence-collection.appspot.com",
+    messagingSenderId: "974064770925",
+    appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+    measurementId: "G-PJ426H3WZN"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+
+<script>
+  // Example: Sign in with Email and Password
+  function signIn(email, password) {
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        // Signed in
+        var user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+      });
+  }
+</script>
+
+
+
+<script>
+document.getElementById('signupForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Signed up
+            var user = userCredential.user;
+            console.log('User created:', user);
+            // Redirect the user or show a success message
+        })
+        .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.error('Error signing up:', errorMessage);
+            // Show an error message to your user
+        });
+});
+</script>
+<script>
+document.getElementById('googleSignInButton').addEventListener('click', function() {
+    var provider = new firebase.auth.GoogleAuthProvider();
+
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+        // Google sign-in successful
+        var token = result.credential.accessToken;
+        var user = result.user;
+        console.log('Google sign-in user:', user);
+        // Redirect the user or show a success message
+    }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.error('Error signing in with Google:', errorMessage);
+        // Show an error message to your user
+    });
+});
+</script>
 
 <script>
   // Corrected Categories Data
@@ -4301,90 +4386,6 @@ function applySavedSettings() {
 document.addEventListener('DOMContentLoaded', applySavedSettings);
 </script>
 
-<script>
-  // Example: Sign in with Email and Password
-  function signIn(email, password) {
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        // Signed in
-        var user = userCredential.user;
-        // ...
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // ...
-      });
-  }
-</script>
-
-
-
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
-    authDomain: "reminiscence-collection.firebaseapp.com",
-    databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
-    projectId: "reminiscence-collection",
-    storageBucket: "reminiscence-collection.appspot.com",
-    messagingSenderId: "974064770925",
-    appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
-    measurementId: "G-PJ426H3WZN"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
-<script>
-document.getElementById('signupForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent form submission
-
-    const email = document.getElementById('signupEmail').value;
-    const password = document.getElementById('signupPassword').value;
-
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            // Signed up
-            var user = userCredential.user;
-            console.log('User created:', user);
-            // Redirect the user or show a success message
-        })
-        .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.error('Error signing up:', errorMessage);
-            // Show an error message to your user
-        });
-});
-</script>
-<script>
-document.getElementById('googleSignInButton').addEventListener('click', function() {
-    var provider = new firebase.auth.GoogleAuthProvider();
-
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-        // Google sign-in successful
-        var token = result.credential.accessToken;
-        var user = result.user;
-        console.log('Google sign-in user:', user);
-        // Redirect the user or show a success message
-    }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.error('Error signing in with Google:', errorMessage);
-        // Show an error message to your user
-    });
-});
-</script>
 
 </body>
 </html>
