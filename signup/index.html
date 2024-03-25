@@ -382,8 +382,6 @@ Accessibility<i class="fa fa-caret-down"></i>
   <div class="copy">Copyright &copy; 2024 Reminiscence Collection. All rights reserved.</div>
 </div>
 
-
-
 <script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
@@ -409,47 +407,7 @@ Accessibility<i class="fa fa-caret-down"></i>
   const analytics = getAnalytics(app);
 </script>
 
-<script>
-// Import the functions you need from the Firebase SDKs
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 
-const auth = getAuth();
-
-// Example: Sign in with Email and Password, now using the modular API
-function signIn(email, password) {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        var user = userCredential.user;
-        // ...
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // ...
-      });
-}
-
-// Adjusted for modular Firebase SDK
-document.getElementById('signupForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent form submission
-
-    const email = document.getElementById('signupEmail').value;
-    const password = document.getElementById('signupPassword').value;
-
-    createUserWithEmailAndPassword(auth, email, password)
-        // Success and error handling remains the same
-});
-
-// Google sign-in with modular API
-document.getElementById('googleSignInButton').addEventListener('click', function() {
-    var provider = new GoogleAuthProvider();
-
-    signInWithPopup(auth, provider)
-        // Success and error handling remains the same
-});
-
-</script>
 
 
 
