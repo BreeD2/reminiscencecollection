@@ -331,22 +331,21 @@ Accessibility<i class="fa fa-caret-down"></i>
         <div id="main-content" class="content">
           <div id="formsContainer">
       <div id="loginSection">
-          <h2>Login</h2>
-          <form id="loginForm">
-              <div class="form-group">
-                  <label for="loginUsername">Username:</label>
-                  <input type="text" id="loginUsername" placeholder="Enter your username" required>
-              </div>
-              <div class="form-group">
-                  <label for="loginPassword">Password:</label>
-                  <input type="password" id="loginPassword" placeholder="Enter your password" required>
-              </div>
-              <button type="submit" id="loginButton">Login</button>
-          </form>
-          <p>Need an account? <a href="../signup/index.html">Signup</a></p>
-      </div>
-  </div>
-
+        <h2>Login</h2>
+<form id="loginForm" action="/login" method="POST">
+    <div class="form-group">
+        <label for="loginUsername">Username:</label>
+        <input type="text" name="username" id="loginUsername" placeholder="Enter your username" required>
+    </div>
+    <div class="form-group">
+        <label for="loginPassword">Password:</label>
+        <input type="password" name="password" id="loginPassword" placeholder="Enter your password" required>
+    </div>
+    <button type="submit" id="loginButton">Login</button>
+</form>
+<p>Need an account? <a href="../signup/index.html">Signup</a></p>
+</div>
+</div>
 
 
 
