@@ -1,6 +1,7 @@
 # reminiscencecollection/reminiscencecollection/routes.py
-from flask import render_template
+from flask import render_template, abort
 from . import app
+from .models import Game  # Assuming you have a Game model defined
 
 @app.route('/')
 def home():
@@ -18,4 +19,11 @@ def signup():
 def games():
     return render_template('games/index.html')
 
-# Define more routes as needed for other pages or game details
+@app.route('/game/<string:game_slug>/')
+def game_details(game_slug):
+    game = Game.query.filter_by(slug=game_slug).first()
+    if game is None:
+        abort(404)
+    return render_template('game_details.html', game=game)
+
+# Add more routes as needed for other pages
