@@ -1,9 +1,9 @@
 from flask import Flask, render_template, url_for, flash, redirect
-from models import db, User  # Make sure these imports are correct based on your project structure
-from forms import LoginForm, RegistrationForm  # Adjust if using different names
+from .models import db, User  # Note the dot (.) before models indicating a relative import
+from .forms import LoginForm, RegistrationForm
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '\x16vJ\x8c\x0ecg\xe7$\x0e\x8b\xd6\xab\x9b-['
+app.config['SECRET_KEY'] = '\x1b-['
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db.init_app(app)
 
@@ -33,3 +33,8 @@ def login():
             flash('Login Unsuccessful. Please check email and password', 'danger')
     # Adjust the template path here
     return render_template('login/index.html', title='Login', form=form)
+
+@app.route('/')
+def home():
+    return 'Welcome to my Flask app!'
+
