@@ -1,6 +1,6 @@
-# reminiscencecollection/models.py
+# reminiscencecollection/reminiscencecollection/models.py
 from reminiscencecollection import db
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    # rest of the model
+    # Define other fields...
