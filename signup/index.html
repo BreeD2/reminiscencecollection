@@ -315,7 +315,7 @@ Accessibility<i class="fa fa-caret-down"></i>
 </aside>
 
 <!-- Sidebar Toggle Button -->
-<div class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle Sidebar">
+<div class="menu-toggle" aria-label="Toggle Sidebar">
   <i class="fa fa-gamepad"></i><br>
 </div>
 
@@ -383,11 +383,11 @@ Accessibility<i class="fa fa-caret-down"></i>
 </div>
 
 <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+
 
   // Your web app's Firebase configuration
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -403,55 +403,45 @@ Accessibility<i class="fa fa-caret-down"></i>
   };
 
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+ const app = initializeApp(firebaseConfig);
+ const analytics = getAnalytics(app);
+ const auth = getAuth(app);
+
+ // Adjusted to modular Firebase Auth
+ document.getElementById('signupForm').addEventListener('submit', async function(event) {
+   event.preventDefault(); // Prevent form submission
+
+   const email = document.getElementById('signupEmail').value;
+   const password = document.getElementById('signupPassword').value;
+
+   try {
+     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+     console.log('User created:', userCredential.user);
+     // Redirect the user or show a success message
+   } catch (error) {
+     console.error('Error signing up:', error.message);
+     // Show an error message to your user
+   }
+ });
+
+ // Adjusted to modular Firebase Auth for Google sign-in
+ document.getElementById('googleSignInButton').addEventListener('click', async function() {
+   const provider = new GoogleAuthProvider();
+
+   try {
+     const result = await signInWithPopup(auth, provider);
+     console.log('Google sign-in user:', result.user);
+     // Redirect the user or show a success message
+   } catch (error) {
+     console.error('Error signing in with Google:', error.message);
+     // Show an error message to your user
+   }
+ });
 </script>
 
 
 
 
-
-<script>
-document.getElementById('signupForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent form submission
-
-    const email = document.getElementById('signupEmail').value;
-    const password = document.getElementById('signupPassword').value;
-
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            // Signed up
-            var user = userCredential.user;
-            console.log('User created:', user);
-            // Redirect the user or show a success message
-        })
-        .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.error('Error signing up:', errorMessage);
-            // Show an error message to your user
-        });
-});
-</script>
-<script>
-document.getElementById('googleSignInButton').addEventListener('click', function() {
-    var provider = new firebase.auth.GoogleAuthProvider();
-
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-        // Google sign-in successful
-        var token = result.credential.accessToken;
-        var user = result.user;
-        console.log('Google sign-in user:', user);
-        // Redirect the user or show a success message
-    }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.error('Error signing in with Google:', errorMessage);
-        // Show an error message to your user
-    });
-});
-</script>
 
 <script>
   // Corrected Categories Data
@@ -3046,7 +3036,7 @@ function updateSubCategory() {
   const mainCategory = document.getElementById('mainCategory').value;
   const subCategoryDropdown = document.getElementById('subCategory');
   subCategoryDropdown.innerHTML = ''; // Clear existing options
-  
+
 
   // Clear previous subcategory options
   subCategory.innerHTML = '<option value="" disabled selected hidden>Choose a subcategory</option>';
