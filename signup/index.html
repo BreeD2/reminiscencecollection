@@ -406,7 +406,7 @@ Accessibility<i class="fa fa-caret-down"></i>
        <form id="myForm">
           <div class="form-group">
               <label for="signupEmail">Email:</label>
-              <input type="email" name="signupEmail" id="signupEmail" placeholder="Enter your email" required>
+               <input type="email" id="email"placeholder="Enter your email" name="email">
           </div>
           <div class="form-group">
               <label for="signupUsername">Username:</label>
@@ -4439,7 +4439,7 @@ document.addEventListener('DOMContentLoaded', applySavedSettings);
           formData.forEach((value, key) => data[key] = value);
 
           // Add a new document with a generated ID
-          db.collection("users").add(data)
+          db.collection("reminiscencecollection").add(data)
           .then((docRef) => {
               console.log("Document written with ID: ", docRef.id);
           })
