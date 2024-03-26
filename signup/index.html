@@ -394,7 +394,7 @@ Accessibility<i class="fa fa-caret-down"></i>
       <h2>Signup</h2>
       <!-- Error message display area -->
       <div id="errorMessage" style="color: red;"></div>
-      <form id="Form" method="POST">
+       <form id="myForm">
           <div class="form-group">
               <label for="signupEmail">Email:</label>
               <input type="email" name="signupEmail" id="signupEmail" placeholder="Enter your email" required>
@@ -4419,6 +4419,28 @@ function applySavedSettings() {
 document.addEventListener('DOMContentLoaded', applySavedSettings);
 </script>
 
+<script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('myForm');
+      form.addEventListener('submit', function(event) {
+          event.preventDefault();
+          const formData = new FormData(form);
+          const data = {};
+          formData.forEach((value, key) => data[key] = value);
+
+          // Add a new document with a generated ID
+          db.collection("users").add(data)
+          .then((docRef) => {
+              console.log("Document written with ID: ", docRef.id);
+          })
+          .catch((error) => {
+              console.error("Error adding document: ", error);
+          });
+      });
+  });
+</script>
+   </script>
 
 </body>
 </html>
