@@ -371,7 +371,19 @@ Accessibility<i class="fa fa-caret-down"></i>
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
-  import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendSignInLinkToEmail } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      GoogleAuthProvider,
+      signInWithPopup,
+      sendSignInLinkToEmail,
+      isSignInWithEmailLink,
+      signInWithEmailLink
+    } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 
   // Your web app's Firebase configuration
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -405,55 +417,52 @@ Accessibility<i class="fa fa-caret-down"></i>
     },
     dynamicLinkDomain: 'example.page.link'
   };
-
-  // Function to validate form inputs
-  function validationFunction() {
-    const emailInput = document.getElementById('signupEmail').value;
-    const usernameInput = document.getElementById('signupUsername').value;
-    const passwordInput = document.getElementById('signupPassword').value;
-
-    if (emailInput === '' || usernameInput === '' || passwordInput === '') {
-      document.getElementById('errorMessage').textContent = 'All fields are required.';
-      return false;
+  // Function to send the sign-in link
+    function sendLink() {
+      const email = document.getElementById('signupEmail').value; // Assuming you have a signupEmail input
+      sendSignInLinkToEmail(auth, email, actionCodeSettings)
+        .then(() => {
+          window.localStorage.setItem('emailForSignIn', email);
+          console.log("Sign-in link sent!");
+        })
+        .catch((error) => {
+          console.error("Error sending sign-in link:", error.message);
+        });
     }
-    // Add more validation logic as needed
-    return true; // Return true if all validations pass
-  }
 
-  // Add event listener for form submission
-  document.getElementById('signupForm').addEventListener('submit', async (event) => {
-    event.preventDefault(); // Prevent the form from submitting normally
-    // Perform your validation
-    if (validationFunction()) {
-      const email = document.getElementById('signupEmail').value; // Use the actual email input from the form
-      try {
-        await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-        window.localStorage.setItem('emailForSignIn', email);
-        console.log("Sign-in link sent!");
-        // Optionally, redirect the user or show a success message
-      } catch (error) {
-        console.error("Error sending sign-in link:", error.message);
-        document.getElementById('errorMessage').textContent = error.message;
+    // Event listener for form submission
+    document.getElementById('signupForm').addEventListener('submit', async (event) => {
+      event.preventDefault(); // Prevent the form from submitting normally
+      sendLink();
+    });
+
+    // Google sign-in functionality
+    document.getElementById('googleSignInButton').addEventListener('click', async () => {
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          console.log('Google sign-in successful', result.user);
+        })
+        .catch((error) => {
+          console.error("Error during Google sign-in:", error);
+        });
+    });
+
+    // Completing sign in with the email link
+    if (isSignInWithEmailLink(auth, window.location.href)) {
+      let email = window.localStorage.getItem('emailForSignIn');
+      if (!email) {
+        email = window.prompt('Please provide your email for confirmation');
       }
+      signInWithEmailLink(auth, email, window.location.href)
+        .then((result) => {
+          window.localStorage.removeItem('emailForSignIn');
+          console.log('Email link sign-in successful', result.user);
+        })
+        .catch((error) => {
+          console.error("Error completing email link sign-in:", error.message);
+        });
     }
-  });
-
-  // Google sign-in functionality
-  document.getElementById('googleSignInButton').addEventListener('click', async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      const result = await signInWithPopup(auth, provider);
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const token = result.credential.accessToken;
-      // The signed-in user info.
-      const user = result.user;
-      // Redirect to another page or show a success message
-      console.log('Google sign-in successful', user);
-    } catch (error) {
-      console.error("Error during Google sign-in:", error);
-      document.getElementById('errorMessage').textContent = error.message;
-    }
-  });
 </script>
 
 <script>
