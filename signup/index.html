@@ -77,6 +77,15 @@
          window.location.assign('your-privacy-policy-url');
        }
      };
+     // Add event listener to form
+  window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('myForm').addEventListener('submit', (e) => {
+      e.preventDefault(); // Prevent the default form submission
+      const email = document.querySelector('#email').value;
+      const password = document.querySelector('#password').value;
+      signUpUser(email, password);
+    });
+  });
 
      var ui = new firebaseui.auth.AuthUI(firebase.auth());
      ui.start('#firebaseui-auth-container', uiConfig);
@@ -4420,7 +4429,7 @@ document.addEventListener('DOMContentLoaded', applySavedSettings);
 </script>
 
 <script>
-<script>
+
   document.addEventListener('DOMContentLoaded', function() {
       const form = document.getElementById('myForm');
       form.addEventListener('submit', function(event) {
@@ -4439,7 +4448,7 @@ document.addEventListener('DOMContentLoaded', applySavedSettings);
           });
       });
   });
-</script>
+
    </script>
 
 </body>
