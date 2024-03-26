@@ -28,12 +28,7 @@
    <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
    <script type="text/javascript">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-auth.js";
-  import * as firebaseui from 'https://www.gstatic.com/firebasejs/ui/6.x.x/firebase-ui-auth.js';
-
-  const firebaseConfig = {
+     var firebaseConfig = {
     apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
     authDomain: "reminiscence-collection.firebaseapp.com",
     databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
@@ -42,74 +37,59 @@
     messagingSenderId: "974064770925",
     appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
     measurementId: "G-PJ426H3WZN"
-  };
+     };
+     firebase.initializeApp(firebaseConfig);
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+     var uiConfig = {
+       callbacks: {
+         signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+           return true;
+         },
+         signInFailure: function(error) {
+           return handleUIError(error);
+         },
+         uiShown: function() {
+           document.getElementById('loader').style.display = 'none';
+         }
+       },
+       credentialHelper: firebaseui.auth.CredentialHelper.NONE,
+       signInFlow: 'popup',
+       signInSuccessUrl: 'https://breed2.github.io/reminiscencecollection//signup/signin/index.html',
+       signInOptions: [
+         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
 
-  const uiConfig = {
-    callbacks: {
-      signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-        return true;
-      },
-      signInFailure: function(error) {
-        // Handle errors here
-        console.error(error);
-        return handleUIError(error);
-      },
-      uiShown: function() {
-        document.getElementById('loader').style.display = 'none';
-      }
-    },
-    credentialHelper: firebaseui.auth.CredentialHelper.NONE,
-    signInFlow: 'popup',
-    signInSuccessUrl: 'https://breed2.github.io/reminiscencecollection//signup/signin/index.html',
-    signInOptions: [
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      {
-        provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        requireDisplayName: true
-      },
-      {
-        provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-        recaptchaParameters: {
-          type: 'image',
-          size: 'invisible',
-          badge: 'bottomleft'
-        }
-      },
-    ],
-    tosUrl: 'your-tos-url',
-    privacyPolicyUrl: function() {
-      window.location.assign('your-privacy-policy-url');
-    }
-  };
+         {
+           provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+           requireDisplayName: true
+         },
+         {
+           provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+           recaptchaParameters: {
+             type: 'image',
+             size: 'invisible',
+             badge: 'bottomleft'
+           }
+         },
 
-  // Initialize the FirebaseUI Widget using Firebase
-  const ui = new firebaseui.auth.AuthUI(firebase.auth());
-  ui.start('#firebaseui-auth-container', uiConfig);
-
-  // Event listener for form submission
+       ],
+       tosUrl: 'your-tos-url',
+       privacyPolicyUrl: function() {
+         window.location.assign('your-privacy-policy-url');
+       }
+     };
+     // Add event listener to form
   window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('myForm').addEventListener('submit', (e) => {
       e.preventDefault(); // Prevent the default form submission
       const email = document.querySelector('#email').value;
       const password = document.querySelector('#password').value;
-      // Sign up user
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          console.log("User created:", userCredential.user);
-          // Redirect or perform additional tasks
-        })
-        .catch((error) => {
-          console.error("Error signing up:", error.message);
-          // Handle errors (e.g., user feedback)
-        });
+      signUpUser(email, password);
     });
   });
-</script>
+
+     var ui = new firebaseui.auth.AuthUI(firebase.auth());
+     ui.start('#firebaseui-auth-container', uiConfig);
+   </script>
 
 
 
