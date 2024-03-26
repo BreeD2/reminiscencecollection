@@ -364,34 +364,15 @@ Accessibility<i class="fa fa-caret-down"></i>
 
 
 
-
-
-<!-- The Modal -->
-<div id="myModal" class="modal">
-  <span class="close">&times;</span>
-  <img class="modal-content" id="img01">
-  <div class="modal-footer">
-
-    <button id="zoomIn" class="zoom-btn">+</button>
-    <button id="zoomOut" class="zoom-btn">-</button>
-    <!-- The Download button is dynamic based on the image shown, so it's moved to JavaScript -->
-
-
-  </div>
-</div>
-
-
-
 <div class="footer">
   <div class="copy">Copyright &copy; 2024 Reminiscence Collection. All rights reserved.</div>
 </div>
 
 <script type="module">
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
-import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
-
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+  import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendSignInLinkToEmail } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 
   // Your web app's Firebase configuration
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -413,7 +394,7 @@ import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWith
 
   // Configure ActionCodeSettings for email link sign-in
   const actionCodeSettings = {
-    url: 'https://breed2.github.io/reminiscencecollection/index.html', // Adjusted URL
+    url: 'https://breed2.github.io/reminiscencecollection///index.html', // Adjusted URL
     handleCodeInApp: true,
     iOS: {
       bundleId: 'com.example.ios'
@@ -426,60 +407,56 @@ import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWith
     dynamicLinkDomain: 'example.page.link'
   };
 
-  // Send sign-in link to email
-  // Ensure you have a mechanism to get 'email' value, e.g., from a form input
-  const email = "user@example.com"; // Placeholder email value
-
-  sendSignInLinkToEmail(auth, email, actionCodeSettings)
-    .then(() => {
-      window.localStorage.setItem('emailForSignIn', email);
-      console.log("Sign-in link sent!");
-    })
-    .catch((error) => {
-      console.error("Error sending sign-in link:", error.message);
-    });
-
-  // Add other event listeners and Firebase Auth logic here...
-  </script>
-<script>
-document.getElementById('googleSignInButton').addEventListener('click', function() {
-  var provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider).then(function(result) {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    var token = result.credential.accessToken;
-    // The signed-in user info.
-    var user = result.user;
-    // Redirect to another page or show a success message
-  }).catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // The email of the user's account used.
-    var email = error.email;
-    // The firebase.auth.AuthCredential type that was used.
-    var credential = error.credential;
-    // Show error message
-    document.getElementById('errorMessage').textContent = errorMessage;
-  });
-});
-</script>
-
-<script>
-function validationFunction() {
-    // Example validation logic
+  // Function to validate form inputs
+  function validationFunction() {
     const emailInput = document.getElementById('signupEmail').value;
     const usernameInput = document.getElementById('signupUsername').value;
     const passwordInput = document.getElementById('signupPassword').value;
 
     if (emailInput === '' || usernameInput === '' || passwordInput === '') {
-        // If any field is empty, return false
-        return false;
+      document.getElementById('errorMessage').textContent = 'All fields are required.';
+      return false;
     }
     // Add more validation logic as needed
     return true; // Return true if all validations pass
-}
+  }
 
+  // Add event listener for form submission
+  document.getElementById('signupForm').addEventListener('submit', async (event) => {
+    event.preventDefault(); // Prevent the form from submitting normally
+    // Perform your validation
+    if (validationFunction()) {
+      const email = document.getElementById('signupEmail').value; // Use the actual email input from the form
+      try {
+        await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+        window.localStorage.setItem('emailForSignIn', email);
+        console.log("Sign-in link sent!");
+        // Optionally, redirect the user or show a success message
+      } catch (error) {
+        console.error("Error sending sign-in link:", error.message);
+        document.getElementById('errorMessage').textContent = error.message;
+      }
+    }
+  });
+
+  // Google sign-in functionality
+  document.getElementById('googleSignInButton').addEventListener('click', async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const token = result.credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      // Redirect to another page or show a success message
+      console.log('Google sign-in successful', user);
+    } catch (error) {
+      console.error("Error during Google sign-in:", error);
+      document.getElementById('errorMessage').textContent = error.message;
+    }
+  });
 </script>
+
 <script>
   // Corrected Categories Data
   const publisherCategories = {
