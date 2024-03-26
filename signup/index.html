@@ -421,19 +421,6 @@ Accessibility<i class="fa fa-caret-down"></i>
         });
     });
 
-    document.getElementById('signupForm').addEventListener('submit', function(event) {
-  event.preventDefault();
-
-  const email = document.getElementById('signupEmail').value;
-  const password = document.getElementById('signupPassword').value;
-
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      alert('Signup successful!');
-    })
-    .catch((error) => {
-      document.getElementById('errorMessage').innerText = errorMessage;
-    });
 
     // Completing sign-in with the email link
     if (isSignInWithEmailLink(auth, window.location.href)) {
