@@ -338,26 +338,28 @@ Accessibility<i class="fa fa-caret-down"></i>
 
         <div id="main-content" class="content">
           <div id="signupContainer">
-        <h2>Signup</h2>
-        <form id="signupForm" method="POST">
+      <h2>Signup</h2>
+      <!-- Error message display area -->
+      <div id="errorMessage" style="color: red;"></div>
+      <form id="signupForm" method="POST">
+          <div class="form-group">
+              <label for="signupEmail">Email:</label>
+              <input type="email" name="signupEmail" id="signupEmail" placeholder="Enter your email" required>
+          </div>
+          <div class="form-group">
+              <label for="signupUsername">Username:</label>
+              <input type="text" name="signupUsername" id="signupUsername" placeholder="Choose a username" required>
+          </div>
+          <div class="form-group">
+              <label for="signupPassword">Password:</label>
+              <input type="password" name="signupPassword" id="signupPassword" placeholder="Create a password" required>
+          </div>
+          <button type="submit" id="signupButton">Signup</button>
+      </form>
+      <p>Already have an account? <a href="../login/index.html">Login</a></p>
+  </div>
+  <button id="googleSignInButton">Sign in with Google</button>
 
-            <div class="form-group">
-                <label for="signupEmail">Email:</label>
-                <input type="email" name="signupEmail" id="signupEmail" placeholder="Enter your email" required>
-            </div>
-            <div class="form-group">
-                <label for="signupUsername">Username:</label>
-                <input type="text" name="signupUsername" id="signupUsername" placeholder="Choose a username" required>
-            </div>
-            <div class="form-group">
-                <label for="signupPassword">Password:</label>
-                <input type="password" name="signupPassword" id="signupPassword" placeholder="Create a password" required>
-            </div>
-            <button type="submit" id="signupButton">Signup</button>
-        </form>
-        <p>Already have an account? <a href="../login/index.html">Login</a></p>
-    </div>
-    <button id="googleSignInButton">Sign in with Google</button>
 
 
 
@@ -439,8 +441,40 @@ import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWith
 
   // Add other event listeners and Firebase Auth logic here...
   </script>
+<script>
+document.getElementById('googleSignInButton').addEventListener('click', function() {
+  var provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider).then(function(result) {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    var token = result.credential.accessToken;
+    // The signed-in user info.
+    var user = result.user;
+    // Redirect to another page or show a success message
+  }).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // The email of the user's account used.
+    var email = error.email;
+    // The firebase.auth.AuthCredential type that was used.
+    var credential = error.credential;
+    // Show error message
+    document.getElementById('errorMessage').textContent = errorMessage;
+  });
+});
+</script>
 
-
+<script>
+document.getElementById('signupForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    // Assume validationFunction returns false if validation fails
+    if (!validationFunction()) {
+        document.getElementById('errorMessage').textContent = 'Please correct the errors before submitting.';
+    } else {
+        // Proceed with form submission or AJAX request
+    }
+});
+</script>
 <script>
   // Corrected Categories Data
   const publisherCategories = {
