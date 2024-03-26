@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-In</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome Back!</h2>
+        <p>Please wait, you are being signed in...</p>
+        <div id="error-message" style="color: red;"></div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+    <script type="module">
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            // Your Firebase config
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        window.onload = function () {
+            if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+                var email = window.localStorage.getItem('emailForSignIn');
+                if (!email) {
+                    email = window.prompt('Please provide your email for confirmation');
+                }
+                firebase.auth().signInWithEmailLink(email, window.location.href)
+                    .then((result) => {
+                        window.localStorage.removeItem('emailForSignIn');
+                        // You can redirect the user to another page
+                        alert('Sign-in successful!');
+                    })
+                    .catch((error) => {
+                        document.getElementById('error-message').innerText = 'Error signing in: ' + error.message;
+                    });
+            }
+        };
+    </script>
+</body>
+</html>

@@ -335,7 +335,7 @@ Accessibility<i class="fa fa-caret-down"></i>
       <h2>Signup</h2>
       <!-- Error message display area -->
       <div id="errorMessage" style="color: red;"></div>
-      <form id="signupForm" method="POST">
+      <form id="Form" method="POST">
           <div class="form-group">
               <label for="signupEmail">Email:</label>
               <input type="email" name="signupEmail" id="signupEmail" placeholder="Enter your email" required>
@@ -408,7 +408,7 @@ Accessibility<i class="fa fa-caret-down"></i>
     },
     dynamicLinkDomain: 'example.page.link'
   };
-  
+
     document.getElementById('googleSignInButton').addEventListener('click', () => {
       const provider = new GoogleAuthProvider();
       signInWithPopup(auth, provider)
@@ -419,6 +419,20 @@ Accessibility<i class="fa fa-caret-down"></i>
         .catch((error) => {
           alert("Error during Google sign-in: " + error.message);
         });
+    });
+
+    document.getElementById('signupForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const email = document.getElementById('signupEmail').value;
+  const password = document.getElementById('signupPassword').value;
+
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      alert('Signup successful!');
+    })
+    .catch((error) => {
+      document.getElementById('errorMessage').innerText = errorMessage;
     });
 
     // Completing sign-in with the email link
