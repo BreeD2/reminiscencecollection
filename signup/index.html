@@ -465,15 +465,20 @@ document.getElementById('googleSignInButton').addEventListener('click', function
 </script>
 
 <script>
-document.getElementById('signupForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    // Assume validationFunction returns false if validation fails
-    if (!validationFunction()) {
-        document.getElementById('errorMessage').textContent = 'Please correct the errors before submitting.';
-    } else {
-        // Proceed with form submission or AJAX request
+function validationFunction() {
+    // Example validation logic
+    const emailInput = document.getElementById('signupEmail').value;
+    const usernameInput = document.getElementById('signupUsername').value;
+    const passwordInput = document.getElementById('signupPassword').value;
+
+    if (emailInput === '' || usernameInput === '' || passwordInput === '') {
+        // If any field is empty, return false
+        return false;
     }
-});
+    // Add more validation logic as needed
+    return true; // Return true if all validations pass
+}
+
 </script>
 <script>
   // Corrected Categories Data
