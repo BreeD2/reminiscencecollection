@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
-  
+
     <link rel="icon" type="image/x-icon" href="..//favicon.ico"/>
     <link rel="apple-touch-icon" sizes="76x76" href="..//apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="..//favicon-32x32.png">
@@ -28,7 +28,7 @@
    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
    <script type="text/javascript">
      var firebaseConfig = {
-    apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+    apiKey: "ke",
     authDomain: "reminiscence-collection.firebaseapp.com",
     databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
     projectId: "reminiscence-collection",
@@ -39,7 +39,7 @@
      };
 
        var firebaseConfig = {
-         apiKey: "key",
+         apiKey: "ke",
          authDomain: "reminiscence-collection.firebaseapp.com",
          databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
          projectId: "reminiscence-collection",
@@ -48,7 +48,8 @@
          appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
          measurementId: "G-PJ426H3WZN"
        };
-
+       firebase.initializeApp(firebaseConfig);
+       var db = firebase.firestore();
 
        var uiConfig = {
          callbacks: {
@@ -57,7 +58,7 @@
            },
            signInFailure: function(error) {
              console.error(error);
-             return handleUIError(error);
+             return;
            },
            uiShown: function() {
              document.getElementById('loader').style.display = 'none';
@@ -96,18 +97,16 @@
            event.preventDefault();
            const email = document.getElementById('email').value;
            const password = document.getElementById('password').value;
-           const username = document.getElementById('username').value; // Ensure you have an input field with id="username" for this
+           const username = document.getElementById('username').value;
 
            firebase.auth().createUserWithEmailAndPassword(email, password)
              .then((userCredential) => {
-               // User created, now add username to Firestore
                return db.collection("users").doc(userCredential.user.uid).set({
                  username: username
                });
              })
              .then(() => {
                console.log("Username added to Firestore");
-               // Redirect or perform additional actions
              })
              .catch((error) => {
                console.error("Error: ", error);
