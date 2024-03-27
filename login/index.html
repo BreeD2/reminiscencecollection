@@ -39,12 +39,12 @@
          measurementId: "G-PJ426H3WZN"
        };
        firebase.initializeApp(firebaseConfig);
+       var db = firebase.firestore();
 
        var uiConfig = {
          callbacks: {
            signInSuccessWithAuthResult: function(authResult, redirectUrl) {
              // User successfully signed in.
-             // Return type determines whether we continue with the redirect.
              window.location.assign('https://breed2.github.io/reminiscencecollection/signup/signin/index.html');
              return false; // False here means we are manually handling the redirect.
            },
@@ -67,25 +67,28 @@
        var ui = new firebaseui.auth.AuthUI(firebase.auth());
        ui.start('#firebaseui-auth-container', uiConfig);
 
-       // Listen for form submission on your login form, assuming it exists
-       var loginForm = document.getElementById('loginForm'); // Ensure this is the correct ID for your form
+       var loginForm = document.getElementById('loginForm');
        if (loginForm) {
          loginForm.addEventListener('submit', function(event) {
            event.preventDefault();
-           const email = document.getElementById('email').value;
+           const username = document.getElementById('username').value;
            const password = document.getElementById('password').value;
 
-           // Sign in with email and password
-           firebase.auth().signInWithEmailAndPassword(email, password)
-             .then((userCredential) => {
-               // Signed in
-               window.location.assign('https://breed2.github.io/reminiscencecollection/signup/signin/index.html'); // Redirect on successful login
-             })
-             .catch((error) => {
-               var errorCode = error.code;
-               var errorMessage = error.message;
-               alert(errorMessage); // Display error message
+           db.collection("users").where("username", "==", username).get().then((querySnapshot) => {
+             querySnapshot.forEach((doc) => {
+               const userEmail = doc.data().email;
+
+               firebase.auth().signInWithEmailAndPassword(userEmail, password)
+                 .then((userCredential) => {
+                   window.location.assign('https://breed2.github.io/reminiscencecollection/signup/signin/index.html');
+                 })
+                 .catch((error) => {
+                   alert(error.message);
+                 });
              });
+           }).catch((error) => {
+             console.error("Error finding user: ", error);
+           });
          });
        }
      });
