@@ -410,11 +410,13 @@ Accessibility<i class="fa fa-caret-down"></i>
           </div>
           <div class="form-group">
               <label for="signupUsername">Username:</label>
-              <input type="text" name="signupUsername" id="signupUsername" placeholder="Choose a username" required>
+              <input type="username" id="username"placeholder="Enter your email" name="password">
+
           </div>
           <div class="form-group">
               <label for="signupPassword">Password:</label>
-              <input type="password" name="signupPassword" id="signupPassword" placeholder="Create a password" required>
+              <input type="password" id="password" placeholder="Enter your email" name="password">
+
           </div>
           <button type="submit" id="signupButton">Signup</button>
       </form>
@@ -463,55 +465,49 @@ Accessibility<i class="fa fa-caret-down"></i>
     measurementId: "G-PJ426H3WZN"
   };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const auth = getAuth(app);
-
   // Configure ActionCodeSettings for email link sign-in
-  const actionCodeSettings = {
-    url: 'https://breed2.github.io/reminiscencecollection////signup/signin/index.html', // Adjusted URL
-    handleCodeInApp: true,
-    iOS: {
-      bundleId: 'com.example.ios'
-    },
-    android: {
-      packageName: 'com.example.android',
-      installApp: true,
-      minimumVersion: '12'
-    },
-    dynamicLinkDomain: 'example.page.link'
-  };
+   const actionCodeSettings = {
+     url: 'https://breed2.github.io/reminiscencecollection////signup/signin/index.html', // Adjusted URL
+     handleCodeInApp: true,
+     iOS: {
+       bundleId: 'com.example.ios'
+     },
+     android: {
+       packageName: 'com.example.android',
+       installApp: true,
+       minimumVersion: '12'
+     },
+     dynamicLinkDomain: 'example.page.link'
+   };
 
-    document.getElementById('googleSignInButton').addEventListener('click', () => {
-      const provider = new GoogleAuthProvider();
-      signInWithPopup(auth, provider)
-        .then((result) => {
-          alert('Google sign-in successful');
-          // You might want to redirect the user or do something else on successful sign-in
-        })
-        .catch((error) => {
-          alert("Error during Google sign-in: " + error.message);
-        });
-    });
+   document.getElementById('googleSignInButton').addEventListener('click', () => {
+     const provider = new firebase.auth.GoogleAuthProvider();
+     firebase.auth().signInWithPopup(auth, provider)
+       .then((result) => {
+         alert('Google sign-in successful');
+         // You might want to redirect the user or do something else on successful sign-in
+       })
+       .catch((error) => {
+         alert("Error during Google sign-in: " + error.message);
+       });
+   });
 
-
-    // Completing sign-in with the email link
-    if (isSignInWithEmailLink(auth, window.location.href)) {
-      let email = window.localStorage.getItem('emailForSignIn');
-      if (!email) {
-        email = window.prompt('Please provide your email for confirmation');
-      }
-      signInWithEmailLink(auth, email, window.location.href)
-        .then((result) => {
-          window.localStorage.removeItem('emailForSignIn');
-          alert('Email link sign-in successful');
-          // Redirect the user or perform other actions upon successful sign-in
-        })
-        .catch((error) => {
-          alert("Error completing email link sign-in: " + error.message);
-        });
-    }
+   // Completing sign-in with the email link
+   if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+     let email = window.localStorage.getItem('emailForSignIn');
+     if (!email) {
+       email = window.prompt('Please provide your email for confirmation');
+     }
+     firebase.auth().signInWithEmailLink(auth, email, window.location.href)
+       .then((result) => {
+         window.localStorage.removeItem('emailForSignIn');
+         alert('Email link sign-in successful');
+         // Redirect the user or perform other actions upon successful sign-in
+       })
+       .catch((error) => {
+         alert("Error completing email link sign-in: " + error.message);
+       });
+   }
 </script>
 
 <script>
