@@ -4,36 +4,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="icon" type="image/x-icon" href="..//favicon.ico"/>
-    <link rel="apple-touch-icon" sizes="76x76" href="..//apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="..//favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="..//favicon-16x16.png">
-  <link rel="manifest" href="..//site.webmanifest">
-  <link rel="mask-icon" href="..//safari-pinned-tab.svg" color="#5bbad5">
-  <meta name="msapplication-TileColor" content="#da532c">
-  <meta name="theme-color" content="#ffffff">
-    <center>
 
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta charset="UTF-8">
-<link rel="stylesheet"href="style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+      <link rel="icon" type="image/x-icon" href="..//favicon.ico"/>
+      <link rel="apple-touch-icon" sizes="76x76" href="..//apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="..//favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="..//favicon-16x16.png">
 
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script src="accessibility/index.html"></script>
-  <script src="script.js"></script>
-<style>
-</style>
-</head>
+    <link rel="mask-icon" href="..//safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+      <center>
+
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet"href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
+     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
+     <script type="text/javascript">
+       var firebaseConfig = {
+      apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+      authDomain: "reminiscence-collection.firebaseapp.com",
+      databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+      projectId: "reminiscence-collection",
+      storageBucket: "reminiscence-collection.appspot.com",
+      messagingSenderId: "974064770925",
+      appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+      measurementId: "G-PJ426H3WZN"
+       };
+
+         var firebaseConfig = {
+           apiKey: "key",
+           authDomain: "reminiscence-collection.firebaseapp.com",
+           databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+           projectId: "reminiscence-collection",
+           storageBucket: "reminiscence-collection.appspot.com",
+           messagingSenderId: "974064770925",
+           appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+           measurementId: "G-PJ426H3WZN"
+         };
 
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+         var uiConfig = {
+           callbacks: {
+             signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+               return true;
+             },
+             signInFailure: function(error) {
+               console.error(error);
+               return handleUIError(error);
+             },
+             uiShown: function() {
+               document.getElementById('loader').style.display = 'none';
+             }
+           },
+           credentialHelper: firebaseui.auth.CredentialHelper.NONE,
+           signInFlow: 'popup',
+           signInSuccessUrl: 'https://breed2.github.io/reminiscencecollection//signup/signin/index.html',
+           signInOptions: [
+             firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+             {
+               provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+               requireDisplayName: true
+             },
+             {
+               provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+               recaptchaParameters: {
+                 type: 'image',
+                 size: 'invisible',
+                 badge: 'bottomleft'
+               }
+             },
+           ],
+           tosUrl: 'your-tos-url',
+           privacyPolicyUrl: function() {
+             window.location.assign('your-privacy-policy-url');
+           }
+         };
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<body>
+         var ui = new firebaseui.auth.AuthUI(firebase.auth());
+         ui.start('#firebaseui-auth-container', uiConfig);
+
+         document.addEventListener('DOMContentLoaded', function() {
+           const form = document.getElementById('myForm');
+           form.addEventListener('submit', function(event) {
+             event.preventDefault();
+             const email = document.getElementById('email').value;
+             const password = document.getElementById('password').value;
+             const username = document.getElementById('username').value; // Ensure you have an input field with id="username" for this
+
+             firebase.auth().createUserWithEmailAndPassword(email, password)
+               .then((userCredential) => {
+                 // User created, now add username to Firestore
+                 return db.collection("users").doc(userCredential.user.uid).set({
+                   username: username
+                 });
+               })
+               .then(() => {
+                 console.log("Username added to Firestore");
+                 // Redirect or perform additional actions
+               })
+               .catch((error) => {
+                 console.error("Error: ", error);
+               });
+           });
+         });
+     </script>
+     </head>
 
   <div class="read-aloud">
   <!-- Navigation Bar with Logo and Website Name -->
