@@ -24,12 +24,14 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
-   <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
-   <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
-   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
-   <script type="text/javascript">
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script> <!-- Added Firestore compat script -->
+  <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
+
+  <script type="text/javascript">
      var firebaseConfig = {
-    apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+    apiKey: "key",
     authDomain: "reminiscence-collection.firebaseapp.com",
     databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
     projectId: "reminiscence-collection",
@@ -3570,76 +3572,6 @@ function decreaseFont() {
 </script>
 
 
-
-<script>// Get the modal
-var modal = document.getElementById("myModal");
-
-// Get the image and insert it inside the modal - use its "alt" text as a caption
-var images = document.querySelectorAll('.mySlides img');
-var modalImg = document.getElementById("img01");
-var captionText = document.getElementById("caption");
-
-images.forEach(img => {
-  img.onclick = function() {
-    modal.style.display = "block";
-    modalImg.src = this.src;
-    captionText.innerHTML = this.alt; // Or use any other attribute or fixed text
-  }
-});
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-</script>
-
-<script>
-  // Get modal elements
-var modal = document.getElementById("myModal");
-var modalImg = document.getElementById("img01");
-var captionText = document.getElementById("caption");
-var zoomInButton = document.getElementById("zoomIn");
-var zoomOutButton = document.getElementById("zoomOut");
-
-// Initial zoom scale
-var imgZoom = 1;
-
-// Zoom in function
-function zoomIn() {
-  imgZoom += 0.1; // Increase zoom
-  modalImg.style.transform = `scale(${imgZoom})`;
-}
-
-// Zoom out function
-function zoomOut() {
-  imgZoom -= 0.1; // Decrease zoom
-  modalImg.style.transform = `scale(${imgZoom})`;
-}
-
-// Attach zoom event listeners
-zoomInButton.onclick = zoomIn;
-zoomOutButton.onclick = zoomOut;
-
-// Image click to open modal
-document.querySelectorAll('.mySlides img').forEach(img => {
-  img.onclick = function() {
-    modal.style.display = "block";
-    modalImg.src = this.src;
-    captionText.innerHTML = this.getAttribute('data-caption'); // Assuming you use 'data-caption' attribute for captions
-    imgZoom = 1; // Reset zoom
-    modalImg.style.transform = `scale(${imgZoom})`; // Apply reset
-  }
-});
-
-// Close modal
-document.getElementsByClassName("close")[0].onclick = function() {
-  modal.style.display = "none";
-}
-</script>
-
 <script type="text/javascript">
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
@@ -3657,44 +3589,6 @@ document.getElementById('filterCheckbox').addEventListener('change', function() 
 </script>
 
 
-<script>
-  // Get the modal
-  var modal = document.getElementById("myModal");
-
-  // Get all images that will open the modal and insert them inside the modal when clicked
-  var imgs = document.querySelectorAll(".game-cover");
-  var modalImg = document.getElementById("img01");
-
-  // Attach onclick event to each image
-  imgs.forEach(img => {
-    img.onclick = function() {
-      modal.style.display = "block";
-      modalImg.src = this.src;
-    }
-  });
-
-  // Get the <span> element that closes the modal and close it when clicked
-  var span = document.getElementsByClassName("close")[0];
-  span.onclick = function() {
-    modal.style.display = "none";
-  }
-
-  // Zoom functionality
-  var zoomLevel = 1;
-  var zoomStep = 0.1;
-
-  document.getElementById("zoomIn").addEventListener("click", function() {
-    zoomLevel += zoomStep;
-    modalImg.style.transform = "scale(" + zoomLevel + ")";
-  });
-
-  document.getElementById("zoomOut").addEventListener("click", function() {
-    if (zoomLevel > 1) { // Ensure zoom level does not go below 1
-      zoomLevel -= zoomStep;
-      modalImg.style.transform = "scale(" + zoomLevel + ")";
-    }
-  });
-</script>
 
 
 
