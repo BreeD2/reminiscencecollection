@@ -29,7 +29,7 @@
    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
    <script type="text/javascript">
      var firebaseConfig = {
-    apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+    apiKey: "key",
     authDomain: "reminiscence-collection.firebaseapp.com",
     databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
     projectId: "reminiscence-collection",
@@ -38,37 +38,84 @@
     appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
     measurementId: "G-PJ426H3WZN"
      };
-     firebase.initializeApp(firebaseConfig);
-     var auth = firebase.auth();
-     var db = firebase.firestore();
 
-     document.addEventListener('DOMContentLoaded', function() {
-       const form = document.getElementById('myForm');
-       form.addEventListener('submit', function(event) {
-         event.preventDefault();
-         const email = document.getElementById('email').value;
-         const password = document.getElementById('password').value;
-         const username = document.getElementById('username').value; // Assume there's an input with id="username"
+       var firebaseConfig = {
+         apiKey: "key",
+         authDomain: "reminiscence-collection.firebaseapp.com",
+         databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+         projectId: "reminiscence-collection",
+         storageBucket: "reminiscence-collection.appspot.com",
+         messagingSenderId: "974064770925",
+         appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+         measurementId: "G-PJ426H3WZN"
+       };
+       firebase.initializeApp(firebaseConfig);
+       var db = firebase.firestore();
 
-         // First, create the user with email and password
-         auth.createUserWithEmailAndPassword(email, password)
-           .then((userCredential) => {
-             // User created successfully, now add the username to Firestore
-             const userId = userCredential.user.uid;
-             return db.collection("users").doc(userId).set({
-               username: username
+       var uiConfig = {
+         callbacks: {
+           signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+             return true;
+           },
+           signInFailure: function(error) {
+             console.error(error);
+             return handleUIError(error);
+           },
+           uiShown: function() {
+             document.getElementById('loader').style.display = 'none';
+           }
+         },
+         credentialHelper: firebaseui.auth.CredentialHelper.NONE,
+         signInFlow: 'popup',
+         signInSuccessUrl: 'https://breed2.github.io/reminiscencecollection//signup/signin/index.html',
+         signInOptions: [
+           firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+           {
+             provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+             requireDisplayName: true
+           },
+           {
+             provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+             recaptchaParameters: {
+               type: 'image',
+               size: 'invisible',
+               badge: 'bottomleft'
+             }
+           },
+         ],
+         tosUrl: 'your-tos-url',
+         privacyPolicyUrl: function() {
+           window.location.assign('your-privacy-policy-url');
+         }
+       };
+
+       var ui = new firebaseui.auth.AuthUI(firebase.auth());
+       ui.start('#firebaseui-auth-container', uiConfig);
+
+       document.addEventListener('DOMContentLoaded', function() {
+         const form = document.getElementById('myForm');
+         form.addEventListener('submit', function(event) {
+           event.preventDefault();
+           const email = document.getElementById('email').value;
+           const password = document.getElementById('password').value;
+           const username = document.getElementById('username').value; // Ensure you have an input field with id="username" for this
+
+           firebase.auth().createUserWithEmailAndPassword(email, password)
+             .then((userCredential) => {
+               // User created, now add username to Firestore
+               return db.collection("users").doc(userCredential.user.uid).set({
+                 username: username
+               });
+             })
+             .then(() => {
+               console.log("Username added to Firestore");
+               // Redirect or perform additional actions
+             })
+             .catch((error) => {
+               console.error("Error: ", error);
              });
-           })
-           .then(() => {
-             console.log("Username saved successfully");
-             // Here, you might want to redirect the user or clear the form
-           })
-           .catch((error) => {
-             console.error("Error signing up or saving username:", error.message);
-             // Handle errors, for example, show an error message to the user
-           });
+         });
        });
-     });
    </script>
 
 
@@ -417,92 +464,6 @@ Accessibility<i class="fa fa-caret-down"></i>
 
 
 
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      GoogleAuthProvider,
-      signInWithPopup,
-      sendSignInLinkToEmail,
-      isSignInWithEmailLink,
-      signInWithEmailLink
-    } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
-    authDomain: "reminiscence-collection.firebaseapp.com",
-    databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
-    projectId: "reminiscence-collection",
-    storageBucket: "reminiscence-collection.appspot.com",
-    messagingSenderId: "974064770925",
-    appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
-    measurementId: "G-PJ426H3WZN"
-  };
-
-  // Configure ActionCodeSettings for email link sign-in
-   const actionCodeSettings = {
-     url: 'https://breed2.github.io/reminiscencecollection////signup/signin/index.html', // Adjusted URL
-     handleCodeInApp: true,
-     iOS: {
-       bundleId: 'com.example.ios'
-     },
-     android: {
-       packageName: 'com.example.android',
-       installApp: true,
-       minimumVersion: '12'
-     },
-     dynamicLinkDomain: 'example.page.link'
-   };
-
-   document.getElementById('googleSignInButton').addEventListener('click', () => {
-     const provider = new firebase.auth.GoogleAuthProvider();
-     firebase.auth().signInWithPopup(auth, provider)
-       .then((result) => {
-         alert('Google sign-in successful');
-         // You might want to redirect the user or do something else on successful sign-in
-       })
-       .catch((error) => {
-         alert("Error during Google sign-in: " + error.message);
-       });
-   });
-
-   firebase.initializeApp(firebaseConfig);
-   var auth = firebase.auth();
-   var db = firebase.firestore();
-
-   document.addEventListener('DOMContentLoaded', function() {
-     const form = document.getElementById('myForm');
-     form.addEventListener('submit', function(event) {
-       event.preventDefault();
-       const email = document.getElementById('email').value;
-       const password = document.getElementById('password').value;
-       const username = document.getElementById('username').value; // Assume there's an input with id="username"
-
-       // First, create the user with email and password
-       auth.createUserWithEmailAndPassword(email, password)
-         .then((userCredential) => {
-           // User created successfully, now add the username to Firestore
-           const userId = userCredential.user.uid;
-           return db.collection("users").doc(userId).set({
-             username: username
-           });
-         })
-         .then(() => {
-           console.log("Username saved successfully");
-           // Here, you might want to redirect the user or clear the form
-         })
-         .catch((error) => {
-           console.error("Error signing up or saving username:", error.message);
-           // Handle errors, for example, show an error message to the user
-         });
-     });
-   });
-</script>
 
 <script>
   // Corrected Categories Data
