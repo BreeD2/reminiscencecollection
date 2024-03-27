@@ -4389,3 +4389,17 @@ form input[type="text"] {
     color: #888; /* Placeholder text color */
     opacity: 1; /* Full opacity */
 }
+
+#firebaseui-auth-container {
+  max-width: 400px; /* Set the maximum width of the container */;
+  max-height: 100px
+
+
+}
+
+/* Style for the loader, if you want to make it more prominent or match the theme */
+#loader {
+  text-align: center; /* Center the loader text or spinner */
+  margin: 20px auto; /* Add some margin for spacing */
+  /* You can add more styles for the loader here */
+}
