@@ -29,7 +29,7 @@
     <!-- Firebase Config -->
     <script type="text/javascript">
       var firebaseConfig = {
-        apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+        apiKey: "key",
         authDomain: "reminiscence-collection.firebaseapp.com",
         databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
         projectId: "reminiscence-collection",
@@ -78,25 +78,46 @@
       var ui = new firebaseui.auth.AuthUI(firebase.auth());
       ui.start('#firebaseui-auth-container', uiConfig);
 
-      document.getElementById('myForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+      var form = document.getElementById('myForm');
+   if (form) {
+     form.addEventListener('submit', function(event) {
+       event.preventDefault();
+       const email = document.getElementById('email').value;
+       const password = document.getElementById('password').value;
 
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-          .then((userCredential) => {
-            var user = userCredential.user;
-            user.sendEmailVerification().then(function() {
-              alert("Verification email sent. Please check your inbox.");
-              firebase.auth().signOut();
-            }).catch(function(error) {
-              console.error(error);
-            });
-          })
-          .catch((error) => {
-            alert(error.message);
-          });
-      });
+       firebase.auth().createUserWithEmailAndPassword(email, password)
+         .then((userCredential) => {
+           var user = userCredential.user;
+           user.sendEmailVerification().then(function() {
+             alert("Verification email sent. Please check your inbox.");
+             firebase.auth().signOut();
+           }).catch(function(error) {
+             console.error(error);
+           });
+         })
+         .catch((error) => {
+           alert(error.message);
+         });
+     });
+   }
+
+   firebase.auth().onAuthStateChanged(function(user) {
+     var userDropdown = document.getElementById('userDropdown3');
+     var loginLink = document.getElementById('loginLink');
+     var userButton = document.getElementById('userButton');
+
+     if (user) {
+       document.getElementById('userName').textContent = user.displayName || "User";
+       if (userDropdown) userDropdown.style.display = 'block';
+       if (loginLink) loginLink.style.display = 'none';
+       if (userButton) userButton.style.display = 'none';
+     } else {
+       if (userDropdown) userDropdown.style.display = 'none';
+       if (loginLink) loginLink.style.display = 'block';
+       if (userButton) userButton.style.display = 'inline-block';
+     }
+   });
+ });
 
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -464,14 +485,12 @@ Accessibility<i class="fa fa-caret-down"></i>
 
           <button type="submit" id="signupButton">Signup</button>
       </form>
-      <p>Already have an account? <a href="../login/index.html">Login</a></p>
+      <p>Already have an account? <a href="..//login/index.html">Login</a></p>
       <div id="firebaseui-auth-container"></div>
     <div id="loader">Loading...</div>
   </div>
 
-  <div id="sign-in-status"></div>
-      <div id="sign-in"></div>
-      <pre id="account-details"></pre>
+
 
 <div class="footer">
   <div class="copy">Copyright &copy; 2024 Reminiscence Collection. All rights reserved.</div>
