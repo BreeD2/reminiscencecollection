@@ -46,6 +46,7 @@
            return true;
          },
          signInFailure: function(error) {
+           console.error(error);
            return handleUIError(error);
          },
          uiShown: function() {
@@ -57,7 +58,6 @@
        signInSuccessUrl: 'https://breed2.github.io/reminiscencecollection//signup/signin/index.html',
        signInOptions: [
          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-
          {
            provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
            requireDisplayName: true
@@ -70,25 +70,35 @@
              badge: 'bottomleft'
            }
          },
-
        ],
        tosUrl: 'your-tos-url',
        privacyPolicyUrl: function() {
          window.location.assign('your-privacy-policy-url');
        }
      };
-     // Add event listener to form
-  window.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('myForm').addEventListener('submit', (e) => {
-      e.preventDefault(); // Prevent the default form submission
-      const email = document.querySelector('#email').value;
-      const password = document.querySelector('#password').value;
-      signUpUser(email, password);
-    });
-  });
 
      var ui = new firebaseui.auth.AuthUI(firebase.auth());
      ui.start('#firebaseui-auth-container', uiConfig);
+
+     document.addEventListener('DOMContentLoaded', function() {
+       const form = document.getElementById('myForm');
+       form.addEventListener('submit', function(event) {
+         event.preventDefault();
+         const formData = new FormData(form);
+         const data = {};
+         formData.forEach((value, key) => data[key] = value);
+
+         // Add a new document to Firestore
+         db.collection("reminiscencecollection").add(data)
+           .then((docRef) => {
+             console.log("Document written with ID: ", docRef.id);
+             // Handle successful document addition here
+           })
+           .catch((error) => {
+             console.error("Error adding document: ", error);
+           });
+       });
+     });
    </script>
 
 
@@ -4424,28 +4434,6 @@ function applySavedSettings() {
 document.addEventListener('DOMContentLoaded', applySavedSettings);
 </script>
 
-<script>
-
-  document.addEventListener('DOMContentLoaded', function() {
-      const form = document.getElementById('myForm');
-      form.addEventListener('submit', function(event) {
-          event.preventDefault();
-          const formData = new FormData(form);
-          const data = {};
-          formData.forEach((value, key) => data[key] = value);
-
-          // Add a new document with a generated ID
-          db.collection("reminiscencecollection").add(data)
-          .then((docRef) => {
-              console.log("Document written with ID: ", docRef.id);
-          })
-          .catch((error) => {
-              console.error("Error adding document: ", error);
-          });
-      });
-  });
-
-   </script>
 
 </body>
 </html>
