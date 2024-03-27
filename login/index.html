@@ -38,15 +38,16 @@
          appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
          measurementId: "G-PJ426H3WZN"
        };
+       // Initialize Firebase
        firebase.initializeApp(firebaseConfig);
        var db = firebase.firestore();
 
+       // FirebaseUI configuration
        var uiConfig = {
          callbacks: {
            signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-             // User successfully signed in.
              window.location.assign('https://breed2.github.io/reminiscencecollection/signup/signin/index.html');
-             return false; // False here means we are manually handling the redirect.
+             return false;
            },
            uiShown: function() {
              document.getElementById('loader').style.display = 'none';
@@ -64,9 +65,11 @@
          }
        };
 
+       // Initialize FirebaseUI Auth
        var ui = new firebaseui.auth.AuthUI(firebase.auth());
        ui.start('#firebaseui-auth-container', uiConfig);
 
+       // Handling login form submission
        var loginForm = document.getElementById('loginForm');
        if (loginForm) {
          loginForm.addEventListener('submit', function(event) {
@@ -74,18 +77,24 @@
            const username = document.getElementById('username').value;
            const password = document.getElementById('password').value;
 
+           // Query Firestore for a document with the entered username
            db.collection("users").where("username", "==", username).get().then((querySnapshot) => {
-             querySnapshot.forEach((doc) => {
-               const userEmail = doc.data().email;
+             if (!querySnapshot.empty) {
+               querySnapshot.forEach((doc) => {
+                 const userEmail = doc.data().email;
 
-               firebase.auth().signInWithEmailAndPassword(userEmail, password)
-                 .then((userCredential) => {
-                   window.location.assign('https://breed2.github.io/reminiscencecollection/signup/signin/index.html');
-                 })
-                 .catch((error) => {
-                   alert(error.message);
-                 });
-             });
+                 // Sign in with the email associated with the username
+                 firebase.auth().signInWithEmailAndPassword(userEmail, password)
+                   .then((userCredential) => {
+                     window.location.assign('https://breed2.github.io/reminiscencecollection/signup/signin/index.html');
+                   })
+                   .catch((error) => {
+                     alert(error.message);
+                   });
+               });
+             } else {
+               alert("Username not found.");
+             }
            }).catch((error) => {
              console.error("Error finding user: ", error);
            });
@@ -392,12 +401,15 @@ Accessibility<i class="fa fa-caret-down"></i>
           <!-- Login Form -->
             <form id="loginForm">
                 <div>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" required>
+                  <label for="username">Username:</label>
+       <input type="text" id="username" required>
                 </div>
                 <div>
                     <label for="password">Password:</label>
                     <input type="password" id="password" required>
+                    <!-- FirebaseUI Auth Container -->
+   <div id="firebaseui-auth-container"></div>
+   <div id="loader">Loading...</div>
                 </div>
                 <button type="submit">Login</button>
             </form>
