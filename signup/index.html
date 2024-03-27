@@ -24,14 +24,12 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script> <!-- Added Firestore compat script -->
-  <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
-  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
-
-  <script type="text/javascript">
+   <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
+   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
+   <script type="text/javascript">
      var firebaseConfig = {
-    apiKey: "key",
+    apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
     authDomain: "reminiscence-collection.firebaseapp.com",
     databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
     projectId: "reminiscence-collection",
@@ -421,15 +419,15 @@ Accessibility<i class="fa fa-caret-down"></i>
       <form id="myForm">
           <div class="form-group">
               <label for="email">Email:</label>
-              <input type="email" id="email" placeholder="Enter your email" name="email" autocomplete="email">
+              <input type="email" id="email" placeholder="Enter your email" name="email" required>>
           </div>
           <div class="form-group">
               <label for="username">Username:</label>
-              <input type="text" id="username" placeholder="Choose a username" name="username" autocomplete="username">
+              <input type="text" id="username" placeholder="Choose a username" name="username" required>
           </div>
           <div class="form-group">
               <label for="password">Password:</label>
-              <input type="password" id="password" placeholder="Create a password" name="password" autocomplete="new-password">
+              <input type="password" id="password" placeholder="Create a password" name="password" required>
           </div>
 
           <button type="submit" id="signupButton">Signup</button>
@@ -506,22 +504,37 @@ Accessibility<i class="fa fa-caret-down"></i>
        });
    });
 
-   // Completing sign-in with the email link
-   if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-     let email = window.localStorage.getItem('emailForSignIn');
-     if (!email) {
-       email = window.prompt('Please provide your email for confirmation');
-     }
-     firebase.auth().signInWithEmailLink(auth, email, window.location.href)
-       .then((result) => {
-         window.localStorage.removeItem('emailForSignIn');
-         alert('Email link sign-in successful');
-         // Redirect the user or perform other actions upon successful sign-in
-       })
-       .catch((error) => {
-         alert("Error completing email link sign-in: " + error.message);
-       });
-   }
+   firebase.initializeApp(firebaseConfig);
+   var auth = firebase.auth();
+   var db = firebase.firestore();
+
+   document.addEventListener('DOMContentLoaded', function() {
+     const form = document.getElementById('myForm');
+     form.addEventListener('submit', function(event) {
+       event.preventDefault();
+       const email = document.getElementById('email').value;
+       const password = document.getElementById('password').value;
+       const username = document.getElementById('username').value; // Assume there's an input with id="username"
+
+       // First, create the user with email and password
+       auth.createUserWithEmailAndPassword(email, password)
+         .then((userCredential) => {
+           // User created successfully, now add the username to Firestore
+           const userId = userCredential.user.uid;
+           return db.collection("users").doc(userId).set({
+             username: username
+           });
+         })
+         .then(() => {
+           console.log("Username saved successfully");
+           // Here, you might want to redirect the user or clear the form
+         })
+         .catch((error) => {
+           console.error("Error signing up or saving username:", error.message);
+           // Handle errors, for example, show an error message to the user
+         });
+     });
+   });
 </script>
 
 <script>
