@@ -28,206 +28,91 @@
     <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
     <!-- Firebase Config -->
     <script type="text/javascript">
-        // Firebase configuration structure
-        var firebaseConfig = {
-            apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
-            authDomain: "reminiscence-collection.firebaseapp.com",
-            databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
-            projectId: "reminiscence-collection",
-            storageBucket: "reminiscence-collection.appspot.com",
-            messagingSenderId: "974064770925",
-            appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
-            measurementId: "G-PJ426H3WZN"
-        };
+    var firebaseConfig = {
+        apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+        authDomain: "reminiscence-collection.firebaseapp.com",
+        databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+        projectId: "reminiscence-collection",
+        storageBucket: "reminiscence-collection.appspot.com",
+        messagingSenderId: "974064770925",
+        appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+        measurementId: "G-PJ426H3WZN"
+    };
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        var db = firebase.firestore();
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
 
-        // FirebaseUI config
-        var uiConfig = {
-            callbacks: {
-                signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-                    return true;
-                },
-                signInFailure: function(error) {
-                    console.error(error);
-                    return;
-                },
-                uiShown: function() {
-                    document.getElementById('loader').style.display = 'none';
+    var uiConfig = {
+        callbacks: {
+            signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+                return true;
+            },
+            uiShown: function() {
+                document.getElementById('loader').style.display = 'none';
+            }
+        },
+        credentialHelper: firebaseui.auth.CredentialHelper.NONE,
+        signInFlow: 'popup',
+        signInSuccessUrl: 'https://breed2.github.io/reminiscencecollection//signup/signin/index.html',
+        signInOptions: [
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            {
+                provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+                requireDisplayName: true
+            },
+            {
+                provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+                recaptchaParameters: {
+                    type: 'image',
+                    size: 'invisible',
+                    badge: 'bottomleft'
                 }
             },
-            credentialHelper: firebaseui.auth.CredentialHelper.NONE,
-            signInFlow: 'popup',
-            signInSuccessUrl: 'https://breed2.github.io/reminiscencecollection//signup/signin/index.html',
-            signInOptions: [
-                firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-                {
-                    provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-                    requireDisplayName: true
-                },
-                {
-                    provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-                    recaptchaParameters: {
-                        type: 'image',
-                        size: 'invisible',
-                        badge: 'bottomleft'
-                    }
-                },
-            ],
-            tosUrl: 'your-tos-url',
-            privacyPolicyUrl: function() {
-                window.location.assign('your-privacy-policy-url');
-            }
-        };
-        // Initialize FirebaseUI Auth
-var ui = new firebaseui.auth.AuthUI(firebase.auth());
-
-// Example function to handle additional user functionalities
-function handleUserFunctions() {
-    // Get the current user
-    var user = firebase.auth().currentUser;
-
-    if (user) {
-        // Example: Update User's Profile
-        user.updateProfile({
-            displayName: "New User Name",
-            photoURL: "https://example.com/new-photo.jpg"
-        }).then(function() {
-            console.log('User Profile Updated Successfully');
-        }).catch(function(error) {
-            console.error('Error updating user profile:', error);
-        });
-
-        // Example: Send Verification Email
-        user.sendEmailVerification().then(function() {
-            console.log('Verification Email Sent Successfully');
-        }).catch(function(error) {
-            console.error('Error sending verification email:', error);
-        });
-
-        // More functionalities like password reset, user deletion, etc., can be added here
-    }
-}
-
-// Authentication state observer
-firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-        // User is signed in.
-        console.log('User is signed in:', user);
-        handleUserFunctions(); // Call to handle additional user functionalities
-    } else {
-        // User is signed out.
-        console.log('User is signed out.');
-    }
-});
-// Initialize FirebaseUI Auth
-var ui = new firebaseui.auth.AuthUI(firebase.auth());
-var uiConfig = {
-    callbacks: {
-        signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-            // User successfully signed in.
-            // Return type determines whether we continue the redirect automatically
-            // or whether we leave that to developer to handle.
-            return true;
-        },
-        uiShown: function() {
-            // The widget is rendered.
-            // Hide the loader.
-            document.getElementById('loader').style.display = 'none';
+        ],
+        tosUrl: 'your-tos-url',
+        privacyPolicyUrl: function() {
+            window.location.assign('your-privacy-policy-url');
         }
-    },
-    // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-    signInFlow: 'popup',
-    signInSuccessUrl: 'signin/index.html', // Redirect after sign in
-    signInOptions: [
-        // Specify providers you want to offer here.
-        firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        // Other providers...
-    ],
-};
-// The start method will wait until the DOM is loaded.
-ui.start('#firebaseui-auth-container', uiConfig);
+    };
 
-document.getElementById('myForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    ui.start('#firebaseui-auth-container', uiConfig);
 
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            // Signed in
-            var user = userCredential.user;
-            // Send verification email
-            user.sendEmailVerification().then(function() {
-                // Email sent.
-                alert("Verification email sent. Please check your inbox.");
-                // Optionally, sign out the user so they can verify their email before logging in
-                firebase.auth().signOut();
-            }).catch(function(error) {
-                // An error happened.
-                console.error(error);
-            });
-        })
-        .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // ..
-            alert(errorMessage);
-        });
-});
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-// Example: Sign Out User
-function signOutUser() {
-    firebase.auth().signOut().then(function() {
-        console.log('User Logged Out!');
-    }).catch(function(error) {
-        console.error('Sign Out Error', error);
-    });
-}
-
-// Example: Password Reset Email
-function sendPasswordReset(emailAddress) {
-    firebase.auth().sendPasswordResetEmail(emailAddress).then(function() {
-        console.log('Password Reset Email Sent Successfully');
-    }).catch(function(error) {
-        console.error('Error sending password reset email:', error);
-    });
-}
-
-// Initialize FirebaseUI config
-ui.start('#firebaseui-auth-container', uiConfig);
-
-        // Initialize FirebaseUI Auth
-        var ui = new firebaseui.auth.AuthUI(firebase.auth());
-        ui.start('#firebaseui-auth-container', uiConfig);
-
-        // Example function to handle form submission for custom sign-up
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('myForm');
-            if(form) {
-                form.addEventListener('submit', function(event) {
-                    event.preventDefault();
-                    const email = document.getElementById('email').value;
-                    const password = document.getElementById('password').value;
-                    const username = document.getElementById('username').value;
-
-                    firebase.auth().createUserWithEmailAndPassword(email, password)
-                        .then((userCredential) => {
-                            return db.collection("users").doc(userCredential.user.uid).set({
-                                username: username
-                            });
-                        })
-                        .then(() => {
-                            console.log("Username added to Firestore");
-                        })
-                        .catch((error) => {
-                            console.error("Error: ", error);
-                        });
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                var user = userCredential.user;
+                user.sendEmailVerification().then(function() {
+                    alert("Verification email sent. Please check your inbox.");
+                    firebase.auth().signOut();
+                }).catch(function(error) {
+                    console.error(error);
                 });
-            }
+            })
+            .catch((error) => {
+                alert(error.message);
+            });
+    });
+
+    function signOutUser() {
+        firebase.auth().signOut().then(function() {
+            console.log('User Logged Out!');
+        }).catch(function(error) {
+            console.error('Sign Out Error', error);
         });
+    }
+
+    function sendPasswordReset(emailAddress) {
+        firebase.auth().sendPasswordResetEmail(emailAddress).then(function() {
+            console.log('Password Reset Email Sent Successfully');
+        }).catch(function(error) {
+            console.error('Error sending password reset email:', error);
+        });
+    }
     </script>
 
 
