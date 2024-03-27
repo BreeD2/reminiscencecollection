@@ -40,63 +40,57 @@
        };
        // Initialize Firebase
        firebase.initializeApp(firebaseConfig);
-       var db = firebase.firestore();
 
        // FirebaseUI configuration
-       var uiConfig = {
+       const uiConfig = {
          callbacks: {
            signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-             window.location.assign('https://breed2.github.io/reminiscencecollection/signup/signin/index.html');
              return false;
            },
            uiShown: function() {
              document.getElementById('loader').style.display = 'none';
            }
          },
-         credentialHelper: firebaseui.auth.CredentialHelper.NONE,
          signInFlow: 'popup',
          signInOptions: [
            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-           firebase.auth.EmailAuthProvider.PROVIDER_ID,
+           firebase.auth.EmailAuthProvider.PROVIDER_ID
          ],
          tosUrl: 'your-tos-url',
-         privacyPolicyUrl: function() {
-           window.location.assign('your-privacy-policy-url');
-         }
+         privacyPolicyUrl: 'your-privacy-policy-url'
        };
 
-       // Initialize FirebaseUI Auth
-       var ui = new firebaseui.auth.AuthUI(firebase.auth());
+       const ui = new firebaseui.auth.AuthUI(firebase.auth());
        ui.start('#firebaseui-auth-container', uiConfig);
 
-       // Handling login form submission
-       var loginForm = document.getElementById('loginForm');
+       const loginForm = document.getElementById('loginForm');
        if (loginForm) {
          loginForm.addEventListener('submit', function(event) {
            event.preventDefault();
            const username = document.getElementById('username').value;
            const password = document.getElementById('password').value;
 
-           // Query Firestore for a document with the entered username
-           db.collection("users").where("username", "==", username).get().then((querySnapshot) => {
+           // Assume you have a collection 'users' where each document is a user with 'username' and 'email' fields
+           firebase.firestore().collection("users").where("username", "==", username).get()
+           .then((querySnapshot) => {
              if (!querySnapshot.empty) {
                querySnapshot.forEach((doc) => {
                  const userEmail = doc.data().email;
-
-                 // Sign in with the email associated with the username
                  firebase.auth().signInWithEmailAndPassword(userEmail, password)
-                   .then((userCredential) => {
-                     window.location.assign('https://breed2.github.io/reminiscencecollection/signup/signin/index.html');
-                   })
-                   .catch((error) => {
-                     alert(error.message);
-                   });
+                 .then(() => {
+                   window.location.assign('https://breed2.github.io/reminiscencecollection/signup/signin/index.html');
+                 })
+                 .catch((error) => {
+                   console.error("Authentication error:", error);
+                   alert("Please try again.");
+                 });
                });
              } else {
-               alert("Username not found.");
+               alert("Username not found or incorrect password.");
              }
            }).catch((error) => {
              console.error("Error finding user: ", error);
+             alert("Please try again.");
            });
          });
        }
@@ -398,44 +392,23 @@ Accessibility<i class="fa fa-caret-down"></i>
 
 
         <div id="main-content" class="content">
-          <!-- Login Form -->
-            <form id="loginForm">
-                <div>
-                  <label for="username">Username:</label>
-       <input type="text" id="username" required>
-                </div>
-                <div>
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" required>
-                    <!-- FirebaseUI Auth Container -->
-   <div id="firebaseui-auth-container"></div>
-   <div id="loader">Loading...</div>
-                </div>
-                <button type="submit">Login</button>
-            </form>
+          <h1>Login Form</h1>
+           <form id="loginForm">
+               <div>
+                   <label for="username">Username:</label>
+                   <input type="text" id="username" required>
+               </div>
+               <div>
+                   <label for="password">Password:</label>
+                   <input type="password" id="password" required>
+               </div>
+               <button type="submit">Login</button>
+           </form>
 
+           <div id="firebaseui-auth-container"></div>
+           <div id="loader">Loading...</div>
 
-          <p>Need an account? <a href="../signup/index.html">Signup</a></p>
-      </div>
-  </div>
-
-
-
-
-
-<!-- The Modal -->
-<div id="myModal" class="modal">
-  <span class="close">&times;</span>
-  <img class="modal-content" id="img01">
-  <div class="modal-footer">
-
-    <button id="zoomIn" class="zoom-btn">+</button>
-    <button id="zoomOut" class="zoom-btn">-</button>
-    <!-- The Download button is dynamic based on the image shown, so it's moved to JavaScript -->
-
-
-  </div>
-</div>
+           <p>Need an account? <a href="../signup/index.html">Signup</a></p>
 
 
 
