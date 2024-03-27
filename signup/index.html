@@ -80,6 +80,9 @@
      var ui = new firebaseui.auth.AuthUI(firebase.auth());
      ui.start('#firebaseui-auth-container', uiConfig);
 
+     // Initialize Cloud Firestore and get a reference to the service
+     var db = firebase.firestore();
+
      document.addEventListener('DOMContentLoaded', function() {
        const form = document.getElementById('myForm');
        form.addEventListener('submit', function(event) {
