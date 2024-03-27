@@ -86,20 +86,30 @@
        const password = document.getElementById('password').value;
 
        firebase.auth().createUserWithEmailAndPassword(email, password)
-         .then((userCredential) => {
-           var user = userCredential.user;
-           user.sendEmailVerification().then(function() {
-             alert("Verification email sent. Please check your inbox.");
-             firebase.auth().signOut();
-           }).catch(function(error) {
-             console.error(error);
-           });
-         })
-         .catch((error) => {
-           alert(error.message);
-         });
+     .then((userCredential) => {
+       // Sign-up successful.
+       var user = userCredential.user;
+       user.sendEmailVerification().then(function() {
+         alert("Verification email sent. Please check your inbox.");
+         firebase.auth().signOut();
+       }).catch(function(error) {
+         console.error(error);
+       });
+     })
+     .catch((error) => {
+       // Handle errors here.
+       var errorCode = error.code;
+       var errorMessage = error.message;
+
+       // Check if the email is already in use
+       if (errorCode === 'auth/email-already-in-use') {
+         alert("This email is already in use by another account.");
+       } else {
+         // Handle other errors
+         alert(errorMessage);
+       }
+       console.error(error);
      });
-   }
 
    firebase.auth().onAuthStateChanged(function(user) {
      var userDropdown = document.getElementById('userDropdown3');
@@ -117,7 +127,7 @@
        if (userButton) userButton.style.display = 'inline-block';
      }
    });
- });
+ 
 
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
