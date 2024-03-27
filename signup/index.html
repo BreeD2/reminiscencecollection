@@ -39,66 +39,33 @@
     measurementId: "G-PJ426H3WZN"
      };
      firebase.initializeApp(firebaseConfig);
-
-     var uiConfig = {
-       callbacks: {
-         signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-           return true;
-         },
-         signInFailure: function(error) {
-           console.error(error);
-           return handleUIError(error);
-         },
-         uiShown: function() {
-           document.getElementById('loader').style.display = 'none';
-         }
-       },
-       credentialHelper: firebaseui.auth.CredentialHelper.NONE,
-       signInFlow: 'popup',
-       signInSuccessUrl: 'https://breed2.github.io/reminiscencecollection//signup/signin/index.html',
-       signInOptions: [
-         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-         {
-           provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-           requireDisplayName: true
-         },
-         {
-           provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-           recaptchaParameters: {
-             type: 'image',
-             size: 'invisible',
-             badge: 'bottomleft'
-           }
-         },
-       ],
-       tosUrl: 'your-tos-url',
-       privacyPolicyUrl: function() {
-         window.location.assign('your-privacy-policy-url');
-       }
-     };
-
-     var ui = new firebaseui.auth.AuthUI(firebase.auth());
-     ui.start('#firebaseui-auth-container', uiConfig);
-
-     // Initialize Cloud Firestore and get a reference to the service
+     var auth = firebase.auth();
      var db = firebase.firestore();
 
      document.addEventListener('DOMContentLoaded', function() {
        const form = document.getElementById('myForm');
        form.addEventListener('submit', function(event) {
          event.preventDefault();
-         const formData = new FormData(form);
-         const data = {};
-         formData.forEach((value, key) => data[key] = value);
+         const email = document.getElementById('email').value;
+         const password = document.getElementById('password').value;
+         const username = document.getElementById('username').value; // Assume there's an input with id="username"
 
-         // Add a new document to Firestore
-         db.collection("reminiscencecollection").add(data)
-           .then((docRef) => {
-             console.log("Document written with ID: ", docRef.id);
-             // Handle successful document addition here
+         // First, create the user with email and password
+         auth.createUserWithEmailAndPassword(email, password)
+           .then((userCredential) => {
+             // User created successfully, now add the username to Firestore
+             const userId = userCredential.user.uid;
+             return db.collection("users").doc(userId).set({
+               username: username
+             });
+           })
+           .then(() => {
+             console.log("Username saved successfully");
+             // Here, you might want to redirect the user or clear the form
            })
            .catch((error) => {
-             console.error("Error adding document: ", error);
+             console.error("Error signing up or saving username:", error.message);
+             // Handle errors, for example, show an error message to the user
            });
        });
      });
