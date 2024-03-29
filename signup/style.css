@@ -4403,3 +4403,59 @@ form input[type="text"] {
   margin: 20px auto; /* Add some margin for spacing */
   /* You can add more styles for the loader here */
 }
+
+/* Basic styling for the form container */
+#signup-form {
+  max-width: 400px; /* Set a max-width for the form */
+  margin: 0 auto; /* Center the form horizontally */
+  padding: 20px; /* Add some padding around the form elements */
+  background-color: #f7f7f7; /* Light grey background */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */;
+  margin-top: 100px;
+  font-family: arial;
+}
+
+/* Styling for input fields to make them look more appealing */
+#signup-form input[type="text"],
+#signup-form input[type="email"],
+#signup-form input[type="password"] {
+  width: calc(100% - 20px); /* Full width minus padding */
+  padding: 10px; /* Add some padding inside the input fields */
+  margin-bottom: 15px; /* Add some space below each input */
+  border: 1px solid #ccc; /* A light border around each input */
+  border-radius: 4px; /* Slightly rounded corners for the inputs */;
+  font-family: arial;
+}
+
+/* Style for the phone number input to differentiate it (optional) */
+#signup-form input[type="text"]#phone {
+  border-color: #blue; /* Example to make phone input stand out */;
+  font-family: arial;
+}
+
+/* Basic styling for the sign up button */
+#signup-form button#signupBtn {
+  width: 100%; /* Make the button expand to the full width of the form */
+  padding: 10px; /* Add some padding to make the button taller */
+  background-color: #0056b3; /* A nice shade of blue */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-radius: 4px; /* Slightly rounded corners for the button */
+  cursor: pointer; /* Change mouse cursor to pointer when over the button */;
+  font-family: arial;
+}
+
+#signup-form button#signupBtn:hover {
+  background-color: #004494; /* Darken the button color on hover */
+}
+
+/* Style for the user-info div for when data is displayed */
+#user-info {
+  margin-top: 20px; /* Space it a bit from the form */
+  padding: 10px; /* Add padding */
+  background-color: #f0f0f0; /* Slightly different grey than the form for contrast */
+  border-radius: 4px; /* Rounded corners */
+  display: none; /* Hide it by default, show via JS when needed */;
+  font-family: arial;
+}

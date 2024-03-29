@@ -69,5 +69,30 @@
 
 <div id="user-info"></div>
 
+<div id="signupContainer">
+<h2>Signup</h2>
+<a href="thankyou/index.html">Sign in</a>
+<!-- Error message display area -->
+<div id="errorMessage" style="color: red;"></div>
+<form id="myForm">
+<div class="form-group">
+    <label for="email">Email:</label>
+    <input type="email" id="email" placeholder="Enter your email" name="email" required>
+</div>
+<div class="form-group">
+    <label for="username">Username:</label>
+    <input type="text" id="username" placeholder="Choose a username" name="username" required>
+</div>
+<div class="form-group">
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="Create a password" name="password" required>
+</div>
+
+<button type="submit" id="signupButton">Signup</button>
+</form>
+<p>Already have an account? <a href="..//login/index.html">Login</a></p>
+<div id="firebaseui-auth-container"></div>
+<div id="loader">Loading...</div>
+
 </body>
 </html>
