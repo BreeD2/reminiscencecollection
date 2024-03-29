@@ -29,6 +29,7 @@
     <!-- Firebase Config -->
     <script type="text/javascript">
       document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Firebase
         var firebaseConfig = {
           apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
           authDomain: "reminiscence-collection.firebaseapp.com",
@@ -40,8 +41,8 @@
           measurementId: "G-PJ426H3WZN"
         };
         firebase.initializeApp(firebaseConfig);
-        var db = firebase.firestore();
 
+        // FirebaseUI Configuration
         var uiConfig = {
           callbacks: {
             signInSuccessWithAuthResult: function(authResult, redirectUrl) {
@@ -74,51 +75,29 @@
             window.location.assign('your-privacy-policy-url');
           }
         };
-
         var ui = new firebaseui.auth.AuthUI(firebase.auth());
         ui.start('#firebaseui-auth-container', uiConfig);
+      });
 
-        var form = document.getElementById('myForm');
-        if (form) {
-          form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-              .then((userCredential) => {
-                userCredential.user.sendEmailVerification().then(function() {
-                  alert("Verification email sent. Please check your inbox.");
-                  firebase.auth().signOut();
-                });
-              })
-              .catch((error) => {
-                if (error.code === 'auth/email-already-in-use') {
-                  alert("This email is already in use by another account.");
-                } else {
-                  alert(error.message);
-                }
-              });
-          });
+      // Global Firebase Auth State Listener
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          const userName = user.displayName || user.email;
+          document.getElementById('userName').textContent = userName;
+          document.getElementById('loginLink').style.display = 'none';
+          document.getElementById('logoutLink').style.display = 'block';
+          document.getElementById('userDropdown').style.display = 'block';
+        } else {
+          document.getElementById('loginLink').style.display = 'block';
+          document.getElementById('logoutLink').style.display = 'none';
+          document.getElementById('userDropdown').style.display = 'none';
         }
-
-        firebase.auth().onAuthStateChanged(function(user) {
-          if (user) {
-            document.getElementById('userName').textContent = user.displayName || "User";
-            document.getElementById('userDropdown3').style.display = 'block';
-            document.getElementById('loginLink').style.display = 'none';
-            document.getElementById('userButton').style.display = 'none';
-          } else {
-            document.getElementById('userDropdown3').style.display = 'none';
-            document.getElementById('loginLink').style.display = 'block';
-            document.getElementById('userButton').style.display = 'inline-block';
-          }
-        });
       });
 
       function signOutUser() {
         firebase.auth().signOut().then(function() {
           console.log('User Logged Out!');
+          window.location.href = 'index.html';
         }).catch(function(error) {
           console.error('Sign Out Error', error);
         });
@@ -132,6 +111,7 @@
         });
       }
     </script>
+
 
 
 
@@ -163,18 +143,17 @@
      <button id="clearSearch" onclick="clearSearchFunction()">X</button>
        <!-- Other navigation items -->
 
-     <div class="dropdown2">
-       <button class="dropbtn2">
-         <i class="fa fa-user"></i> User
-         <i class="fa fa-caret-down"></i>
-       </button>
-       <div class="dropdown-content2">
-          <a href="index.html">Signup</a>
-         <a href="..//login/index.html"id="logoutLink">Login</a>
-         <a href="..//myprofile/index.html">My Profile</a>
-         <a href="..//logout/index.html"id="loginLink">Logout</a>
-       </div>
-     </div>
+       <div class="dropdown2">
+        <button class="dropbtn2">
+          <i class="fa fa-user"></i> User <i class="fa fa-caret-down"></i>
+        </button>
+        <div id="userDropdown" style="display: none;">
+      <button class="dropbtn">
+        <i class="fa fa-user"></i> <span id="userName">User</span> <i class="fa fa-caret-down"></i>
+      </button>
+      <!-- Dropdown content -->
+    </div>
+
      <div class="dropdown">
        <button class="dropbtn">
          <i class="fas fa-wheelchair"></i>
@@ -192,12 +171,16 @@ Accessibility<i class="fa fa-caret-down"></i>
          <button id="stopButton">Stop Reading</button>
        </div>
      </div>
-     <div class="dropdown3" id="userDropdown" style="display: none;">
-  <button class="dropbtn3">
-    <i class="fa fa-user"></i> <span id="userName">User</span>
-    <i class="fa fa-caret-down"></i>
-  </button>
-</div>
+     <div id="userDropdown" style="display: none;">
+       <button class="dropbtn">
+         <i class="fa fa-user"></i> <span id="userName1">User</span>
+         <i class="fa fa-caret-down"></i>
+       </button>
+       <!-- Your dropdown items here -->
+     </div>
+
+
+
 
      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
        <i class="fa fa-bars"></i>
@@ -441,7 +424,7 @@ Accessibility<i class="fa fa-caret-down"></i>
 
     <div class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display:none;width:200px;" id="mySidebar">
         <button onclick="toggleSidebar()" class="w3-bar-item w3-button w3-large">Close &times;</button>
-        <!-- Add your sidebar content here -->
+
     </div>
 
 
