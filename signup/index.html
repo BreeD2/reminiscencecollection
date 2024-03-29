@@ -127,37 +127,38 @@
 <body>
 
   <div class="read-aloud">
-  <!-- Navigation Bar with Logo and Website Name -->
-  <div class="topnav" id="myTopnav">
-    <a href="..//index.html" class="logo">
-      <img src="..//rpa.png" alt="Reminiscence Collection" style="height: 23px;">&ensp;<span class="title-text">Reminiscence&ensp;Collection</span>
+   <!-- Navigation Bar with Logo and Website Name -->
+   <div class="topnav" id="myTopnav">
+     <a href="..//index.html" class="logo">
+       <img src="..//rpa.png" alt="Reminiscence Collection" style="height: 23px;">&ensp;<span class="title-text">Reminiscence&ensp;Collection</span>
 
- </a>
- <a href="..//index.html" class="active">Home</a>
-     <a href="..//games/index.html">Games</a>
-     <a href="..//about/index.html">About</a>
-     <a href="..//contact/index.html">Contact</a>
-     <!-- Accessibility Button and Dropdown -->
-     <!-- User Information Dropdown -->
-     <input type="text" id="searchInput2" placeholder="Search.." onkeyup="searchFunction()">
-     <button id="clearSearch" onclick="clearSearchFunction()">X</button>
-       <!-- Other navigation items -->
+  </a>
+  <a href="..//index.html" class="active">Home</a>
+      <a href="..//games/index.html">Games</a>
+      <a href="..//about/index.html">About</a>
+      <a href="..//contact/index.html">Contact</a>
+      <!-- Accessibility Button and Dropdown -->
+      <!-- User Information Dropdown -->
+      <input type="text" id="searchInput2" placeholder="Search.." onkeyup="searchFunction()">
+      <button id="clearSearch" onclick="clearSearchFunction()">X</button>
+        <!-- Other navigation items -->
 
-       <div class="dropdown2">
+      <div class="dropdown2">
         <button class="dropbtn2">
-          <i class="fa fa-user"></i> User <i class="fa fa-caret-down"></i>
+          <i class="fa fa-user"></i> User
+          <i class="fa fa-caret-down"></i>
         </button>
-        <div id="userDropdown" style="display: none;">
-      <button class="dropbtn">
-        <i class="fa fa-user"></i> <span id="userName">User</span> <i class="fa fa-caret-down"></i>
-      </button>
-      <!-- Dropdown content -->
-    </div>
-
-     <div class="dropdown">
-       <button class="dropbtn">
-         <i class="fas fa-wheelchair"></i>
-Accessibility<i class="fa fa-caret-down"></i>
+        <div class="dropdown-content2">
+          <a href="index.html" id="signupLink">Signup</a>
+       <a href="../login/index.html" id="loginLink">Login</a>
+       <a href="..//logoout/index.html" id="logoutLink" style="display: none;" onclick="signOutUser()">Logout</a>
+     </div>
+        
+      </div>
+      <div class="dropdown">
+        <button class="dropbtn">
+          <i class="fas fa-wheelchair"></i>
+ Accessibility<i class="fa fa-caret-down"></i>
 
        </button>
        <div class="dropdown-content">
