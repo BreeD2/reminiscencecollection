@@ -45,6 +45,10 @@
             .catch((error) => {
                 document.getElementById("user-info").innerHTML = "Error signing up: " + error.message;
             });
+            // Add the event listener to your button
+   document.addEventListener('DOMContentLoaded', (event) => {
+       document.getElementById('signupBtn').addEventListener('click', signup);
+   });
       }
     </script>
 </head>
@@ -55,7 +59,8 @@
     <input type="email" id="email" placeholder="Email">
     <input type="password" id="password" placeholder="Password">
     <input type="text" id="phone" placeholder="Phone Number">
-    <button onclick="signup()">Sign Up</button>
+    <button id="signupBtn">Sign Up</button>
+
 </div>
 
 <div id="user-info"></div>
