@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup and Display User Info</title>
     <script type="module">
+      // Import Firebase modules
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
       import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
       import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
+      // Firebase configuration
       const firebaseConfig = {
         apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
         authDomain: "reminiscence-collection.firebaseapp.com",
@@ -20,36 +22,36 @@
         measurementId: "G-PJ426H3WZN"
       };
 
+      // Initialize Firebase
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
       const db = getFirestore(app);
 
-      function signup() {
+      // Signup function
+      async function signup() {
         const username = document.getElementById("username").value;
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
         const phone = document.getElementById("phone").value;
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                return setDoc(doc(db, "users", user.uid), {
-                    username: username,
-                    email: email,
-                    phone: phone
-                });
-            })
-            .then(() => {
-                document.getElementById("user-info").innerHTML = "Signup successful. User information saved in Firestore.";
-            })
-            .catch((error) => {
-                document.getElementById("user-info").innerHTML = "Error signing up: " + error.message;
-            });
-            // Add the event listener to your button
-   document.addEventListener('DOMContentLoaded', (event) => {
-       document.getElementById('signupBtn').addEventListener('click', signup);
-   });
+        try {
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+          await setDoc(doc(db, "users", user.uid), {
+            username: username,
+            email: email,
+            phone: phone
+          });
+          document.getElementById("user-info").innerHTML = "Signup successful. User information saved in Firestore.";
+        } catch (error) {
+          document.getElementById("user-info").innerHTML = "Error signing up: " + error.message;
+        }
       }
+
+      // Add the event listener to the signup button
+      window.addEventListener('DOMContentLoaded', (event) => {
+        document.getElementById('signupBtn').addEventListener('click', signup);
+      });
     </script>
 </head>
 <body>
@@ -60,7 +62,6 @@
     <input type="password" id="password" placeholder="Password">
     <input type="text" id="phone" placeholder="Phone Number">
     <button id="signupBtn">Sign Up</button>
-
 </div>
 
 <div id="user-info"></div>
