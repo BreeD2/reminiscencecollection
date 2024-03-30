@@ -61,21 +61,17 @@
             phone: phone
           });
           await sendEmailVerification(userCredential.user);
-          // Display success message
-          document.getElementById("user-info").textContent = "Signup successful. Please check your email for verification. Redirecting...";
-
-          // Redirect after 3 seconds
-          setTimeout(() => {
-            window.location.href = 'create-account.html';
-          }, 3000); // 3000 milliseconds = 3 seconds
-
+          document.getElementById("user-info").innerHTML = "Signup successful. Please check your email for verification.";
         } catch (error) {
           let errorMessage = "Error signing up: " + error.message;
-          document.getElementById("user-info").textContent = errorMessage;
+          if (error.code === 'auth/email-already-in-use') {
+            errorMessage += ` <a href="..//login//index.html">Log in</a> or <a href="../../forgot/index.html">forgot your password?</a>`;
+          }
+          document.getElementById("user-info").innerHTML = errorMessage;
         }
       }
 
-      window.addEventListener('DOMContentLoaded', () => {
+      document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('signupBtn').addEventListener('click', signup);
       });
     </script>
