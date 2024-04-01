@@ -1,6 +1,5 @@
 <html lang="en">
 <head>
-  <meta name="google-site-verification" content="54n2hnmzlk6xb4DTZIXmq0v7PKN_QJBvH-1CSaysUT8" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
@@ -16,6 +15,8 @@
     <center>
 
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta charset="UTF-8">
 <link rel="stylesheet"href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
@@ -61,17 +62,21 @@
             phone: phone
           });
           await sendEmailVerification(userCredential.user);
-          document.getElementById("user-info").innerHTML = "Signup successful. Please check your email for verification.";
+          // Display success message
+          document.getElementById("user-info").textContent = "Signup successful. Please check your email for verification. Redirecting...";
+
+          // Redirect after 3 seconds
+          setTimeout(() => {
+            window.location.href = 'create-account.html';
+          }, 3000); // 3000 milliseconds = 3 seconds
+
         } catch (error) {
           let errorMessage = "Error signing up: " + error.message;
-          if (error.code === 'auth/email-already-in-use') {
-            errorMessage += ` <a href="..//login//index.html">Log in</a> or <a href="../../forgot/index.html">forgot your password?</a>`;
-          }
-          document.getElementById("user-info").innerHTML = errorMessage;
+          document.getElementById("user-info").textContent = errorMessage;
         }
       }
 
-      document.addEventListener('DOMContentLoaded', () => {
+      window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('signupBtn').addEventListener('click', signup);
       });
     </script>
