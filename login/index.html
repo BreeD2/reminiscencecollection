@@ -23,79 +23,68 @@
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
-     <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
-     <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
-     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
-     <script type="text/javascript">
-     document.addEventListener('DOMContentLoaded', function() {
-       var firebaseConfig = {
-         apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
-         authDomain: "reminiscence-collection.firebaseapp.com",
-         databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
-         projectId: "reminiscence-collection",
-         storageBucket: "reminiscence-collection.appspot.com",
-         messagingSenderId: "974064770925",
-         appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
-         measurementId: "G-PJ426H3WZN"
-       };
-       // Initialize Firebase
-       firebase.initializeApp(firebaseConfig);
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
+    <!-- Firebase Config -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+      import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+      import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
-       // FirebaseUI configuration
-       const uiConfig = {
-         callbacks: {
-           signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-             return false;
-           },
-           uiShown: function() {
-             document.getElementById('loader').style.display = 'none';
-           }
-         },
-         signInFlow: 'popup',
-         signInOptions: [
-           firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-           firebase.auth.EmailAuthProvider.PROVIDER_ID
-         ],
-         tosUrl: 'your-tos-url',
-         privacyPolicyUrl: 'your-privacy-policy-url'
-       };
+    // Firebase configuration (replace with your Firebase project's config object)
+    const firebaseConfig = {
+      apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+      authDomain: "reminiscence-collection.firebaseapp.com",
+      databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+      projectId: "reminiscence-collection",
+      storageBucket: "reminiscence-collection.appspot.com",
+      messagingSenderId: "974064770925",
+      appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+      measurementId: "G-PJ426H3WZN"
+    };
 
-       const ui = new firebaseui.auth.AuthUI(firebase.auth());
-       ui.start('#firebaseui-auth-container', uiConfig);
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-       const loginForm = document.getElementById('loginForm');
-       if (loginForm) {
-         loginForm.addEventListener('submit', function(event) {
-           event.preventDefault();
-           const username = document.getElementById('username').value;
-           const password = document.getElementById('password').value;
+    // Email and Password Login
+    document.getElementById('loginBtn').addEventListener('click', async (event) => {
+        event.preventDefault(); // Prevent default form submission
 
-           // Assume you have a collection 'users' where each document is a user with 'username' and 'email' fields
-           firebase.firestore().collection("users").where("username", "==", username).get()
-           .then((querySnapshot) => {
-             if (!querySnapshot.empty) {
-               querySnapshot.forEach((doc) => {
-                 const userEmail = doc.data().email;
-                 firebase.auth().signInWithEmailAndPassword(userEmail, password)
-                 .then(() => {
-                   window.location.assign('https://breed2.github.io/reminiscencecollection/signup/signin/index.html');
-                 })
-                 .catch((error) => {
-                   console.error("Authentication error:", error);
-                   alert("Please try again.");
-                 });
-               });
-             } else {
-               alert("Username not found or incorrect password.");
-             }
-           }).catch((error) => {
-             console.error("Error finding user: ", error);
-             alert("Please try again.");
-           });
-         });
-       }
-     });
-     </script>
+        const email = document.getElementById("login-email").value;
+        const password = document.getElementById("login-password").value;
+
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            console.log("Logged in user:", userCredential.user);
+            // Redirect to your desired page after successful login
+            window.location.href = '/home'; // Change '/home' to your desired path
+        } catch (error) {
+            document.getElementById("login-error").textContent = error.message;
+            console.error("Login error:", error);
+        }
+    });
+
+    // Google Sign-In
+    const googleProvider = new GoogleAuthProvider();
+    document.getElementById('googleSignInBtn').addEventListener('click', () => {
+        signInWithPopup(auth, googleProvider)
+        .then((result) => {
+            // This gives you a Google Access Token. You can use it to access Google APIs.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            // Redirect to your desired page after successful login
+            window.location.href = '/home'; // Change '/home' to your desired path
+        }).catch((error) => {
+            document.getElementById("login-error").textContent = error.message;
+            console.error("Google sign-in error:", error);
+        });
+    });
+    </script>
+
      </head>
 
   <div class="read-aloud">
