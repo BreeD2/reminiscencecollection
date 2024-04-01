@@ -34,7 +34,7 @@
       import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
       const firebaseConfig = {
-        apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+        apiKey: "key",
         authDomain: "reminiscence-collection.firebaseapp.com",
         databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
         projectId: "reminiscence-collection",
@@ -44,42 +44,86 @@
         measurementId: "G-PJ426H3WZN"
       };
 
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getFirestore(app);
+          // Initialize Firebase
+          const app = initializeApp(firebaseConfig);
+          const auth = getAuth(app);
+          const db = getFirestore(app);
 
-      async function signup() {
-        const username = document.getElementById("username").value;
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        const phone = document.getElementById("phone").value;
-
-        try {
-          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-          await setDoc(doc(db, "users", userCredential.user.uid), {
-            username: username,
-            email: email,
-            phone: phone
+          // Real-time validation for email
+          document.getElementById('email').addEventListener('input', function(e) {
+              const emailInput = e.target;
+              const emailError = document.getElementById('email-error');
+              const regex = /\S+@\S+\.\S+/;
+              if (!regex.test(emailInput.value)) {
+                  emailError.textContent = "Please enter a valid email address.";
+              } else {
+                  emailError.textContent = "";
+              }
           });
-          await sendEmailVerification(userCredential.user);
-          // Display success message
-          document.getElementById("user-info").textContent = "Signup successful. Please check your email for verification. Redirecting...";
 
-          // Redirect after 3 seconds
-          setTimeout(() => {
-            window.location.href = 'create-account.html';
-          }, 3000); // 3000 milliseconds = 3 seconds
+          // Real-time validation for password
+          document.getElementById('password').addEventListener('input', function(e) {
+              const passwordInput = e.target;
+              const passwordError = document.getElementById('password-error');
+              if (passwordInput.value.length < 8) {
+                  passwordError.textContent = "Password must be at least 8 characters long.";
+              } else {
+                  passwordError.textContent = "";
+              }
+          });
 
-        } catch (error) {
-          let errorMessage = "Error signing up: " + error.message;
-          document.getElementById("user-info").textContent = errorMessage;
-        }
-      }
+          // Signup function
+          async function signup() {
+              // UI feedback for loading state
+              document.getElementById('loading-indicator').style.display = 'block';
+              document.getElementById('signupBtn').disabled = true;
 
-      window.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('signupBtn').addEventListener('click', signup);
-      });
-    </script>
+              // Collect form data
+              const username = document.getElementById("username").value;
+              const email = document.getElementById("email").value;
+              const password = document.getElementById("password").value;
+              const phone = document.getElementById("phone").value;
+
+              try {
+                  // Check if username is taken
+                  const usernameTaken = await isUsernameTaken(username);
+                  if (usernameTaken) {
+                      throw new Error('Username is already taken. Please choose another.');
+                  }
+
+                  // Create user account
+                  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+                  // Store additional user details in Firestore
+                  await setDoc(doc(db, "users", userCredential.user.uid), {
+                      username,
+                      email,
+                      phone
+                  });
+
+                  // Verify email and give user feedback
+                  await sendEmailVerification(userCredential.user);
+                  document.getElementById("user-info").textContent = "Signup successful. Please check your email for verification. Redirecting...";
+
+                  // Redirect user
+                  setTimeout(() => {
+                      window.location.href = 'createaccount/index.html'; // Adjust as needed
+                  }, 3000);
+              } catch (error) {
+                  document.getElementById("user-info").textContent = error.message;
+              } finally {
+                  // Reset UI feedback
+                  document.getElementById('loading-indicator').style.display = 'none';
+                  document.getElementById('signupBtn').disabled = false;
+              }
+          }
+
+
+          window.addEventListener('DOMContentLoaded', () => {
+              document.getElementById('signupBtn').addEventListener('click', signup);
+          });
+      </script>
+
 
 
 
@@ -226,9 +270,15 @@
             <div id="signup-form">
                 <input type="text" id="username" placeholder="Username" required>
                 <input type="email" id="email" placeholder="Email" required>
-                <input type="password" id="password" placeholder="Password" required>
+<div id="email-error" style="color: red;"></div>
+
+<input type="password" id="password" placeholder="Password" required>
+<div id="password-error" style="color: red;"></div>
+
                 <input type="text" id="phone" placeholder="Phone Number">
-                <button id="signupBtn">Sign Up</button>
+                <div id="loading-indicator" style="display: none;">Signing up...</div>
+  <button id="signupBtn">Sign Up</button>
+
                 <!-- Link to the login page -->
 <p>Already have an account? <a href="..//login/index.html">Log in here</a></p>
             </div>
@@ -241,6 +291,53 @@
 <div class="footer">
   <div class="copy">Copyright &copy; 2024 Reminiscence Collection. All rights reserved.</div>
 </div>
+<script>
+document.getElementById('email').addEventListener('input', function(e) {
+    const emailInput = e.target;
+    const emailError = document.getElementById('email-error');
+    // Simple regex for basic email validation
+    const regex = /\S+@\S+\.\S+/;
+    if (!regex.test(emailInput.value)) {
+        emailError.textContent = "Please enter a valid email address.";
+    } else {
+        emailError.textContent = ""; // Clear error message
+    }
+});
+</script>
+<script>
+document.getElementById('password').addEventListener('input', function(e) {
+    const passwordInput = e.target;
+    const passwordError = document.getElementById('password-error');
+    // Example check: length greater than 8
+    if (passwordInput.value.length < 8) {
+        passwordError.textContent = "Password must be at least 8 characters long.";
+    } else {
+        passwordError.textContent = ""; // Clear error message
+    }
+});
+
+</script>
+<script>
+async function signup() {
+    // Show loading indicator and disable signup button
+    document.getElementById('loading-indicator').style.display = 'block';
+    document.getElementById('signupBtn').disabled = true;
+
+    try {
+        // Your signup logic here
+        // ...
+        // Hide loading indicator and enable button upon success
+        document.getElementById('loading-indicator').style.display = 'none';
+        document.getElementById('signupBtn').disabled = false;
+        // Redirect or show success message
+    } catch (error) {
+        // Hide loading indicator and enable button upon failure
+        document.getElementById('loading-indicator').style.display = 'none';
+        document.getElementById('signupBtn').disabled = false;
+        // Show error message
+    }
+}
+</script>
 
 <script>
   // Corrected Categories Data
