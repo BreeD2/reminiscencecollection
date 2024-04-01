@@ -321,8 +321,16 @@
           <!-- Add your sidebar content here -->
       </div>
 
-    <h1>Welcome to Your Dashboard</h1>
-    <p id="userInfo">Loading user information...</p>
+      <h1>Welcome to Your Dashboard</h1>
+          <div id="userProfile">
+              <h2>User Profile</h2>
+              <div><strong>Username:</strong> <input type="text" id="usernameInput" placeholder="Username"></div>
+              <div><strong>Email:</strong> <span id="emailDisplay"></span></div>
+              <div><strong>Description:</strong> <input type="text" id="descriptionInput" placeholder="Description"></div>
+              <div><strong>Profile Picture:</strong> <img id="profilePicture" src="" alt="Profile Picture" style="width: 100px; height: 100px;"></div>
+              <!-- Add more profile fields as necessary -->
+          </div>
+
     <button id="logoutBtn">Log Out</button>
 
     <div class="footer">
@@ -4109,16 +4117,20 @@
         };
 
         // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
 
         auth.onAuthStateChanged(user => {
             if (user) {
                 // User is signed in.
                 updateNavbarWithUserInfo(user);
+                fetchAndUpdateUserProfile(user);
             } else {
                 // No user is signed in.
                 resetNavbar();
+                window.location.href = 'login.html'; // Redirect to login page
             }
         });
 
@@ -4132,7 +4144,28 @@
             userNameDisplay.innerHTML = `<i class="fa fa-user"></i> User <i class="fa fa-caret-down"></i>`;
         }
 
-        // Initialize the FirebaseUI Widget
+        function fetchAndUpdateUserProfile(user) {
+            db.collection("users").doc(user.uid).get().then((doc) => {
+                if (doc.exists) {
+                    // Assuming there are input fields with IDs: usernameInput, descriptionInput
+                    document.getElementById("usernameInput").value = doc.data().username;
+                    document.getElementById("descriptionInput").value = doc.data().description;
+                    // For profile picture, assuming there's an img tag with ID: profilePicture
+                    storage.ref(`profilePictures/${user.uid}`).getDownloadURL()
+                        .then((url) => {
+                            document.getElementById("profilePicture").src = url;
+                        }).catch((error) => {
+                            console.error("Error loading profile picture:", error);
+                        });
+                } else {
+                    console.log("No user profile found in Firestore");
+                }
+            }).catch((error) => {
+                console.error("Error fetching user profile:", error);
+            });
+        }
+
+        // Initialize the FirebaseUI Widget using Firebase
         const ui = new firebaseui.auth.AuthUI(auth);
 
         // FirebaseUI configuration
@@ -4141,17 +4174,17 @@
                 signInSuccessWithAuthResult: function(authResult, redirectUrl) {
                     // User successfully signed in
                     updateNavbarWithUserInfo(authResult.user);
-                    // Redirect to the dashboard page
-                    window.location.href = 'dashboard/index.html';
-                    return false;
+                    fetchAndUpdateUserProfile(authResult.user);
+                    window.location.href = 'dashboard/index.html'; // Redirect to dashboard
+                    return false; // Avoids redirecting back to the login page
                 },
                 signInFailure: function(error) {
                     // Handle sign-in errors
-                    alert(error.message);
+                    console.error("Sign-in error:", error);
+                    alert('Sign-in error. Please try again.');
                     return Promise.resolve();
                 },
                 uiShown: function() {
-                    // Hide the loader once FirebaseUI is loaded
                     document.getElementById('loader').style.display = 'none';
                 }
             },
@@ -4169,6 +4202,8 @@
         // Start the FirebaseUI widget
         ui.start('#firebaseui-auth-container', uiConfig);
     </script>
+
+
 
 </body>
 </html>
