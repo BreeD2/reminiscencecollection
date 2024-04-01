@@ -322,32 +322,16 @@
       </div>
 
       <h1>Welcome to Your Dashboard</h1>
-      <div id="userProfile">
-          <h2>User Profile</h2>
-          <form id="updateProfileForm">
-              <div>
-                  <strong>Username:</strong>
-                  <input type="text" id="usernameInput" placeholder="Username">
-              </div>
-              <div>
-                  <strong>Email:</strong>
-                  <span id="emailDisplay"></span>
-              </div>
-              <div>
-                  <strong>Description:</strong>
-                  <input type="text" id="descriptionInput" placeholder="Description">
-              </div>
-              <div>
-                  <strong>Profile Picture:</strong>
-                  <img id="profilePicture" src="" alt="Profile Picture" style="width: 100px; height: 100px;">
-                  <input type="file" id="profilePictureInput">
-              </div>
-              <button type="submit">Update Profile</button>
-          </form>
-      </div>
+          <div id="userProfile">
+              <h2>User Profile</h2>
+              <div><strong>Username:</strong> <input type="text" id="usernameInput" placeholder="Username"></div>
+              <div><strong>Email:</strong> <span id="emailDisplay"></span></div>
+              <div><strong>Description:</strong> <input type="text" id="descriptionInput" placeholder="Description"></div>
+              <div><strong>Profile Picture:</strong> <img id="profilePicture" src="" alt="Profile Picture" style="width: 100px; height: 100px;"></div>
+              <!-- Add more profile fields as necessary -->
+          </div>
 
-      <button id="logoutBtn">Log Out</button>
-
+    <button id="logoutBtn">Log Out</button>
 
     <div class="footer">
       <div class="copy">Copyright &copy; 2024 Reminiscence Collection. All rights reserved.</div>
@@ -4146,7 +4130,6 @@
             } else {
                 // No user is signed in.
                 resetNavbar();
-                window.location.href = 'login.html'; // Redirect to login page
             }
         });
 
@@ -4181,7 +4164,7 @@
             });
         }
 
-        // Initialize the FirebaseUI Widget using Firebase
+        // Initialize the FirebaseUI Widget
         const ui = new firebaseui.auth.AuthUI(auth);
 
         // FirebaseUI configuration
@@ -4191,16 +4174,22 @@
                     // User successfully signed in
                     updateNavbarWithUserInfo(authResult.user);
                     fetchAndUpdateUserProfile(authResult.user);
-                    window.location.href = 'dashboard/index.html'; // Redirect to dashboard
-                    return false; // Avoids redirecting back to the login page
+                    // Redirect to the dashboard page
+                    window.location.href = 'dashboard/index.html';
+                    return false;
                 },
                 signInFailure: function(error) {
                     // Handle sign-in errors
                     console.error("Sign-in error:", error);
-                    alert('Sign-in error. Please try again.');
+                    if (error.code === 'auth/wrong-password') {
+                        alert('The password is incorrect. Please try again.');
+                    } else {
+                        alert('Sign-in error. Please try again.');
+                    }
                     return Promise.resolve();
                 },
                 uiShown: function() {
+                    // Hide the loader once FirebaseUI is loaded
                     document.getElementById('loader').style.display = 'none';
                 }
             },
@@ -4218,7 +4207,6 @@
         // Start the FirebaseUI widget
         ui.start('#firebaseui-auth-container', uiConfig);
     </script>
-
 
 
 </body>
