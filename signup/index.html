@@ -91,7 +91,7 @@
                   phone
               });
               await sendEmailVerification(userCredential.user);
-              document.getElementById("user-info").innerHTML = "Signup successful. Please check your email for verification. <a href='signin.html'>Sign in</a>";
+              document.getElementById("user-info").innerHTML = "Signup successful. Please check your email for verification. <a href='signin/index.html'>Sign in</a>";
               setTimeout(() => {
                   window.location.href = 'createaccount/index.html';
               }, 3000);
@@ -99,7 +99,7 @@
               console.error("Signup error:", error);
               let errorMessage = "An error occurred during signup. Please try again.";
               if (error.code === 'auth/email-already-in-use') {
-                  errorMessage = `This email is already in use. <a href='login.html'>Log in</a> or <a href='reset-password.html'>reset your password</a>.`;
+                  errorMessage = `This email is already in use. <a href='login/index.html'>Log in</a> or <a href='resetpassword/index.html'>reset your password</a>.`;
               } else if (error.code === 'auth/weak-password') {
                   errorMessage = "The password is too weak. Please use a stronger password.";
               }
