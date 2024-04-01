@@ -22,67 +22,62 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
-    <!-- Firebase Config -->
+    <!-- Firebase App (core) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <!-- Firebase Auth -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
     <script type="module">
+      // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-      import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-      import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+      import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
 
-    // Firebase configuration (replace with your Firebase project's config object)
-    const firebaseConfig = {
-      apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
-      authDomain: "reminiscence-collection.firebaseapp.com",
-      databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
-      projectId: "reminiscence-collection",
-      storageBucket: "reminiscence-collection.appspot.com",
-      messagingSenderId: "974064770925",
-      appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
-      measurementId: "G-PJ426H3WZN"
-    };
+      // Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+        authDomain: "reminiscence-collection.firebaseapp.com",
+        databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+        projectId: "reminiscence-collection",
+        storageBucket: "reminiscence-collection.appspot.com",
+        messagingSenderId: "974064770925",
+        appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+        measurementId: "G-PJ426H3WZN"
+      };
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
 
-    // Email and Password Login
-    document.getElementById('loginBtn').addEventListener('click', async (event) => {
-        event.preventDefault(); // Prevent default form submission
-
-        const email = document.getElementById("login-email").value;
-        const password = document.getElementById("login-password").value;
-
+      document.getElementById('loginBtn').addEventListener('click', async () => {
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
         try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            console.log("Logged in user:", userCredential.user);
-            // Redirect to your desired page after successful login
-            window.location.href = '/home'; // Change '/home' to your desired path
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          console.log("Logged in user:", userCredential.user);
+          // Redirect to your desired page after successful login
+          window.location.href = '/home'; // Change '/home' to your desired path
         } catch (error) {
-            document.getElementById("login-error").textContent = error.message;
-            console.error("Login error:", error);
+          document.getElementById("login-error").textContent = error.message;
+          console.error("Login error:", error);
         }
-    });
+      });
 
-    // Google Sign-In
-    const googleProvider = new GoogleAuthProvider();
-    document.getElementById('googleSignInBtn').addEventListener('click', () => {
+      // Google Sign-In
+      const googleProvider = new GoogleAuthProvider();
+      document.getElementById('googleSignInBtn').addEventListener('click', () => {
         signInWithPopup(auth, googleProvider)
         .then((result) => {
-            // This gives you a Google Access Token. You can use it to access Google APIs.
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
-            // The signed-in user info.
-            const user = result.user;
-            // Redirect to your desired page after successful login
-            window.location.href = '/home'; // Change '/home' to your desired path
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          const token = credential.accessToken;
+          // The signed-in user info.
+          const user = result.user;
+          // Redirect to your desired page after successful login
+          window.location.href = '/home'; // Change '/home' to your desired path
         }).catch((error) => {
-            document.getElementById("login-error").textContent = error.message;
-            console.error("Google sign-in error:", error);
+          document.getElementById("login-error").textContent = error.message;
+          console.error("Google sign-in error:", error);
         });
-    });
+      });
     </script>
 
      </head>
@@ -382,69 +377,31 @@ Accessibility<i class="fa fa-caret-down"></i>
 
         <div id="main-content" class="content">
           <h1>Login Form</h1>
-           <form id="loginForm">
-               <div>
-                   <label for="username">Username:</label>
-                   <input type="text" id="username" required>
-               </div>
-               <div>
-                   <label for="password">Password:</label>
-                   <input type="password" id="password" required>
-               </div>
-               <button type="submit">Login</button>
-           </form>
+          <form id="loginForm">
+              <div>
+                  <label for="login-email">Email:</label>
+                  <input type="email" id="login-email" required>
+              </div>
+              <div>
+                  <label for="login-password">Password:</label>
+                  <input type="password" id="login-password" required>
+              </div>
+              <button id="loginBtn" type="button">Login</button> <!-- Changed type to "button" to prevent form submission -->
+          </form>
 
-           <div id="firebaseui-auth-container"></div>
-           <div id="loader">Loading...</div>
+          <button id="googleSignInBtn">Sign in with Google</button>
 
-           <p>Need an account? <a href="../signup/index.html">Signup</a></p>
+          <div id="loader" style="display: none;">Loading...</div>
+          <div id="login-error" style="color: red;"></div> <!-- For displaying login errors -->
 
+          <p>Need an account? <a href="../signup/index.html">Signup</a></p>
 
 
 <div class="footer">
   <div class="copy">Copyright &copy; 2024 Reminiscence Collection. All rights reserved.</div>
 </div>
 
-<script>
 
-  var email="someone@example.com";
-  var password="password";
-
-  //Sign In User with Email and Password
-  firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    console.log(errorCode);
-    console.log(errorMessage);
-});
-
-
-</script>
-
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-  const options = ["All Games", "Publisher", "Developer", "Series", "Platform", "Released Dates", "Genre", "Mode"];
-  const optionsContainer = document.querySelector('.options-container');
-  const selectedOption = document.querySelector('.selected-option');
-
-  options.forEach(option => {
-    const div = document.createElement('div');
-    div.textContent = option;
-    div.classList.add('option');
-    div.onclick = function() {
-      selectedOption.textContent = option;
-      optionsContainer.classList.add('hidden');
-    };
-    optionsContainer.appendChild(div);
-  });
-
-  selectedOption.onclick = function() {
-    optionsContainer.classList.toggle('hidden');
-  };
-});
-</script>
 
 <script>
   // Corrected Categories Data
