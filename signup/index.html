@@ -60,7 +60,6 @@
 
       document.getElementById('signupBtn').addEventListener('click', async (event) => {
           event.preventDefault(); // Prevent form from submitting normally
-          console.log("Signup button clicked");
 
           const username = document.getElementById("username").value;
           const email = document.getElementById("email").value;
@@ -92,7 +91,7 @@
                   phone
               });
               await sendEmailVerification(userCredential.user);
-              document.getElementById("user-info").textContent = "Signup successful. Please check your email for verification.";
+              document.getElementById("user-info").innerHTML = "Signup successful. Please check your email for verification. <a href='signin.html'>Sign in</a>";
               setTimeout(() => {
                   window.location.href = 'createaccount/index.html';
               }, 3000);
@@ -100,17 +99,18 @@
               console.error("Signup error:", error);
               let errorMessage = "An error occurred during signup. Please try again.";
               if (error.code === 'auth/email-already-in-use') {
-                  errorMessage = "This email is already in use. Please log in or reset your password.";
+                  errorMessage = `This email is already in use. <a href='login.html'>Log in</a> or <a href='reset-password.html'>reset your password</a>.`;
               } else if (error.code === 'auth/weak-password') {
                   errorMessage = "The password is too weak. Please use a stronger password.";
               }
-              document.getElementById("user-info").textContent = errorMessage;
+              document.getElementById("user-info").innerHTML = errorMessage; // Note: Using innerHTML to include HTML links
           } finally {
               document.getElementById('loading-indicator').style.display = 'none';
               document.getElementById('signupBtn').disabled = false;
           }
       });
     </script>
+
 
 
 
