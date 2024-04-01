@@ -28,62 +28,80 @@
     <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
     <script>
-           const firebaseConfig = {
-               apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
-               authDomain: "reminiscence-collection.firebaseapp.com",
-               databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
-               projectId: "reminiscence-collection",
-               storageBucket: "reminiscence-collection.appspot.com",
-               messagingSenderId: "974064770925",
-               appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
-               measurementId: "G-PJ426H3WZN"
-           };
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+        authDomain: "reminiscence-collection.firebaseapp.com",
+        databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+        projectId: "reminiscence-collection",
+        storageBucket: "reminiscence-collection.appspot.com",
+        messagingSenderId: "974064770925",
+        appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+        measurementId: "G-PJ426H3WZN"
+    };
 
-           firebase.initializeApp(firebaseConfig);
-           const auth = firebase.auth();
+    // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
 
-           document.getElementById('loginBtn').addEventListener('click', async () => {
-               const credential = document.getElementById('login-credential').value;
-               const password = document.getElementById('login-password').value;
-               try {
-                   let userCredential;
-                   if (credential.includes('@')) { // Email login
-                       userCredential = await auth.signInWithEmailAndPassword(credential, password);
-                   } else { // TODO: Phone login logic
-                       console.log('Phone login not yet implemented');
-                       return;
-                   }
-                   console.log('Login successful:', userCredential.user);
-                   // Redirect or update UI
-               } catch (error) {
-                   console.error('Login error:', error);
-                   document.getElementById('login-error').textContent = error.message;
-                   if (error.code === 'auth/wrong-password') {
-                       document.getElementById('login-error').textContent = 'Incorrect password. Please try again.';
-                   } else if (error.code === 'auth/user-not-found') {
-                       document.getElementById('login-error').textContent = 'No account found with this email. Please sign up.';
-                   }
-               }
-           });
+        // Initialize the FirebaseUI Widget using Firebase
+        const ui = new firebaseui.auth.AuthUI(auth);
 
-           auth.onAuthStateChanged((user) => {
-               if (user) {
-                   console.log('User logged in:', user);
-                   document.getElementById('userGreeting').style.display = 'block';
-                   document.getElementById('displayName').textContent = user.displayName || user.email;
-                   document.getElementById('loginLink').style.display = 'none';
-                   document.getElementById('logoutLink').style.display = 'inline';
-                   document.getElementById('logoutLink').onclick = () => {
-                       auth.signOut();
-                   };
-               } else {
-                   console.log('No user logged in');
-                   document.getElementById('userGreeting').style.display = 'none';
-                   document.getElementById('loginLink').style.display = 'inline';
-                   document.getElementById('logoutLink').style.display = 'none';
-               }
-           });
-       </script>
+        // FirebaseUI configuration
+        const uiConfig = {
+            callbacks: {
+                signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+                    // User successfully signed in
+                    window.location.href = 'dashboard/index.html'; // Specify the URL of your dashboard page
+                    return false; // Avoids redirecting back to the login page
+                },
+                uiShown: function() {
+                    document.getElementById('loader').style.display = 'none';
+                }
+            },
+            signInFlow: 'popup',
+            signInSuccessUrl: 'dashboard/index.html',
+            signInOptions: [
+                {
+                    provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+                    requireDisplayName: false // Prevents duplication of the email sign-in button
+                },
+                {
+                    provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                    scopes: ['email'], // Specify additional OAuth scopes if needed
+                },
+                {
+                    provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+                    defaultCountry: 'US',
+                },
+            ],
+            tosUrl: 'your-tos-url', // Add your Terms of Service URL
+            privacyPolicyUrl: 'your-privacy-policy-url' // Add your Privacy Policy URL
+        };
+
+        ui.start('#firebaseui-auth-container', uiConfig);
+
+        document.getElementById('forgotPasswordLink').addEventListener('click', function() {
+            const emailAddress = prompt('Please enter your email address:');
+            if (emailAddress) {
+                auth.sendPasswordResetEmail(emailAddress)
+                .then(function() {
+                    alert('Password reset email sent. Please check your inbox.');
+                }).catch(function(error) {
+                    console.error('Error sending password reset email:', error);
+                    alert('Error sending password reset email. Please make sure the email address is correct.');
+                });
+            }
+        });
+
+        // Optional: Implement sign-out functionality
+        document.getElementById('signOutButton').addEventListener('click', function() {
+            auth.signOut().then(function() {
+                console.log('User signed out');
+                window.location.reload();
+            });
+        });
+    </script>
 
      </head>
 
@@ -103,20 +121,19 @@
      <input type="text" id="searchInput2" placeholder="Search.." onkeyup="searchFunction()">
      <button id="clearSearch" onclick="clearSearchFunction()">X</button>
        <!-- Other navigation items -->
-       <div class="dropdown2" id="userDropdown" style="display: none;">
-                   <button class="dropbtn2" id="userButton">
-                       <i class="fa fa-user"></i> User
-                       <i class="fa fa-caret-down"></i>
-                   </button>
-                   <div class="dropdown-content2">
-                       <a href="..//myprofile/index.html" id="profileLink">My Profile</a>
-                       <a href="#" id="logoutLink">Logout</a>
-                   </div>
-               </div>
-               <div id="authLinks">
-                   <a href="..//signup/index.html" id="signupLink">Signup</a>
-                   <a href="..//login/index.html" id="loginLink">Login</a>
-               </div>
+
+     <div class="dropdown2">
+       <button class="dropbtn2">
+         <i class="fa fa-user"></i> User
+         <i class="fa fa-caret-down"></i>
+       </button>
+       <div class="dropdown-content2">
+          <a href="..//signup/index.html">Signup</a>
+         <a href="index.html" class="active">Login</a>
+         <a href="..//myprofile/index.html">My Profile</a>
+         <a href="..//logout/index.html">Logout</a>
+       </div>
+     </div>
      <div class="dropdown">
        <button class="dropbtn">
          <i class="fas fa-wheelchair"></i>
@@ -382,23 +399,30 @@ Accessibility<i class="fa fa-caret-down"></i>
 
 
         <div id="main-content" class="content">
-          <h1>Login Form</h1>
-              <form id="loginForm">
-                  <div>
-                      <label for="login-credential">Email/Phone:</label>
-                      <input type="text" id="login-credential" required placeholder="Email or Phone">
-                  </div>
-                  <div>
-                      <label for="login-password">Password:</label>
-                      <input type="password" id="login-password" placeholder="Password (for email login)">
-                  </div>
-                  <button type="button" id="loginBtn">Login</button>
-                  <div id="firebaseui-auth-container"></div>
-                  <div id="loader" style="display: none;">Loading...</div>
+          <form id="loginForm">
+              <div>
+                  <label for="login-credential">Email/Phone:</label>
+                  <input type="text" id="login-credential" required placeholder="Email or Phone">
+              </div>
+              <div id="otp-section" style="display: none;">
+                  <label for="otp">OTP:</label>
+                  <input type="text" id="otp" placeholder="Enter OTP">
+              </div>
+              <div>
+                  <label for="login-password">Password:</label>
+                  <input type="password" id="login-password" placeholder="Password (for email login)">
+              </div>
+  <button type="button" id="loginBtn">Login</button>
+
+
+  <div id="firebaseui-auth-container"></div>
+<div id="loader">Loading...</div>
                   <div id="login-error" style="color: red;"></div>
-                  <p><a href="..//forgot/index.html">Forgot Password?</a></p>
+                  <p><a href="..//forgot/index.html" id="forgotPasswordLink">Forgot Password?</a></p>
+
                   <p>Need an account? <a href="..//signup/index.html">Signup</a></p>
-              </form>
+
+          </form>
 
 
 
@@ -5907,46 +5931,6 @@ const searchFunction = () => {
     });
 };
 
-</script>
-
-<script>
-// Example function to toggle light mode and save the setting
-function toggleLightMode() {
-    document.body.classList.toggle('light-mode');
-    // Save the current theme to localStorage
-    if (document.body.classList.contains('light-mode')) {
-        localStorage.setItem('theme', 'light');
-    } else {
-        localStorage.removeItem('theme');
-    }
-}
-
-// Example function to toggle dark mode and save the setting
-function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
-    // Save the current theme to localStorage
-    if (document.body.classList.contains('dark-mode')) {
-        localStorage.setItem('theme', 'dark');
-    } else {
-        localStorage.removeItem('theme');
-    }
-}
-
-// Function to apply saved settings on page load
-function applySavedSettings() {
-    // Apply theme from saved settings
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-        document.body.classList.add('light-mode');
-    } else if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-    }
-
-    // Here, add more conditions to apply other settings like font size
-}
-
-// Call `applySavedSettings` when the page loads
-document.addEventListener('DOMContentLoaded', applySavedSettings);
 </script>
 
 

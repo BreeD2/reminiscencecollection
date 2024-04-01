@@ -4445,3 +4445,134 @@ form input[type="text"] {
 #loader { display: none; }
  #userDropdown { display: none; }
  #logoutLink { display: none; }
+
+
+ /* Custom styling for FirebaseUI buttons */
+ .firebaseui-idp-button,
+ .firebaseui-id-submit {
+     font-size: 10px; /* Adjust the font size */
+     padding: 5px; /* Adjust the padding */
+     /* Add more customizations as needed */;
+     color:black
+ }
+
+     /* Your custom styles here */
+     .firebaseui-idp-button, .firebaseui-id-submit {
+         font-size: 10px;
+         padding: 5px;
+     }
+
+
+     /* Adjust the size of the Google logo inside the sign-in button */
+     .firebaseui-idp-google img {
+         width: auto; /* Adjust width as needed */
+         height: 24px; /* Adjust height to match the height of logos in other buttons */
+         max-width: 100%; /* Ensure the image does not exceed the button size */
+         max-height: 100%; /* Ensure the image does not exceed the button size */
+     }
+
+
+
+     #loginForm div {
+       margin-bottom: 15px;
+     }
+
+     #loginForm label {
+       display: block;
+       margin-bottom: 5px;
+     }
+
+     #loginForm input[type="text"],
+     #loginForm input[type="password"] {
+       width: 100%;
+       padding: 8px;
+       border: 1px solid #ddd;
+       border-radius: 4px;
+       box-sizing: border-box; /* Ensures padding doesn't affect the input's width */
+     }
+
+     /* Style for the buttons */
+     #loginForm button {
+       width: 100%;
+       padding: 10px;
+       background-color: #0056b3;
+       color: white;
+       border: none;
+       border-radius: 4px;
+       cursor: pointer;
+     }
+
+     #loginForm button:hover {
+       background-color: #003d82;
+     }
+
+     /* Loader and error message styling */
+     #loader, #login-error {
+       text-align: center;
+       margin-top: 15px;
+     }
+
+     /* Link styling */
+     #loginForm a {
+       color: #0056b3;
+       text-decoration: none;
+     }
+
+     #loginForm a:hover {
+       text-decoration: underline;
+     }
+
+     /* Style adjustments for the FirebaseUI Auth container */
+     #firebaseui-auth-container {
+       margin-top: 20px;
+       color:black
+     }
+
+     /* Adjust the size of the Google button image */
+     .firebaseui-idp-button {
+       display: flex !important;
+       align-items: center;
+       color:black
+     }
+
+     .firebaseui-idp-button img {
+       width: 18px;
+       margin-right: 8px;
+     }
+
+     /* Add space between the login button and the forgot password link */
+     #loginBtn {
+       margin-bottom: 10px;
+     }
+
+     /* Add the CSS rules here */
+ .firebaseui-idp-text-short {
+     display: none;
+ }
+
+ .firebaseui-idp-text-long {
+     display: block !important;
+color:black;
+list-style: none
+ }
+
+#firebaseui-auth-container > div > div.firebaseui-card-content > form > ul {
+  list-style: none
+}
+#firebaseui-auth-container > div > form > div.firebaseui-card-header > h1 {
+  font-size: 15px
+}
+
+#firebaseui-auth-container > div > form > div.firebaseui-card-actions > div > button.firebaseui-id-secondary-link.firebaseui-button.mdl-button.mdl-js-button.mdl-button--primary {
+    font-size: 15px
+}
+#firebaseui-auth-container > div > form > div.firebaseui-card-actions > div > button.firebaseui-id-submit.firebaseui-button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored {
+    font-size: 15px
+}
+#firebaseui-auth-container > div > form > div.firebaseui-card-content > div > div.firebaseui-textfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.is-upgraded > input {
+  width:100%;
+  padding: 5px
+}
+#firebaseui-auth-container > div > form > div.firebaseui-card-footer > ul {
+  list-style: none
+}
