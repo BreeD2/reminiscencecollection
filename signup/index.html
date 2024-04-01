@@ -44,87 +44,67 @@
         measurementId: "G-PJ426H3WZN"
       };
 
-          // Initialize Firebase
-          const app = initializeApp(firebaseConfig);
-          const auth = getAuth(app);
-          const db = getFirestore(app);
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
 
-          // Real-time validation for email
-          document.getElementById('email').addEventListener('input', function(e) {
-              const emailInput = e.target;
-              const emailError = document.getElementById('email-error');
-              const regex = /\S+@\S+\.\S+/;
-              if (!regex.test(emailInput.value)) {
-                  emailError.textContent = "Please enter a valid email address.";
-              } else {
-                  emailError.textContent = "";
-              }
-          });
+      function validateEmail(email) {
+          const regex = /\S+@\S+\.\S+/;
+          return regex.test(email);
+      }
 
-          // Real-time validation for password
-          document.getElementById('password').addEventListener('input', function(e) {
-              const passwordInput = e.target;
-              const passwordError = document.getElementById('password-error');
-              if (passwordInput.value.length < 8) {
-                  passwordError.textContent = "Password must be at least 8 characters long.";
-              } else {
-                  passwordError.textContent = "";
-              }
-          });
+      function validatePassword(password) {
+          return password.length >= 8;
+      }
 
-          // Signup function
-          async function signup() {
-              // UI feedback for loading state
-              document.getElementById('loading-indicator').style.display = 'block';
-              document.getElementById('signupBtn').disabled = true;
+      document.getElementById('signupBtn').addEventListener('click', async (event) => {
+          event.preventDefault(); // Prevent form from submitting normally
+          console.log("Signup button clicked");
 
-              // Collect form data
-              const username = document.getElementById("username").value;
-              const email = document.getElementById("email").value;
-              const password = document.getElementById("password").value;
-              const phone = document.getElementById("phone").value;
+          const username = document.getElementById("username").value;
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const phone = document.getElementById("phone").value;
 
-              try {
-                  // Check if username is taken
-                  const usernameTaken = await isUsernameTaken(username);
-                  if (usernameTaken) {
-                      throw new Error('Username is already taken. Please choose another.');
-                  }
-
-                  // Create user account
-                  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-                  // Store additional user details in Firestore
-                  await setDoc(doc(db, "users", userCredential.user.uid), {
-                      username,
-                      email,
-                      phone
-                  });
-
-                  // Verify email and give user feedback
-                  await sendEmailVerification(userCredential.user);
-                  document.getElementById("user-info").textContent = "Signup successful. Please check your email for verification. Redirecting...";
-
-                  // Redirect user
-                  setTimeout(() => {
-                      window.location.href = 'createaccount/index.html'; // Adjust as needed
-                  }, 3000);
-              } catch (error) {
-                  document.getElementById("user-info").textContent = error.message;
-              } finally {
-                  // Reset UI feedback
-                  document.getElementById('loading-indicator').style.display = 'none';
-                  document.getElementById('signupBtn').disabled = false;
-              }
+          if (!validateEmail(email)) {
+              document.getElementById('email-error').textContent = "Please enter a valid email address.";
+              return;
+          } else {
+              document.getElementById('email-error').textContent = "";
           }
 
+          if (!validatePassword(password)) {
+              document.getElementById('password-error').textContent = "Password must be at least 8 characters long.";
+              return;
+          } else {
+              document.getElementById('password-error').textContent = "";
+          }
 
-          window.addEventListener('DOMContentLoaded', (event) => {
-        console.log("DOM fully loaded and parsed");
-        document.getElementById('signupBtn').addEventListener('click', signup);
-        console.log("Signup event listener added");
-          });
-      </script>
+          document.getElementById('loading-indicator').style.display = 'block';
+          document.getElementById('signupBtn').disabled = true;
+
+          try {
+              const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+              await setDoc(doc(db, "users", userCredential.user.uid), {
+                  username,
+                  email,
+                  phone
+              });
+              await sendEmailVerification(userCredential.user);
+              document.getElementById("user-info").textContent = "Signup successful. Please check your email for verification.";
+              setTimeout(() => {
+                  window.location.href = 'createaccount/index.html';
+              }, 3000);
+          } catch (error) {
+              console.error("Signup error:", error);
+              document.getElementById("user-info").textContent = error.message;
+          } finally {
+              document.getElementById('loading-indicator').style.display = 'none';
+              document.getElementById('signupBtn').disabled = false;
+          }
+      });
+  </script>
 
 
 
