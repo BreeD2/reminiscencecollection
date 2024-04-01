@@ -322,16 +322,32 @@
       </div>
 
       <h1>Welcome to Your Dashboard</h1>
-          <div id="userProfile">
-              <h2>User Profile</h2>
-              <div><strong>Username:</strong> <input type="text" id="usernameInput" placeholder="Username"></div>
-              <div><strong>Email:</strong> <span id="emailDisplay"></span></div>
-              <div><strong>Description:</strong> <input type="text" id="descriptionInput" placeholder="Description"></div>
-              <div><strong>Profile Picture:</strong> <img id="profilePicture" src="" alt="Profile Picture" style="width: 100px; height: 100px;"></div>
-              <!-- Add more profile fields as necessary -->
-          </div>
+      <div id="userProfile">
+          <h2>User Profile</h2>
+          <form id="updateProfileForm">
+              <div>
+                  <strong>Username:</strong>
+                  <input type="text" id="usernameInput" placeholder="Username">
+              </div>
+              <div>
+                  <strong>Email:</strong>
+                  <span id="emailDisplay"></span>
+              </div>
+              <div>
+                  <strong>Description:</strong>
+                  <input type="text" id="descriptionInput" placeholder="Description">
+              </div>
+              <div>
+                  <strong>Profile Picture:</strong>
+                  <img id="profilePicture" src="" alt="Profile Picture" style="width: 100px; height: 100px;">
+                  <input type="file" id="profilePictureInput">
+              </div>
+              <button type="submit">Update Profile</button>
+          </form>
+      </div>
 
-    <button id="logoutBtn">Log Out</button>
+      <button id="logoutBtn">Log Out</button>
+
 
     <div class="footer">
       <div class="copy">Copyright &copy; 2024 Reminiscence Collection. All rights reserved.</div>

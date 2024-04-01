@@ -31,6 +31,10 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
 <body>
 
   <div class="read-aloud">
@@ -5491,5 +5495,71 @@ const searchFunction = () => {
 };
 
 </script>
+<script>
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+        authDomain: "reminiscence-collection.firebaseapp.com",
+        databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+        projectId: "reminiscence-collection",
+        storageBucket: "reminiscence-collection.appspot.com",
+        messagingSenderId: "974064770925",
+        appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+        measurementId: "G-PJ426H3WZN"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            // User is signed in.
+            document.getElementById('userDetails').style.display = 'block';
+            document.getElementById('userName').textContent = user.displayName || user.email;
+            document.getElementById('signInBtn').style.display = 'none'; // Hide sign-in button
+
+            // Call function to initialize or refresh game content for the user
+            initializeGameForUser(user);
+        } else {
+            // No user is signed in.
+            document.getElementById('userDetails').style.display = 'none';
+            document.getElementById('signInBtn').style.display = 'block'; // Show sign-in button
+
+            // Handle what should be visible or accessible on the game page when no user is signed in
+            handleGuestUserGameAccess();
+        }
+    });
+
+    function initializeGameForUser(user) {
+        console.log("Initializing game for user:", user.displayName || user.email);
+        // E.g., fetching user-specific scores, settings, etc.
+    }
+
+    function handleGuestUserGameAccess() {
+        console.log("Handling game access for guest user.");
+        // E.g., limiting features, showing sign-in prompt, etc.
+    }
+
+    document.getElementById('signInBtn').addEventListener('click', () => {
+        window.location.href = 'login.html'; // Example redirection
+    });
+
+    // Like, Comment, and Rate functionalities
+    document.getElementById('likeButton').addEventListener('click', () => {
+        const userId = firebase.auth().currentUser.uid;
+        const gameId = 'someGameId'; // Replace with the actual game ID
+        db.collection('likes').add({
+            userId: userId,
+            gameId: gameId,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(() => console.log('Liked!'));
+    });
+
+    // Additional event listeners for commentButton and rateButton follow...
+</script>
+
 
  </body>
