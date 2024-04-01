@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Optionally, add your CSS here -->
+</head>
+<body>
+
+
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
+  <!-- Firebase Config -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+      authDomain: "reminiscence-collection.firebaseapp.com",
+      databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+      projectId: "reminiscence-collection",
+      storageBucket: "reminiscence-collection.appspot.com",
+      messagingSenderId: "974064770925",
+      appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+      measurementId: "G-PJ426H3WZN"
+    };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        auth.onAuthStateChanged(user => {
+            if(user) {
+                // User is signed in, show the user info
+                document.getElementById('userInfo').textContent = `Welcome, ${user.displayName || user.email}`;
+            } else {
+                // No user is signed in, redirect to login page
+                window.location.href = 'login.html';
+            }
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            auth.signOut().then(() => {
+                window.location.href = 'login.html';
+            }).catch((error) => {
+                console.error('Sign Out Error', error);
+            });
+        });
+    </script>
+
+    <h1>Welcome to Your Dashboard</h1>
+    <p id="userInfo">Loading user information...</p>
+    <button id="logoutBtn">Log Out</button>
+</body>
+</html>
