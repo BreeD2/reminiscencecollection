@@ -34,7 +34,7 @@
       import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
       const firebaseConfig = {
-        apiKey: "key",
+        apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
         authDomain: "reminiscence-collection.firebaseapp.com",
         databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
         projectId: "reminiscence-collection",
@@ -119,8 +119,10 @@
           }
 
 
-          window.addEventListener('DOMContentLoaded', () => {
-              document.getElementById('signupBtn').addEventListener('click', signup);
+          window.addEventListener('DOMContentLoaded', (event) => {
+        console.log("DOM fully loaded and parsed");
+        document.getElementById('signupBtn').addEventListener('click', signup);
+        console.log("Signup event listener added");
           });
       </script>
 
