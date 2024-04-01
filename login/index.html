@@ -56,8 +56,6 @@
        <div class="dropdown-content2">
           <a href="..//signup/index.html">Signup</a>
          <a href="index.html" class="active">Login</a>
-         <a href="..//myprofile/index.html">My Profile</a>
-         <a href="..//logout/index.html">Logout</a>
        </div>
      </div>
      <div class="dropdown">
@@ -4151,6 +4149,17 @@ const firebaseConfig = {
                 window.location.href = 'dashboard/index.html'; // Specify the URL of your dashboard page
                 return false; // Avoids redirecting back to the login page
             },
+            signInFailure: function(error) {
+                // Handle sign-in errors
+                // For example, if error.code == 'auth/wrong-password'
+                if (error.code === 'auth/wrong-password') {
+                    alert('The password is incorrect. Please try again.');
+                } else {
+                    // Handle other errors
+                    alert(error.message);
+                }
+                return Promise.resolve();
+            },
             uiShown: function() {
                 document.getElementById('loader').style.display = 'none';
             }
@@ -4158,22 +4167,14 @@ const firebaseConfig = {
         signInFlow: 'popup',
         signInSuccessUrl: 'dashboard/index.html',
         signInOptions: [
-            {
-                provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-                requireDisplayName: false // Prevents duplication of the email sign-in button
-            },
-            {
-                provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-                scopes: ['email'], // Specify additional OAuth scopes if needed
-            },
-            {
-                provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-                defaultCountry: 'US',
-            },
+            firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            firebase.auth.PhoneAuthProvider.PROVIDER_ID,
         ],
-        tosUrl: 'your-tos-url', // Add your Terms of Service URL
-        privacyPolicyUrl: 'your-privacy-policy-url' // Add your Privacy Policy URL
+        tosUrl: 'https://breed2.github.io/reminiscencecollection//////termsofservice/index.html', // Add your Terms of Service URL
+        privacyPolicyUrl: 'https://breed2.github.io/reminiscencecollection//////publicpolicy/index.html' // Add your Privacy Policy URL
     };
+
 
     ui.start('#firebaseui-auth-container', uiConfig);
 
@@ -4190,7 +4191,7 @@ const firebaseConfig = {
         }
     });
 
-  
+
 </script>
 
 </body>
