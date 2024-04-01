@@ -4441,3 +4441,7 @@ form input[type="text"] {
 #loginForm button[type="submit"]:hover {
   background-color: #0056b3; /* Darker blue on hover */
 }
+
+#loader { display: none; }
+ #userDropdown { display: none; }
+ #logoutLink { display: none; }
