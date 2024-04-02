@@ -18,8 +18,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet"href="style.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script src="accessibility/index.html"></script>
-  <script src="script.js"></script>
+
 <style>
 </style>
 </head>
@@ -42,14 +41,14 @@
   <div class="read-aloud">
   <!-- Navigation Bar with Logo and Website Name -->
   <div class="topnav" id="myTopnav">
-    <a href="..//index.html" class="logo">
-      <img src="..//rpa.png" alt="Reminiscence Collection" style="height: 23px;">&ensp;<span class="title-text">Reminiscence&ensp;Collection</span>
+    <a href="index.html" class="logo">
+      <img src="rpa.png" alt="Reminiscence Collection" style="height: 23px;">&ensp;<span class="title-text">Reminiscence&ensp;Collection</span>
 
  </a>
  <a href="index.html" class="active">Home</a>
-     <a href="../games/index.html">Games</a>
-     <a href="../about/index.html">About</a>
-     <a href="../contact/index.html">Contact</a>
+     <a href="games/index.html">Games</a>
+     <a href="about/index.html">About</a>
+     <a href="contact/index.html">Contact</a>
      <!-- Accessibility Button and Dropdown -->
      <!-- User Information Dropdown -->
      <input type="text" id="searchInput2" placeholder="Search.." onkeyup="searchFunction()">
@@ -62,10 +61,10 @@
          <i class="fa fa-caret-down"></i>
        </button>
   <div class="dropdown-content2" id="authLinks">
-          <a href="..//signup/index.html">Signup</a>
-         <a href="..//login/index.html">Login</a>
-         <a href="..//myprofile/index.html">My Profile</a>
-         <a href="..//logout/index.html">Logout</a>
+          <a href="signup/index.html">Signup</a>
+         <a href="login/index.html">Login</a>
+         <a href="myprofile/index.html">My Profile</a>
+         <a href="logout/index.html">Logout</a>
        </div>
      </div>
      <div class="dropdown">
@@ -394,30 +393,6 @@ Accessibility<i class="fa fa-caret-down"></i>
   <div class="copy">Copyright &copy; 2024 Reminiscence Collection. All rights reserved.</div>
 </div>
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-  const options = ["All Games", "Publisher", "Developer", "Series", "Platform", "Released Dates", "Genre", "Mode"];
-  const optionsContainer = document.querySelector('.options-container');
-  const selectedOption = document.querySelector('.selected-option');
-
-  options.forEach(option => {
-    const div = document.createElement('div');
-    div.textContent = option;
-    div.classList.add('option');
-    div.onclick = function() {
-      selectedOption.textContent = option;
-      optionsContainer.classList.add('hidden');
-    };
-    optionsContainer.appendChild(div);
-  });
-
-  selectedOption.onclick = function() {
-    optionsContainer.classList.toggle('hidden');
-  };
-});
-</script>
-
 <script>
   // Corrected Categories Data
   const publisherCategories = {
@@ -3011,7 +2986,7 @@ function updateSubCategory() {
   const mainCategory = document.getElementById('mainCategory').value;
   const subCategoryDropdown = document.getElementById('subCategory');
   subCategoryDropdown.innerHTML = ''; // Clear existing options
-  console.log("Main category selected:", mainCategory); // Debugging line
+
 
   // Clear previous subcategory options
   subCategory.innerHTML = '<option value="" disabled selected hidden>Choose a subcategory</option>';
@@ -3077,81 +3052,17 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
-<script>
-
-</script>
-<script>
-  let slideIndex = 1;
-  showSlides(slideIndex);
-
-  // Next/previous controls
-  function plusSlides(n) {
-    showSlides(slideIndex += n);
-  }
-
-  // Thumbnail image controls
-  function currentSlide(n) {
-    showSlides(slideIndex = n);
-  }
-
-  function showSlides(n) {
-    let i;
-    let slides = document.getElementsByClassName("mySlides");
-    let dots = document.getElementsByClassName("demo");
-    let captionText = document.getElementById("caption");
-    if (n > slides.length) {slideIndex = 1}
-    if (n < 1) {slideIndex = slides.length}
-    for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-    }
-    for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-    }
-    slides[slideIndex-1].style.display = "block";
-    dots[slideIndex-1].className += " active";
-    captionText.innerHTML = dots[slideIndex-1].alt;
-  }
-</script>
 
 
-</div>
-  <script>document.querySelector('.menu-toggle').addEventListener('click', function() {
+  <script>
+  document.querySelector('.menu-toggle').addEventListener('click', function() {
     this.classList.toggle('active');
 });
 </script>
 
 
 
-        <script>
-        let slideIndex = 1;
-showSlides(slideIndex);
 
-// Next/previous controls
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
-
-// Thumbnail image controls
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  let dots = document.getElementsByClassName("dot");
-  if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].className += " active";
-}
-        </script>
 
     <script>
       document.querySelector('.menu-toggle').addEventListener('click', function() {
@@ -3161,45 +3072,7 @@ function showSlides(n) {
     </script>
 
 
-<script>
-  function showSlide(slideIndex) {
-      var slides = document.getElementsByClassName("mySlides");
-      for (var i = 0; i < slides.length; i++) {
-          slides[i].style.display = "none";
-      }
-      slides[slideIndex].style.display = "block";
-  }
 
-  // Initially show the first slide
-  showSlide(0);
-
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const speakButton = document.getElementById('speakButton');
-    speakButton.addEventListener('click', function() {
-        speakText();
-    });
-});
-
-function speakText() {
-    if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance();
-        let textToRead = '';
-
-        document.querySelectorAll('.read-aloud').forEach(element => {
-            textToRead += element.textContent + ' ';
-        });
-
-        utterance.text = textToRead;
-        speechSynthesis.speak(utterance);
-    } else {
-        alert('Your browser does not support text-to-speech functionality.');
-    }
-}
-
-</script>
 
 
 
@@ -3291,30 +3164,7 @@ function speakText() {
   document.body.classList.toggle('invert-colors');
 }
 </script>
-<script>
-  // Brightness control variables
-  var brightness = 100;
-  var brightnessStep = 10;
 
-  // Brightness control functions
-  function increaseBrightness() {
-    brightness += brightnessStep;
-    updateBrightness();
-  }
-
-  function decreaseBrightness() {
-    brightness -= brightnessStep;
-    updateBrightness();
-  }
-
-  function updateBrightness() {
-    document.body.style.filter = "brightness(" + brightness + "%)";
-  }
-
-  // Add event listeners to brightness control buttons
-  document.getElementById("brightnessUpBtn").addEventListener("click", increaseBrightness);
-  document.getElementById("brightnessDownBtn").addEventListener("click", decreaseBrightness);
-</script>
 
 <!-- Contrast control script -->
 <script>
@@ -3340,7 +3190,6 @@ function speakText() {
 
 
 
-
 <script>
   function toggleDarkMode() {
     document.body.classList.toggle("dark-mode");
@@ -3352,79 +3201,7 @@ function speakText() {
     }
   }
 </script>
-<script>
-  function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
 
-    // You can add more elements to toggle dark mode if needed
-    var elementsToToggle = document.querySelectorAll(".dark-mode-toggle");
-    elementsToToggle.forEach(function (element) {
-      element.classList.toggle("dark-mode");
-    });
-  }
-</script>
-
-<script>
-    function toggleHighContrast() {
-        document.body.classList.toggle("high-contrast");
-        toggleAccessibilityMenu(); // Added to toggle the menu when changing contrast
-    }
-
-    function adjustFontSize(action) {
-        var currentFontSize = parseFloat(window.getComputedStyle(document.body, null).getPropertyValue('font-size'));
-        var newSize;
-
-        if (action === 'increase') {
-            newSize = currentFontSize * 1.1 + 'px';
-        } else if (action === 'decrease') {
-            newSize = currentFontSize / 1.1 + 'px';
-        }
-
-        document.body.style.fontSize = newSize;
-        toggleAccessibilityMenu(); // Added to toggle the menu when changing font size
-    }
-
-    function toggleDarkMode() {
-        document.body.classList.toggle("dark-mode");
-        toggleAccessibilityMenu(); // Added to toggle the menu when changing dark mode
-    }
-
-    function toggleAccessibilityMenu() {
-        var accessibilityDropup = document.getElementById(".accessibility-dropup");
-        accessibilityDropup.style.display = (accessibilityDropup.style.display === "block") ? "none" : "block";
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        const darkModeToggle = document.getElementById('dark-mode-toggle');
-
-        darkModeToggle.addEventListener('click', function () {
-            toggleDarkMode();
-        });
-
-        const highContrastToggle = document.getElementById('high-contrast-toggle');
-
-        highContrastToggle.addEventListener('click', function () {
-            toggleHighContrast();
-        });
-
-        const accessibilityCogIcon = document.querySelector('.cog-icon');
-
-        accessibilityCogIcon.addEventListener('click', function () {
-            toggleAccessibilityMenu();
-        });
-
-        const increaseFontButton = document.querySelector('#accessibility-dropup button:nth-child(2)');
-        const decreaseFontButton = document.querySelector('#accessibility-dropup button:nth-child(3)');
-
-        increaseFontButton.addEventListener('click', function () {
-            adjustFontSize('increase');
-        });
-
-        decreaseFontButton.addEventListener('click', function () {
-            adjustFontSize('decrease');
-        });
-    });
-</script>
 
 <!-- JavaScript -->
 
@@ -3592,15 +3369,13 @@ function decreaseFont() {
 
 </script>
 <script>
-    // Called once the DOM is fully loaded
     document.addEventListener('DOMContentLoaded', function () {
         storeOriginalFontSizes(); // Store original font sizes for specified elements
-        // Add any other initialization code here...
     });
 
     // Store the original font sizes
     function storeOriginalFontSizes() {
-        const selector = '.sidebar *, .topnav *, .welcome, .underwelcome, .opening-screen button,p,.featured-games,.featured-games-title, .footer,#enter-site-button';
+        const selector = '.sidebar *, #signupContainer, #signupContainer h2, .form-group label, button#signupButton, p, .featured-games, .featured-games-title, .footer, #enter-site-button';
         document.querySelectorAll(selector).forEach(element => {
             element.setAttribute('data-original-font-size', window.getComputedStyle(element).fontSize);
         });
@@ -3616,37 +3391,40 @@ function decreaseFont() {
 
     // Increase font size
     function increaseFont() {
-        adjustFontSize(1.1, '.sidebar *, .welcome, .underwelcome, .opening-screen button,p,.featured-games-title,.footer,featured-games, .dropdown-content, #enter-site-button');
+        adjustFontSize(1.1, '.sidebar *, #signupContainer, .underwelcome, .opening-screen button, p, .featured-games-title, .footer, .featured-games, .dropdown-content, #enter-site-button');
     }
 
     // Decrease font size
     function decreaseFont() {
-        adjustFontSize(0.9, '.sidebar *, .welcome, .underwelcome, .dropdown-content,.dropdown, .opening-screen button,.featured-games,.featured-games-title,p,.footer, #enter-site-button');
+        adjustFontSize(0.9, '.sidebar *, #signupContainer, .underwelcome, .dropdown-content, .dropdown, .opening-screen button, .featured-games, .featured-games-title, p, .footer, #enter-site-button');
     }
 
     // Reset font sizes to their original values
     function resetFont() {
-        const selector = '.sidebar *,  .welcome, .underwelcome, .opening-screen button,.featured-games,.featured-games-title,p,.footer, #enter-site-button';
+        const selector = '.sidebar *, #signupContainer, .underwelcome, .opening-screen button, .featured-games, .featured-games-title, p, .footer, #enter-site-button';
         document.querySelectorAll(selector).forEach(element => {
             const originalFontSize = element.getAttribute('data-original-font-size');
             if (originalFontSize) element.style.fontSize = originalFontSize;
         });
     }
 
-    // New functions for toggling visual modes
+    // Inverts colors
     function invertColors() {
         document.body.classList.toggle('invert-colors');
     }
-    // Stop any ongoing speech synthesis
-  if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-  }
 
+    // Cancels any ongoing speech synthesis
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+    }
+
+    // Toggles light mode
     function toggleLightMode() {
         document.body.classList.add('light-mode');
         document.body.classList.remove('dark-mode');
     }
 
+    // Toggles dark mode
     function toggleDarkMode() {
         document.body.classList.add('dark-mode');
         document.body.classList.remove('light-mode');
@@ -3659,80 +3437,9 @@ function decreaseFont() {
         // Reset global style adjustments if any
         document.body.style.filter = '';
         document.body.style.webkitFilter = '';
-        // Close the accessibility menu if you have a function to do so
-        // closeAccessibilityDropup(); // Uncomment if this function is defined
     }
 </script>
 
-
-<script>// Get the modal
-var modal = document.getElementById("myModal");
-
-// Get the image and insert it inside the modal - use its "alt" text as a caption
-var images = document.querySelectorAll('.mySlides img');
-var modalImg = document.getElementById("img01");
-var captionText = document.getElementById("caption");
-
-images.forEach(img => {
-  img.onclick = function() {
-    modal.style.display = "block";
-    modalImg.src = this.src;
-    captionText.innerHTML = this.alt; // Or use any other attribute or fixed text
-  }
-});
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-</script>
-
-<script>
-  // Get modal elements
-var modal = document.getElementById("myModal");
-var modalImg = document.getElementById("img01");
-var captionText = document.getElementById("caption");
-var zoomInButton = document.getElementById("zoomIn");
-var zoomOutButton = document.getElementById("zoomOut");
-
-// Initial zoom scale
-var imgZoom = 1;
-
-// Zoom in function
-function zoomIn() {
-  imgZoom += 0.1; // Increase zoom
-  modalImg.style.transform = `scale(${imgZoom})`;
-}
-
-// Zoom out function
-function zoomOut() {
-  imgZoom -= 0.1; // Decrease zoom
-  modalImg.style.transform = `scale(${imgZoom})`;
-}
-
-// Attach zoom event listeners
-zoomInButton.onclick = zoomIn;
-zoomOutButton.onclick = zoomOut;
-
-// Image click to open modal
-document.querySelectorAll('.mySlides img').forEach(img => {
-  img.onclick = function() {
-    modal.style.display = "block";
-    modalImg.src = this.src;
-    captionText.innerHTML = this.getAttribute('data-caption'); // Assuming you use 'data-caption' attribute for captions
-    imgZoom = 1; // Reset zoom
-    modalImg.style.transform = `scale(${imgZoom})`; // Apply reset
-  }
-});
-
-// Close modal
-document.getElementsByClassName("close")[0].onclick = function() {
-  modal.style.display = "none";
-}
-</script>
 
 <script type="text/javascript">
 function googleTranslateElementInit() {
@@ -3750,507 +3457,39 @@ document.getElementById('filterCheckbox').addEventListener('change', function() 
 });
 </script>
 
-<script>
-fetch('/api/featured-games')
-  .then(response => response.json())
-  .then(games => {
-    const carousel = document.querySelector('.games-carousel');
-    games.forEach(game => {
-      const card = document.createElement('div');
-      card.className = 'game-card';
-      card.innerHTML = `
-        <img src="${game.coverImage}" alt="${game.title}">
-        <p class="game-title">${game.title}</p>
-        <!-- Add more details as needed -->
-      `;
-      carousel.appendChild(card);
-    });
-  })
-  .catch(error => console.error('Error fetching featured games:', error));
-</script>
-
-<script>
-  // Get the modal
-  var modal = document.getElementById("myModal");
-
-  // Get all images that will open the modal and insert them inside the modal when clicked
-  var imgs = document.querySelectorAll(".game-cover");
-  var modalImg = document.getElementById("img01");
-
-  // Attach onclick event to each image
-  imgs.forEach(img => {
-    img.onclick = function() {
-      modal.style.display = "block";
-      modalImg.src = this.src;
-    }
-  });
-
-  // Get the <span> element that closes the modal and close it when clicked
-  var span = document.getElementsByClassName("close")[0];
-  span.onclick = function() {
-    modal.style.display = "none";
-  }
-
-  // Zoom functionality
-  var zoomLevel = 1;
-  var zoomStep = 0.1;
-
-  document.getElementById("zoomIn").addEventListener("click", function() {
-    zoomLevel += zoomStep;
-    modalImg.style.transform = "scale(" + zoomLevel + ")";
-  });
-
-  document.getElementById("zoomOut").addEventListener("click", function() {
-    if (zoomLevel > 1) { // Ensure zoom level does not go below 1
-      zoomLevel -= zoomStep;
-      modalImg.style.transform = "scale(" + zoomLevel + ")";
-    }
-  });
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const gameDetails = [
-    [
-      // Details for game slot 1
-      {
-        title: "Super Mario Odyssey",
-        developer: [
-      "Nintendo",
-"<br>Tencent Games (China)",
-      ],
-        publisher: [
-      "1-UP Studio",
-"<br>Nintendo EPD Tokyo",
-      ],
-        series: "Super Mario",
-        platform: "Nintendo Switch",
-        releaseDates: [
-      "Japan: October 27, 2017",
-"<br>USA: October 27, 2017",
-"<br>Mexico: October 27, 2017",
-"<br>Europe: October 27, 2017",
-"<br>Australia: October 27, 2017",
-"<br>Hong Kong: October 27, 2017",
-"<br>South Korea: December 1, 2017",
-"<br>Republic of China: December 1, 2017",
-"<br>China: March 16, 2020"
-      ],
-        genres:
-        [
-      "Action",
-      "<br>Adventure","<br>Platformer"
-
-      ],
-        modes: "Single-player & Multiplayer",
-        imgSrc: "featured/supermarioodyssey.png",
-        imgAlt: "Cover art of Super Mario Odyssey"
-      },
-      {
-        title: "NBA 2K22",
-        developer: "Visual Concepts",
-        publisher: "2K",
-        series: "NBA 2K",
-        platform: [
-    "Apple Arcade (Arcade Edition)",
-    "<br>Microsoft Windows",
-    "<br>Nintendo Switch",
-    "<br>PlayStation 4",
-    "<br>PlayStation 5",
-    "<br>Xbox One",
-    "<br>Xbox Series X/S"
-  ],
-  releaseDates: [
-"Worldwide: September 10, 2021",
-"<br>Arcade Edition",
-"<br>Worldwide: October 19, 2021"
-],
-        genres: "Sports",
-        modes: "Single-player & Multiplayer",
-        imgSrc: "featured/nba2k22.png",
-        imgAlt: "Cover art of NBA 2K22"
-      },
-      {
-        title: "The Walking Dead: Survival Instinct",
-        developer: "Terminal Reality",
-        publisher: "Activision",
-        series: "The Walking Dead",
-        platform: [
-    "Microsoft Windows",
-"<br>Nintendo Wii U",
-"<br>PlayStation 3",
-"<br>Xbox 360"
-  ],
-  releaseDates: [
-"North America: March 19, 2013",
-"Australia: March 21, 2013",
-"Europe: March 22, 2013"
-],
-        genres: [
-      "Shooter",
-      "<br>Survival"
-      ],
-        modes: "Single-player Only",
-        imgSrc: "featured/thewalkingdeadsurvivalinstinct.jpg",
-        imgAlt: "Cover art of The Walking Dead: Survival Instinct"
-      },
-      {
-        title: "NBA 2K22",
-        developer: "Visual Concepts",
-        publisher: "2K",
-        series: "NBA 2K",
-        platform: [
-    "Apple Arcade (Arcade Edition)",
-    "<br>Microsoft Windows",
-    "<br>Nintendo Switch",
-    "<br>PlayStation 4",
-    "<br>PlayStation 5",
-    "<br>Xbox One",
-    "<br>Xbox Series X/S"
-  ],
-  releaseDates: [
-"Worldwide: September 10, 2021",
-"<br>Arcade Edition",
-"<br>Worldwide: October 19, 2021"
-],
-        genres: "Sports",
-        modes: "Single-player & Multiplayer",
-        imgSrc: "featured/nba2k22.png",
-        imgAlt: "Cover art of NBA 2K22"
-      },
-      {
-        title: "Tomodachi Life",
-        developer: "Nintendo SPD7",
-        publisher: "Nintendo",
-        series: "Tomodachi Life",
-        platform: [
-    "Nintendo 3DS"
-  ],
-  releaseDates: [
-"Japan: April 18, 2013",
-"<br>North America: June 6, 2014",
-"<br>Europe: June 6, 2014",
-"<br>Australia: June 7, 2014",
-"<br>South Korea: July 17, 2014",
-],
-        genres: [
-      "Simulation"
-      ],
-        modes: "Single-player Only",
-        imgSrc: "featured/tomodachilife.jpg",
-        imgAlt: "Cover art of Tomodachi Life"
-      },
-    ],
-    [
-      // Details for game slot 2
-      {
-        title: "Midnight Club 3: Dub Edition",
-        developer: "Rockstar San Diego",
-        publisher: "Rockstar Games",
-        series: "Midnight Club",
-        platform: [
-      "PlayStation 2",
-"<br>PlayStation Portable",
-"<br>Xbox"
-      ],
-        releaseDates: [
-      "PlayStation 2", "<br>Xbox",
-"<br>North America: April 12, 2005",
-"<br>Phase Alternating Line: April 15, 2005",
-"<br>PlayStation Portable",
-"<br>North America: June 28, 2005",
-"<br>Phase Alternating Line: September 1, 2005",
-"<br>Remix",
-"<br>North America: March 13, 2006",
-"<br>Europe: March 17, 2006"
-      ],
-        genres: "Racing",
-        modes: "Single-player & Multiplayer",
-        imgSrc: "featured/midnightclub3dubedition.png",
-        imgAlt: "Cover art of Midnight Club 3: Dub Edition"
-      },
-      // Details for game slot 2
-      {
-        title: "Frogger 2: Swampy’s Revenge",
-        developer: [
-      "Blitz Games (PlayStation, Dreamcast, Microsoft Windows)",
-"<br>Game Titan (Game Boy Color)"
-      ],
-        publisher: "Frogger",
-        series: "Frogger",
-        platform: [
-      "Dreamcast",
-"<br>Game Boy Color",
-"<br>Microsoft Windows",
-"<br>PlayStation"
-      ],
-        releaseDates: [
-      "North America: September 21, 2000",
-"<br>Europe: October 13, 2000 (PC, PlayStation)",
-"<br>Dreamcast",
-"<br>North America: October 13, 2000"
-      ],
-        genres: "Action",
-        modes: "Single-player & Multiplayer",
-        imgSrc: "featured/frogger2swampysrevenge.jpg",
-        imgAlt: "Cover art of Frogger 2: Swampy’s Revenge"
-      },
-      {
-        title: "The Sims 3: Starter Pack",
-        developer: [
-      "Maxis"
-      ],
-        publisher: "Electronic Arts",
-        series: "The Sims",
-        platform: [
-      "Mac",
-"<br>PC",
-
-      ],
-        releaseDates: [
-      "March 25, 2013"
-      ],
-        genres: "Simulation",
-        modes: "Single-player Only",
-        imgSrc: "featured/thesims3starterpack.png",
-        imgAlt: "Cover art of The Sims 3: Starter Pack"
-      },
-      {
-  title: "The SpongeBob SquarePants Movie",
-  developer: [
-    "AWE Games (Microsoft Windows)",
-    "<br>Aspyr (Mac)",
-    "<br>Heavy Iron Studios (PlayStation 2, Nintendo GameCube, Xbox)",
-    "<br>WayForward Technologies (Game Boy Advance)"
-  ],
-  publisher: [
-    "Aspyr (Mac)",
-    "<br>THQ"
-  ],
-  series: "SpongeBob SquarePants",
-  platform: [
-    "Game Boy Advance",
-    "<br>Mac OS X",
-    "<br>Mobile",
-    "<br>Microsoft Windows",
-    "<br>Nintendo GameCube",
-    "<br>PlayStation 2",
-    "<br>Xbox"
-  ],
-  releaseDates: [
-    "<br>Game Boy Advance, Nintendo GameCube, PlayStation 2, PC, Xbox",
-    "<br>North America: October 27, 2004",
-    "<br>Phase Alternating Line: February 18, 2005",
-    "<br>Mobile", "November 2004",
-    "<br>Mac OS X", "North America: December 12, 2005",
-  ],
-  genres: ["Platformer", "<br>Adventure"],
-  modes: "Single-player Only",
-  imgSrc: "featured/thespongebobsquarepantsmovie.png",
-  imgAlt: "Cover art of The SpongeBob SquarePants Movie"
-},
-{
-title: "Uncharted 4: A Thief’s End",
-developer: [
-"Naughty Dog"
-],
-publisher: [
-"Sony Computer Entertainment"
-],
-series: "Uncharted",
-platform: [
-"Microsoft Windows",
-"<br>PlayStation 4",
-"<br>PlayStation 5",
-],
-releaseDates: [
-"PlayStation 4",
-"<br>May 10, 2016",
-"<br>PlayStation 5",
-"<br>January 28, 2022",
-"<br>Microsoft Windows",
-"<br>October 19, 2022",
-],
-genres: ["Action",
-"<br>Adventure",
-"<br>Shooter"],
-modes: "Single-player & Multiplayer",
-imgSrc: "featured/uncharted4athiefsend.png",
-imgAlt: "Cover art of Uncharted 4: A Thief’s End"
-}
-
-    ],
-    [
-      // Details for game slot 3
-      {
-        title: "LittleBigPlanet",
-        developer:
-      "Media Molecule",
-        publisher: "Sony Computer Entertainment",
-        series: "LittleBigPlanet",
-        platform:
-      "PlayStation 3",
-
-        releaseDates: [
-      "October 27, 2008",
-"<br>North America: October 27, 2008",
-"<br>Europe: November 5, 2008",
-"<br>Australia: November 7, 2008",
-"<br>Game of the Year Edition",
-"<br>North America: September 8, 2009",
-"<br>United Kingdom: April 16, 2010",
-      ],
-        genres:[
-      "Platformer",
-"<br>Sandbox",
 
 
-      ],
-        modes:
-      "Single-player & Multiplayer",
-
-        imgSrc: "featured/littlebigplanet.png",
-        imgAlt: "LittleBigPlanet",
-      },
-      {
-        title: "DJ Hero 2",
-        developer: "FreeStyleGames",
-        publisher: "Activision",
-        series: "DJ Hero",
-        platform: [
-      "Nintendo Wii",
-"<br>PlayStation 3",
-"<br>Xbox 360"
-      ],
-        releaseDates: [
-      "North America: October 19, 2010",
-"<br>Australia: October 19, 2010",
-"<br>Europe: October 22, 2010"
-      ],
-        genres:
-        [
-      "Music"
-
-      ],
-        modes: "Single-player & Multiplayer",
-        imgSrc: "featured/djhero2.png",
-        imgAlt: "Cover art of DJ Hero 2"
-      },
-      {
-        title: "uDraw Studio",
-        developer: "Pipeworks Software",
-        publisher: "THQ",
-        series: "uDraw",
-        platform: [
-      "Nintendo Wii",
-
-      ],
-        releaseDates: [
-      "North America: November 14, 2010",
-"<br>Australia: February 24, 2011",
-"<br>Europe: March 4, 2011",
-      ],
-        genres:
-        [
-      "Art"
-
-      ],
-        modes: "Single-player Only",
-        imgSrc: "featured/udrawstudio.png",
-        imgAlt: "Cover art of uDraw Studio"
-      },
-    ]
-  ];
-
-  function updateGameInfo(slotIndex) {
-    const slot = gameDetails[slotIndex];
-    const currentGame = slot[Math.floor(Math.random() * slot.length)];
-    const gameCard = document.querySelector(`#game${slotIndex + 1}-info`).parentNode;
-    gameCard.querySelector('.game-cover').src = currentGame.imgSrc;
-    gameCard.querySelector('.game-cover').alt = currentGame.imgAlt;
-
-    // For releaseDates, assuming it's a string. Adding a <br> for an additional line space
-      const releaseDatesString = `<br>${currentGame.releaseDates}`;
-
-    const gameInfo = gameCard.querySelector('.game-info');
-    gameInfo.innerHTML = `<h3 class="game-title">${currentGame.title}</h3>
-                          <p><strong>Developer(s):</strong><br>${currentGame.developer}</p>
-                          <p><strong>Publisher(s):</strong><br>${currentGame.publisher}</p>
-                          <p><strong>Series:</strong><br>${currentGame.series}</p>
-                          <p><strong>Platform(s):</strong><br>${currentGame.platform}</p>
-                          <p><strong>Released Date(s):</strong><br>${currentGame.releaseDates}</p>
-                          <p><strong>Genre(s):</strong><br>${currentGame.genres}</p>
-                          <p><strong>Mode(s):</strong><br>${currentGame.modes}</p>`;
-  }
-
-  // Initial update
-  gameDetails.forEach((_, index) => updateGameInfo(index));
-
-  // Schedule updates (e.g., every 2 minutes = 120000 milliseconds)
-  setInterval(() => {
-    gameDetails.forEach((_, index) => updateGameInfo(index));
-  }, 10000);
-});
-
-</script>
 
 
 
 <script>
-  // When the user clicks on the button, toggle between hiding and showing the dropdown content
-  document.querySelector('.accessibility-button').onclick = function() {
-    document.querySelector('.dropdown-content').classList.toggle('show');
-  };
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    var userInfo = document.querySelector(".user-info"); // Select the .user-info container
+    var dropdown = document.querySelector(".dropdown"); // Assuming you also want to select and hide .dropdown
 
-  // Close the dropdown if the user clicks outside of it
-  window.onclick = function(event) {
-    if (!event.target.matches('.accessibility-button')) {
-      var dropdowns = document.getElementsByClassName('dropdown-content');
-      for (var i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
-        }
-      }
-    }
-  };
-</script>
-
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const accessibilityButton = document.querySelector('.accessibility-button');
-  const iconSpan = document.createElement('span');
-  iconSpan.innerHTML = '<i class="fa fa-cog" style="display:none;"></i>'; // Gear icon is hidden by default
-  accessibilityButton.appendChild(iconSpan); // Add the gear icon span to the button
-
-  // Function to update the icon based on screen width
-  function updateIcon() {
-    if (window.innerWidth <= 600) {
-      // Small screens: show gear icon, hide caret-down
-      accessibilityButton.querySelector('.fa-cog').style.display = 'inline-block';
-      accessibilityButton.querySelector('.fa-caret-down').style.display = 'none';
+    if (x.className === "topnav") {
+        x.className += " responsive";
+        // Hide .user-info in responsive mode
+        if (userInfo) userInfo.style.display = "none";
+        // Hide .dropdown in responsive mode, if it exists
+        if (dropdown) dropdown.style.display = "none";
     } else {
-      // Larger screens: show caret-down, hide gear icon
-      accessibilityButton.querySelector('.fa-cog').style.display = 'none';
-      accessibilityButton.querySelector('.fa-caret-down').style.display = 'inline-block';
+        x.className = "topnav";
+        // Show .user-info when not in responsive mode
+        if (userInfo) userInfo.style.display = "";
+        // Show .dropdown when not in responsive mode, if it exists
+        if (dropdown) dropdown.style.display = "";
     }
-  }
-
-  // Add search input to the designated container
-  const searchContainer = document.querySelector('.search-container');
-  if (searchContainer) {
-    const searchInput = document.createElement('input');
-    searchInput.type = 'text';
-    searchInput.placeholder = 'Search..';
-    searchContainer.appendChild(searchInput);
-  }
-
-  window.addEventListener('resize', updateIcon);
-  updateIcon(); // Call once on load
-});
+}
 </script>
+
+
+
+
+
+
+
 
 <script>
 function toggleFocusHighlight() {
@@ -4313,132 +3552,376 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<script>
-const bcrypt = require('bcrypt');
-const express = require('express');
-const session = require('express-session');
 
-const app = express();
 
-// Middleware
-app.use(express.json());
-app.use(session({
-  secret: 'your secret key',
-  resave: false,
-  saveUninitialized: true,
-}));
 
-// Assuming you have a User model and database setup
-app.post('/signup', async (req, res) => {
-  const { username, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  // Save username, hashedPassword, and an optional profileImageUrl to your database
-});
 
-app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  const user = await User.findOne({ username });
-  if (user && await bcrypt.compare(password, user.hashedPassword)) {
-    req.session.userId = user.id; // Log the user in
-    res.json({ message: "Logged in successfully" });
-  } else {
-    res.status(401).json({ message: "Invalid credentials" });
-  }
-});
-</script>
+  </body>
+  </html>
+
 
 
 <script>
-app.get('/profile', async (req, res) => {
-  if (!req.session.userId) {
-    return res.status(401).json({ message: "Not authenticated" });
-  }
+  function toggleDropdown() {
+    const dropdown = document.querySelector('.dropdown-content2');
+    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+}
 
-  const user = await User.findById(req.session.userId);
-  res.json({ username: user.username, profileImageUrl: user.profileImageUrl });
-});
-</script>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const signInButton = document.getElementById('signInButton');
-  const userProfile = document.querySelector('.user-profile');
-  const userNameDiv = document.querySelector('.user-name');
-
-  signInButton.addEventListener('click', () => {
-    // Simulate sign in process
-    signInButton.style.display = 'none'; // Hide sign in button
-    userProfile.style.display = 'flex'; // Show user profile
-  });
-
-  userNameDiv.addEventListener('click', () => {
-    const newName = prompt('Enter new name:');
-    if (newName) {
-      userNameDiv.textContent = newName;
+// Optional: Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+    if (!event.target.matches('.user-icon img')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content2");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.style.display === 'block') {
+                openDropdown.style.display = 'none';
+            }
+        }
     }
-  });
-});
+}
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const loginButton = document.getElementById('loginButton');
-  const logoutButton = document.getElementById('logoutButton');
-  const userProfile = document.getElementById('userProfile');
-  const userName = document.getElementById('userName');
-  const userIcon = document.getElementById('userIcon');
+function toggleDropdown2() {
+    // Select the dropdown menu
+    var dropdown = document.querySelector('.dropdown-content2');
+    // Toggle the display property
+    if (dropdown.style.display === "none" || dropdown.style.display === "") {
+        dropdown.style.display = "block";
+    } else {
+        dropdown.style.display = "none";
+    }
+}
 
-  // Simulate a user sign-in process
-  loginButton.addEventListener('click', () => {
-    // Here, you would replace these values with those from your sign-in process
-    const exampleUser = {
-      name: 'John Doe',
-      icon: 'path/to/user-icon.jpg' // Use a real image path
-    };
-    // Display user information
-    userName.textContent = exampleUser.name;
-    userIcon.src = exampleUser.icon;
-
-    // Update UI
-    loginButton.style.display = 'none';
-    userProfile.style.display = 'flex';
-  });
-
-  // Simulate user sign-out
-  logoutButton.addEventListener('click', () => {
-    // Hide user info and show login button
-    userProfile.style.display = 'none';
-    loginButton.style.display = 'block';
-  });
-});
+// Optional: Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+    if (!event.target.matches('.user-icon, .user-icon img, .user-icon i')) {
+        var dropdowns = document.querySelectorAll(".dropdown-content2");
+        dropdowns.forEach(function(dropdown) {
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            }
+        });
+    }
+}
+</script>
 
 
+<script>
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+
+    // Get all elements with the 'dropdown-content' class within the topnav
+    var dropdowns = x.getElementsByClassName("dropdown");
+    for (var i = 0; i < dropdowns.length; i++) {
+        // If the topnav is in responsive mode, ensure dropdown-content remains hidden
+        if (x.className.includes("responsive")) {
+            dropdowns[i].style.display = "none";
+        } else {
+            // Reset style in case it was previously modified
+            dropdowns[i].style.display = "";
+        }
+    }
+}
+
+// This part is to ensure the dropdown content does not display in responsive mode
+// You may need to add an event listener or modify existing ones for dropdown buttons
+// to control their display property separately if they should be visible in responsive mode.
+
+</script>
+
+
+<script>
+function updateNavigationForLoggedInUser(userName, profileImagePath) {
+  const profileSection = document.querySelector('.profile-section');
+  profileSection.querySelector('.profile-name').textContent = userName;
+  profileSection.querySelector('.profile-icon').src = profileImagePath;
+
+  // Hide the login and signup links
+  document.querySelector('a[href="login/index.html"]').style.display = 'none';
+  document.querySelector('a[href="..//signup/index.html"]').style.display = 'none';
+
+  // Show the profile section
+  profileSection.style.display = 'flex';
+}
 </script>
 
 <script>
-// Simulate checking login status on page load
-document.addEventListener('DOMContentLoaded', () => {
-    checkLoginStatus();
-});
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    var userIcon = document.querySelector(".user-icon"); // Select the .user-icon
 
-function logIn() {
-    // Here you would have your actual login logic
-    localStorage.setItem('isLoggedIn', 'true');
-    checkLoginStatus();
-}
+    if (x.className === "topnav") {
+        x.className += " responsive";
+        // Hide the .user-icon when entering responsive mode
+        if (userIcon) userIcon.style.display = "none";
+    } else {
+        x.className = "topnav";
+        // Show the .user-icon when exiting responsive mode
+        if (userIcon) userIcon.style.display = "block";
+    }
 
-function logOut() {
-    localStorage.removeItem('isLoggedIn');
-    checkLoginStatus();
-}
-
-function checkLoginStatus() {
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    document.querySelector('.logged-in-toolbar').style.display = isLoggedIn ? 'block' : 'none';
-    document.querySelector('.logged-out-toolbar').style.display = isLoggedIn ? 'none' : 'flex';
+    // Get all elements with the 'dropdown-content' class within the topnav
+    var dropdowns = x.getElementsByClassName("dropdown");
+    for (var i = 0; i < dropdowns.length; i++) {
+        // If the topnav is in responsive mode, ensure dropdown-content remains hidden
+        if (x.className.includes("responsive")) {
+            dropdowns[i].style.display = "none";
+        } else {
+            // Reset style in case it was previously modified
+            dropdowns[i].style.display = "";
+        }
+    }
 }
 </script>
+
+
+
+
+<script>
+function toggleFocusHighlight() {
+  var styleElement = document.getElementById('focus-highlight-style');
+
+  if (styleElement) {
+    // If the style element exists, remove it to disable focus highlight
+    styleElement.remove();
+  } else {
+    // Create a new style element to add focus highlight styles
+    styleElement = document.createElement('style');
+    styleElement.id = 'focus-highlight-style';
+    styleElement.innerText = `:focus { outline: 2px solid yellow; }`; // Customize as needed
+    document.head.appendChild(styleElement);
+  }
+}
+</script>
+
+<script>
+document.getElementById('speakSelectedText').addEventListener('click', function() {
+    // Get selected text
+    var text = getSelectedText();
+    if (text) {
+        speakText(text);
+    } else {
+        console.log('No text selected.');
+    }
+});
+
+function getSelectedText() {
+    var text = '';
+    if (typeof window.getSelection != "undefined") {
+        text = window.getSelection().toString();
+    } else if (typeof document.selection != "undefined" && document.selection.type == "Text") {
+        text = document.selection.createRange().text;
+    }
+    return text;
+}
+
+function speakText(textToSpeak) {
+    if ('speechSynthesis' in window) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = textToSpeak;
+        window.speechSynthesis.speak(msg);
+    } else {
+        console.log('Text-to-Speech not supported.');
+    }
+}
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const stopButton = document.getElementById('stopButton');
+    stopButton.addEventListener('click', function() {
+        if ('speechSynthesis' in window) {
+            speechSynthesis.cancel();
+        }
+    });
+});
+</script>
+
+
+
+<script>
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    var userIcon = document.querySelector(".user-icon"); // Select the .user-icon
+
+    if (x.className === "topnav") {
+        x.className += " responsive";
+        // Hide the .user-icon when entering responsive mode
+        if (userIcon) userIcon.style.display = "none";
+    } else {
+        x.className = "topnav";
+        // Show the .user-icon when exiting responsive mode
+        if (userIcon) userIcon.style.display = "block";
+    }
+
+    // Get all elements with the 'dropdown-content' class within the topnav
+    var dropdowns = x.getElementsByClassName("dropdown");
+    for (var i = 0; i < dropdowns.length; i++) {
+        // If the topnav is in responsive mode, ensure dropdown-content remains hidden
+        if (x.className.includes("responsive")) {
+            dropdowns[i].style.display = "none";
+        } else {
+            // Reset style in case it was previously modified
+            dropdowns[i].style.display = "";
+        }
+    }
+}
+</script>
+
+
+
+
+
+<script>
+function toggleFocusHighlight() {
+  var styleElement = document.getElementById('focus-highlight-style');
+
+  if (styleElement) {
+    // If the style element exists, remove it to disable focus highlight
+    styleElement.remove();
+  } else {
+    // Create a new style element to add focus highlight styles
+    styleElement = document.createElement('style');
+    styleElement.id = 'focus-highlight-style';
+    styleElement.innerText = `:focus { outline: 2px solid yellow; }`; // Customize as needed
+    document.head.appendChild(styleElement);
+  }
+}
+</script>
+
+<script>
+document.getElementById('speakSelectedText').addEventListener('click', function() {
+    // Get selected text
+    var text = getSelectedText();
+    if (text) {
+        speakText(text);
+    } else {
+        console.log('No text selected.');
+    }
+});
+
+function getSelectedText() {
+    var text = '';
+    if (typeof window.getSelection != "undefined") {
+        text = window.getSelection().toString();
+    } else if (typeof document.selection != "undefined" && document.selection.type == "Text") {
+        text = document.selection.createRange().text;
+    }
+    return text;
+}
+
+function speakText(textToSpeak) {
+    if ('speechSynthesis' in window) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = textToSpeak;
+        window.speechSynthesis.speak(msg);
+    } else {
+        console.log('Text-to-Speech not supported.');
+    }
+}
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const stopButton = document.getElementById('stopButton');
+    stopButton.addEventListener('click', function() {
+        if ('speechSynthesis' in window) {
+            speechSynthesis.cancel();
+        }
+    });
+});
+</script>
+
+
+
+<!-- Heyo This is Important -->
+
+<script>
+document.getElementById('speakSelectedText').addEventListener('click', function() {
+    // Get selected text
+    var text = getSelectedText();
+    if (text) {
+        speakText(text);
+    } else {
+        console.log('No text selected.');
+    }
+});
+
+function getSelectedText() {
+    var text = '';
+    if (typeof window.getSelection != "undefined") {
+        text = window.getSelection().toString();
+    } else if (typeof document.selection != "undefined" && document.selection.type == "Text") {
+        text = document.selection.createRange().text;
+    }
+    return text;
+}
+
+function speakText(textToSpeak) {
+    if ('speechSynthesis' in window) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = textToSpeak;
+        window.speechSynthesis.speak(msg);
+    } else {
+        console.log('Text-to-Speech not supported.');
+    }
+}
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const stopButton = document.getElementById('stopButton');
+    stopButton.addEventListener('click', function() {
+        if ('speechSynthesis' in window) {
+            speechSynthesis.cancel();
+        }
+    });
+});
+</script>
+
+
+
+
+
+
+
+<script>
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+
+    // Get all elements with the 'dropdown-content' class within the topnav
+    var dropdowns = x.getElementsByClassName("dropdown");
+    for (var i = 0; i < dropdowns.length; i++) {
+        // If the topnav is in responsive mode, ensure dropdown-content remains hidden
+        if (x.className.includes("responsive")) {
+            dropdowns[i].style.display = "none";
+        } else {
+            // Reset style in case it was previously modified
+            dropdowns[i].style.display = "";
+        }
+    }
+}
+
+// This part is to ensure the dropdown content does not display in responsive mode
+// You may need to add an event listener or modify existing ones for dropdown buttons
+// to control their display property separately if they should be visible in responsive mode.
+
+</script>
+
 
 <script>
 function myFunction() {
@@ -4456,7 +3939,6 @@ function myFunction() {
   }
 }
 </script>
-
 
 <script>
 const searchFunction = () => {
@@ -4689,379 +4171,6 @@ document.getElementById('searchInput2').addEventListener('input', searchFunction
 
 </script>
 
-
-<!-- Heyo This is Important -->
-
-<script>
-document.getElementById('speakSelectedText').addEventListener('click', function() {
-    // Get selected text
-    var text = getSelectedText();
-    if (text) {
-        speakText(text);
-    } else {
-        console.log('No text selected.');
-    }
-});
-
-function getSelectedText() {
-    var text = '';
-    if (typeof window.getSelection != "undefined") {
-        text = window.getSelection().toString();
-    } else if (typeof document.selection != "undefined" && document.selection.type == "Text") {
-        text = document.selection.createRange().text;
-    }
-    return text;
-}
-
-function speakText(textToSpeak) {
-    if ('speechSynthesis' in window) {
-        const msg = new SpeechSynthesisUtterance();
-        msg.text = textToSpeak;
-        window.speechSynthesis.speak(msg);
-    } else {
-        console.log('Text-to-Speech not supported.');
-    }
-}
-</script>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const stopButton = document.getElementById('stopButton');
-    stopButton.addEventListener('click', function() {
-        if ('speechSynthesis' in window) {
-            speechSynthesis.cancel();
-        }
-    });
-});
-</script>
-
-<script>
-const bcrypt = require('bcrypt');
-const express = require('express');
-const session = require('express-session');
-
-const app = express();
-
-// Middleware
-app.use(express.json());
-app.use(session({
-  secret: 'your secret key',
-  resave: false,
-  saveUninitialized: true,
-}));
-
-// Assuming you have a User model and database setup
-app.post('/signup', async (req, res) => {
-  const { username, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  // Save username, hashedPassword, and an optional profileImageUrl to your database
-});
-
-app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  const user = await User.findOne({ username });
-  if (user && await bcrypt.compare(password, user.hashedPassword)) {
-    req.session.userId = user.id; // Log the user in
-    res.json({ message: "Logged in successfully" });
-  } else {
-    res.status(401).json({ message: "Invalid credentials" });
-  }
-});
-</script>
-
-
-<script>
-app.get('/profile', async (req, res) => {
-  if (!req.session.userId) {
-    return res.status(401).json({ message: "Not authenticated" });
-  }
-
-  const user = await User.findById(req.session.userId);
-  res.json({ username: user.username, profileImageUrl: user.profileImageUrl });
-});
-</script>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const signInButton = document.getElementById('signInButton');
-  const userProfile = document.querySelector('.user-profile');
-  const userNameDiv = document.querySelector('.user-name');
-
-  signInButton.addEventListener('click', () => {
-    // Simulate sign in process
-    signInButton.style.display = 'none'; // Hide sign in button
-    userProfile.style.display = 'flex'; // Show user profile
-  });
-
-  userNameDiv.addEventListener('click', () => {
-    const newName = prompt('Enter new name:');
-    if (newName) {
-      userNameDiv.textContent = newName;
-    }
-  });
-});
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const loginButton = document.getElementById('loginButton');
-  const logoutButton = document.getElementById('logoutButton');
-  const userProfile = document.getElementById('userProfile');
-  const userName = document.getElementById('userName');
-  const userIcon = document.getElementById('userIcon');
-
-  // Simulate a user sign-in process
-  loginButton.addEventListener('click', () => {
-    // Here, you would replace these values with those from your sign-in process
-    const exampleUser = {
-      name: 'John Doe',
-      icon: 'path/to/user-icon.jpg' // Use a real image path
-    };
-    // Display user information
-    userName.textContent = exampleUser.name;
-    userIcon.src = exampleUser.icon;
-
-    // Update UI
-    loginButton.style.display = 'none';
-    userProfile.style.display = 'flex';
-  });
-
-  // Simulate user sign-out
-  logoutButton.addEventListener('click', () => {
-    // Hide user info and show login button
-    userProfile.style.display = 'none';
-    loginButton.style.display = 'block';
-  });
-});
-
-
-</script>
-
-<script>
-// Simulate checking login status on page load
-document.addEventListener('DOMContentLoaded', () => {
-    checkLoginStatus();
-});
-
-function logIn() {
-    // Here you would have your actual login logic
-    localStorage.setItem('isLoggedIn', 'true');
-    checkLoginStatus();
-}
-
-function logOut() {
-    localStorage.removeItem('isLoggedIn');
-    checkLoginStatus();
-}
-
-function checkLoginStatus() {
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    document.querySelector('.logged-in-toolbar').style.display = isLoggedIn ? 'block' : 'none';
-    document.querySelector('.logged-out-toolbar').style.display = isLoggedIn ? 'none' : 'flex';
-}
-</script>
-<script>
-function toggleDropdown2() {
-    const dropdown = document.querySelector('.dropdown-content2');
-    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-}
-
-// Optional: Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-    if (!event.target.matches('.user-icon img')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content2");
-        for (var i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.style.display === 'block') {
-                openDropdown.style.display = 'none';
-            }
-        }
-    }
-}
-</script>
-
-<script>
-function myFunction() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-        x.className += " responsive";
-    } else {
-        x.className = "topnav";
-    }
-
-    // Get all elements with the 'dropdown-content' class within the topnav
-    var dropdowns = x.getElementsByClassName("dropdown");
-    for (var i = 0; i < dropdowns.length; i++) {
-        // If the topnav is in responsive mode, ensure dropdown-content remains hidden
-        if (x.className.includes("responsive")) {
-            dropdowns[i].style.display = "none";
-        } else {
-            // Reset style in case it was previously modified
-            dropdowns[i].style.display = "";
-        }
-    }
-}
-
-// This part is to ensure the dropdown content does not display in responsive mode
-// You may need to add an event listener or modify existing ones for dropdown buttons
-// to control their display property separately if they should be visible in responsive mode.
-
-</script>
-
-<script>
-  // When the user clicks on the button, toggle between hiding and showing the dropdown content
-  document.querySelector('.accessibility-button').onclick = function() {
-    document.querySelector('.dropdown-content').classList.toggle('show');
-  };
-
-  // Close the dropdown if the user clicks outside of it
-  window.onclick = function(event) {
-    if (!event.target.matches('.accessibility-button')) {
-      var dropdowns = document.getElementsByClassName('dropdown-content');
-      for (var i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
-        }
-      }
-    }
-  };
-</script>
-
-<script>
-function updateNavigationForLoggedInUser(userName, profileImagePath) {
-  const profileSection = document.querySelector('.profile-section');
-  profileSection.querySelector('.profile-name').textContent = userName;
-  profileSection.querySelector('.profile-icon').src = profileImagePath;
-
-  // Hide the login and signup links
-  document.querySelector('a[href="login/index.html"]').style.display = 'none';
-  document.querySelector('a[href="..//signup/index.html"]').style.display = 'none';
-
-  // Show the profile section
-  profileSection.style.display = 'flex';
-}
-</script>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const loginButton = document.getElementById('loginButton');
-  const logoutButton = document.getElementById('logoutButton');
-  const userProfile = document.getElementById('userProfile');
-  const userName = document.getElementById('userName');
-  const userIcon = document.getElementById('userIcon');
-
-  // Simulate a user sign-in process
-  loginButton.addEventListener('click', () => {
-    // Here, you would replace these values with those from your sign-in process
-    const exampleUser = {
-      name: 'John Doe',
-      icon: 'path/to/user-icon.jpg' // Use a real image path
-    };
-    // Display user information
-    userName.textContent = exampleUser.name;
-    userIcon.src = exampleUser.icon;
-
-    // Update UI
-    loginButton.style.display = 'none';
-    userProfile.style.display = 'flex';
-  });
-
-  // Simulate user sign-out
-  logoutButton.addEventListener('click', () => {
-    // Hide user info and show login button
-    userProfile.style.display = 'none';
-    loginButton.style.display = 'block';
-  });
-});
-
-
-</script>
-
-<script>
-// Simulate checking login status on page load
-document.addEventListener('DOMContentLoaded', () => {
-    checkLoginStatus();
-});
-
-function logIn() {
-    // Here you would have your actual login logic
-    localStorage.setItem('isLoggedIn', 'true');
-    checkLoginStatus();
-}
-
-function logOut() {
-    localStorage.removeItem('isLoggedIn');
-    checkLoginStatus();
-}
-
-function checkLoginStatus() {
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    document.querySelector('.logged-in-toolbar').style.display = isLoggedIn ? 'block' : 'none';
-    document.querySelector('.logged-out-toolbar').style.display = isLoggedIn ? 'none' : 'flex';
-}
-</script>
-
-<script>
-function myFunction() {
-  var x = document.getElementById("myTopnav");
-  var searchResults = document.getElementById("searchResults2");
-
-  if (x.className === "topnav") {
-    x.className += " responsive";
-    // Show searchResults2 when opening the menu
-    searchResults.style.display = "block";
-  } else {
-    x.className = "topnav";
-    // Hide searchResults2 when closing the menu
-    searchResults.style.display = "none";
-  }
-}
-</script>
-
-<script>
-// Example function to toggle light mode and save the setting
-function toggleLightMode() {
-    document.body.classList.toggle('light-mode');
-    // Save the current theme to localStorage
-    if (document.body.classList.contains('light-mode')) {
-        localStorage.setItem('theme', 'light');
-    } else {
-        localStorage.removeItem('theme');
-    }
-}
-
-// Example function to toggle dark mode and save the setting
-function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
-    // Save the current theme to localStorage
-    if (document.body.classList.contains('dark-mode')) {
-        localStorage.setItem('theme', 'dark');
-    } else {
-        localStorage.removeItem('theme');
-    }
-}
-
-// Function to apply saved settings on page load
-function applySavedSettings() {
-    // Apply theme from saved settings
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-        document.body.classList.add('light-mode');
-    } else if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-    }
-
-    // Here, add more conditions to apply other settings like font size
-}
-
-// Call `applySavedSettings` when the page loads
-document.addEventListener('DOMContentLoaded', applySavedSettings);
-</script>
-
 <script>
   // Firebase configuration
   const firebaseConfig = {
@@ -5075,27 +4184,35 @@ document.addEventListener('DOMContentLoaded', applySavedSettings);
     measurementId: "G-PJ426H3WZN"
   };
 
-  // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const storage = firebase.storage();
 
-  // Handle authentication state changes
-  firebase.auth().onAuthStateChanged(user => {
-    const authLinks = document.getElementById('authLinks');
-    if (user) {
-      // User is signed in
-      document.getElementById('authStatus').textContent = 'Dashboard';
-      authLinks.innerHTML = `
-        <a href="../myprofile/index.html">My Profile</a>
-        <a href="javascript:void(0);" onclick="firebase.auth().signOut().then(() => location.reload());">Logout</a>
-      `;
-    } else {
-      // No user is signed in
-      document.getElementById('authStatus').textContent = 'Login';
-      authLinks.innerHTML = `
-        <a href="../signup/index.html">Signup</a>
-        <a href="../login/index.html">Login</a>
-      `;
-    }
+  / Handle authentication state changes
+    firebase.auth().onAuthStateChanged(user => {
+      const authStatus = document.getElementById('authStatus');
+      const authLinks = document.getElementById('authLinks');
+
+      if (user) {
+        // User is signed in
+        if(authStatus) authStatus.textContent = 'Dashboard';
+        if(authLinks) {
+          authLinks.innerHTML = `
+            <a href="myprofile/index.html">My Profile</a>
+            <a href="javascript:void(0);" onclick="firebase.auth().signOut().then(() => location.reload());">Logout</a>
+          `;
+        }
+      } else {
+        // No user is signed in
+        if(authStatus) authStatus.textContent = 'Login';
+        if(authLinks) {
+          authLinks.innerHTML = `
+            <a href="signup/index.html">Signup</a>
+            <a href="login/index.html">Login</a>
+          `;
+        }
+      }
+    });
   });
 </script>
 
