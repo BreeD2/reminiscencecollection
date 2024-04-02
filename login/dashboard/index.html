@@ -324,11 +324,16 @@
       <h1>Welcome to Your Dashboard</h1>
           <div id="userProfile">
               <h2>User Profile</h2>
-              <div><strong>Username:</strong> <input type="text" id="usernameInput" placeholder="Username"></div>
-              <div><strong>Email:</strong> <span id="emailDisplay"></span></div>
-              <div><strong>Description:</strong> <input type="text" id="descriptionInput" placeholder="Description"></div>
-              <div><strong>Profile Picture:</strong> <img id="profilePicture" src="" alt="Profile Picture" style="width: 100px; height: 100px;"></div>
-              <!-- Add more profile fields as necessary -->
+              <!-- Display User Email and Profile Picture -->
+              <div id="emailDisplay"></div>
+              <img id="userProfilePic" src="" alt="Profile Picture" style="width: 100px; height: 100px;">
+
+              <!-- Input for Updating Username -->
+              <input type="text" id="usernameInput" placeholder="New username">
+              <!-- Input for Changing Profile Picture -->
+              <input type="file" id="profilePicChange">
+              <!-- Button to Submit Profile Updates -->
+              <button id="updateProfileBtn">Update Profile</button>
           </div>
 
           <div id="historySection">
@@ -4110,96 +4115,81 @@
     };
 
     </script>
-<!-- Firebase Authentication and Firestore Initialization Script -->
-<script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
-      authDomain: "reminiscence-collection.firebaseapp.com",
-      databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
-      projectId: "reminiscence-collection",
-      storageBucket: "reminiscence-collection.appspot.com",
-      messagingSenderId: "974064770925",
-      appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
-      measurementId: "G-PJ426H3WZN"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-    const storage = firebase.storage();
+    <script>
+      // Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+        authDomain: "reminiscence-collection.firebaseapp.com",
+        databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+        projectId: "reminiscence-collection",
+        storageBucket: "reminiscence-collection.appspot.com",
+        messagingSenderId: "974064770925",
+        appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+        measurementId: "G-PJ426H3WZN"
+      };
 
-    auth.onAuthStateChanged(user => {
-    if (user) {
-        // User is logged in. Fetch history.
-        const userId = user.uid;
-        fetchLikes(userId);
-        fetchComments(userId);
-        fetchRatings(userId);
-        // Additional setup for logged-in users...
-    } else {
-        // No user is signed in. Hide the history or display a message.
-        document.getElementById('historySection').innerHTML = '<p>Please log in to view your activity history.</p>';
-    }
-});
+      // Initialize Firebase
+      const app = firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+      const storage = firebase.storage();
 
-function fetchLikes(userId) {
-    db.collection('likes').where('userId', '==', userId).get().then(querySnapshot => {
-        const likes = [];
-        querySnapshot.forEach(doc => {
-            likes.push(doc.data().gameId); // Assuming you want to display game IDs for now
-        });
-        // Display these likes on the dashboard
-        document.getElementById('likesHistory').innerHTML = likes.join(', ');
-    });
-}
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          // Display user's email, name, and profile picture
+          document.getElementById('emailDisplay').textContent = user.email || 'No email available';
+          document.getElementById('userName').textContent = user.displayName || 'No name set';
 
-function fetchComments(userId) {
-    // Similar to fetchLikes, but query the 'comments' collection
-    // Adapt the display logic to include comment text
-}
+          const userProfilePicRef = storage.ref(`profilePictures/${user.uid}`);
+          userProfilePicRef.getDownloadURL().then((url) => {
+            document.getElementById('userProfilePic').src = url;
+          }).catch(() => {
+            console.log('No profile picture found. Using default.');
+            // Set a default image or leave blank if no profile picture is found
+            document.getElementById('userProfilePic').src = 'path/to/default/image.png';
+          });
 
-function fetchRatings(userId) {
-    // Similar to fetchLikes, but query the 'ratings' collection
-    // Adapt the display logic to include rating values
-}
+          // Logout functionality
+          document.getElementById('logoutBtn').addEventListener('click', () => {
+            auth.signOut().then(() => {
+              window.location.href = '/index.html'; // Adjust as needed
+            });
+          });
 
-</script>
+          // Username and profile picture update functionality
+          document.getElementById('updateProfileBtn').addEventListener('click', () => {
+            const newUsername = document.getElementById('usernameInput').value;
+            const file = document.getElementById('profilePicChange').files[0]; // Ensure your file input ID matches
 
-<!-- JavaScript Code -->
-<script>
-    // Event Listener for Sign-in Button Click
-    document.getElementById('signInBtn').addEventListener('click', () => {
-        window.location.href = 'login.html'; // Example redirection
-    });
+            if (newUsername) {
+              user.updateProfile({
+                displayName: newUsername
+              }).then(() => {
+                console.log('Username updated successfully.');
+                window.location.reload();
+              });
+            }
 
-    // Event Listener for Like Button Click
-    document.getElementById('likeButton').addEventListener('click', () => {
-        const userId = firebase.auth().currentUser.uid;
-        const gameId = 'someGameId'; // Replace with actual game ID
-        db.collection('likes').add({
-            userId: userId,
-            gameId: gameId,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        }).then(() => console.log('Liked!'));
-    });
+            if (file) {
+              const uploadTask = storage.ref(`profilePictures/${user.uid}`).put(file);
+              uploadTask.then(() => {
+                uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                  user.updateProfile({
+                    photoURL: downloadURL
+                  }).then(() => {
+                    console.log('Profile picture updated.');
+                    window.location.reload();
+                  });
+                });
+              });
+            }
+          });
+        } else {
+          window.location.href = '/login.html'; // Redirect to login if not logged in
+        }
+      });
+    </script>
 
-    // Additional Event Listeners for Comment and Rate Buttons...
-</script>
-
-<!-- JavaScript for Uploading Profile Picture (example) -->
-<script>
-    const fileInput = document.getElementById('profilePic');
-    fileInput.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        const storageRef = storage.ref();
-        const userProfilePicRef = storageRef.child('profilePictures/' + firebase.auth().currentUser.uid);
-
-        userProfilePicRef.put(file).then((snapshot) => {
-            console.log('Uploaded a profile picture!');
-            // You might want to store the file path or URL in Firestore for easy retrieval
-        });
-    });
-</script>
 
 
 </body>
