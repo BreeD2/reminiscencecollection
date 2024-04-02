@@ -3962,10 +3962,9 @@ const searchFunction = () => {
 
 
 
-<!-- Firebase Config -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
 
   // Firebase configuration
   const firebaseConfig = {
@@ -3983,26 +3982,33 @@ const searchFunction = () => {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  // SignIn Event Listener
-  document.getElementById('signinBtn').addEventListener('click', async (event) => {
+  // SignUp Event Listener
+  document.getElementById('signupBtn').addEventListener('click', async (event) => {
     event.preventDefault(); // Prevent form from submitting normally
 
     // Retrieve form values
-    const email = document.getElementById("signin-email").value;
-    const password = document.getElementById("signin-password").value;
+    const email = document.getElementById("signup-email").value;
+    const password = document.getElementById("signup-password").value;
 
-    // Attempt to sign in the user
+    // Attempt to sign up the user
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // Redirect after successful sign in
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      // Redirect or perform further actions upon successful sign-up
+      console.log("Sign-up successful, user:", userCredential.user);
+      // Optionally, redirect the user to a dashboard or verification page
       window.location.href = '../dashboard/index.html';
     } catch (error) {
-      // Handle errors
-      document.getElementById("signin-error").textContent = `Error during sign-in: ${error.message}`;
+      console.error("Error during sign-up:", error);
+      // Handle specific error for email already in use
+      if (error.code === 'auth/email-already-in-use') {
+        document.getElementById("signup-error").textContent = "This email already has an account. Please log in or use a different email.";
+      } else {
+        // Handle other errors
+        document.getElementById("signup-error").textContent = `Sign-up error: ${error.message}`;
+      }
     }
   });
 </script>
-
 
 </body>
 </html>
