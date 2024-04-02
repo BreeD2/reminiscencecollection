@@ -22,11 +22,16 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <!-- Firebase App (core) -->
+    <!-- Firebase App (core) & Firebase Auth, Firestore -->
     <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
+    <!-- FirebaseUI Auth -->
+    <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth__en.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
+    <!-- Firebase Storage (If you're using storage) -->
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-storage-compat.js"></script>
+
 
 
      </head>
@@ -4122,8 +4127,8 @@ const searchFunction = () => {
 </script>
 
 <script>
-// Firebase configuration
-const firebaseConfig = {
+  // Firebase configuration
+  const firebaseConfig = {
     apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
     authDomain: "reminiscence-collection.firebaseapp.com",
     databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
@@ -4132,66 +4137,59 @@ const firebaseConfig = {
     messagingSenderId: "974064770925",
     appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
     measurementId: "G-PJ426H3WZN"
-};
+  };
 
-// Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
 
-    // Initialize the FirebaseUI Widget using Firebase
-    const ui = new firebaseui.auth.AuthUI(auth);
+  // Auth reference
+  const auth = firebase.auth();
 
-    // FirebaseUI configuration
-    const uiConfig = {
-        callbacks: {
-            signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-                // User successfully signed in
-                window.location.href = 'dashboard/index.html'; // Specify the URL of your dashboard page
-                return false; // Avoids redirecting back to the login page
-            },
-            signInFailure: function(error) {
-                // Handle sign-in errors
-                // For example, if error.code == 'auth/wrong-password'
-                if (error.code === 'auth/wrong-password') {
-                    alert('The password is incorrect. Please try again.');
-                } else {
-                    // Handle other errors
-                    alert(error.message);
-                }
-                return Promise.resolve();
-            },
-            uiShown: function() {
-                document.getElementById('loader').style.display = 'none';
-            }
-        },
-        signInFlow: 'popup',
-        signInSuccessUrl: 'dashboard/index.html',
-        signInOptions: [
-            firebase.auth.EmailAuthProvider.PROVIDER_ID,
-            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-            firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-        ],
-        tosUrl: 'https://breed2.github.io/reminiscencecollection//////termsofservice/index.html', // Add your Terms of Service URL
-        privacyPolicyUrl: 'https://breed2.github.io/reminiscencecollection//////publicpolicy/index.html' // Add your Privacy Policy URL
-    };
+  // Initialize the FirebaseUI Widget using Firebase
+  const ui = new firebaseui.auth.AuthUI(auth);
 
+  // FirebaseUI configuration
+  const uiConfig = {
+    callbacks: {
+      signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+        // User successfully signed in
+        window.location.href = 'dashboard/index.html'; // Redirect to your dashboard page
+        return false; // Prevents the default redirect by FirebaseUI
+      },
+      signInFailure: function(error) {
+        // Handle sign-in errors
+        console.error('Sign in failure:', error);
+        return Promise.resolve(); // Proper error handling
+      },
+      uiShown: function() {
+        document.getElementById('loader').style.display = 'none';
+      }
+    },
+    signInFlow: 'popup',
+    signInSuccessUrl: 'dashboard/index.html', // Redirect here for signInFlow: 'redirect'
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.auth.PhoneAuthProvider.PROVIDER_ID
+      // Add other providers as needed
+    ],
+    tosUrl: 'https://breed2.github.io/reminiscencecollection//////termsofservice/index.html',
+    privacyPolicyUrl: 'https://breed2.github.io/reminiscencecollection//////publicpolicy/index.html'
+  };
 
-    ui.start('#firebaseui-auth-container', uiConfig);
+  ui.start('#firebaseui-auth-container', uiConfig);
 
-    document.getElementById('forgotPasswordLink').addEventListener('click', function() {
-        const emailAddress = prompt('Please enter your email address:');
-        if (emailAddress) {
-            auth.sendPasswordResetEmail(emailAddress)
-            .then(function() {
-                alert('Password reset email sent. Please check your inbox.');
-            }).catch(function(error) {
-                console.error('Error sending password reset email:', error);
-                alert('Error sending password reset email. Please make sure the email address is correct.');
-            });
-        }
-    });
-
-
+  // Password reset link click listener
+  document.getElementById('forgotPasswordLink').addEventListener('click', function() {
+    const emailAddress = prompt('Please enter your email address:');
+    if (emailAddress) {
+      auth.sendPasswordResetEmail(emailAddress).then(function() {
+        alert('Password reset email sent. Please check your inbox.');
+      }).catch(function(error) {
+        console.error('Error sending password reset email:', error);
+        alert('Error sending password reset email. Please ensure the email address is correct.');
+      });
+    }
+  });
 </script>
 
 </body>
