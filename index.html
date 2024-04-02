@@ -4172,47 +4172,62 @@ document.getElementById('searchInput2').addEventListener('input', searchFunction
 </script>
 
 <script>
-  // Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
-    authDomain: "reminiscence-collection.firebaseapp.com",
-    databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
-    projectId: "reminiscence-collection",
-    storageBucket: "reminiscence-collection.appspot.com",
-    messagingSenderId: "974064770925",
-    appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
-    measurementId: "G-PJ426H3WZN"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+  authDomain: "reminiscence-collection.firebaseapp.com",
+  databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+  projectId: "reminiscence-collection",
+  storageBucket: "reminiscence-collection.appspot.com",
+  messagingSenderId: "974064770925",
+  appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+  measurementId: "G-PJ426H3WZN"
+};
 
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const storage = firebase.storage();
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const storage = firebase.storage();
 
-  // Handle authentication state changes
-  firebase.auth().onAuthStateChanged(user => {
-    const authStatus = document.getElementById('authStatus');
-    const authLinks = document.getElementById('authLinks');
+auth.onAuthStateChanged(user => {
+  if (user) {
+    document.getElementById('userName').textContent = user.displayName || 'User';
+    const userProfilePicRef = storage.ref('profilePictures/' + user.uid);
+    userProfilePicRef.getDownloadURL().then((url) => {
+      // Ensure you have an <img> element with id 'userProfilePic' in your topnav for displaying the profile picture
+      document.getElementById('userProfilePic').src = url;
+    }).catch(() => {
+      console.log('Profile picture not found. Using default.');
+    });
 
-    if (user) {
-      // User is signed in
-      if(authStatus) authStatus.textContent = 'Dashboard';
-      if(authLinks) {
-        authLinks.innerHTML = `
-          <a href="myprofile/index.html">My Profile</a>
-          <a href="javascript:void(0);" onclick="firebase.auth().signOut().then(() => location.reload());">Logout</a>
-        `;
+    document.getElementById('logoutBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      auth.signOut().then(() => {
+        window.location.href = '../index.html'; // Adjust as necessary
+      });
+    });
+
+    document.getElementById('updateProfileBtn').addEventListener('click', () => {
+      const newUsername = document.getElementById('usernameInput').value;
+      const file = document.getElementById('profilePicChange').files[0];
+
+      if (newUsername) {
+        user.updateProfile({ displayName: newUsername })
+          .then(() => window.location.reload());
       }
-    } else {
-      // No user is signed in
-      if(authStatus) authStatus.textContent = 'Login';
-      if(authLinks) {
-        authLinks.innerHTML = `
-          <a href="signup/index.html">Signup</a>
-          <a href="login/index.html">Login</a>
-        `;
+
+      if (file) {
+        const uploadTask = storage.ref(`profilePictures/${user.uid}`).put(file);
+        uploadTask.then(() => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            user.updateProfile({ photoURL: downloadURL })
+              .then(() => window.location.reload());
+          });
+        });
       }
-    }
-  });
+    });
+  } else {
+    window.location.href = '../login.html'; // Redirect to login if not logged in
+  }
+});
 </script>
 
 
