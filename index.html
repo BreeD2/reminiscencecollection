@@ -31,6 +31,12 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script>
+<!-- Correctly include Firebase Storage compat layer -->
+<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
 <body>
 
   <div class="read-aloud">
@@ -55,7 +61,7 @@
          <i class="fa fa-user"></i> User
          <i class="fa fa-caret-down"></i>
        </button>
-       <div class="dropdown-content2">
+  <div class="dropdown-content2" id="authLinks">
           <a href="..//signup/index.html">Signup</a>
          <a href="..//login/index.html">Login</a>
          <a href="..//myprofile/index.html">My Profile</a>
@@ -5054,6 +5060,43 @@ function applySavedSettings() {
 
 // Call `applySavedSettings` when the page loads
 document.addEventListener('DOMContentLoaded', applySavedSettings);
+</script>
+
+<script>
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+    authDomain: "reminiscence-collection.firebaseapp.com",
+    databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+    projectId: "reminiscence-collection",
+    storageBucket: "reminiscence-collection.appspot.com",
+    messagingSenderId: "974064770925",
+    appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+    measurementId: "G-PJ426H3WZN"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Handle authentication state changes
+  firebase.auth().onAuthStateChanged(user => {
+    const authLinks = document.getElementById('authLinks');
+    if (user) {
+      // User is signed in
+      document.getElementById('authStatus').textContent = 'Dashboard';
+      authLinks.innerHTML = `
+        <a href="../myprofile/index.html">My Profile</a>
+        <a href="javascript:void(0);" onclick="firebase.auth().signOut().then(() => location.reload());">Logout</a>
+      `;
+    } else {
+      // No user is signed in
+      document.getElementById('authStatus').textContent = 'Login';
+      authLinks.innerHTML = `
+        <a href="../signup/index.html">Signup</a>
+        <a href="../login/index.html">Login</a>
+      `;
+    }
+  });
 </script>
 
 
