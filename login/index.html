@@ -329,19 +329,16 @@ Accessibility<i class="fa fa-caret-down"></i>
 
         <div id="main-content" class="content">
           <form id="loginForm">
-              <div>
-                  <label for="login-credential">Email/Phone:</label>
-                  <input type="text" id="login-credential" required placeholder="Email or Phone">
-              </div>
-              <div id="otp-section" style="display: none;">
-                  <label for="otp">OTP:</label>
-                  <input type="text" id="otp" placeholder="Enter OTP">
-              </div>
-              <div>
-                  <label for="login-password">Password:</label>
-                  <input type="password" id="login-password" placeholder="Password (for email login)">
-              </div>
-  <button type="button" id="loginBtn">Login</button>
+
+            <div>
+                    <label for="login-credential">Email:</label>
+                    <input type="text" id="login-credential" required placeholder="Email">
+                </div>
+                <div>
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" required placeholder="Password">
+                </div>
+                <button type="button" id="loginBtn">Login</button>
 
 
   <div id="firebaseui-auth-container"></div>
@@ -4127,69 +4124,69 @@ const searchFunction = () => {
 </script>
 
 <script>
-  // Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
-    authDomain: "reminiscence-collection.firebaseapp.com",
-    databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
-    projectId: "reminiscence-collection",
-    storageBucket: "reminiscence-collection.appspot.com",
-    messagingSenderId: "974064770925",
-    appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
-    measurementId: "G-PJ426H3WZN"
-  };
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+        authDomain: "reminiscence-collection.firebaseapp.com",
+        databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+        projectId: "reminiscence-collection",
+        storageBucket: "reminiscence-collection.appspot.com",
+        messagingSenderId: "974064770925",
+        appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+        measurementId: "G-PJ426H3WZN"
+    };
 
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-  // Auth reference
-  const auth = firebase.auth();
+    // Initialize FirebaseUI
+    const ui = new firebaseui.auth.AuthUI(auth);
+    const uiConfig = {
+        callbacks: {
+            signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+                // User successfully signed in
+                window.location.href = '..//dashboard/index.html';
+                return false;
+            },
+        },
+        signInFlow: 'popup',
+        signInOptions: [
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+               firebase.auth.PhoneAuthProvider.PROVIDER_ID
+        ],
+        tosUrl: 'https://breed2.github.io/reminiscencecollection//////termsofservice/index.html',
+        privacyPolicyUrl: 'https://breed2.github.io/reminiscencecollection//////publicpolicy/index.html'
+    };
+    ui.start('#firebaseui-auth-container', uiConfig);
 
-  // Initialize the FirebaseUI Widget using Firebase
-  const ui = new firebaseui.auth.AuthUI(auth);
+    // Manual sign-in for email/password
+    document.getElementById('loginBtn').addEventListener('click', function() {
+        const email = document.getElementById('login-credential').value;
+        const password = document.getElementById('login-password').value;
 
-  // FirebaseUI configuration
-  const uiConfig = {
-    callbacks: {
-      signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-        // User successfully signed in
-        window.location.href = 'dashboard/index.html'; // Redirect to your dashboard page
-        return false; // Prevents the default redirect by FirebaseUI
-      },
-      signInFailure: function(error) {
-        // Handle sign-in errors
-        console.error('Sign in failure:', error);
-        return Promise.resolve(); // Proper error handling
-      },
-      uiShown: function() {
-        document.getElementById('loader').style.display = 'none';
-      }
-    },
-    signInFlow: 'popup',
-    signInSuccessUrl: 'dashboard/index.html', // Redirect here for signInFlow: 'redirect'
-    signInOptions: [
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.PhoneAuthProvider.PROVIDER_ID
-      // Add other providers as needed
-    ],
-    tosUrl: 'https://breed2.github.io/reminiscencecollection//////termsofservice/index.html',
-    privacyPolicyUrl: 'https://breed2.github.io/reminiscencecollection//////publicpolicy/index.html'
-  };
+        auth.signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                window.location.href = '..//dashboard/index.html';
+            })
+            .catch((error) => {
+                alert('Failed to sign in: ' + error.message);
+            });
+    });
 
-  ui.start('#firebaseui-auth-container', uiConfig);
-
-  // Password reset link click listener
-  document.getElementById('forgotPasswordLink').addEventListener('click', function() {
-    const emailAddress = prompt('Please enter your email address:');
-    if (emailAddress) {
-      auth.sendPasswordResetEmail(emailAddress).then(function() {
-        alert('Password reset email sent. Please check your inbox.');
-      }).catch(function(error) {
-        console.error('Error sending password reset email:', error);
-        alert('Error sending password reset email. Please ensure the email address is correct.');
-      });
-    }
-  });
+    // Forgot password handler
+    document.getElementById('forgotPasswordLink').addEventListener('click', function(event) {
+        event.preventDefault();
+        const emailAddress = prompt('Please enter your email address:');
+        if (emailAddress) {
+            auth.sendPasswordResetEmail(emailAddress)
+                .then(function() {
+                    alert('Password reset email sent. Please check your inbox.');
+                }).catch(function(error) {
+                    alert('Error sending password reset email: ' + error.message);
+                });
+        }
+    });
 </script>
 
 </body>
