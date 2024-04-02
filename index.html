@@ -39,62 +39,60 @@
   <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-storage-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
   <div class="read-aloud">
-  <!-- Navigation Bar with Logo and Website Name -->
-  <div class="topnav" id="myTopnav">
-    <a href="index.html" class="logo">
-      <img src="rpa.png" alt="Reminiscence Collection" style="height: 23px;">&ensp;<span class="title-text">Reminiscence&ensp;Collection</span>
+    <!-- Navigation Bar with Logo and Website Name -->
+    <div class="topnav" id="myTopnav">
+      <a href="..//index.html" class="logo">
+        <img src="..//rpa.png" alt="Reminiscence Collection" style="height: 23px;">&ensp;<span class="title-text">Reminiscence&ensp;Collection</span>
 
- </a>
- <a href="index.html" class="active">Home</a>
-     <a href="games/index.html">Games</a>
-     <a href="about/index.html">About</a>
-     <a href="contact/index.html">Contact</a>
-     <!-- Accessibility Button and Dropdown -->
-     <!-- User Information Dropdown -->
-     <input type="text" id="searchInput2" placeholder="Search.." onkeyup="searchFunction()">
-     <button id="clearSearch" onclick="clearSearchFunction()">X</button>
-       <!-- Other navigation items -->
+   </a>
+   <a href="https://breed2.github.io/reminiscencecollection//index.html">Home</a>
+       <a href="..//games/index.html">Games</a>
+       <a href="..//about/index.html">About</a>
+       <a href="..//contact/index.html">Contact</a>
+       <!-- Accessibility Button and Dropdown -->
+       <!-- User Information Dropdown -->
+       <input type="text" id="searchInput2" placeholder="Search.." onkeyup="searchFunction()">
+       <button id="clearSearch" onclick="clearSearchFunction()">X</button>
+         <!-- Other navigation items -->
 
-     <div class="dropdown2">
-       <button class="dropbtn2">
-         <i class="fa fa-user"></i> User
-         <i class="fa fa-caret-down"></i>
-       </button>
-  <div class="dropdown-content2" id="authLinks">
-    <div id="authStatus">Login</div>
-          <a href="signup/index.html">Signup</a>
-         <a href="login/index.html">Login</a>
-         <a href="myprofile/index.html">My Profile</a>
-         <a href="logout/index.html">Logout</a>
+         <!-- User Information Dropdown -->
+         <div class="dropdown2">
+             <button class="dropbtn2">
+                 <i class="fa fa-user"></i> <span id="userName">User</span> <i class="fa fa-caret-down"></i>
+             </button>
+             <div class="dropdown-content2">
+                 <a href="..//myprofile/index.html">My Profile</a>
+                 <a href="..//logout/index.html" id="logoutBtn">Logout</a>
+             </div>
+         </div>
+       <div class="dropdown">
+         <button class="dropbtn">
+           <i class="fas fa-wheelchair"></i>
+  Accessibility<i class="fa fa-caret-down"></i>
+
+         </button>
+         <div class="dropdown-content">
+           <div id="google_translate_element"></div>
+           <button onclick="resetSettings()">Reset Settings</button>
+           <button onclick="increaseFont()">Increase Font Size</button>
+           <button onclick="decreaseFont()">Decrease Font Size</button>
+           <button onclick="toggleLightMode()">Toggle Light Mode</button>
+           <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+           <button id="speakSelectedText">Read Selected Text</button>
+           <button id="stopButton">Stop Reading</button>
+         </div>
        </div>
-     </div>
-     <div class="dropdown">
-       <button class="dropbtn">
-         <i class="fas fa-wheelchair"></i>
-Accessibility<i class="fa fa-caret-down"></i>
-
-       </button>
-       <div class="dropdown-content">
-         <div id="google_translate_element"></div>
-         <button onclick="resetSettings()">Reset Settings</button>
-         <button onclick="increaseFont()">Increase Font Size</button>
-         <button onclick="decreaseFont()">Decrease Font Size</button>
-         <button onclick="toggleLightMode()">Toggle Light Mode</button>
-         <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
-         <button id="speakSelectedText">Read Selected Text</button>
-         <button id="stopButton">Stop Reading</button>
-       </div>
-     </div>
 
 
-     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-       <i class="fa fa-bars"></i>
-     </a>
+       <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+         <i class="fa fa-bars"></i>
+       </a>
 
 
- </div>
- <!-- Moved searchResults outside the topnav -->
- <div id="searchResults2" class="search-results2"></div>
+   </div>
+   <!-- Moved searchResults outside the topnav -->
+   <div id="searchResults2" class="search-results2"></div>
+
 
 <aside class="sidebar">
     <h3>All Games</h3>
@@ -4171,9 +4169,7 @@ const clearSearchFunction = () => {
 document.getElementById('searchInput2').addEventListener('input', searchFunction);
 
 </script>
-
 <script>
-  // Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
     authDomain: "reminiscence-collection.firebaseapp.com",
@@ -4188,34 +4184,49 @@ document.getElementById('searchInput2').addEventListener('input', searchFunction
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
   const storage = firebase.storage();
-  // Place this script in a .js file and include it in all pages
-  document.addEventListener('DOMContentLoaded', () => {
-    const authStatus = document.getElementById('authStatus');
-    const authLinks = document.getElementById('authLinks');
 
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        if (authStatus) authStatus.textContent = 'Dashboard';
-        if (authLinks) {
-          authLinks.innerHTML = `
-            <a href="myprofile/index.html">My Profile</a>
-            <a href="javascript:void(0);" onclick="firebase.auth().signOut().then(() => location.reload());">Logout</a>
-          `;
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      document.getElementById('userName').textContent = user.displayName || 'User';
+      const userProfilePicRef = storage.ref('profilePictures/' + user.uid);
+      userProfilePicRef.getDownloadURL().then((url) => {
+        // Ensure you have an <img> element with id 'userProfilePic' in your topnav for displaying the profile picture
+        document.getElementById('userProfilePic').src = url;
+      }).catch(() => {
+        console.log('Profile picture not found. Using default.');
+      });
+
+      document.getElementById('logoutBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        auth.signOut().then(() => {
+          window.location.href = '../index.html'; // Adjust as necessary
+        });
+      });
+
+      document.getElementById('updateProfileBtn').addEventListener('click', () => {
+        const newUsername = document.getElementById('usernameInput').value;
+        const file = document.getElementById('profilePicChange').files[0];
+
+        if (newUsername) {
+          user.updateProfile({ displayName: newUsername })
+            .then(() => window.location.reload());
         }
-      } else {
-        if (authStatus) authStatus.textContent = 'Login';
-        if (authLinks) {
-          authLinks.innerHTML = `
-            <a href="signup/index.html">Signup</a>
-            <a href="login/index.html">Login</a>
-          `;
+
+        if (file) {
+          const uploadTask = storage.ref(`profilePictures/${user.uid}`).put(file);
+          uploadTask.then(() => {
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              user.updateProfile({ photoURL: downloadURL })
+                .then(() => window.location.reload());
+            });
+          });
         }
-      }
-    });
+      });
+    } else {
+      window.location.href = '../login.html'; // Redirect to login if not logged in
+    }
   });
-
 </script>
-
 
   </body>
   </html>
