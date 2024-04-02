@@ -4293,3 +4293,11 @@ margin-top: 20px;
 .game-cover {
    cursor: pointer;
 }
+
+.liked {
+  color: blue; /* Example style */
+}
+
+.highlighted {
+  color: gold; /* Example style */
+}
