@@ -175,18 +175,21 @@
 
 
         <div id="main-content" class="content">
-          <div id="signin-form">
-            <input type="email" id="signin-email" placeholder="Email" required>
-            <div id="email-error" style="color: red;"></div>
-
-            <input type="password" id="signin-password" placeholder="Password" required>
-            <div id="password-error" style="color: red;"></div>
-
-            <button id="signinBtn">Sign In</button>
-            <div id="signin-error" style="color: red;"></div>
+          <div id="signup-container">
+              <h2>Sign Up</h2>
+              <form id="signup-form">
+                  <div>
+                      <label for="signup-email">Email:</label>
+                      <input type="email" id="signup-email" required placeholder="Enter your email">
+                  </div>
+                  <div>
+                      <label for="signup-password">Password:</label>
+                      <input type="password" id="signup-password" required placeholder="Create a password">
+                  </div>
+                  <button type="button" id="signupBtn">Sign Up</button>
+                  <p id="signup-error" style="color: red;"></p> <!-- To display signup errors -->
+              </form>
           </div>
-
-          <p>Don't have an account? <a href="..//signup/index.html">Sign up here</a></p>
 
 
 <div class="footer">
@@ -3963,52 +3966,53 @@ const searchFunction = () => {
 
 
 <script type="module">
+  // Move imports to the top level of your module
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
   import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
 
-  // Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
-    authDomain: "reminiscence-collection.firebaseapp.com",
-    databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
-    projectId: "reminiscence-collection",
-    storageBucket: "reminiscence-collection.appspot.com",
-    messagingSenderId: "974064770925",
-    appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
-    measurementId: "G-PJ426H3WZN"
-  };
+  document.addEventListener('DOMContentLoaded', async function() {
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+      authDomain: "reminiscence-collection.firebaseapp.com",
+      databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+      projectId: "reminiscence-collection",
+      storageBucket: "reminiscence-collection.appspot.com",
+      messagingSenderId: "974064770925",
+      appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+      measurementId: "G-PJ426H3WZN"
+    };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-  // SignUp Event Listener
-  document.getElementById('signupBtn').addEventListener('click', async (event) => {
-    event.preventDefault(); // Prevent form from submitting normally
+    // Ensure the button and elements are loaded
+    const signupButton = document.getElementById('signupBtn');
+    if (signupButton) {
+      signupButton.addEventListener('click', async (event) => {
+        event.preventDefault(); // Prevent form from submitting normally
 
-    // Retrieve form values
-    const email = document.getElementById("signup-email").value;
-    const password = document.getElementById("signup-password").value;
+        // Retrieve form values
+        const email = document.getElementById("signup-email").value;
+        const password = document.getElementById("signup-password").value;
 
-    // Attempt to sign up the user
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      // Redirect or perform further actions upon successful sign-up
-      console.log("Sign-up successful, user:", userCredential.user);
-      // Optionally, redirect the user to a dashboard or verification page
-      window.location.href = '../dashboard/index.html';
-    } catch (error) {
-      console.error("Error during sign-up:", error);
-      // Handle specific error for email already in use
-      if (error.code === 'auth/email-already-in-use') {
-        document.getElementById("signup-error").textContent = "This email already has an account. Please log in or use a different email.";
-      } else {
-        // Handle other errors
-        document.getElementById("signup-error").textContent = `Sign-up error: ${error.message}`;
-      }
+        // Attempt to sign up the user
+        try {
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          console.log("Sign-up successful, user:", userCredential.user);
+          window.location.href = '../dashboard/index.html';
+        } catch (error) {
+          console.error("Error during sign-up:", error);
+          document.getElementById("signup-error").textContent = error.message;
+        }
+      });
+    } else {
+      console.error('Signup button not found!');
     }
   });
 </script>
+
 
 </body>
 </html>
