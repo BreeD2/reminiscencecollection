@@ -3881,13 +3881,7 @@ button {
     font-size: 30px; /* Default font size */
 }
 
-/* Media query for screens smaller than 600px */
-@media (max-width: 600px) {
-    .game-title {
-        font-size: 25px; /* Smaller font size on small screens */
-    }
 
-}
 .star {
     cursor: pointer;
     color: grey;
@@ -4210,7 +4204,7 @@ border:2px solid white;
     font-size: 10px
   }
   .game-title {
-    font-size: 18px
+    font-size: 25px
   }
   #likeButton, #commentButton, #rateButton {
     font-size: 10px

@@ -3966,9 +3966,10 @@ const searchFunction = () => {
 
 
 <script type="module">
-  // Move imports to the top level of your module
+  // Firebase imports
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
   document.addEventListener('DOMContentLoaded', async function() {
     // Firebase configuration
@@ -3986,30 +3987,43 @@ const searchFunction = () => {
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    // Ensure the button and elements are loaded
-    const signupButton = document.getElementById('signupBtn');
-    if (signupButton) {
-      signupButton.addEventListener('click', async (event) => {
-        event.preventDefault(); // Prevent form from submitting normally
+    document.getElementById('signupBtn').addEventListener('click', async (event) => {
+      event.preventDefault(); // Prevent form from submitting normally
 
-        // Retrieve form values
-        const email = document.getElementById("signup-email").value;
-        const password = document.getElementById("signup-password").value;
+      const email = document.getElementById("signup-email").value;
+      const password = document.getElementById("signup-password").value;
 
-        // Attempt to sign up the user
-        try {
-          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-          console.log("Sign-up successful, user:", userCredential.user);
-          window.location.href = '../dashboard/index.html';
-        } catch (error) {
-          console.error("Error during sign-up:", error);
-          document.getElementById("signup-error").textContent = error.message;
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+        // Ask for username and verification method choice
+        const username = prompt("Please enter your username:");
+        const verificationMethod = confirm("Press OK to verify by email, Cancel for phone verification.");
+
+        // Update user profile with username
+        if(username) {
+          await updateProfile(userCredential.user, { displayName: username });
+          await setDoc(doc(db, "users", userCredential.user.uid), { email, username });
         }
-      });
-    } else {
-      console.error('Signup button not found!');
-    }
+
+        // Send email verification or handle phone verification
+        if(verificationMethod) {
+          await sendEmailVerification(userCredential.user);
+          alert("Verification email sent. Please check your inbox.");
+        } else {
+          // Implement phone verification logic here
+          alert("Phone verification is selected but not implemented in this example.");
+        }
+
+        console.log("Sign-up successful, user:", userCredential.user);
+        window.location.href = '../dashboard/index.html';
+      } catch (error) {
+        console.error("Error during sign-up:", error);
+        document.getElementById("signup-error").textContent = error.message;
+      }
+    });
   });
 </script>
 
