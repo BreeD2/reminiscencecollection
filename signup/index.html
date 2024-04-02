@@ -3965,67 +3965,52 @@ const searchFunction = () => {
 
 
 
-<script type="module">
-  // Firebase imports
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+<script>
+        // Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+          authDomain: "reminiscence-collection.firebaseapp.com",
+          databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+          projectId: "reminiscence-collection",
+          storageBucket: "reminiscence-collection.appspot.com",
+          messagingSenderId: "974064770925",
+          appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+          measurementId: "G-PJ426H3WZN"
+        };
 
-  document.addEventListener('DOMContentLoaded', async function() {
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
-      authDomain: "reminiscence-collection.firebaseapp.com",
-      databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
-      projectId: "reminiscence-collection",
-      storageBucket: "reminiscence-collection.appspot.com",
-      messagingSenderId: "974064770925",
-      appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
-      measurementId: "G-PJ426H3WZN"
-    };
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.getAuth(app);
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+        document.getElementById('signup-btn').addEventListener('click', async () => {
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
 
-    document.getElementById('signupBtn').addEventListener('click', async (event) => {
-      event.preventDefault(); // Prevent form from submitting normally
+            try {
+                const userCredential = await firebase.auth().createUserWithEmailAndPassword(auth, email, password);
+                console.log('User created:', userCredential.user);
 
-      const email = document.getElementById("signup-email").value;
-      const password = document.getElementById("signup-password").value;
-
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-        // Ask for username and verification method choice
-        const username = prompt("Please enter your username:");
-        const verificationMethod = confirm("Press OK to verify by email, Cancel for phone verification.");
-
-        // Update user profile with username
-        if(username) {
-          await updateProfile(userCredential.user, { displayName: username });
-          await setDoc(doc(db, "users", userCredential.user.uid), { email, username });
-        }
-
-        // Send email verification or handle phone verification
-        if(verificationMethod) {
-          await sendEmailVerification(userCredential.user);
-          alert("Verification email sent. Please check your inbox.");
-        } else {
-          // Implement phone verification logic here
-          alert("Phone verification is selected but not implemented in this example.");
-        }
-
-        console.log("Sign-up successful, user:", userCredential.user);
-        window.location.href = '../dashboard/index.html';
-      } catch (error) {
-        console.error("Error during sign-up:", error);
-        document.getElementById("signup-error").textContent = error.message;
-      }
-    });
-  });
-</script>
+                // Send an email verification
+                firebase.auth().sendEmailVerification(userCredential.user)
+                .then(() => {
+                    console.log('Verification email sent.');
+                    alert('Please verify your email. Check your inbox.');
+                    // Redirect to dashboard or further steps here
+                    // For example, after verification, ask for the username
+                    const username = prompt('Please enter your username:');
+                    if(username) {
+                        // Save the username in the database or update the user profile
+                        console.log('Username set:', username);
+                        // Then redirect to the dashboard
+                        window.location.href = '..//dashboard/index.html'; // Update with the correct path
+                    }
+                });
+            } catch (error) {
+                console.error('Signup error:', error);
+                document.getElementById('signup-error').innerText = error.message;
+            }
+        });
+    </script>
 
 
 </body>
