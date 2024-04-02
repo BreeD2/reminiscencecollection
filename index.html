@@ -4190,7 +4190,7 @@ document.getElementById('searchInput2').addEventListener('input', searchFunction
   function logoutUser() {
     auth.signOut().then(() => {
       console.log('User logged out');
-      window.location.href = '..//index.html'; // Redirect the user after logout
+      window.location.href = 'index.html'; // Redirect the user after logout
     }).catch((error) => {
       console.error('Logout Error:', error);
     });
@@ -4216,7 +4216,7 @@ document.getElementById('searchInput2').addEventListener('input', searchFunction
         // Profile update logic remains unchanged
       });
     } else {
-      window.location.href = '..//index.html'; // Redirect to login if not logged in
+      window.location.href = 'index.html'; // Redirect to login if not logged in
     }
   });
 </script>
