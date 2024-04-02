@@ -4188,31 +4188,30 @@ document.getElementById('searchInput2').addEventListener('input', searchFunction
   const auth = firebase.auth();
   const storage = firebase.storage();
 
-  / Handle authentication state changes
-    firebase.auth().onAuthStateChanged(user => {
-      const authStatus = document.getElementById('authStatus');
-      const authLinks = document.getElementById('authLinks');
+  // Handle authentication state changes
+  firebase.auth().onAuthStateChanged(user => {
+    const authStatus = document.getElementById('authStatus');
+    const authLinks = document.getElementById('authLinks');
 
-      if (user) {
-        // User is signed in
-        if(authStatus) authStatus.textContent = 'Dashboard';
-        if(authLinks) {
-          authLinks.innerHTML = `
-            <a href="myprofile/index.html">My Profile</a>
-            <a href="javascript:void(0);" onclick="firebase.auth().signOut().then(() => location.reload());">Logout</a>
-          `;
-        }
-      } else {
-        // No user is signed in
-        if(authStatus) authStatus.textContent = 'Login';
-        if(authLinks) {
-          authLinks.innerHTML = `
-            <a href="signup/index.html">Signup</a>
-            <a href="login/index.html">Login</a>
-          `;
-        }
+    if (user) {
+      // User is signed in
+      if(authStatus) authStatus.textContent = 'Dashboard';
+      if(authLinks) {
+        authLinks.innerHTML = `
+          <a href="myprofile/index.html">My Profile</a>
+          <a href="javascript:void(0);" onclick="firebase.auth().signOut().then(() => location.reload());">Logout</a>
+        `;
       }
-    });
+    } else {
+      // No user is signed in
+      if(authStatus) authStatus.textContent = 'Login';
+      if(authLinks) {
+        authLinks.innerHTML = `
+          <a href="signup/index.html">Signup</a>
+          <a href="login/index.html">Login</a>
+        `;
+      }
+    }
   });
 </script>
 
