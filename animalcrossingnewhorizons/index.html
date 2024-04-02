@@ -4189,133 +4189,134 @@ const searchFunction = () => {
 </script>
 
 <script>
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
-  authDomain: "reminiscence-collection.firebaseapp.com",
-  databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
-  projectId: "reminiscence-collection",
-  storageBucket: "reminiscence-collection.appspot.com",
-  messagingSenderId: "974064770925",
-  appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
-  measurementId: "G-PJ426H3WZN"
-};
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+      authDomain: "reminiscence-collection.firebaseapp.com",
+      databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+      projectId: "reminiscence-collection",
+      storageBucket: "reminiscence-collection.appspot.com",
+      messagingSenderId: "974064770925",
+      appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+      measurementId: "G-PJ426H3WZN"
+    };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
-const currentGameId = 'animalCrossingNewHorizons'; // Identifier for the current game
+    const currentGameId = 'animalCrossingNewHorizons'; // Identifier for the current game
 
-// Listen for authentication state changes
-firebase.auth().onAuthStateChanged(user => {
-  const userDropdownContent = document.querySelector('.dropdown-content2');
-  const rateButton = document.getElementById('rateButton');
-  const ratingContainer = document.getElementById('ratingContainer');
-  const likeButton = document.getElementById('likeButton');
-  const commentButton = document.getElementById('commentButton');
+    // Listen for authentication state changes
+    firebase.auth().onAuthStateChanged(user => {
+      const userDropdownContent = document.querySelector('.dropdown-content2');
+      const rateButton = document.getElementById('rateButton');
+      const ratingContainer = document.getElementById('ratingContainer');
+      const likeButton = document.getElementById('likeButton');
+      const commentButton = document.getElementById('commentButton');
 
-  // Adjust navigation based on user state
-  if (user) {
-    // User is logged in
-    userDropdownContent.innerHTML = `
-      <a href="..//myprofile/index.html">My Profile</a>
-      <a href="javascript:void(0);" id="logoutButton">Logout</a>
-    `;
+      // Adjust navigation based on user state
+      if (user) {
+        // User is logged in
+        userDropdownContent.innerHTML = `
+          <a href="..//myprofile/index.html">My Profile</a>
+          <a href="javascript:void(0);" id="logoutButton">Logout</a>
+        `;
 
-    document.getElementById('logoutButton').addEventListener('click', (e) => {
-      e.preventDefault();
-      firebase.auth().signOut().then(() => {
-        console.log('User logged out');
-        window.location.reload(); // Refresh the page to update the navbar
-      }).catch((error) => {
-        console.error('Logout Error:', error);
-      });
-    });
+        document.getElementById('logoutButton').addEventListener('click', (e) => {
+          e.preventDefault();
+          firebase.auth().signOut().then(() => {
+            console.log('User logged out');
+            window.location.reload(); // Refresh the page to update the navbar
+          }).catch((error) => {
+            console.error('Logout Error:', error);
+          });
+        });
 
-    // Enable interactive game elements and fetch previous actions
-    rateButton.onclick = () => ratingContainer.style.display = 'block';
-    likeButton.onclick = () => saveLike(user.uid, currentGameId);
-    commentButton.onclick = () => saveComment(user.uid, currentGameId);
-    document.querySelectorAll('#ratingContainer .star').forEach(star => {
-      star.onclick = () => {
-        const rating = star.getAttribute('data-value');
-        saveRating(user.uid, currentGameId, rating);
-        highlightRatingStars(rating); // Highlight the stars up to the user's rating
-      };
-    });
+        // Enable interactive game elements and fetch previous actions
+        rateButton.onclick = () => ratingContainer.style.display = 'block';
+        likeButton.onclick = () => saveLike(user.uid, currentGameId);
+        commentButton.onclick = () => saveComment(user.uid, currentGameId);
+        document.querySelectorAll('#ratingContainer .star').forEach(star => {
+          star.onclick = () => {
+            const rating = star.getAttribute('data-value');
+            saveRating(user.uid, currentGameId, rating);
+            highlightRatingStars(rating); // Highlight the stars up to the user's rating
+          };
+        });
 
-    fetchUserActions(user.uid); // Fetch previous user actions for the game
-  } else {
-    // No user is signed in
-    userDropdownContent.innerHTML = `
-      <a href="..//signup/index.html">Signup</a>
-      <a href="..//login/index.html">Login</a>
-    `;
-  }
-});
-
-// Functions to save likes, comments, and ratings
-function saveLike(userId, gameId) {
-  db.collection('likes').add({
-    userId: userId,
-    gameId: gameId,
-    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-  }).then(() => console.log('Like saved.'));
-}
-
-function saveComment(userId, gameId) {
-  const comment = prompt('Enter your comment:');
-  if (comment) {
-    db.collection('comments').add({
-      userId: userId,
-      gameId: gameId,
-      comment: comment,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(() => console.log('Comment saved.'));
-  }
-}
-
-function saveRating(userId, gameId, rating) {
-  db.collection('ratings').add({
-    userId: userId,
-    gameId: gameId,
-    rating: parseInt(rating, 10),
-    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-  }).then(() => console.log('Rating saved.'));
-}
-function fetchUserActions(userId) {
-  // Check if the user has liked the game
-  db.collection('likes').where('userId', '==', userId).where('gameId', '==', currentGameId)
-    .get().then(querySnapshot => {
-      if (!querySnapshot.empty) {
-        document.getElementById('likeButton').classList.add('liked'); // Adjust based on your actual UI logic
+        fetchUserActions(user.uid); // Fetch previous user actions for the game
+      } else {
+        // No user is signed in
+        userDropdownContent.innerHTML = `
+          <a href="..//signup/index.html">Signup</a>
+          <a href="..//login/index.html">Login</a>
+        `;
       }
-  });
+    });
 
-  // Fetch user's rating for the game and highlight stars
-  db.collection('ratings').where('userId', '==', userId).where('gameId', '==', currentGameId)
-    .get().then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        const rating = doc.data().rating;
-        highlightRatingStars(rating);
-      });
-  });
-}
-
-function highlightRatingStars(rating) {
-  const stars = document.querySelectorAll('#ratingContainer .star');
-  stars.forEach((star, index) => {
-    if (index < rating) {
-      star.classList.add('highlighted'); // Add 'highlighted' class or your equivalent
-    } else {
-      star.classList.remove('highlighted'); // Ensure stars above the rating are not highlighted
+    // Functions to save likes, comments, and ratings
+    function saveLike(userId, gameId) {
+      db.collection('likes').add({
+        userId: userId,
+        gameId: gameId,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => console.log('Like saved.'));
     }
-  });
-}
 
+    function saveComment(userId, gameId) {
+      const comment = prompt('Enter your comment:');
+      if (comment) {
+        db.collection('comments').add({
+          userId: userId,
+          gameId: gameId,
+          comment: comment,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(() => console.log('Comment saved.'));
+      }
+    }
+
+    function saveRating(userId, gameId, rating) {
+      db.collection('ratings').add({
+        userId: userId,
+        gameId: gameId,
+        rating: parseInt(rating, 10),
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => console.log('Rating saved.'));
+    }
+
+    function fetchUserActions(userId) {
+      // Check if the user has liked the game
+      db.collection('likes').where('userId', '==', userId).where('gameId', '==', currentGameId)
+        .get().then(querySnapshot => {
+          if (!querySnapshot.empty) {
+            document.getElementById('likeButton').classList.add('liked'); // Adjust based on your actual UI logic
+          }
+      });
+
+      // Fetch user's rating for the game and highlight stars
+      db.collection('ratings').where('userId', '==', userId).where('gameId', '==', currentGameId)
+        .get().then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            const rating = doc.data().rating;
+            highlightRatingStars(rating);
+          });
+      });
+    }
+
+    function highlightRatingStars(rating) {
+      const stars = document.querySelectorAll('#ratingContainer .star');
+      stars.forEach((star, index) => {
+        if (index < rating) {
+          star.classList.add('highlighted'); // Add 'highlighted' class or your equivalent
+        } else {
+          star.classList.remove('highlighted'); // Ensure stars above the rating are not highlighted
+        }
+      });
+    }
 </script>
+
 
 
 
