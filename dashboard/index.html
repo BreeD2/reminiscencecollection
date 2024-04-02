@@ -4118,6 +4118,7 @@
 
     </script>
     <script>
+      // Firebase configuration
       const firebaseConfig = {
         apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
         authDomain: "reminiscence-collection.firebaseapp.com",
@@ -4129,49 +4130,44 @@
         measurementId: "G-PJ426H3WZN"
       };
 
+      // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       const auth = firebase.auth();
       const storage = firebase.storage();
 
+      // Define the logoutUser function
+      function logoutUser() {
+        auth.signOut().then(() => {
+          console.log('User logged out');
+        }).catch((error) => {
+          console.error('Logout Error:', error);
+        });
+      }
+
+      // Handle authentication state changes
       auth.onAuthStateChanged(user => {
         if (user) {
+          // Display user's display name, or 'User' if not available
           document.getElementById('userName').textContent = user.displayName || 'User';
+
+          // Attempt to load the user's profile picture
           const userProfilePicRef = storage.ref('profilePictures/' + user.uid);
           userProfilePicRef.getDownloadURL().then((url) => {
-            // Ensure you have an <img> element with id 'userProfilePic' in your topnav for displaying the profile picture
             document.getElementById('userProfilePic').src = url;
           }).catch(() => {
             console.log('Profile picture not found. Using default.');
           });
 
+          // Attach the logoutUser function to the logout button's click event
           document.getElementById('logoutBtn').addEventListener('click', (e) => {
             e.preventDefault();
-            auth.signOut().then(() => {
-              window.location.href = '..//index.html'; // Adjust as necessary
-            });
-          });
-
-          document.getElementById('updateProfileBtn').addEventListener('click', () => {
-            const newUsername = document.getElementById('usernameInput').value;
-            const file = document.getElementById('profilePicChange').files[0];
-
-            if (newUsername) {
-              user.updateProfile({ displayName: newUsername })
-                .then(() => window.location.reload());
-            }
-
-            if (file) {
-              const uploadTask = storage.ref(`profilePictures/${user.uid}`).put(file);
-              uploadTask.then(() => {
-                uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                  user.updateProfile({ photoURL: downloadURL })
-                    .then(() => window.location.reload());
-                });
-              });
-            }
+            logoutUser(); // Call logoutUser function here
           });
         } else {
-          window.location.href = '..//index.html'; // Redirect to login if not logged in
+          // If no user is logged in, you might want to clear or set default values
+          document.getElementById('userName').textContent = 'User';
+          // Optionally, set a default or placeholder image for 'userProfilePic'
+          // document.getElementById('userProfilePic').src = 'path/to/default/image';
         }
       });
     </script>
