@@ -4198,6 +4198,7 @@ document.getElementById('searchInput2').addEventListener('input', searchFunction
 
   // Handle authentication state changes
   auth.onAuthStateChanged(user => {
+    const dropdownContent = document.querySelector('.dropdown-content2');
     if (user) {
       // Display user's display name, or 'User' if not available
       document.getElementById('userName').textContent = user.displayName || 'User';
@@ -4210,19 +4211,27 @@ document.getElementById('searchInput2').addEventListener('input', searchFunction
         console.log('Profile picture not found. Using default.');
       });
 
-      // Attach the logoutUser function to the logout button's click event
+      // Update dropdown content for logged-in users
+      dropdownContent.innerHTML = `
+        <a href="dashboard/index.html">Dashboard</a>
+        <a href="#" id="logoutBtn">Logout</a>
+      `;
+
+      // Reattach the logout event listener to the new logout button
       document.getElementById('logoutBtn').addEventListener('click', (e) => {
         e.preventDefault();
         logoutUser(); // Call logoutUser function here
       });
     } else {
-      // If no user is logged in, you might want to clear or set default values
-      document.getElementById('userName').textContent = 'User';
-      // Optionally, set a default or placeholder image for 'userProfilePic'
-      // document.getElementById('userProfilePic').src = 'path/to/default/image';
+      // Update dropdown content for guests
+      dropdownContent.innerHTML = `
+        <a href="login/index.html">Login</a>
+        <a href="signin/index.html">Sign In</a>
+      `;
     }
   });
 </script>
+
 
 
   </body>
