@@ -363,6 +363,13 @@
 
  </p>
 
+ <!-- Comments Section -->
+    <div id="commentsSection">
+        <h2>User Comments</h2>
+        <div id="commentsList">
+            <!-- User comments will be appended here -->
+        </div>
+
    </div>
    <div class="footer">
      <div class="copy">Copyright &copy; 2024 Reminiscence Collection. All rights reserved.</div>
@@ -4189,14 +4196,6 @@ const searchFunction = () => {
       // Display user's display name, or 'User' if not available
       document.getElementById('userName').textContent = user.displayName || 'User';
 
-      // Attempt to load the user's profile picture
-      const userProfilePicRef = storage.ref('profilePictures/' + user.uid);
-      userProfilePicRef.getDownloadURL().then((url) => {
-        document.getElementById('userProfilePic').src = url;
-      }).catch(() => {
-        console.log('Profile picture not found. Using default.');
-      });
-
       // Update dropdown content for logged-in users
       dropdownContent.innerHTML = `
         <a href="..//dashboard/index.html">Dashboard</a>
@@ -4236,28 +4235,32 @@ const searchFunction = () => {
   }
 
   function saveComment(commentText) {
-    if (!isUserSignedIn()) {
-      alert("Please sign in to comment on this game.");
-      return;
-    }
-    fetch('https://script.google.com/macros/s/AKfycbw8_1wnOr1r5NuCbb-ivFNifjxiF4Cap-tvOqt8qjchRLoq8lqIYumQhxzzQO6Ep10j/exec', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        type: 'comment',
-        userId: auth.currentUser.uid,
-        comment: commentText,
-      }),
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Comment response:', data);
-      alert('Your comment has been posted!');
-    })
-    .catch(error => console.error('Error sending comment:', error));
+      if (!isUserSignedIn()) {
+          alert("Please sign in to comment on this game.");
+          return;
+      }
+      fetch('https://script.google.com/macros/s/AKfycbw8_1wnOr1r5NuCbb-ivFNifjxiF4Cap-tvOqt8qjchRLoq8lqIYumQhxzzQO6Ep10j/exec', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              type: 'comment',
+              userId: auth.currentUser.uid,
+              comment: commentText,
+          }),
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log('Comment response:', data);
+          // Assuming you have the user's display name stored or fetched
+          const userName = auth.currentUser.displayName || 'User';
+          addCommentToPage(commentText, userName);
+          alert('Your comment has been posted!');
+      })
+      .catch(error => console.error('Error sending comment:', error));
   }
+
 
   function saveRating(rating) {
     if (!isUserSignedIn()) {
@@ -4287,6 +4290,58 @@ const searchFunction = () => {
   function isUserSignedIn() {
     return !!auth.currentUser; // Returns true if currentUser is not null
   }
+
+  function addCommentToPage(commentText, userName) {
+      // Create the comment element
+      const commentEl = document.createElement('p');
+      commentEl.classList.add('user-comment');
+      commentEl.innerHTML = `<strong>${userName}:</strong> ${commentText}`;
+
+      // Append the comment to the list
+      document.getElementById('commentsList').appendChild(commentEl);
+  }
+
+  // Example usage
+  addCommentToPage('This is a great game!', 'Alice');
+
+  document.addEventListener('DOMContentLoaded', function() {
+      // This code will run after the DOM is fully loaded
+      const likeButton = document.getElementById('likeButton');
+      const commentButton = document.getElementById('commentButton');
+      const rateButton = document.getElementById('rateButton');
+
+      if(likeButton) {
+        likeButton.addEventListener('click', function() {
+          // Assuming you have a way to get the current user's ID
+          const userId = auth.currentUser ? auth.currentUser.uid : null;
+          if(userId) {
+            sendLikeToServer(userId);
+          } else {
+            alert('You must be signed in to like this game.');
+          }
+        });
+      }
+
+      if(commentButton) {
+        commentButton.addEventListener('click', function() {
+          // Trigger comment functionality, e.g., show a comment input
+          const commentText = prompt("Enter your comment: ");
+          if(commentText) {
+            saveComment(commentText);
+          }
+        });
+      }
+
+      if(rateButton) {
+        rateButton.addEventListener('click', function() {
+          // Assuming there's a way for users to select a rating
+          const rating = prompt("Enter your rating (1-5): ");
+          if(rating) {
+            saveRating(rating);
+          }
+        });
+      }
+    });
 
 </script>
 
