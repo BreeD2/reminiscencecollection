@@ -324,22 +324,17 @@
       </div>
 
       <h1>Welcome to Your Dashboard</h1>
-      <div id="userProfile">
-      <h2>User Profile</h2>
-      <!-- Display User Email and Profile Picture -->
-      <div id="emailDisplay"></div>
+          <div id="userProfile">
+              <h2>User Profile</h2>
+              <!-- Display User Email and Profile Picture -->
+              <div id="emailDisplay"></div>
 
-      <!-- Input for Updating Username -->
-      <input type="text" id="usernameInput" placeholder="New username">
-      <!-- Input for User Description -->
-      <textarea id="userDescriptionInput" placeholder="Write your description here"></textarea>
-      <div id="messageDisplay"></div>
 
-      <!-- Button to Submit Profile Updates -->
-      <button id="updateProfileBtn">Update Profile</button>
-      <!-- Button to Save User Description -->
-      <button id="saveDescriptionBtn">Save Description</button>
-  </div>
+              <!-- Input for Updating Username -->
+              <input type="text" id="usernameInput" placeholder="New username">
+              <!-- Input for Changing Profile Picture -->
+              <button id="updateProfileBtn">Update Profile</button>
+          </div>
 
           <div id="historySection">
     <h2>My Activity</h2>
@@ -4210,66 +4205,57 @@ function fetchUserRatings(userId) {
     }).catch(error => console.error('Error fetching ratings:', error));
 }
 
-// Improved function to update username, profile picture, and handle description saving
-document.getElementById('updateProfileBtn').addEventListener('click', e => {
-  e.preventDefault();
-  updateUsernameAndProfilePic();
-});
-
-document.getElementById('saveDescriptionBtn').addEventListener('click', e => {
-  e.preventDefault();
-  saveUserDescription();
-});
-
-function saveUserDescription() {
-  const userDescription = document.getElementById('userDescriptionInput').value;
-  const userId = firebase.auth().currentUser.uid;
-  if (userId) {
-      firebase.firestore().collection('users').doc(userId).set({
-          description: userDescription
-      }, { merge: true })
-      .then(() => {
-          console.log('Description saved successfully');
-          // Display success message
-          displayMessage('Description updated successfully.');
-      })
-      .catch(error => {
-          console.error('Error saving description:', error);
-      });
-  } else {
-      console.log('User not logged in');
-  }
-}
-
-function fetchUserDescription(userId) {
-  firebase.firestore().collection('users').doc(userId).get()
-  .then(doc => {
-      if (doc.exists) {
-          const userDescription = doc.data().description;
-          document.getElementById('userDescriptionDisplay').textContent = userDescription;
-      }
-  })
-  .catch(error => {
-      console.error('Error fetching description:', error);
+// Function to update username and profile picture
+  document.getElementById('updateProfileBtn').addEventListener('click', (e) => {
+    e.preventDefault();
+    updateUsernameAndProfilePic();
   });
-}
 
-// Call fetchUserDescription when a user is logged in to display their description
-auth.onAuthStateChanged(user => {
-  // Existing auth state changed handling...
-  if (user) {
-      // Call fetchUserDescription here
-      fetchUserDescription(user.uid);
+  function updateUsernameAndProfilePic() {
+      const user = auth.currentUser;
+      if (!user) {
+          console.error('No user logged in');
+          return;
+      }
+
+      const newUsername = document.getElementById('usernameInput').value;
+      const profilePicFile = document.getElementById('profilePicChange').files[0];
+
+      // Update username if provided
+      if (newUsername) {
+          user.updateProfile({
+              displayName: newUsername
+          }).then(() => {
+              console.log('Username updated successfully');
+              document.getElementById('userName').textContent = newUsername; // Update username display immediately
+
+              // Optionally, update username in Firestore/Realtime Database here
+          }).catch((error) => {
+              console.error('Error updating username:', error);
+          });
+      }
+
+      // Upload new profile picture if provided
+      if (profilePicFile) {
+          const profilePicRef = storage.ref(`profilePictures/${user.uid}`);
+          profilePicRef.put(profilePicFile).then(() => {
+              console.log('Profile picture uploaded successfully');
+              // Get download URL and optionally update user profile or database
+              profilePicRef.getDownloadURL().then((url) => {
+                  user.updateProfile({
+                      photoURL: url
+                  }).then(() => {
+                      document.getElementById('userProfilePic').src = url; // Update profile picture display immediately
+                      console.log('Profile picture updated successfully');
+                  }).catch((error) => {
+                      console.error('Error updating profile picture URL:', error);
+                  });
+              });
+          }).catch((error) => {
+              console.error('Error uploading profile picture:', error);
+          });
+      }
   }
-});
-
-// Helper function to display messages to the user
-function displayMessage(message) {
-  // Assuming you have an element with id "messageDisplay" for showing messages
-  document.getElementById('messageDisplay').textContent = message;
-  // Optionally, clear the message after a few seconds
-  setTimeout(() => document.getElementById('messageDisplay').textContent = '', 3000);
-}
 
     </script>
 
