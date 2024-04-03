@@ -4161,66 +4161,68 @@ const searchFunction = () => {
 
 </script>
 <script>
-  // Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
-    authDomain: "reminiscence-collection.firebaseapp.com",
-    databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
-    projectId: "reminiscence-collection",
-    storageBucket: "reminiscence-collection.appspot.com",
-    messagingSenderId: "974064770925",
-    appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
-    measurementId: "G-PJ426H3WZN"
-  };
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+  authDomain: "reminiscence-collection.firebaseapp.com",
+  databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+  projectId: "reminiscence-collection",
+  storageBucket: "reminiscence-collection.appspot.com",
+  messagingSenderId: "974064770925",
+  appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+  measurementId: "G-PJ426H3WZN"
+};
 
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const storage = firebase.storage();
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const storage = firebase.storage();
 
-  // Define the logoutUser function
-  function logoutUser() {
-    auth.signOut().then(() => {
-      console.log('User logged out');
-      // Optionally redirect the user to login page or home page after logout
-      window.location.href = '..//index.html';
-    }).catch((error) => {
-      console.error('Logout Error:', error);
+// Define the logoutUser function
+function logoutUser() {
+  auth.signOut().then(() => {
+    console.log('User logged out');
+    // Optionally redirect the user to login page or home page after logout
+    window.location.href = 'index.html';
+  }).catch((error) => {
+    console.error('Logout Error:', error);
+  });
+}
+
+// Handle authentication state changes
+auth.onAuthStateChanged(user => {
+  const dropdownContent = document.querySelector('.dropdown-content2');
+  if (user) {
+    // Display user's display name, or 'User' if not available
+    document.getElementById('userName').textContent = user.displayName || 'User';
+
+    // Attempt to load the user's profile picture
+    const userProfilePicRef = storage.ref('profilePictures/' + user.uid);
+    userProfilePicRef.getDownloadURL().then((url) => {
+      document.getElementById('userProfilePic').src = url;
+    }).catch(() => {
+      console.log('Profile picture not found. Using default.');
     });
-  }
 
-  // Handle authentication state changes
-  auth.onAuthStateChanged(user => {
-    const dropdownContent = document.querySelector('.dropdown-content2');
-    if (user) {
-      // Display user's display name, or 'User' if not available
-      document.getElementById('userName').textContent = user.displayName || 'User';
+    // Update dropdown content for logged-in users
+    dropdownContent.innerHTML = `
+      <a href="dashboard/index.html">Dashboard</a>
+      <a href="javascript:void(0);" id="logoutBtn">Logout</a>
+    `;
 
-      // Update dropdown content for logged-in users
-      dropdownContent.innerHTML = `
-        <a href="..//dashboard/index.html">Dashboard</a>
-        <a href="javascript:void(0);" id="logoutBtn">Logout</a>
-      `;
-
-      // New: Check if the user has liked the game upon login
-    checkLikeStatus(user.uid, 'animalcrossingnewhorizons'); // Replace 'gameId' with your actual game ID
+    // Reattach the logout event listener to the new logout button
+    document.getElementById('logoutBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      logoutUser(); // Call logoutUser function here
+    });
+  } else {
+    // Update dropdown content for guests
+    dropdownContent.innerHTML = `
+      <a href="login/index.html">Login</a>
+      <a href="signup/index.html">Signup</a>
+    `;
   }
 });
-
-
-      // Reattach the logout event listener to the new logout button
-      document.getElementById('logoutBtn').addEventListener('click', (e) => {
-        e.preventDefault();
-        logoutUser(); // Invoke logoutUser function here
-      });
-    } else {
-      // Update dropdown content for guests
-      dropdownContent.innerHTML = `
-        <a href="..//login/index.html">Login</a>
-        <a href="..//signup/index.html">Signup</a>
-      `;
-    }
-  });
   function sendLikeToServer(userId) {
       fetch('https://script.google.com/macros/s/AKfycbw8_1wnOr1r5NuCbb-ivFNifjxiF4Cap-tvOqt8qjchRLoq8lqIYumQhxzzQO6Ep10j/exec', {
           method: 'POST',
@@ -4237,23 +4239,7 @@ const searchFunction = () => {
           updateLikeButtonUI(true); // Example function to visually indicate like
       })
       .catch(error => console.error('Error sending like:', error));
-  }function sendLikeToServer(userId) {
-    fetch('https://script.google.com/macros/s/AKfycbw8_1wnOr1r5NuCbb-ivFNifjxiF4Cap-tvOqt8qjchRLoq8lqIYumQhxzzQO6Ep10j/exec', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            type: 'like',
-            userId: userId,
-            gameId: gameId, // Include the gameId here
-        }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Like response:', data);
-        updateLikeButtonUI(true); // Example function to visually indicate like
-    })
-    .catch(error => console.error('Error sending like:', error));
-}
+  }
     // Update Firebase database
     const likesRef = firebase.firestore().collection('likes').doc(userId);
     likesRef.set({ [gameId]: liked }, { merge: true });
