@@ -4299,6 +4299,23 @@
         displayMessage('No new password provided or user not logged in.');
       }
     }
+
+    function updateUsernameAndProfilePic() {
+    const newUsername = document.getElementById('usernameInput').value;
+    const user = firebase.auth().currentUser;
+    if (user && newUsername) {
+        user.updateProfile({
+            displayName: newUsername
+        }).then(() => {
+            console.log('Username updated successfully');
+            document.getElementById('userName').textContent = newUsername; // Update username display immediately
+            displayMessage('Username updated successfully.');
+        }).catch((error) => {
+            console.error('Error updating username:', error);
+            displayMessage('Error updating username.');
+        });
+    }
+}
         </script>
 
 
