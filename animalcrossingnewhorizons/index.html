@@ -4216,6 +4216,11 @@ const searchFunction = () => {
       `;
     }
   });
+
+  // Function to check if the user is signed in
+  function isUserSignedIn() {
+    return !!firebase.auth().currentUser;
+  }
   // Save like
   function saveLike(userId) {
     if (!isUserSignedIn()) {
