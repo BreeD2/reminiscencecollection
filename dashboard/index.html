@@ -4214,48 +4214,51 @@ function fetchUserRatings(userId) {
   });
 
   function updateUsernameAndProfilePic() {
-    const user = auth.currentUser;
-    if (!user) {
-      console.error('No user logged in');
-      return;
-    }
+      const user = auth.currentUser;
+      if (!user) {
+          console.error('No user logged in');
+          return;
+      }
 
-    const newUsername = document.getElementById('usernameInput').value;
-    const profilePicFile = document.getElementById('profilePicChange').files[0];
+      const newUsername = document.getElementById('usernameInput').value;
+      const profilePicFile = document.getElementById('profilePicChange').files[0];
 
-    // Update username if provided
-    if (newUsername) {
-      user.updateProfile({
-        displayName: newUsername
-      }).then(() => {
-        console.log('Username updated successfully');
-        // Optionally, update username in Firestore/Realtime Database
-      }).catch((error) => {
-        console.error('Error updating username:', error);
-      });
-    }
-
-    // Upload new profile picture if provided
-    if (profilePicFile) {
-      const profilePicRef = storage.ref(`profilePictures/${user.uid}`);
-      profilePicRef.put(profilePicFile).then(() => {
-        console.log('Profile picture uploaded successfully');
-        // Get download URL and optionally update user profile or database
-        profilePicRef.getDownloadURL().then((url) => {
+      // Update username if provided
+      if (newUsername) {
           user.updateProfile({
-            photoURL: url
+              displayName: newUsername
           }).then(() => {
-            document.getElementById('userProfilePic').src = url;
-            console.log('Profile picture updated successfully');
+              console.log('Username updated successfully');
+              document.getElementById('userName').textContent = newUsername; // Update username display immediately
+
+              // Optionally, update username in Firestore/Realtime Database here
           }).catch((error) => {
-            console.error('Error updating profile picture URL:', error);
+              console.error('Error updating username:', error);
           });
-        });
-      }).catch((error) => {
-        console.error('Error uploading profile picture:', error);
-      });
-    }
+      }
+
+      // Upload new profile picture if provided
+      if (profilePicFile) {
+          const profilePicRef = storage.ref(`profilePictures/${user.uid}`);
+          profilePicRef.put(profilePicFile).then(() => {
+              console.log('Profile picture uploaded successfully');
+              // Get download URL and optionally update user profile or database
+              profilePicRef.getDownloadURL().then((url) => {
+                  user.updateProfile({
+                      photoURL: url
+                  }).then(() => {
+                      document.getElementById('userProfilePic').src = url; // Update profile picture display immediately
+                      console.log('Profile picture updated successfully');
+                  }).catch((error) => {
+                      console.error('Error updating profile picture URL:', error);
+                  });
+              });
+          }).catch((error) => {
+              console.error('Error uploading profile picture:', error);
+          });
+      }
   }
+
     </script>
 
 
