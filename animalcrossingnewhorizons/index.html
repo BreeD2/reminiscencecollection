@@ -4216,73 +4216,72 @@ const searchFunction = () => {
       `;
     }
   });
-
   // Save like
-   function saveLike(userId) {
-     if (!isUserSignedIn()) {
-       alert("Please sign in to like this game.");
-       return;
-     }
-     // Firestore database operation
-     db.collection("likes").add({
-       userId: userId,
-       timestamp: firebase.firestore.FieldValue.serverTimestamp()
-     });
-     alert("Liked!");
-   }
+  function saveLike(userId) {
+    if (!isUserSignedIn()) {
+      alert("Please sign in to like this game.");
+      return;
+    }
+    // Firestore database operation
+    db.collection("likes").add({
+      userId: userId,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    alert("Liked!");
+  }
 
-   // Save comment
-   function saveComment(userId) {
-     if (!isUserSignedIn()) {
-       alert("Please sign in to comment on this game.");
-       return;
-     }
-     const comment = prompt("Enter your comment:");
-     if (comment) {
-       db.collection("comments").add({
-         userId: userId,
-         comment: comment,
-         timestamp: firebase.firestore.FieldValue.serverTimestamp()
-       });
-     }
-   }
+  // Save comment
+  function saveComment(userId) {
+    if (!isUserSignedIn()) {
+      alert("Please sign in to comment on this game.");
+      return;
+    }
+    const comment = prompt("Enter your comment:");
+    if (comment) {
+      db.collection("comments").add({
+        userId: userId,
+        comment: comment,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    }
+  }
 
-   // Save rating
-   function saveRating(userId, rating) {
-     if (!isUserSignedIn()) {
-       alert("Please sign in to rate this game.");
-       return;
-     }
-     db.collection("ratings").add({
-       userId: userId,
-       rating: rating,
-       timestamp: firebase.firestore.FieldValue.serverTimestamp()
-     });
-     alert(`Rated ${rating} star(s)!`);
-     document.getElementById("ratingContainer").style.display = 'none'; // Hide rating container
-   }
+  // Save rating
+  function saveRating(userId, rating) {
+    if (!isUserSignedIn()) {
+      alert("Please sign in to rate this game.");
+      return;
+    }
+    db.collection("ratings").add({
+      userId: userId,
+      rating: rating,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    alert(`Rated ${rating} star(s)!`);
+    document.getElementById("ratingContainer").style.display = 'none'; // Hide rating container
+  }
 
-   // Setup event listeners
-   document.addEventListener('DOMContentLoaded', function() {
-     const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : null;
+  // Setup event listeners
+  document.addEventListener('DOMContentLoaded', function() {
+    const userId = firebase.auth().currentUser ? firebase.auth().currentUser.uid : null;
 
-     document.getElementById("likeButton").addEventListener("click", () => saveLike(userId));
-     document.getElementById("commentButton").addEventListener("click", () => saveComment(userId));
-     document.getElementById("rateButton").addEventListener("click", () => {
-       if (!isUserSignedIn()) {
-         alert("Please sign in to rate this game.");
-         return;
-       }
-       document.getElementById("ratingContainer").style.display = 'block'; // Show rating container
-     });
+    document.getElementById("likeButton").addEventListener("click", () => saveLike(userId));
+    document.getElementById("commentButton").addEventListener("click", () => saveComment(userId));
+    document.getElementById("rateButton").addEventListener("click", () => {
+      if (!isUserSignedIn()) {
+        alert("Please sign in to rate this game.");
+        return;
+      }
+      document.getElementById("ratingContainer").style.display = 'block'; // Show rating container
+    });
 
-     document.querySelectorAll('#ratingContainer .star').forEach(star => {
-       star.addEventListener('click', () => {
-         const rating = star.getAttribute('data-value');
-         saveRating(userId, rating);
-       });
-     });
-   });
+    document.querySelectorAll('#ratingContainer .star').forEach(star => {
+      star.addEventListener('click', () => {
+        const rating = star.getAttribute('data-value');
+        saveRating(userId, rating);
+      });
+    });
+  });
 </script>
 
 
