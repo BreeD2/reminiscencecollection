@@ -324,19 +324,20 @@
       </div>
 
       <h1>Welcome to Your Dashboard</h1>
-          <div id="userProfile">
-              <h2>User Profile</h2>
-              <!-- Display User Email and Profile Picture -->
-              <div id="emailDisplay"></div>
-              <img id="userProfilePic" src="" alt="Profile Picture" style="width: 100px; height: 100px;">
+      <div id="userProfile">
+      <h2>User Profile</h2>
+      <!-- Display User Email and Profile Picture -->
+      <div id="emailDisplay"></div>
 
-              <!-- Input for Updating Username -->
-              <input type="text" id="usernameInput" placeholder="New username">
-              <!-- Input for Changing Profile Picture -->
-              <input type="file" id="profilePicChange">
-              <!-- Button to Submit Profile Updates -->
-              <button id="updateProfileBtn">Update Profile</button>
-          </div>
+      <!-- Input for Updating Username -->
+      <input type="text" id="usernameInput" placeholder="New username">
+      <!-- Input for User Description -->
+      <textarea id="userDescriptionInput" placeholder="Write your description here"></textarea>
+      <!-- Button to Submit Profile Updates -->
+      <button id="updateProfileBtn">Update Profile</button>
+      <!-- Button to Save User Description -->
+      <button id="saveDescriptionBtn">Save Description</button>
+  </div>
 
           <div id="historySection">
     <h2>My Activity</h2>
@@ -4258,6 +4259,42 @@ function fetchUserRatings(userId) {
           });
       }
   }
+  document.getElementById('saveDescriptionBtn').addEventListener('click', e => {
+    e.preventDefault();
+    const userDescription = document.getElementById('userDescriptionInput').value;
+    const userId = firebase.auth().currentUser.uid;
+    if (userId) {
+        // Save the description to Firestore
+        firebase.firestore().collection('users').doc(userId).set({
+            description: userDescription
+        }, { merge: true }) // Using merge true to not overwrite other fields
+        .then(() => {
+            console.log('Description saved successfully');
+        })
+        .catch(error => {
+            console.error('Error saving description:', error);
+        });
+    } else {
+        console.log('User not logged in');
+    }
+});
+
+function fetchUserDescription(userId) {
+    firebase.firestore().collection('users').doc(userId).get()
+    .then(doc => {
+        if (doc.exists) {
+            const userDescription = doc.data().description;
+            // Assuming you have an element to display the description
+            document.getElementById('userDescriptionDisplay').textContent = userDescription;
+        } else {
+            console.log('No description available');
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching description:', error);
+    });
+}
+
 
     </script>
 
