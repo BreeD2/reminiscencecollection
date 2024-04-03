@@ -59,9 +59,9 @@
              <button class="dropbtn2">
                  <i class="fa fa-user"></i> <span id="userName">User</span> <i class="fa fa-caret-down"></i>
              </button>
-             <div class="dropdown-content2"id="userDropdownContent">
-                 <a href="..//myprofile/index.html">My Profile</a>
-                 <a href="..//logout/index.html" id="logoutBtn">Logout</a>
+             <div class="dropdown-content2">
+                 <a href="dashboard/index.html">Dashboard</a>
+                 <a href="logout/index.html" id="logoutBtn">Logout</a>
              </div>
          </div>
        <div class="dropdown">
@@ -4207,6 +4207,16 @@ const searchFunction = () => {
 
   const currentGameId = 'animalCrossingNewHorizons'; // Identifier for the current game
 
+  // Define the logoutUser function
+  function logoutUser() {
+    auth.signOut().then(() => {
+      console.log('User logged out');
+    }).catch((error) => {
+      console.error('Logout Error:', error);
+    });
+  }
+
+
   // Listen for authentication state changes
   auth.onAuthStateChanged((user) => {
     const dropdownContent = document.querySelector('.dropdown-content2');
@@ -4229,8 +4239,8 @@ const searchFunction = () => {
 
       // Update dropdown content for logged-in users
       dropdownContent.innerHTML = `
-        <a href="../myprofile/index.html">My Profile</a>
-        <a href="javascript:void(0);" id="logoutButton">Logout</a>
+      <a href="..//dashboard/index.html">Dashboard</a>
+      <a href="#" id="logoutBtn">Logout</a>
       `;
 
       // Logout functionality
