@@ -346,6 +346,30 @@
 <!-- Button to Change Password -->
 <button id="changePasswordBtn">Change Password</button>
 
+<!-- Input and Button for Email Update -->
+<input type="email" id="emailInput" placeholder="New Email">
+<button id="updateEmailBtn">Update Email</button>
+
+<!-- Privacy Settings -->
+<select id="privacySetting">
+  <option value="public">Public</option>
+  <option value="friends">Friends</option>
+  <option value="onlyMe">Only Me</option>
+</select>
+<button id="updatePrivacyBtn">Update Privacy Settings</button>
+
+<!-- Account Deletion Button -->
+<button id="deleteAccountBtn">Delete Account</button>
+
+<!-- Activity Filters -->
+<select id="activityFilter">
+  <option value="all">All</option>
+  <option value="likes">Likes</option>
+  <option value="comments">Comments</option>
+  <option value="ratings">Ratings</option>
+</select>
+<button id="filterActivityBtn">Filter Activity</button>
+
 
           <div id="historySection">
     <h2>My Activity</h2>
@@ -356,7 +380,7 @@
 
 
 
-    <a href="javascript:void(0);" id="logoutBtn">Logout</a>
+
 
     <div class="footer">
       <div class="copy">Copyright &copy; 2024 Reminiscence Collection. All rights reserved.</div>
@@ -4318,6 +4342,76 @@
         });
     }
 }
+
+document.getElementById('updateEmailBtn').addEventListener('click', e => {
+  e.preventDefault();
+  updateEmail();
+});
+
+function updateEmail() {
+  const newEmail = document.getElementById('emailInput').value;
+  const user = firebase.auth().currentUser;
+  if (user && newEmail) {
+    user.updateEmail(newEmail).then(() => {
+      displayMessage('Email updated successfully.');
+    }).catch(error => {
+      console.error('Error updating email:', error);
+      displayMessage('Error updating email. You might need to re-login.');
+    });
+  }
+}
+
+document.getElementById('updatePrivacyBtn').addEventListener('click', e => {
+  e.preventDefault();
+  updatePrivacySettings();
+});
+
+function updatePrivacySettings() {
+  const privacySetting = document.getElementById('privacySetting').value;
+  const userId = firebase.auth().currentUser.uid;
+  // Example: Update privacy setting in Firestore
+  firebase.firestore().collection('users').doc(userId).set({
+    privacySetting: privacySetting
+  }, { merge: true })
+  .then(() => {
+    displayMessage('Privacy settings updated successfully.');
+  }).catch(error => {
+    console.error('Error updating privacy settings:', error);
+    displayMessage('Error updating privacy settings.');
+  });
+}
+
+document.getElementById('deleteAccountBtn').addEventListener('click', e => {
+  e.preventDefault();
+  deleteAccount();
+});
+
+function deleteAccount() {
+  const user = firebase.auth().currentUser;
+  if (user) {
+    user.delete().then(() => {
+      displayMessage('Account deleted successfully.');
+      // Redirect or handle UI change after account deletion
+    }).catch(error => {
+      console.error('Error deleting account:', error);
+      displayMessage('Error deleting account. You might need to re-login.');
+    });
+  }
+}
+
+document.getElementById('filterActivityBtn').addEventListener('click', e => {
+  e.preventDefault();
+  filterUserActivity();
+});
+
+function filterUserActivity() {
+  const filter = document.getElementById('activityFilter').value;
+  // Assuming you have a function to handle fetching and displaying filtered activities
+  fetchAndDisplayActivities(filter);
+}
+
+// You'll need to define fetchAndDisplayActivities based on your app's requirements.
+
         </script>
 
 
