@@ -324,17 +324,26 @@
       </div>
 
       <h1>Welcome to Your Dashboard</h1>
-          <div id="userProfile">
-              <h2>User Profile</h2>
-              <!-- Display User Email and Profile Picture -->
-              <div id="emailDisplay"></div>
+      <div id="userProfile">
+          <h2>User Profile</h2>
+          <!-- Display User Email and Profile Picture -->
+          <div id="emailDisplay"></div>
 
+          <!-- Input for Updating Username -->
+          <input type="text" id="usernameInput" placeholder="New username">
+          <!-- Input for User Description -->
+          <textarea id="userDescriptionInput" placeholder="Write your description here"></textarea>
+          <!-- Button to Submit Profile Updates -->
+          <button id="updateProfileBtn">Update Profile</button>
+          <!-- Button to Save User Description -->
+          <button id="saveDescriptionBtn">Save Description</button>
+      </div>
 
-              <!-- Input for Updating Username -->
-              <input type="text" id="usernameInput" placeholder="New username">
-              <!-- Input for Changing Profile Picture -->
-              <button id="updateProfileBtn">Update Profile</button>
-          </div>
+      <!-- Input for New Password -->
+<input type="password" id="newPasswordInput" placeholder="New Password">
+<!-- Button to Change Password -->
+<button id="changePasswordBtn">Change Password</button>
+
 
           <div id="historySection">
     <h2>My Activity</h2>
@@ -4117,147 +4126,180 @@
 
     </script>
     <script>
-      // Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
-        authDomain: "reminiscence-collection.firebaseapp.com",
-        databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
-        projectId: "reminiscence-collection",
-        storageBucket: "reminiscence-collection.appspot.com",
-        messagingSenderId: "974064770925",
-        appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
-        measurementId: "G-PJ426H3WZN"
-      };
+          // Firebase configuration
+          const firebaseConfig = {
+            apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+            authDomain: "reminiscence-collection.firebaseapp.com",
+            databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+            projectId: "reminiscence-collection",
+            storageBucket: "reminiscence-collection.appspot.com",
+            messagingSenderId: "974064770925",
+            appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+            measurementId: "G-PJ426H3WZN"
+          };
 
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      const auth = firebase.auth();
-      const storage = firebase.storage();
+          // Initialize Firebase
+          firebase.initializeApp(firebaseConfig);
+          const auth = firebase.auth();
+          const storage = firebase.storage();
 
-      // Define the logoutUser function
-      function logoutUser() {
-        auth.signOut().then(() => {
-          console.log('User logged out');
-          // Optionally redirect the user to login page or home page after logout
-          window.location.href = '..//index.html';
-        }).catch((error) => {
-          console.error('Logout Error:', error);
-        });
-      }
+          // Define the logoutUser function
+          function logoutUser() {
+            auth.signOut().then(() => {
+              console.log('User logged out');
+              // Optionally redirect the user to login page or home page after logout
+              window.location.href = '..//index.html';
+            }).catch((error) => {
+              console.error('Logout Error:', error);
+            });
+          }
 
-      // Handle authentication state changes
-      auth.onAuthStateChanged(user => {
-        if (user) {
-          // Display user's display name, or 'User' if not available
-          document.getElementById('userName').textContent = user.displayName || 'User';
+          // Handle authentication state changes
+          auth.onAuthStateChanged(user => {
+            if (user) {
+              // Display user's display name, or 'User' if not available
+              document.getElementById('userName').textContent = user.displayName || 'User';
 
-          // Attempt to load the user's profile picture
-          const userProfilePicRef = storage.ref('profilePictures/' + user.uid);
-          userProfilePicRef.getDownloadURL().then((url) => {
-            document.getElementById('userProfilePic').src = url;
-          }).catch(() => {
-            console.log('Profile picture not found. Using default.');
-          });
-
-          // Attach the logoutUser function to the logout button's click event
-          document.getElementById('logoutBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            logoutUser(); // Call logoutUser function here
-          });
-        } else {
-          // If no user is logged in, you might want to clear or set default values
-          document.getElementById('userName').textContent = 'User';
-          // Optionally, set a default or placeholder image for 'userProfilePic'
-          // document.getElementById('userProfilePic').src = 'path/to/default/image';
-        }
-      });
-
-      function fetchUserLikes(userId) {
-    const userLikesRef = firebase.firestore().collection('users').doc(userId).collection('likes');
-    userLikesRef.get().then(querySnapshot => {
-        const likes = [];
-        querySnapshot.forEach(doc => {
-            likes.push(doc.id); // Assuming the like ID is what you want to display
-        });
-        document.getElementById('likesHistory').textContent = likes.join(', ');
-    }).catch(error => console.error('Error fetching likes:', error));
-}
-
-function fetchUserComments(userId) {
-    const userCommentsRef = firebase.firestore().collection('users').doc(userId).collection('comments');
-    userCommentsRef.get().then(querySnapshot => {
-        const comments = [];
-        querySnapshot.forEach(doc => {
-            comments.push(doc.data().comment); // Assuming you store comments with a 'comment' field
-        });
-        document.getElementById('commentsHistory').textContent = comments.join(', ');
-    }).catch(error => console.error('Error fetching comments:', error));
-}
-
-function fetchUserRatings(userId) {
-    const userRatingsRef = firebase.firestore().collection('users').doc(userId).collection('ratings');
-    userRatingsRef.get().then(querySnapshot => {
-        const ratings = [];
-        querySnapshot.forEach(doc => {
-            ratings.push(`${doc.id}: ${doc.data().rating}`); // Displaying rating ID and value
-        });
-        document.getElementById('ratingsHistory').textContent = ratings.join(', ');
-    }).catch(error => console.error('Error fetching ratings:', error));
-}
-
-// Function to update username and profile picture
-  document.getElementById('updateProfileBtn').addEventListener('click', (e) => {
-    e.preventDefault();
-    updateUsernameAndProfilePic();
-  });
-
-  function updateUsernameAndProfilePic() {
-      const user = auth.currentUser;
-      if (!user) {
-          console.error('No user logged in');
-          return;
-      }
-
-      const newUsername = document.getElementById('usernameInput').value;
-      const profilePicFile = document.getElementById('profilePicChange').files[0];
-
-      // Update username if provided
-      if (newUsername) {
-          user.updateProfile({
-              displayName: newUsername
-          }).then(() => {
-              console.log('Username updated successfully');
-              document.getElementById('userName').textContent = newUsername; // Update username display immediately
-
-              // Optionally, update username in Firestore/Realtime Database here
-          }).catch((error) => {
-              console.error('Error updating username:', error);
-          });
-      }
-
-      // Upload new profile picture if provided
-      if (profilePicFile) {
-          const profilePicRef = storage.ref(`profilePictures/${user.uid}`);
-          profilePicRef.put(profilePicFile).then(() => {
-              console.log('Profile picture uploaded successfully');
-              // Get download URL and optionally update user profile or database
-              profilePicRef.getDownloadURL().then((url) => {
-                  user.updateProfile({
-                      photoURL: url
-                  }).then(() => {
-                      document.getElementById('userProfilePic').src = url; // Update profile picture display immediately
-                      console.log('Profile picture updated successfully');
-                  }).catch((error) => {
-                      console.error('Error updating profile picture URL:', error);
-                  });
+              // Attempt to load the user's profile picture
+              const userProfilePicRef = storage.ref('profilePictures/' + user.uid);
+              userProfilePicRef.getDownloadURL().then((url) => {
+                document.getElementById('userProfilePic').src = url;
+              }).catch(() => {
+                console.log('Profile picture not found. Using default.');
               });
-          }).catch((error) => {
-              console.error('Error uploading profile picture:', error);
-          });
-      }
-  }
 
-    </script>
+              // Attach the logoutUser function to the logout button's click event
+              document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                logoutUser(); // Call logoutUser function here
+              });
+            } else {
+              // If no user is logged in, you might want to clear or set default values
+              document.getElementById('userName').textContent = 'User';
+              // Optionally, set a default or placeholder image for 'userProfilePic'
+              // document.getElementById('userProfilePic').src = 'path/to/default/image';
+            }
+          });
+
+          function fetchUserLikes(userId) {
+        const userLikesRef = firebase.firestore().collection('users').doc(userId).collection('likes');
+        userLikesRef.get().then(querySnapshot => {
+            const likes = [];
+            querySnapshot.forEach(doc => {
+                likes.push(doc.id); // Assuming the like ID is what you want to display
+            });
+            document.getElementById('likesHistory').textContent = likes.join(', ');
+        }).catch(error => console.error('Error fetching likes:', error));
+    }
+
+    function fetchUserComments(userId) {
+        const userCommentsRef = firebase.firestore().collection('users').doc(userId).collection('comments');
+        userCommentsRef.get().then(querySnapshot => {
+            const comments = [];
+            querySnapshot.forEach(doc => {
+                comments.push(doc.data().comment); // Assuming you store comments with a 'comment' field
+            });
+            document.getElementById('commentsHistory').textContent = comments.join(', ');
+        }).catch(error => console.error('Error fetching comments:', error));
+    }
+
+    function fetchUserRatings(userId) {
+        const userRatingsRef = firebase.firestore().collection('users').doc(userId).collection('ratings');
+        userRatingsRef.get().then(querySnapshot => {
+            const ratings = [];
+            querySnapshot.forEach(doc => {
+                ratings.push(`${doc.id}: ${doc.data().rating}`); // Displaying rating ID and value
+            });
+            document.getElementById('ratingsHistory').textContent = ratings.join(', ');
+        }).catch(error => console.error('Error fetching ratings:', error));
+    }
+
+    // Improved function to update username, profile picture, and handle description saving
+    document.getElementById('updateProfileBtn').addEventListener('click', e => {
+      e.preventDefault();
+      updateUsernameAndProfilePic();
+    });
+
+    document.getElementById('saveDescriptionBtn').addEventListener('click', e => {
+      e.preventDefault();
+      saveUserDescription();
+    });
+
+    function saveUserDescription() {
+      const userDescription = document.getElementById('userDescriptionInput').value;
+      const userId = firebase.auth().currentUser.uid;
+      if (userId) {
+          firebase.firestore().collection('users').doc(userId).set({
+              description: userDescription
+          }, { merge: true })
+          .then(() => {
+              console.log('Description saved successfully');
+              // Display success message
+              displayMessage('Description updated successfully.');
+          })
+          .catch(error => {
+              console.error('Error saving description:', error);
+          });
+      } else {
+          console.log('User not logged in');
+      }
+    }
+
+    function fetchUserDescription(userId) {
+      firebase.firestore().collection('users').doc(userId).get()
+      .then(doc => {
+          if (doc.exists) {
+              const userDescription = doc.data().description;
+              document.getElementById('userDescriptionDisplay').textContent = userDescription;
+          }
+      })
+      .catch(error => {
+          console.error('Error fetching description:', error);
+      });
+    }
+
+    // Call fetchUserDescription when a user is logged in to display their description
+    auth.onAuthStateChanged(user => {
+      // Existing auth state changed handling...
+      if (user) {
+          // Call fetchUserDescription here
+          fetchUserDescription(user.uid);
+      }
+    });
+
+    // Helper function to display messages to the user
+    function displayMessage(message) {
+      // Assuming you have an element with id "messageDisplay" for showing messages
+      document.getElementById('messageDisplay').textContent = message;
+      // Optionally, clear the message after a few seconds
+      setTimeout(() => document.getElementById('messageDisplay').textContent = '', 3000);
+    }
+    document.getElementById('changePasswordBtn').addEventListener('click', e => {
+      e.preventDefault();
+      changeUserPassword();
+    });
+
+    function changeUserPassword() {
+      const newPassword = document.getElementById('newPasswordInput').value;
+      const user = firebase.auth().currentUser;
+
+      if (user && newPassword) {
+        user.updatePassword(newPassword).then(() => {
+          console.log('Password updated successfully');
+          displayMessage('Password updated successfully.');
+          // Clear the input field after successful update
+          document.getElementById('newPasswordInput').value = '';
+        }).catch(error => {
+          console.error('Error updating password:', error);
+          // Display error message to the user
+          displayMessage('Error updating password. Make sure you are logged in recently.');
+        });
+      } else {
+        console.log('No new password provided or user not logged in');
+        displayMessage('No new password provided or user not logged in.');
+      }
+    }
+        </script>
 
 
 
