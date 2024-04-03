@@ -4217,7 +4217,7 @@ const searchFunction = () => {
     }
   });
   function sendLikeToServer(userId) {
-    fetch('YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL', {
+    fetch('https://script.google.com/macros/s/AKfycbw8_1wnOr1r5NuCbb-ivFNifjxiF4Cap-tvOqt8qjchRLoq8lqIYumQhxzzQO6Ep10j/exec', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -4228,7 +4228,10 @@ const searchFunction = () => {
       }),
     })
     .then(response => response.json())
-    .then(data => console.log('Like response:', data))
+    .then(data => {
+      console.log('Like response:', data);
+      alert('You liked the game!');
+    })
     .catch(error => console.error('Error sending like:', error));
   }
 
@@ -4249,7 +4252,10 @@ const searchFunction = () => {
       }),
     })
     .then(response => response.json())
-    .then(data => console.log('Comment response:', data))
+    .then(data => {
+      console.log('Comment response:', data);
+      alert('Your comment has been posted!');
+    })
     .catch(error => console.error('Error sending comment:', error));
   }
 
@@ -4270,7 +4276,10 @@ const searchFunction = () => {
       }),
     })
     .then(response => response.json())
-    .then(data => console.log('Rating response:', data))
+    .then(data => {
+      console.log('Rating response:', data);
+      alert('Your rating has been saved!');
+    })
     .catch(error => console.error('Error sending rating:', error));
   }
 
@@ -4280,6 +4289,7 @@ const searchFunction = () => {
   }
 
 </script>
+
 
 
 
