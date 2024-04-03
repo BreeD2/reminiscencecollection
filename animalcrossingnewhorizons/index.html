@@ -4319,6 +4319,69 @@ function updateLikeButtonUI(liked) {
         likeButton.innerText = 'Like';
     }
 }
+
+function fetchAndDisplayLikes() {
+    const userId = auth.currentUser ? auth.currentUser.uid : null;
+    if (!userId) return;
+
+    const gameContainer = document.querySelector('.game-container');
+    const gameId = gameContainer.getAttribute('data-game-id');
+
+    firestore.collection('likes').doc(userId).get().then(doc => {
+        if (doc.exists && doc.data()[gameId]) {
+            updateLikeButtonUI(true);
+        } else {
+            updateLikeButtonUI(false);
+        }
+    }).catch(error => console.error("Error fetching likes: ", error));
+}
+
+async function fetchAndDisplayComments(gameId) {
+    // Assuming comments are stored in a collection named 'comments'
+    // and each document contains gameId, text, and userName
+    const commentsRef = firestore.collection('comments');
+    const snapshot = await commentsRef.where('gameId', '==', gameId).get();
+    if (snapshot.empty) {
+        console.log('No matching comments.');
+        return;
+    }
+    snapshot.forEach(doc => {
+        addCommentToPage(doc.data().text, doc.data().userName);
+    });
+}
+
+async function fetchAndDisplayRating(gameId, userId) {
+    // Assuming ratings are stored in a collection named 'ratings'
+    // and each document contains gameId, rating, and userId
+    const ratingsRef = firestore.collection('ratings').doc(`${gameId}_${userId}`);
+    const doc = await ratingsRef.get();
+    if (!doc.exists) {
+        console.log('No matching rating.');
+        return;
+    }
+    // Display the rating in the UI
+    console.log('Rating:', doc.data().rating);
+    // Here, you'd update the UI to reflect the user's rating
+}
+
+function handleCommentButtonClick() {
+    const commentText = prompt("Enter your comment:");
+    const userName = auth.currentUser.displayName || 'Anonymous';
+    const userId = auth.currentUser.uid;
+    const gameContainer = document.querySelector('.game-container');
+    const gameId = gameContainer.getAttribute('data-game-id');
+
+    if (commentText) {
+        const comment = { gameId, text: commentText, userName, userId, timestamp: firebase.firestore.FieldValue.serverTimestamp() };
+        firestore.collection('comments').add(comment)
+            .then(() => {
+                console.log('Comment added');
+                addCommentToPage(commentText, userName);
+            })
+            .catch(error => console.error('Error adding comment:', error));
+    }
+}
+
 </script>
 
  </body>
