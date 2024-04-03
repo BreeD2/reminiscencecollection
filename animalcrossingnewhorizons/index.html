@@ -4218,57 +4218,61 @@ const searchFunction = () => {
   });
 
   function setupGameInteractions(userId) {
-      const likeButton = document.getElementById('likeButton');
-      const commentButton = document.getElementById('commentButton');
-      const rateButton = document.getElementById('rateButton');
-      const ratingContainer = document.getElementById('ratingContainer');
+      document.getElementById("likeButton").addEventListener("click", () => {
+        if (isUserSignedIn()) {
+          saveLike(userId);
+        } else {
+          alert("Please sign in to like this game.");
+        }
+      });
 
-      likeButton.onclick = () => saveLike(userId);
-      commentButton.onclick = () => saveComment(userId);
-      rateButton.onclick = () => ratingContainer.style.display = 'block';
+      document.getElementById("commentButton").addEventListener("click", () => {
+        if (isUserSignedIn()) {
+          const comment = prompt("Enter your comment:");
+          if (comment) saveComment(userId, comment);
+        } else {
+          alert("Please sign in to comment on this game.");
+        }
+      });
+
+      document.getElementById("rateButton").addEventListener("click", () => {
+        if (isUserSignedIn()) {
+          document.getElementById("ratingContainer").style.display = 'block';
+        } else {
+          alert("Please sign in to rate this game.");
+        }
+      });
 
       document.querySelectorAll('#ratingContainer .star').forEach(star => {
-        star.onclick = () => {
+        star.addEventListener('click', () => {
           const rating = star.getAttribute('data-value');
           saveRating(userId, rating);
-          ratingContainer.style.display = 'none'; // Hide after selection
-        };
+          document.getElementById("ratingContainer").style.display = 'none';
+        });
       });
     }
 
     function saveLike(userId) {
-      // Example Firestore save
       db.collection("likes").add({
         userId: userId,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      })
-      .then(() => console.log("Like saved"))
-      .catch(error => console.error("Error saving like: ", error));
+      });
     }
 
-    function saveComment(userId) {
-      const comment = prompt("Enter your comment:");
-      if (comment) {
-        // Example Firestore save
-        db.collection("comments").add({
-          userId: userId,
-          comment: comment,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        })
-        .then(() => console.log("Comment saved"))
-        .catch(error => console.error("Error saving comment: ", error));
-      }
+    function saveComment(userId, comment) {
+      db.collection("comments").add({
+        userId: userId,
+        comment: comment,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      });
     }
 
     function saveRating(userId, rating) {
-      // Example Firestore save
       db.collection("ratings").add({
         userId: userId,
         rating: rating,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      })
-      .then(() => console.log("Rating saved"))
-      .catch(error => console.error("Error saving rating: ", error));
+      });
     }
 </script>
 
