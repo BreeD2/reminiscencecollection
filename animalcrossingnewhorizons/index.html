@@ -60,8 +60,8 @@
                  <i class="fa fa-user"></i> <span id="userName">User</span> <i class="fa fa-caret-down"></i>
              </button>
              <div class="dropdown-content2">
-                 <a href="dashboard/index.html">Dashboard</a>
-                 <a href="logout/index.html" id="logoutBtn">Logout</a>
+                 <a href="..//dashboard/index.html">Dashboard</a>
+                 <a href="..//logout/index.html" id="logoutBtn">Logout</a>
              </div>
          </div>
        <div class="dropdown">
@@ -4200,12 +4200,9 @@ const searchFunction = () => {
   };
 
   // Initialize Firebase
-  const app = firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth(app);
-  const db = firebase.firestore(app);
-  const storage = firebase.storage(app);
-
-  const currentGameId = 'animalCrossingNewHorizons'; // Identifier for the current game
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const storage = firebase.storage();
 
   // Define the logoutUser function
   function logoutUser() {
@@ -4216,62 +4213,40 @@ const searchFunction = () => {
     });
   }
 
-
-  // Listen for authentication state changes
-  auth.onAuthStateChanged((user) => {
+  // Handle authentication state changes
+  auth.onAuthStateChanged(user => {
     const dropdownContent = document.querySelector('.dropdown-content2');
-
     if (user) {
-      // Display user's display name and profile picture
-      const userNameDisplay = document.getElementById('userName');
-      userNameDisplay.textContent = user.displayName || 'User';
+      // Display user's display name, or 'User' if not available
+      document.getElementById('userName').textContent = user.displayName || 'User';
 
-      const userProfilePic = document.getElementById('userProfilePic');
-      if(user.photoURL) {
-        userProfilePic.src = user.photoURL;
-      } else {
-        // Attempt to load the user's profile picture from storage
-        const userProfilePicRef = storage.ref(`profilePictures/${user.uid}`);
-        userProfilePicRef.getDownloadURL()
-          .then((url) => userProfilePic.src = url)
-          .catch(() => console.log('Profile picture not found. Using default.'));
-      }
+      // Attempt to load the user's profile picture
+      const userProfilePicRef = storage.ref('profilePictures/' + user.uid);
+      userProfilePicRef.getDownloadURL().then((url) => {
+        document.getElementById('userProfilePic').src = url;
+      }).catch(() => {
+        console.log('Profile picture not found. Using default.');
+      });
 
       // Update dropdown content for logged-in users
       dropdownContent.innerHTML = `
-      <a href="..//dashboard/index.html">Dashboard</a>
-      <a href="#" id="logoutBtn">Logout</a>
+        <a href="..//dashboard/index.html">Dashboard</a>
+        <a href="#" id="logoutBtn">Logout</a>
       `;
 
-      // Logout functionality
-      document.getElementById('logoutButton').addEventListener('click', (e) => {
+      // Reattach the logout event listener to the new logout button
+      document.getElementById('logoutBtn').addEventListener('click', (e) => {
         e.preventDefault();
-        auth.signOut().then(() => {
-          console.log('User logged out');
-          window.location.reload();
-        }).catch((error) => console.error('Logout Error:', error));
+        logoutUser(); // Call logoutUser function here
       });
-
-      // Setup game interactions
-      setupGameInteractions(user.uid);
-
     } else {
       // Update dropdown content for guests
       dropdownContent.innerHTML = `
-        <a href="..//signup/index.html">Signup</a>
         <a href="..//login/index.html">Login</a>
+        <a href="..//signup/index.html">Signup</a>
       `;
     }
   });
-
-  // Game interactions and utility functions remain unchanged
-  function setupGameInteractions(userId) { /* Unchanged */ }
-  function saveLike(userId, gameId) { /* Unchanged */ }
-  function saveComment(userId, gameId) { /* Unchanged */ }
-  function saveRating(userId, gameId, rating) { /* Unchanged */ }
-  function fetchUserActions(userId) { /* Unchanged */ }
-  function highlightRatingStars(rating) { /* Unchanged */ }
-
 </script>
 
 
