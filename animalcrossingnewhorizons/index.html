@@ -391,55 +391,7 @@
 
    </div>
  </div>
-<script>
-  document.getElementById("rateButton").addEventListener("click", function() {
-   var ratingContainer = document.getElementById("ratingContainer");
-   ratingContainer.style.display = ratingContainer.style.display === "none" ? "block" : "none";
- });
 
-  document.querySelectorAll('.star').forEach(star => {
-    star.addEventListener('mouseover', hoverStars);
-    star.addEventListener('mouseout', function() {
-      updateStars(this.parentElement);
-    });
-    star.addEventListener('click', setRating);
-  });
-
-  function hoverStars() {
-    this.classList.add('hover');
-    const hoverValue = this.dataset.value;
-    this.parentElement.querySelectorAll('.star').forEach(star => {
-      if (star.dataset.value <= hoverValue) {
-        star.classList.add('hover');
-      } else {
-        star.classList.remove('hover');
-      }
-    });
-  }
-
-  function setRating() {
-    const ratingValue = this.dataset.value;
-    const ratingContainer = this.parentElement;
-    if (!ratingContainer.dataset.hasRated) {
-      ratingContainer.dataset.rating = ratingValue;
-      ratingContainer.dataset.hasRated = "true";
-      updateStars(ratingContainer);
-      alert("You rated this " + ratingValue + " stars. Thank you for your feedback!");
-    }
-  }
-
-  function updateStars(ratingContainer) {
-    const ratingValue = ratingContainer.dataset.rating;
-    ratingContainer.querySelectorAll('.star').forEach(star => {
-      star.classList.remove('hover');
-      if (star.dataset.value <= ratingValue) {
-        star.classList.add('selected');
-      } else {
-        star.classList.remove('selected');
-      }
-    });
-  }
-</script>
 
 
 
@@ -4214,7 +4166,7 @@ async function updateUIForLoggedInUser(user) {
         console.log('Profile picture not found. Using default.');
     }
     document.querySelector('.dropdown-content2').innerHTML = `
-      <a href="dashboard/index.html">Dashboard</a>
+      <a href="..//dashboard/index.html">Dashboard</a>
       <a href="javascript:void(0);" id="logoutBtn">Logout</a>
     `;
     document.getElementById('logoutBtn').addEventListener('click', logoutUser);
@@ -4222,8 +4174,8 @@ async function updateUIForLoggedInUser(user) {
 
 function updateUIForLoggedOutUser() {
     document.querySelector('.dropdown-content2').innerHTML = `
-      <a href="login/index.html">Login</a>
-      <a href="signup/index.html">Signup</a>
+      <a href="..//login/index.html">Login</a>
+      <a href="..//signup/index.html">Signup</a>
     `;
 }
 
@@ -4365,14 +4317,27 @@ async function fetchAndDisplayRating(gameId, userId) {
 }
 
 function handleCommentButtonClick() {
-    const commentText = prompt("Enter your comment:");
-    const userName = auth.currentUser.displayName || 'Anonymous';
-    const userId = auth.currentUser.uid;
-    const gameContainer = document.querySelector('.game-container');
-    const gameId = gameContainer.getAttribute('data-game-id');
+    // Check if the user is signed in
+    if (!auth.currentUser) {
+        alert("You must be signed in to add a comment.");
+        return;
+    }
 
+    const commentText = prompt("Enter your comment:");
     if (commentText) {
-        const comment = { gameId, text: commentText, userName, userId, timestamp: firebase.firestore.FieldValue.serverTimestamp() };
+        const userName = auth.currentUser.displayName || 'Anonymous';
+        const userId = auth.currentUser.uid;
+        const gameContainer = document.querySelector('.game-container');
+        const gameId = gameContainer.getAttribute('data-game-id');
+
+        const comment = {
+            gameId,
+            text: commentText,
+            userName,
+            userId,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
         firestore.collection('comments').add(comment)
             .then(() => {
                 console.log('Comment added');
