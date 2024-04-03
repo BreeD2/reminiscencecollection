@@ -4173,6 +4173,39 @@
           // document.getElementById('userProfilePic').src = 'path/to/default/image';
         }
       });
+
+      function fetchUserLikes(userId) {
+    const userLikesRef = firebase.firestore().collection('users').doc(userId).collection('likes');
+    userLikesRef.get().then(querySnapshot => {
+        const likes = [];
+        querySnapshot.forEach(doc => {
+            likes.push(doc.id); // Assuming the like ID is what you want to display
+        });
+        document.getElementById('likesHistory').textContent = likes.join(', ');
+    }).catch(error => console.error('Error fetching likes:', error));
+}
+
+function fetchUserComments(userId) {
+    const userCommentsRef = firebase.firestore().collection('users').doc(userId).collection('comments');
+    userCommentsRef.get().then(querySnapshot => {
+        const comments = [];
+        querySnapshot.forEach(doc => {
+            comments.push(doc.data().comment); // Assuming you store comments with a 'comment' field
+        });
+        document.getElementById('commentsHistory').textContent = comments.join(', ');
+    }).catch(error => console.error('Error fetching comments:', error));
+}
+
+function fetchUserRatings(userId) {
+    const userRatingsRef = firebase.firestore().collection('users').doc(userId).collection('ratings');
+    userRatingsRef.get().then(querySnapshot => {
+        const ratings = [];
+        querySnapshot.forEach(doc => {
+            ratings.push(`${doc.id}: ${doc.data().rating}`); // Displaying rating ID and value
+        });
+        document.getElementById('ratingsHistory').textContent = ratings.join(', ');
+    }).catch(error => console.error('Error fetching ratings:', error));
+}
     </script>
 
 
