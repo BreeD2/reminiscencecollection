@@ -4173,75 +4173,102 @@ const searchFunction = () => {
   const storage = firebase.storage();
   const db = firebase.firestore(); // Initialize Firestore
 
-    // Handle user authentication state changes
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        setupGameInteractions(user.uid);
-      } else {
-        setupGameInteractions(null);
-      }
+  // Define the logoutUser function
+  function logoutUser() {
+    auth.signOut().then(() => {
+      console.log('User logged out');
+    }).catch((error) => {
+      console.error('Logout Error:', error);
     });
+  }
 
-    function isUserSignedIn() {
-      return !!auth.currentUser;
+  // Handle authentication state changes
+  auth.onAuthStateChanged(user => {
+    const dropdownContent = document.querySelector('.dropdown-content2');
+    if (user) {
+      // Display user's display name, or 'User' if not available
+      document.getElementById('userName').textContent = user.displayName || 'User';
+
+      // Attempt to load the user's profile picture
+      const userProfilePicRef = storage.ref('profilePictures/' + user.uid);
+      userProfilePicRef.getDownloadURL().then((url) => {
+        document.getElementById('userProfilePic').src = url;
+      }).catch(() => {
+        console.log('Profile picture not found. Using default.');
+      });
+
+      // Update dropdown content for logged-in users
+      dropdownContent.innerHTML = `
+        <a href="..//dashboard/index.html">Dashboard</a>
+        <a href="#" id="logoutBtn">Logout</a>
+      `;
+
+      // Reattach the logout event listener to the new logout button
+      document.getElementById('logoutBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        logoutUser(); // Call logoutUser function here
+      });
+    } else {
+      // Update dropdown content for guests
+      dropdownContent.innerHTML = `
+        <a href="..//login/index.html">Login</a>
+        <a href="..//signup/index.html">Signup</a>
+      `;
     }
+  });
 
-    function setupGameInteractions(userId) {
-      document.getElementById("likeButton").addEventListener("click", () => {
-        if (isUserSignedIn()) {
-          saveLike(userId);
-        } else {
-          alert("Please sign in to like this game.");
-        }
-      });
+  function setupGameInteractions(userId) {
+      const likeButton = document.getElementById('likeButton');
+      const commentButton = document.getElementById('commentButton');
+      const rateButton = document.getElementById('rateButton');
+      const ratingContainer = document.getElementById('ratingContainer');
 
-      document.getElementById("commentButton").addEventListener("click", () => {
-        if (isUserSignedIn()) {
-          const comment = prompt("Enter your comment:");
-          if (comment) saveComment(userId, comment);
-        } else {
-          alert("Please sign in to comment on this game.");
-        }
-      });
-
-      document.getElementById("rateButton").addEventListener("click", () => {
-        if (isUserSignedIn()) {
-          document.getElementById("ratingContainer").style.display = 'block';
-        } else {
-          alert("Please sign in to rate this game.");
-        }
-      });
+      likeButton.onclick = () => saveLike(userId);
+      commentButton.onclick = () => saveComment(userId);
+      rateButton.onclick = () => ratingContainer.style.display = 'block';
 
       document.querySelectorAll('#ratingContainer .star').forEach(star => {
-        star.addEventListener('click', () => {
+        star.onclick = () => {
           const rating = star.getAttribute('data-value');
           saveRating(userId, rating);
-          document.getElementById("ratingContainer").style.display = 'none';
-        });
+          ratingContainer.style.display = 'none'; // Hide after selection
+        };
       });
     }
 
     function saveLike(userId) {
+      // Example Firestore save
       db.collection("likes").add({
         userId: userId,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      });
+      })
+      .then(() => console.log("Like saved"))
+      .catch(error => console.error("Error saving like: ", error));
     }
 
-    function saveComment(userId, comment) {
-      db.collection("comments").add({
-        userId: userId,
-        comment: comment,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      });
+    function saveComment(userId) {
+      const comment = prompt("Enter your comment:");
+      if (comment) {
+        // Example Firestore save
+        db.collection("comments").add({
+          userId: userId,
+          comment: comment,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(() => console.log("Comment saved"))
+        .catch(error => console.error("Error saving comment: ", error));
+      }
     }
 
     function saveRating(userId, rating) {
+      // Example Firestore save
       db.collection("ratings").add({
         userId: userId,
         rating: rating,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      });
+      })
+      .then(() => console.log("Rating saved"))
+      .catch(error => console.error("Error saving rating: ", error));
     }
 </script>
 
