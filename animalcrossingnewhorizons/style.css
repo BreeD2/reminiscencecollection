@@ -4295,3 +4295,21 @@ margin-top: 20px;
 .highlighted {
   color: gold; /* Example style */
 }
+
+#commentInput {
+  max-width: 300px;
+  min-height: 50px;
+  margin: 10px;
+  margin-top: 20px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+
+}
+
+#submitComment {
+  margin: 10px;
+
+}

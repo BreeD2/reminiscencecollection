@@ -362,20 +362,20 @@
      <br> After experiencing my first foray into the Animal Crossing universe with "New Leaf," I've become quite the enthusiast. "Animal Crossing: New Horizons" elevates the series with its expansive customization options, allowing for a level of personal expression I hadn't encountered before in gaming. For the first time, I was able to craft a character who truly mirrored my appearance, adding a personal touch to my virtual escapade. The game's landscaping possibilities are impressive, offering endless creativity in designing one's island paradise. The ability to design and share unique clothing, hats, and art enhances this further, although I'm less thrilled about the restriction of one island per console — a limitation that feels unnecessarily binding without investing in additional hardware. While I yearn for richer dialogues from the animal inhabitants to enrich the world further, my overall experience has been profoundly positive. Acquiring the game in March 2020, amid the pandemic, it provided not just a delightful escape but a means to connect and share moments with others during isolation.
 
  </p>
-
+<div class="game-info">
  <!-- Comments Section -->
  <div id="commentsSection">
-     <h2>User Comments</h2>
+      <strong>User's Comments</strong>
      <div id="commentsList">
          <!-- User comments will be appended here -->
      </div>
      <!-- Add Comment Section -->
      <div id="addCommentSection">
-         <textarea id="commentInput" placeholder="Write a comment..."></textarea>
+         <textarea id="commentInput" placeholder="Write a comment..."></textarea><br>
          <button id="submitComment">Submit Comment</button>
      </div>
  </div>
-
+</div>
 </div>
    <div class="footer">
      <div class="copy">Copyright &copy; 2024 Reminiscence Collection. All rights reserved.</div>
@@ -4226,10 +4226,25 @@ async function handleAuthStateChanges() {
     });
 }
 
+async function editComment(commentId, oldText) {
+    const newText = prompt("Edit your comment:", oldText);
+    if (newText && newText.trim() !== '') {
+        try {
+            await firestore.collection('comments').doc(commentId).update({
+                text: newText
+            });
+            showToast('Comment updated successfully.');
+            fetchAndDisplayComments(gameId);
+        } catch (error) {
+            console.error('Error updating comment:', error);
+            showToast('Failed to update comment.');
+        }
+    }
+}
 
 
 
-// Assuming `fetchAndDisplayComments` is called after the DOM is fully loaded
+// Correct: This fetches comments regardless of the user's sign-in state.
 async function fetchAndDisplayComments(gameId) {
     const commentsList = document.getElementById('commentsList');
     commentsList.innerHTML = ''; // Clear existing comments
@@ -4237,36 +4252,17 @@ async function fetchAndDisplayComments(gameId) {
     try {
         const querySnapshot = await firestore.collection('comments')
                                              .where('gameId', '==', gameId)
-                                             .orderBy('timestamp', 'desc')
                                              .get();
 
-        for (const doc of querySnapshot.docs) {
-            const comment = doc.data();
-            const userDoc = await firestore.collection('users').doc(comment.userId).get();
-            const username = userDoc.exists ? userDoc.data().username : "Anonymous"; // Assuming there's a 'username' field
-
-            // Create comment display elements
-            const commentElement = document.createElement('div');
-            const usernameElement = document.createElement('span');
-            const commentTextElement = document.createElement('p');
-            const deleteButton = document.createElement('button');
-
-            usernameElement.textContent = username + ': ';
-            commentTextElement.textContent = comment.text;
-            deleteButton.textContent = 'Delete';
-            deleteButton.onclick = function() { deleteComment(doc.id); };
-
-            commentElement.appendChild(usernameElement);
-            commentElement.appendChild(commentTextElement);
-            commentElement.appendChild(deleteButton);
-
-            commentsList.appendChild(commentElement);
-        }
+        querySnapshot.forEach((doc) => {
+            // Processing and displaying each comment
+        });
     } catch (error) {
         console.error('Error fetching comments:', error);
-        showToast('Failed to fetch comments.');
     }
 }
+
+
 
 async function deleteComment(commentId) {
     try {
