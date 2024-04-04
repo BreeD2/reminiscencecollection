@@ -342,6 +342,8 @@
       <span class="star" data-value="4">&#9733;</span>
       <span class="star" data-value="5">&#9733;</span>
   </div>
+  <span id="likesCount"></span>
+
 
        <p class="game-info"><strong>Developer(s):</strong><br>Nintendo EPD<br></p>
        <p class="game-info"><strong>Publisher(s):</strong><br>Nintendo</p>
@@ -447,31 +449,6 @@ document.getElementById("zoomOut").addEventListener("click", function() {
     }
 });
 </script>
-
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-  const options = ["All Games", "Publisher", "Developer", "Series", "Platform", "Released Dates", "Genre", "Mode"];
-  const optionsContainer = document.querySelector('.options-container');
-  const selectedOption = document.querySelector('.selected-option');
-
-  options.forEach(option => {
-    const div = document.createElement('div');
-    div.textContent = option;
-    div.classList.add('option');
-    div.onclick = function() {
-      selectedOption.textContent = option;
-      optionsContainer.classList.add('hidden');
-    };
-    optionsContainer.appendChild(div);
-  });
-
-  selectedOption.onclick = function() {
-    optionsContainer.classList.toggle('hidden');
-  };
-});
-</script>
-
 <script>
   // Corrected Categories Data
   const publisherCategories = {
@@ -3065,10 +3042,10 @@ function updateSubCategory() {
   const mainCategory = document.getElementById('mainCategory').value;
   const subCategoryDropdown = document.getElementById('subCategory');
   subCategoryDropdown.innerHTML = ''; // Clear existing options
-  console.log("Main category selected:", mainCategory); // Debugging line
+
 
   // Clear previous subcategory options
-  subCategory.innerHTML = '<option value="" disabled selected hidden>Select a subcategory</option>';
+  subCategory.innerHTML = '<option value="" disabled selected hidden>Choose a subcategory</option>';
 
   // Example: Dummy data for demonstration
   const optionsData = {
@@ -3130,6 +3107,10 @@ document.addEventListener("DOMContentLoaded", function() {
   updateSubCategory(); // To setup initial subcategory options based on the default or first category in the dropdown
 });
 </script>
+
+
+
+
 
 <script>
   document.querySelector('.menu-toggle').addEventListener('click', function() {
@@ -4146,42 +4127,29 @@ const auth = firebase.auth();
 const storage = firebase.storage();
 const firestore = firebase.firestore();
 const db = firebase.firestore();
-const userId = firebase.auth().currentUser.uid;
-const gameId = 'someGameId';
+const gameId = 'animalcrossingnewhorizons'; // Assume this is set appropriately elsewhere
 
-db.collection('games').doc(gameId).collection('likes').doc(userId).set({
-  liked: true, // or current timestamp
+// Use an auth state observer to wait for the auth state to be initialized
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    // User is signed in, now you can safely use user.uid
+    const userId = user.uid;
+
+    db.collection('games').doc(gameId).collection('likes').doc(userId).set({
+      liked: true, // or current timestamp
+    }).then(() => {
+      console.log("Like status set successfully.");
+    }).catch((error) => {
+      console.error("Error setting like status: ", error);
+    });
+  } else {
+    // No user is signed in.
+    console.log("No user signed in.");
+  }
 });
 
-db.collection('games').doc(gameId).collection('likes').doc(userId).get()
-  .then(doc => {
-    if (doc.exists) {
-      console.log("User has liked this game.");
-    } else {
-      console.log("User has not liked this game.");
-    }
-  });
-
-  // When loading the game's details page
-  window.onload = function() {
-      const userId = firebase.auth().currentUser.uid;
-      const gameId = 'someGameId';
-
-      // Check if the game has been liked by the current user
-      db.collection('games').doc(gameId).collection('likes').doc(userId).get()
-        .then(doc => {
-          if (doc.exists) {
-            console.log("User has liked this game.");
-            // Update UI accordingly
-          } else {
-            console.log("User has not liked this game.");
-            // Update UI accordingly
-          }
-        });
-  };
 
 
-let gameId = 'animalcrossingnewhorizons'; // example gameId, ensure this is the correct ID used in Firestore
 
 
 function showToast(message) {
@@ -4227,7 +4195,7 @@ async function handleLikeClick() {
    if (commentText) {
      try {
        await firestore.collection('comments').add({
-         gameId: gameId,
+
          text: commentText,
          userId: auth.currentUser.uid,
          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -4593,6 +4561,7 @@ async function fetchAndDisplayLikes(gameId) {
 
             // Assuming you have an element with ID 'likesCount' to display the number of likes
             document.getElementById('likesCount').textContent = `Likes: ${likesCount}`;
+
         } else {
             console.log('No likes data found for this game.');
         }
@@ -4620,6 +4589,11 @@ async function fetchAndDisplayRating(gameId) {
     showToast('Failed to fetch rating.');
   }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Your existing code to handle DOMContentLoaded
+    fetchAndDisplayLikes('gameId'); // Replace 'gameId' with your actual game ID variable or value
+});
 
 
 document.addEventListener('DOMContentLoaded', async function() {

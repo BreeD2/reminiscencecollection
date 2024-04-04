@@ -4330,7 +4330,7 @@ margin-top: 20px;
 
 
     border-radius: 5px;
-  
+
 }
 
 /* Add Comment Section */
@@ -4498,4 +4498,17 @@ h2 {
 .reply {
     max-width: 500px;
     max-height: 500px;
+}
+
+
+#likesCount {
+  padding: 7px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: white;
+  background-color: dodgerblue;
+  border: none;
+  border-radius: 5px;
+
+  cursor: pointer;
 }
