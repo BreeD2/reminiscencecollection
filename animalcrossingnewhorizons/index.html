@@ -4136,6 +4136,35 @@ const auth = firebase.auth();
 const storage = firebase.storage();
 const firestore = firebase.firestore();
 
+firebase.auth().createUserWithEmailAndPassword(email, password)
+  .then((userCredential) => {
+    // Successfully signed up
+    const user = userCredential.user;
+    // Create a user document in 'users' collection
+    firestore.collection('users').doc(user.uid).set({
+      username: username, // Username entered by the user
+      email: email,
+      // any other user info
+    });
+  })
+  .catch((error) => {
+    console.error("Error signing up:", error);
+  });
+
+  const user = firebase.auth().currentUser;
+const newUsername = "NewUsername"; // New username entered by the user
+
+firestore.collection('users').doc(user.uid).update({
+  username: newUsername,
+  // any other fields to update
+}).then(() => {
+  console.log("User profile updated successfully.");
+}).catch((error) => {
+  console.error("Error updating user profile:", error);
+});
+
+
+
 let gameId = 'animalcrossingnewhorizons'; // example gameId, ensure this is the correct ID used in Firestore
 
 
@@ -4261,44 +4290,51 @@ async function fetchAndDisplayComments(gameId) {
             const username = userDoc.exists ? userDoc.data().username : "Anonymous";
             const date = comment.timestamp ? comment.timestamp.toDate().toLocaleString() : "Unknown date";
 
-            // Create comment display elements
             const commentElement = document.createElement('div');
             const usernameElement = document.createElement('span');
             usernameElement.textContent = `${username} on ${date}: `;
             const commentTextElement = document.createElement('p');
             commentTextElement.textContent = comment.text;
 
-            // Buttons for edit, delete, and reply
-            const editButton = document.createElement('button');
-            editButton.textContent = 'Edit';
-            editButton.onclick = function() {
-                // Implement edit functionality here
-                editComment(doc.id, comment.text);
-            };
-
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.onclick = function() {
-                // Implement delete functionality here
-                deleteComment(doc.id);
-            };
-
             const replyButton = document.createElement('button');
             replyButton.textContent = 'Reply';
-            replyButton.onclick = function() {
-                // Implement reply functionality here
-                console.log("Replying to comment ID: ", doc.id);
+
+            // Create reply input field and send button, initially hidden
+            const replyInput = document.createElement('input');
+            replyInput.type = 'text';
+            replyInput.placeholder = 'Type your reply here...';
+            replyInput.style.display = 'none';
+
+            const sendReplyButton = document.createElement('button');
+            sendReplyButton.textContent = 'Send';
+            sendReplyButton.style.display = 'none';
+
+            // Show input field and send button when reply is clicked
+            replyButton.onclick = () => {
+                replyInput.style.display = 'block';
+                sendReplyButton.style.display = 'inline';
+            };
+
+            // Handle sending of the reply
+            sendReplyButton.onclick = async () => {
+                const replyText = replyInput.value.trim();
+                if (replyText) {
+                    // Implement the function to handle reply
+                    await replyToComment(doc.id, replyText);
+                    replyInput.value = ''; // Clear input field
+                    replyInput.style.display = 'none';
+                    sendReplyButton.style.display = 'none';
+                    // Optionally, refresh the displayed comments to include the new reply
+                } else {
+                    alert('Reply cannot be empty.');
+                }
             };
 
             commentElement.appendChild(usernameElement);
             commentElement.appendChild(commentTextElement);
-            if (auth.currentUser && auth.currentUser.uid === comment.userId) {
-                // Show edit and delete buttons only for the user who made the comment
-                commentElement.appendChild(editButton);
-                commentElement.appendChild(deleteButton);
-            }
-            // Show reply button to all users
             commentElement.appendChild(replyButton);
+            commentElement.appendChild(replyInput);
+            commentElement.appendChild(sendReplyButton);
 
             commentsList.appendChild(commentElement);
         });
