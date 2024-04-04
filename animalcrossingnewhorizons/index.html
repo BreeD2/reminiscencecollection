@@ -4270,38 +4270,53 @@ function setupEventListeners() {
     rateButton.addEventListener('click', () => handleLikeOrRateClick('rate'));
 }
 
-function handleAuthStateChanges() {
-    auth.onAuthStateChanged(user => {
-        const dropdownContent = document.querySelector('.dropdown-content2');
-        if (user) {
-            updateUIForLoggedInUser(user);
-        } else {
-            updateUIForLoggedOutUser();
-        }
+
+  // Define the logoutUser function
+  function logoutUser() {
+    auth.signOut().then(() => {
+      console.log('User logged out');
+      // Optionally redirect the user to login page or home page after logout
+      window.location.href = 'index.html';
+    }).catch((error) => {
+      console.error('Logout Error:', error);
     });
-}
+  }
 
-async function updateUIForLoggedInUser(user) {
-    document.getElementById('userName').textContent = user.displayName || 'User';
-    try {
-        const url = await storage.ref('profilePictures/' + user.uid).getDownloadURL();
+  // Handle authentication state changes
+  auth.onAuthStateChanged(user => {
+    const dropdownContent = document.querySelector('.dropdown-content2');
+    if (user) {
+      // Display user's display name, or 'User' if not available
+      document.getElementById('userName').textContent = user.displayName || 'User';
+
+      // Attempt to load the user's profile picture
+      const userProfilePicRef = storage.ref('profilePictures/' + user.uid);
+      userProfilePicRef.getDownloadURL().then((url) => {
         document.getElementById('userProfilePic').src = url;
-    } catch {
+      }).catch(() => {
         console.log('Profile picture not found. Using default.');
-    }
-    document.querySelector('.dropdown-content2').innerHTML = `
-      <a href="..//dashboard/index.html">Dashboard</a>
-      <a href="javascript:void(0);" id="logoutBtn">Logout</a>
-    `;
-    document.getElementById('logoutBtn').addEventListener('click', logoutUser);
-}
+      });
 
-function updateUIForLoggedOutUser() {
-    document.querySelector('.dropdown-content2').innerHTML = `
-      <a href="..//login/index.html">Login</a>
-      <a href="..//signup/index.html">Signup</a>
-    `;
-}
+      // Update dropdown content for logged-in users
+      dropdownContent.innerHTML = `
+        <a href="dashboard/index.html">Dashboard</a>
+        <a href="javascript:void(0);" id="logoutBtn">Logout</a>
+      `;
+
+      // Reattach the logout event listener to the new logout button
+      document.getElementById('logoutBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        logoutUser(); // Call logoutUser function here
+      });
+    } else {
+      // Update dropdown content for guests
+      dropdownContent.innerHTML = `
+        <a href="login/index.html">Login</a>
+        <a href="signup/index.html">Signup</a>
+      `;
+    }
+  });
+
 
 </script>
 
