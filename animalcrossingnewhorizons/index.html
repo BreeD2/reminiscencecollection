@@ -4275,39 +4275,19 @@ async function fetchAndDisplayComments(gameId) {
             const commentTextElement = document.createElement('p');
             commentTextElement.textContent = comment.text;
 
-            // Buttons for edit, delete, and reply
-            const editButton = document.createElement('button');
-            editButton.textContent = 'Edit';
-            editButton.onclick = function() {
-                // Implement edit functionality here
-                editComment(doc.id, comment.text);
+            // Define replyButton here within the loop to ensure it's accessible
+            const replyButton = document.createElement('button');
+            replyButton.textContent = 'Reply';
+            replyButton.onclick = () => {
+                // Show the popup
+                document.getElementById('replyPopup').style.display = 'block';
+                // Store comment ID in a data attribute for later use
+                document.getElementById('sendReply').setAttribute('data-commentId', doc.id);
             };
-
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.onclick = function() {
-                // Implement delete functionality here
-                deleteComment(doc.id);
-            };
-
-            // Inside fetchAndDisplayComments function
-  replyButton.onclick = () => {
-      document.getElementById('replyPopup').style.display = 'block';
-
-      // Store comment ID in a data attribute for later
-      document.getElementById('sendReply').setAttribute('data-commentId', doc.id);
-  };
-
 
             commentElement.appendChild(usernameElement);
             commentElement.appendChild(commentTextElement);
-            if (auth.currentUser && auth.currentUser.uid === comment.userId) {
-                // Show edit and delete buttons only for the user who made the comment
-                commentElement.appendChild(editButton);
-                commentElement.appendChild(deleteButton);
-            }
-            // Show reply button to all users
-            commentElement.appendChild(replyButton);
+            commentElement.appendChild(replyButton); // Add the reply button to the comment element
 
             commentsList.appendChild(commentElement);
         });
@@ -4316,6 +4296,7 @@ async function fetchAndDisplayComments(gameId) {
         showToast('Failed to fetch comments.');
     }
 }
+
 
 async function replyToComment(commentId) {
     const replyText = prompt("Enter your reply:");
