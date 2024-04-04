@@ -4169,15 +4169,18 @@ function isUserSignedIn() {
 }
 
 
-// Define the handleLikeClick function
 async function handleLikeClick() {
-  if (!isUserSignedIn()) {
-         showToast('You must be signed in to like.');
-         return;
-     }
-     // Perform like logic, update Firestore, and then:
-     showToast('Like updated successfully.');
- }
+    if (!isUserSignedIn()) {
+        showToast('You must be signed in to like.');
+        return;
+    }
+    const likesRef = firestore.collection('likes').doc(gameId);
+    const doc = await likesRef.get();
+    let likes = doc.exists ? doc.data().likes || {} : {};
+    likes[auth.currentUser.uid] = !likes[auth.currentUser.uid]; // Toggle like
+    await likesRef.set({ likes }, { merge: true });
+    showToast('Like updated successfully.');
+}
 
  async function handleCommentClick() {
    const gameId = 'animalcrossingnewhorizons'; // Example gameId, replace as needed
@@ -4249,60 +4252,48 @@ async function editComment(commentId, currentText) {
         }
     }
 }
-async function fetchAndDisplayComments(gameId) {
+async function fetchAndDisplayCommentsAndLikes(gameId) {
     const commentsList = document.getElementById('commentsList');
     commentsList.innerHTML = ''; // Clear existing comments
 
-    try {
-        const querySnapshot = await firestore.collection('comments')
-            .where('gameId', '==', gameId)
-            .orderBy('timestamp', 'desc')
-            .get();
+    // Fetch comments
+    const querySnapshot = await firestore.collection('comments')
+        .where('gameId', '==', gameId)
+        .orderBy('timestamp', 'desc')
+        .get();
 
-        querySnapshot.forEach(async (doc) => {
-            const comment = doc.data();
-            const userDoc = await firestore.collection('users').doc(comment.userId).get();
-            const username = userDoc.exists ? userDoc.data().username : "Anonymous";
-            const date = comment.timestamp ? comment.timestamp.toDate().toLocaleString() : "Unknown date";
+    for (const doc of querySnapshot.docs) {
+        const comment = doc.data();
+        const userDoc = await firestore.collection('users').doc(comment.userId).get();
+        const username = userDoc.exists ? userDoc.data().username : "Anonymous";
+        const date = comment.timestamp ? comment.timestamp.toDate().toLocaleString() : "Unknown date";
 
-            const commentElement = document.createElement('div');
-            commentElement.classList.add('comment');
-            const usernameElement = document.createElement('span');
-            usernameElement.textContent = `${username} on ${date}: `;
-            const commentTextElement = document.createElement('p');
-            commentTextElement.textContent = comment.text;
+        // Fetch rating and check for replies
+        const [ratingDoc, repliesSnapshot] = await Promise.all([
+            firestore.collection('ratings').doc(comment.userId).get(),
+            firestore.collection('replies').where('commentId', '==', doc.id).get()
+        ]);
+        const rating = ratingDoc.exists && ratingDoc.data()[gameId] ? ratingDoc.data()[gameId] : 'No rating';
+        const hasReplies = !repliesSnapshot.empty;
 
-            // Create a container for replies
-            const repliesContainer = document.createElement('div');
-            repliesContainer.classList.add('replies-container');
+        // Assuming likes are stored with commentId as key and a list of userIds as value
+        const likesSnapshot = await firestore.collection('likes').doc(doc.id).get();
+        const likesCount = likesSnapshot.exists ? Object.keys(likesSnapshot.data()).length : 0;
 
-            // Append username and comment text first
-            commentElement.appendChild(usernameElement);
-            commentElement.appendChild(commentTextElement);
+        // Construct comment element with username, date, text, rating, likes, and reply indicator
+        const commentElement = document.createElement('div');
+        commentElement.classList.add('comment');
+        commentElement.innerHTML = `
+            <p>${username} on ${date}: ${comment.text}</p>
+            <p>Rating: ${rating}</p>
+            <p>Likes: ${likesCount}</p>
+            ${hasReplies ? '<p>Has replies</p>' : ''}
+        `;
 
-            // Edit and Delete buttons for comment
-            if (auth.currentUser && auth.currentUser.uid === comment.userId) {
-                const editButton = document.createElement('button');
-                editButton.textContent = 'Edit';
-                editButton.onclick = () => editComment(doc.id, comment.text); // Add your editComment function
-                commentElement.appendChild(editButton);
-
-                const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Delete';
-                deleteButton.onclick = async () => {
-                    if (confirm("Are you sure you want to delete this comment?")) {
-                        try {
-                            await firestore.collection('comments').doc(doc.id).delete();
-                            showToast('Comment deleted successfully.');
-                            fetchAndDisplayComments(gameId);
-                        } catch (error) {
-                            console.error('Error deleting comment:', error);
-                            showToast('Failed to delete comment.');
-                        }
-                    }
-                };
-                commentElement.appendChild(deleteButton);
-            }
+        // Append comment element to the list
+        commentsList.appendChild(commentElement);
+    }
+}
 
             // Reply button
             const replyButton = document.createElement('button');
