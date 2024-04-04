@@ -4251,7 +4251,6 @@ async function editComment(commentId, oldText) {
     }
 }
 
-
 async function fetchAndDisplayComments(gameId) {
     const commentsList = document.getElementById('commentsList');
     commentsList.innerHTML = ''; // Clear existing comments
@@ -4275,19 +4274,25 @@ async function fetchAndDisplayComments(gameId) {
             const commentTextElement = document.createElement('p');
             commentTextElement.textContent = comment.text;
 
-            // Define replyButton here within the loop to ensure it's accessible
+            // Define and set up the replyButton
             const replyButton = document.createElement('button');
             replyButton.textContent = 'Reply';
             replyButton.onclick = () => {
-                // Show the popup
+                // Implementation for showing the reply popup
                 document.getElementById('replyPopup').style.display = 'block';
-                // Store comment ID in a data attribute for later use
                 document.getElementById('sendReply').setAttribute('data-commentId', doc.id);
             };
 
+            // Add elements to the commentElement
             commentElement.appendChild(usernameElement);
             commentElement.appendChild(commentTextElement);
-            commentElement.appendChild(replyButton); // Add the reply button to the comment element
+            if (auth.currentUser && auth.currentUser.uid === comment.userId) {
+                const editButton = ...; // Define editButton and set its onclick
+                const deleteButton = ...; // Define deleteButton and set its onclick
+                commentElement.appendChild(editButton);
+                commentElement.appendChild(deleteButton);
+            }
+            commentElement.appendChild(replyButton); // This ensures replyButton is defined
 
             commentsList.appendChild(commentElement);
         });
@@ -4296,6 +4301,7 @@ async function fetchAndDisplayComments(gameId) {
         showToast('Failed to fetch comments.');
     }
 }
+
 
 
 async function replyToComment(commentId) {
