@@ -4224,21 +4224,25 @@ async function sendLikeToServer(userId, gameId, liked) {
         console.error('Error sending like:', error);
     }
 }
-
-function handleCommentButtonClick() {
-    const commentText = prompt("Enter your comment:");
-    if (commentText) {
-        const userName = auth.currentUser.displayName || 'Anonymous';
-        addCommentToPage(commentText, userName);
-    }
+function handleAuthStateChanges() {
+    auth.onAuthStateChanged(user => {
+        const dropdownContent = document.querySelector('.dropdown-content2');
+        if (user) {
+            // Update UI for logged in user
+            updateUIForLoggedInUser(user);
+            // Now also fetch and display comments for the current game
+            const gameContainer = document.querySelector('.game-container');
+            if (gameContainer) { // Ensure gameContainer exists
+                const gameId = gameContainer.getAttribute('data-game-id');
+                fetchAndDisplayComments(gameId);
+            }
+        } else {
+            updateUIForLoggedOutUser();
+        }
+    });
 }
 
-function addCommentToPage(commentText, userName) {
-    const commentEl = document.createElement('p');
-    commentEl.classList.add('user-comment');
-    commentEl.innerHTML = `<strong>${userName}:</strong> ${commentText}`;
-    document.getElementById('commentsList').appendChild(commentEl);
-}
+
 
 async function saveRating(userId, gameId, rating) {
     try {
@@ -4316,36 +4320,6 @@ async function fetchAndDisplayRating(gameId, userId) {
     // Here, you'd update the UI to reflect the user's rating
 }
 
-function handleCommentButtonClick() {
-    // Check if the user is signed in
-    if (!auth.currentUser) {
-        alert("You must be signed in to add a comment.");
-        return;
-    }
-
-    const commentText = prompt("Enter your comment:");
-    if (commentText) {
-        const userName = auth.currentUser.displayName || 'Anonymous';
-        const userId = auth.currentUser.uid;
-        const gameContainer = document.querySelector('.game-container');
-        const gameId = gameContainer.getAttribute('data-game-id');
-
-        const comment = {
-            gameId,
-            text: commentText,
-            userName,
-            userId,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        };
-
-        firestore.collection('comments').add(comment)
-            .then(() => {
-                console.log('Comment added');
-                addCommentToPage(commentText, userName);
-            })
-            .catch(error => console.error('Error adding comment:', error));
-    }
-}
 
 </script>
 
