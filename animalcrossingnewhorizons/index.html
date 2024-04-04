@@ -4183,6 +4183,7 @@ async function handleLikeClick() {
     likes[auth.currentUser.uid] = !likes[auth.currentUser.uid]; // Toggle like
     await likesRef.set({ likes }, { merge: true });
     showToast('Like updated successfully.');
+    fetchAndDisplayLikes(gameId); // Call this after updating the like status
 }
 
  async function handleCommentClick() {
