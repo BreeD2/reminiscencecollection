@@ -4251,6 +4251,8 @@ async function editComment(commentId, oldText) {
     }
 }
 
+
+
 async function fetchAndDisplayComments(gameId) {
     const commentsList = document.getElementById('commentsList');
     commentsList.innerHTML = ''; // Clear existing comments
@@ -4267,32 +4269,34 @@ async function fetchAndDisplayComments(gameId) {
             const username = userDoc.exists ? userDoc.data().username : "Anonymous";
             const date = comment.timestamp ? comment.timestamp.toDate().toLocaleString() : "Unknown date";
 
-            // Create comment display elements
             const commentElement = document.createElement('div');
             const usernameElement = document.createElement('span');
             usernameElement.textContent = `${username} on ${date}: `;
             const commentTextElement = document.createElement('p');
             commentTextElement.textContent = comment.text;
 
-            // Define and set up the replyButton
             const replyButton = document.createElement('button');
             replyButton.textContent = 'Reply';
             replyButton.onclick = () => {
-                // Implementation for showing the reply popup
                 document.getElementById('replyPopup').style.display = 'block';
                 document.getElementById('sendReply').setAttribute('data-commentId', doc.id);
+            };
+
+            // Define editButton and set its onclick event
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Edit';
+            editButton.classList.add('edit-button-class'); // Optional: Add a class for styling
+            editButton.onclick = () => {
+                editComment(doc.id, comment.text);
             };
 
             // Add elements to the commentElement
             commentElement.appendChild(usernameElement);
             commentElement.appendChild(commentTextElement);
+            commentElement.appendChild(replyButton); // Add the reply button to the comment element
             if (auth.currentUser && auth.currentUser.uid === comment.userId) {
-                const editButton = ...; // Define editButton and set its onclick
-                const deleteButton = ...; // Define deleteButton and set its onclick
-                commentElement.appendChild(editButton);
-                commentElement.appendChild(deleteButton);
+                commentElement.appendChild(editButton); // Add edit button for comments made by the current user
             }
-            commentElement.appendChild(replyButton); // This ensures replyButton is defined
 
             commentsList.appendChild(commentElement);
         });
@@ -4301,6 +4305,25 @@ async function fetchAndDisplayComments(gameId) {
         showToast('Failed to fetch comments.');
     }
 }
+
+// This function is already defined in your script, included here to avoid the syntax error
+async function editComment(commentId, currentText) {
+    const newText = prompt('Edit your comment:', currentText);
+    if (newText !== null && newText.trim() !== '') {
+        try {
+            await firestore.collection('comments').doc(commentId).update({
+                text: newText.trim()
+            });
+            showToast('Comment updated successfully.');
+            fetchAndDisplayComments(gameId);
+        } catch (error) {
+            console.error('Error updating comment:', error);
+            showToast('Failed to update comment.');
+        }
+    }
+}
+
+
 
 
 
