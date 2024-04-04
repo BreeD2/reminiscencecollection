@@ -3966,49 +3966,94 @@ const searchFunction = () => {
 
 
 <script>
-apiKey: "AIzaSyAMEkIdecNerz3qFFa1uWdIfNlXgK4siTM",
-authDomain: "thereminiscencecollection.firebaseapp.com",
-projectId: "thereminiscencecollection",
-storageBucket: "thereminiscencecollection.appspot.com",
-messagingSenderId: "1092408379840",
-appId: "1:1092408379840:web:6e5d0ba1c7d4d8100fa025",
-measurementId: "G-3B8XEPCE0T"
-};
+  // Your Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAMEkIdecNerz3qFFa1uWdIfNlXgK4siTM",
+    authDomain: "thereminiscencecollection.firebaseapp.com",
+    projectId: "thereminiscencecollection",
+    storageBucket: "thereminiscencecollection.appspot.com",
+    messagingSenderId: "1092408379840",
+    appId: "1:1092408379840:web:6e5d0ba1c7d4d8100fa025",
+    measurementId: "G-3B8XEPCE0T"
+  };
 
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.getAuth(app);
 
-        document.getElementById('signup-btn').addEventListener('click', async () => {
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-            try {
-                const userCredential = await firebase.auth().createUserWithEmailAndPassword(auth, email, password);
-                console.log('User created:', userCredential.user);
+  document.getElementById('signup-btn').addEventListener('click', async () => {
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
 
-                // Send an email verification
-                firebase.auth().sendEmailVerification(userCredential.user)
-                .then(() => {
-                    console.log('Verification email sent.');
-                    alert('Please verify your email. Check your inbox.');
-                    // Redirect to dashboard or further steps here
-                    // For example, after verification, ask for the username
-                    const username = prompt('Please enter your username:');
-                    if(username) {
-                        // Save the username in the database or update the user profile
-                        console.log('Username set:', username);
-                        // Then redirect to the dashboard
-                        window.location.href = '..//dashboard/index.html'; // Update with the correct path
-                    }
-                });
-            } catch (error) {
-                console.error('Signup error:', error);
-                document.getElementById('signup-error').innerText = error.message;
-            }
-        });
-    </script>
+      try {
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          console.log('User created:', userCredential.user);
 
+          // Send an email verification
+          await sendEmailVerification(userCredential.user);
+          console.log('Verification email sent.');
+          alert('Please verify your email. Check your inbox.');
+
+          // Prompt for username after verification
+          const username = prompt('Please enter your username:');
+          if (username) {
+              // Save the username in Firestore under 'users' collection
+              await setDoc(doc(db, 'users', userCredential.user.uid), {
+                  username: username,
+                  email: email,
+              });
+              console.log('Username set:', username);
+              // Then redirect to the dashboard
+              window.location.href = '..//dashboard/index.html'; // Update with the correct path
+          }
+      } catch (error) {
+          console.error('Signup error:', error);
+          document.getElementById('signup-error').innerText = error.message;
+      }
+  });
+
+  // Handle authentication state changes
+auth.onAuthStateChanged(user => {
+  const dropdownContent = document.querySelector('.dropdown-content2');
+  if (user) {
+    // User is signed in, redirect to the dashboard or home page
+    window.location.href = '..//dashboard/index.html'; // or your dashboard path
+
+    // You might still want to update the UI or display the user's information
+    // Display user's display name, or 'User' if not available
+    document.getElementById('userName').textContent = user.displayName || 'User';
+
+    // Attempt to load the user's profile picture
+    const userProfilePicRef = storage.ref('profilePictures/' + user.uid);
+    userProfilePicRef.getDownloadURL().then((url) => {
+      document.getElementById('userProfilePic').src = url;
+    }).catch(() => {
+      console.log('Profile picture not found. Using default.');
+    });
+
+    // Update dropdown content for logged-in users
+    dropdownContent.innerHTML = `
+      <a href="..//dashboard/index.html">Dashboard</a>
+      <a href="javascript:void(0);" id="logoutBtn">Logout</a>
+    `;
+
+    // Reattach the logout event listener to the new logout button
+    document.getElementById('logoutBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      logoutUser(); // Call logoutUser function here
+    });
+  } else {
+    // User is not signed in, update UI accordingly
+    // This is where you might want to stay on the login/signup page
+    // Update dropdown content for guests
+    dropdownContent.innerHTML = `
+      <a href="..//login/index.html">Login</a>
+      <a href="..//signup/index.html">Signup</a>
+    `;
+  }
+});
+</script>
 
 </body>
 </html>
