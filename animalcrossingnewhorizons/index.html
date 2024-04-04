@@ -4136,32 +4136,6 @@ const auth = firebase.auth();
 const storage = firebase.storage();
 const firestore = firebase.firestore();
 
-firebase.auth().createUserWithEmailAndPassword(email, password)
-  .then((userCredential) => {
-    // Successfully signed up
-    const user = userCredential.user;
-    // Create a user document in 'users' collection
-    firestore.collection('users').doc(user.uid).set({
-      username: username, // Username entered by the user
-      email: email,
-      // any other user info
-    });
-  })
-  .catch((error) => {
-    console.error("Error signing up:", error);
-  });
-
-  const user = firebase.auth().currentUser;
-const newUsername = "NewUsername"; // New username entered by the user
-
-firestore.collection('users').doc(user.uid).update({
-  username: newUsername,
-  // any other fields to update
-}).then(() => {
-  console.log("User profile updated successfully.");
-}).catch((error) => {
-  console.error("Error updating user profile:", error);
-});
 
 
 
