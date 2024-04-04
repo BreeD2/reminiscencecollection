@@ -4253,7 +4253,6 @@ async function editComment(commentId, currentText) {
 
 
 
-
 async function fetchAndDisplayComments(gameId) {
     const commentsList = document.getElementById('commentsList');
     commentsList.innerHTML = ''; // Clear existing comments
@@ -4264,46 +4263,49 @@ async function fetchAndDisplayComments(gameId) {
                                              .orderBy('timestamp', 'desc')
                                              .get();
 
-        querySnapshot.forEach(async (doc) => {
+        for (const doc of querySnapshot.docs) {
             const comment = doc.data();
             const userDoc = await firestore.collection('users').doc(comment.userId).get();
             const username = userDoc.exists ? userDoc.data().username : "Anonymous";
             const date = comment.timestamp ? comment.timestamp.toDate().toLocaleString() : "Unknown date";
 
             const commentElement = document.createElement('div');
+            commentElement.classList.add('comment');
             const usernameElement = document.createElement('span');
             usernameElement.textContent = `${username} on ${date}: `;
             const commentTextElement = document.createElement('p');
             commentTextElement.textContent = comment.text;
 
-            const replyButton = document.createElement('button');
-            replyButton.textContent = 'Reply';
-            replyButton.onclick = () => {
-                document.getElementById('replyPopup').style.display = 'block';
-                document.getElementById('sendReply').setAttribute('data-commentId', doc.id);
-            };
-
-            // Define editButton and set its onclick event
-            const editButton = document.createElement('button');
-            editButton.textContent = 'Edit';
-            editButton.classList.add('edit-button-class'); // Optional: Add a class for styling
-            editButton.onclick = () => {
-                editComment(doc.id, comment.text);
-            };
-
-            // Add elements to the commentElement
             commentElement.appendChild(usernameElement);
             commentElement.appendChild(commentTextElement);
-            commentElement.appendChild(replyButton); // Add the reply button to the comment element
-            if (auth.currentUser && auth.currentUser.uid === comment.userId) {
-                commentElement.appendChild(editButton); // Add edit button for comments made by the current user
-            }
+
+            // Assuming you already have the replyButton setup here
 
             commentsList.appendChild(commentElement);
-        });
+
+            // Fetch and display replies for this comment
+            const repliesQuerySnapshot = await firestore.collection('replies')
+                                                        .where('commentId', '==', doc.id)
+                                                        .orderBy('timestamp', 'asc')
+                                                        .get();
+            const repliesContainer = document.createElement('div');
+            repliesContainer.classList.add('replies-container');
+            repliesQuerySnapshot.forEach(replyDoc => {
+                const reply = replyDoc.data();
+                // Similar to how comments are handled, create elements for each reply
+                const replyElement = document.createElement('div');
+                replyElement.classList.add('reply');
+                const replyText = document.createElement('p');
+                replyText.textContent = reply.text; // Assuming reply has a text field
+                replyElement.appendChild(replyText);
+                repliesContainer.appendChild(replyElement);
+            });
+
+            commentElement.appendChild(repliesContainer); // Append replies directly under the comment
+        }
     } catch (error) {
-        console.error('Error fetching comments:', error);
-        showToast('Failed to fetch comments.');
+        console.error('Error fetching comments and replies:', error);
+        showToast('Failed to fetch comments and replies.');
     }
 }
 
@@ -4411,6 +4413,22 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Submit Comment button not found.');
     }
 });
+
+document.getElementById('cancelReply').addEventListener('click', function() {
+    document.getElementById('replyPopup').style.display = 'none';
+    document.getElementById('replyText').value = ''; // Optionally clear the textarea
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Setup other event listeners
+    setupEventListeners();
+    // Setup the cancel reply button
+    document.getElementById('cancelReply').addEventListener('click', function() {
+        document.getElementById('replyPopup').style.display = 'none';
+        document.getElementById('replyText').value = ''; // Optionally clear the textarea
+    });
+});
+
 
 
 async function fetchAndDisplayLikes(gameId) {
