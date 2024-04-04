@@ -4314,6 +4314,49 @@ async function handleRateClick() {
 }
 
 
+  async function fetchAndDisplayComments(gameId) {
+      const commentsRef = firestore.collection('comments');
+      const commentsQuerySnapshot = await commentsRef.where('gameId', '==', gameId).get();
+      const commentsListElement = document.getElementById('commentsList');
+
+      commentsListElement.innerHTML = ''; // Clear existing comments
+
+      for (const doc of commentsQuerySnapshot.docs) {
+          const comment = doc.data();
+          const userRef = firestore.collection('users').doc(comment.userId);
+          const userDoc = await userRef.get();
+
+          if (!userDoc.exists) {
+              console.log("No such user!");
+              continue;
+          }
+
+          const user = userDoc.data();
+          const userName = user.name; // Assuming user's name is stored in 'name' field
+
+          // You can also fetch ratings here if stored separately
+
+          // Create elements for displaying the comment
+          const commentElement = document.createElement('div');
+          const userNameElement = document.createElement('span');
+          const commentTextElement = document.createElement('p');
+
+          userNameElement.textContent = userName;
+          commentTextElement.textContent = comment.text;
+
+          // Style your elements as needed
+          userNameElement.style.fontWeight = 'bold';
+
+          // Append to the comment element
+          commentElement.appendChild(userNameElement);
+          commentElement.appendChild(commentTextElement);
+
+          // Append the comment element to the comments list
+          commentsListElement.appendChild(commentElement);
+      }
+  }
+
+
   // Define the logoutUser function
   function logoutUser() {
     auth.signOut().then(() => {
@@ -4359,48 +4402,6 @@ async function handleRateClick() {
       `;
     }
   });
-
-  async function fetchAndDisplayComments(gameId) {
-      const commentsRef = firestore.collection('comments');
-      const commentsQuerySnapshot = await commentsRef.where('gameId', '==', gameId).get();
-      const commentsListElement = document.getElementById('commentsList');
-
-      commentsListElement.innerHTML = ''; // Clear existing comments
-
-      for (const doc of commentsQuerySnapshot.docs) {
-          const comment = doc.data();
-          const userRef = firestore.collection('users').doc(comment.userId);
-          const userDoc = await userRef.get();
-
-          if (!userDoc.exists) {
-              console.log("No such user!");
-              continue;
-          }
-
-          const user = userDoc.data();
-          const userName = user.name; // Assuming user's name is stored in 'name' field
-
-          // You can also fetch ratings here if stored separately
-
-          // Create elements for displaying the comment
-          const commentElement = document.createElement('div');
-          const userNameElement = document.createElement('span');
-          const commentTextElement = document.createElement('p');
-
-          userNameElement.textContent = userName;
-          commentTextElement.textContent = comment.text;
-
-          // Style your elements as needed
-          userNameElement.style.fontWeight = 'bold';
-
-          // Append to the comment element
-          commentElement.appendChild(userNameElement);
-          commentElement.appendChild(commentTextElement);
-
-          // Append the comment element to the comments list
-          commentsListElement.appendChild(commentElement);
-      }
-  }
 
 
 </script>
