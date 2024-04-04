@@ -4255,16 +4255,15 @@ async function editComment(commentId, currentText) {
         }
     }
 }
-
 async function fetchAndDisplayComments(gameId) {
     const commentsList = document.getElementById('commentsList');
     commentsList.innerHTML = ''; // Clear existing comments
 
     try {
         const querySnapshot = await firestore.collection('comments')
-                                             .where('gameId', '==', gameId)
-                                             .orderBy('timestamp', 'desc')
-                                             .get();
+            .where('gameId', '==', gameId)
+            .orderBy('timestamp', 'desc')
+            .get();
 
         querySnapshot.forEach(async (doc) => {
             const comment = doc.data();
@@ -4279,58 +4278,93 @@ async function fetchAndDisplayComments(gameId) {
             const commentTextElement = document.createElement('p');
             commentTextElement.textContent = comment.text;
 
-            // Reply functionality
-            const replyButton = document.createElement('button');
-            replyButton.textContent = 'Reply';
-            replyButton.onclick = () => {
-              if (!isUserSignedIn()) {
-                showToast('You must be signed in to reply.');
-                return;
-              }
-              document.getElementById('replyPopup').style.display = 'block';
-              document.getElementById('sendReply').setAttribute('data-commentId', doc.id);
-            };
-
-            // Replies container
+            // Create a container for replies
             const repliesContainer = document.createElement('div');
             repliesContainer.classList.add('replies-container');
 
-            // Append elements to the comment element
+            // Append username and comment text first
             commentElement.appendChild(usernameElement);
             commentElement.appendChild(commentTextElement);
-            commentElement.appendChild(replyButton);
 
-            // Fetch and display replies for the comment
-            const repliesQuerySnapshot = await firestore.collection('replies')
-                                                        .where('commentId', '==', doc.id)
-                                                        .orderBy('timestamp', 'asc')
-                                                        .get();
-
-            repliesQuerySnapshot.forEach(replyDoc => {
-                const reply = replyDoc.data();
-                // Example reply structure - you can customize this as needed
-                const replyElement = document.createElement('div');
-                replyElement.textContent = reply.text; // Simplified for example
-                repliesContainer.appendChild(replyElement);
-            });
-
-            // Only show edit and delete buttons if the user owns the comment
+            // Edit and Delete buttons for comment
             if (auth.currentUser && auth.currentUser.uid === comment.userId) {
                 const editButton = document.createElement('button');
                 editButton.textContent = 'Edit';
-                // Add your edit functionality here
+                editButton.onclick = () => editComment(doc.id, comment.text); // Add your editComment function
                 commentElement.appendChild(editButton);
 
                 const deleteButton = document.createElement('button');
                 deleteButton.textContent = 'Delete';
-                // Add your delete functionality here
+                deleteButton.onclick = async () => {
+                    if (confirm("Are you sure you want to delete this comment?")) {
+                        try {
+                            await firestore.collection('comments').doc(doc.id).delete();
+                            showToast('Comment deleted successfully.');
+                            fetchAndDisplayComments(gameId);
+                        } catch (error) {
+                            console.error('Error deleting comment:', error);
+                            showToast('Failed to delete comment.');
+                        }
+                    }
+                };
                 commentElement.appendChild(deleteButton);
             }
 
-            // Append the replies container after the reply button (and edit/delete buttons if applicable)
+            // Reply button
+            const replyButton = document.createElement('button');
+            replyButton.textContent = 'Reply';
+            replyButton.onclick = () => {
+                if (!isUserSignedIn()) {
+                    showToast('You must be signed in to reply.');
+                    return;
+                }
+                document.getElementById('replyPopup').style.display = 'block';
+                document.getElementById('sendReply').setAttribute('data-commentId', doc.id);
+            };
+            commentElement.appendChild(replyButton);
+
+            // Append the replies container before adding reply functionalities
             commentElement.appendChild(repliesContainer);
 
-            // Finally, append the comment element to the comments list
+            // Fetch and display replies for the comment
+            const repliesQuerySnapshot = await firestore.collection('replies')
+                .where('commentId', '==', doc.id)
+                .orderBy('timestamp', 'asc')
+                .get();
+
+            repliesQuerySnapshot.forEach(replyDoc => {
+                const reply = replyDoc.data();
+                const replyElement = document.createElement('div');
+                replyElement.textContent = reply.text; // Example structure
+
+                // Only show edit and delete buttons for the user's own replies
+                if (auth.currentUser && auth.currentUser.uid === reply.userId) {
+                    const editReplyButton = document.createElement('button');
+                    editReplyButton.textContent = 'Edit';
+                    editReplyButton.onclick = () => editReply(replyDoc.id, reply.text); // Implement editReply function
+                    replyElement.appendChild(editReplyButton);
+
+                    const deleteReplyButton = document.createElement('button');
+                    deleteReplyButton.textContent = 'Delete';
+                    deleteReplyButton.onclick = async () => {
+                        if (confirm("Are you sure you want to delete this reply?")) {
+                            try {
+                                await firestore.collection('replies').doc(replyDoc.id).delete();
+                                showToast('Reply deleted successfully.');
+                                fetchAndDisplayComments(gameId); // Refresh comments and replies
+                            } catch (error) {
+                                console.error('Error deleting reply:', error);
+                                showToast('Failed to delete reply.');
+                            }
+                        }
+                    };
+                    replyElement.appendChild(deleteReplyButton);
+                }
+
+                repliesContainer.appendChild(replyElement);
+            });
+
+            // Append the comment element (with replies) to the comments list
             commentsList.appendChild(commentElement);
         });
     } catch (error) {
@@ -4338,7 +4372,6 @@ async function fetchAndDisplayComments(gameId) {
         showToast('Failed to fetch comments.');
     }
 }
-
 
 
 
