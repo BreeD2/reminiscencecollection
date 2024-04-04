@@ -4502,39 +4502,43 @@ async function handleRateClick() {
     });
   }
 
-  // Handle authentication state changes
-  auth.onAuthStateChanged(user => {
-    const dropdownContent = document.querySelector('.dropdown-content2');
-    if (user) {
-      // Display user's display name, or 'User' if not available
-      document.getElementById('userName').textContent = user.displayName || 'User';
+  auth.onAuthStateChanged(async user => {
+      const dropdownContent = document.querySelector('.dropdown-content2');
+      if (user) {
+          // User is signed in
+          console.log('User is logged in:', user);
 
-      // Attempt to load the user's profile picture
-      const userProfilePicRef = storage.ref('profilePictures/' + user.uid);
-      userProfilePicRef.getDownloadURL().then((url) => {
-        document.getElementById('userProfilePic').src = url;
-      }).catch(() => {
-        console.log('Profile picture not found. Using default.');
-      });
+          // Display user's display name or fallback to 'User'
+          document.getElementById('userName').textContent = user.displayName || 'User';
 
-      // Update dropdown content for logged-in users
-      dropdownContent.innerHTML = `
-        <a href="..//dashboard/index.html">Dashboard</a>
-        <a href="javascript:void(0);" id="logoutBtn">Logout</a>
-      `;
+          // Attempt to load the user's profile picture
+          const userProfilePicRef = storage.ref(`profilePictures/${user.uid}`);
+          userProfilePicRef.getDownloadURL().then((url) => {
+              document.getElementById('userProfilePic').src = url;
+          }).catch(() => {
+              // If there's an error, such as the file not existing, use a default image
+              document.getElementById('userProfilePic').src = 'path/to/default/profile/pic.png';
+              console.log('Profile picture not found. Using default.');
+          });
 
-      // Reattach the logout event listener to the new logout button
-      document.getElementById('logoutBtn').addEventListener('click', (e) => {
-        e.preventDefault();
-        logoutUser(); // Call logoutUser function here
-      });
-    } else {
-      // Update dropdown content for guests
-      dropdownContent.innerHTML = `
-        <a href="..//login/index.html">Login</a>
-        <a href="..//signup/index.html">Signup</a>
-      `;
-    }
+          // Update dropdown content for logged-in users
+          dropdownContent.innerHTML = `
+              <a href="..//dashboard/index.html">Dashboard</a>
+              <a href="javascript:void(0);" id="logoutBtn">Logout</a>
+          `;
+
+          // Attach event listener to the logout button again if necessary
+          document.getElementById('logoutBtn').addEventListener('click', logoutUser);
+
+      } else {
+          // No user is signed in
+          console.log('User is logged out.');
+          // Update dropdown content for guests
+          dropdownContent.innerHTML = `
+              <a href="..//login/index.html">Login</a>
+              <a href="..//signup/index.html">Signup</a>
+          `;
+      }
   });
 
 
