@@ -4323,29 +4323,29 @@ function handleCommentButtonClick() {
         return;
     }
 
-    function handleCommentButtonClick() {
-        if (!auth.currentUser) {
-            alert('You must be signed in to make a comment.');
-            return;
-        }
+    const commentText = prompt("Enter your comment:");
+    if (commentText) {
+        const userName = auth.currentUser.displayName || 'Anonymous';
+        const userId = auth.currentUser.uid;
+        const gameContainer = document.querySelector('.game-container');
+        const gameId = gameContainer.getAttribute('data-game-id');
 
-        const commentText = prompt("Enter your comment:");
-        if (commentText) {
-            const userName = auth.currentUser.displayName || 'Anonymous';
-            const userId = auth.currentUser.uid;
-            const gameContainer = document.querySelector('.game-container');
-            const gameId = gameContainer.getAttribute('data-game-id');
+        const comment = {
+            gameId,
+            text: commentText,
+            userName,
+            userId,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        };
 
-            const comment = { gameId, text: commentText, userName, userId, timestamp: firebase.firestore.FieldValue.serverTimestamp() };
-            firestore.collection('comments').add(comment)
-                .then(() => {
-                    console.log('Comment added');
-                    addCommentToPage(commentText, userName);
-                })
-                .catch(error => console.error('Error adding comment:', error));
-        }
+        firestore.collection('comments').add(comment)
+            .then(() => {
+                console.log('Comment added');
+                addCommentToPage(commentText, userName);
+            })
+            .catch(error => console.error('Error adding comment:', error));
     }
-
+}
 
 </script>
 
