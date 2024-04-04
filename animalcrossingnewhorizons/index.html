@@ -4229,45 +4229,57 @@ async function handleAuthStateChanges() {
 
 
 
+// Assuming `fetchAndDisplayComments` is called after the DOM is fully loaded
 async function fetchAndDisplayComments(gameId) {
-    const commentsListElement = document.getElementById('commentsList');
-    commentsListElement.innerHTML = ''; // Clear current comments
+    const commentsList = document.getElementById('commentsList');
+    commentsList.innerHTML = ''; // Clear existing comments
 
-    const commentsSnapshot = await firestore.collection('comments')
-                                            .where('gameId', '==', gameId)
-                                            .orderBy('timestamp', 'desc')
-                                            .get();
+    try {
+        const querySnapshot = await firestore.collection('comments')
+                                             .where('gameId', '==', gameId)
+                                             .orderBy('timestamp', 'desc')
+                                             .get();
 
-    commentsSnapshot.forEach(doc => {
-        const comment = doc.data();
-        const commentElement = document.createElement('div');
-        const textElement = document.createElement('p');
-        textElement.textContent = comment.text;
+        for (const doc of querySnapshot.docs) {
+            const comment = doc.data();
+            const userDoc = await firestore.collection('users').doc(comment.userId).get();
+            const username = userDoc.exists ? userDoc.data().username : "Anonymous"; // Assuming there's a 'username' field
 
-        // Include buttons for Edit, Delete, Reply
-        const editButton = document.createElement('button');
-        editButton.textContent = 'Edit';
-        // Attach event listener to handle edit
-        // editButton.addEventListener('click', () => handleEditComment(doc.id, comment.text));
+            // Create comment display elements
+            const commentElement = document.createElement('div');
+            const usernameElement = document.createElement('span');
+            const commentTextElement = document.createElement('p');
+            const deleteButton = document.createElement('button');
 
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        // Attach event listener to handle delete
-        // deleteButton.addEventListener('click', () => handleDeleteComment(doc.id));
+            usernameElement.textContent = username + ': ';
+            commentTextElement.textContent = comment.text;
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() { deleteComment(doc.id); };
 
-        const replyButton = document.createElement('button');
-        replyButton.textContent = 'Reply';
-        // Attach event listener to handle reply
-        // replyButton.addEventListener('click', () => handleReplyComment(doc.id));
+            commentElement.appendChild(usernameElement);
+            commentElement.appendChild(commentTextElement);
+            commentElement.appendChild(deleteButton);
 
-        commentElement.appendChild(textElement);
-        commentElement.appendChild(editButton);
-        commentElement.appendChild(deleteButton);
-        commentElement.appendChild(replyButton);
-
-        commentsListElement.appendChild(commentElement);
-    });
+            commentsList.appendChild(commentElement);
+        }
+    } catch (error) {
+        console.error('Error fetching comments:', error);
+        showToast('Failed to fetch comments.');
+    }
 }
+
+async function deleteComment(commentId) {
+    try {
+        await firestore.collection('comments').doc(commentId).delete();
+        showToast('Comment deleted successfully.');
+        // Refresh comments display
+        await fetchAndDisplayComments(gameId);
+    } catch (error) {
+        console.error('Error deleting comment:', error);
+        showToast('Failed to delete comment.');
+    }
+}
+
 
 
 async function deleteComment(commentId) {
