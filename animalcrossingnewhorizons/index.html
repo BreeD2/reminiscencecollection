@@ -4221,61 +4221,57 @@ async function handleAuthStateChanges() {
 }
 
 async function fetchAndDisplayComments(gameId) {
-    const commentsList = document.getElementById('commentsList');
-    commentsList.innerHTML = ''; // Clear existing comments before displaying new ones
+  const commentsList = document.getElementById('commentsList');
+  commentsList.innerHTML = ''; // Clear existing comments
 
-    try {
-        const querySnapshot = await firestore.collection('comments')
-                                             .where('gameId', '==', gameId)
-                                             .orderBy('timestamp', 'desc') // Order by timestamp if you want the newest comments first
-                                             .get();
+  try {
+    const querySnapshot = await firestore.collection('comments')
+                                         .where('gameId', '==', gameId)
+                                         .orderBy('timestamp', 'desc')
+                                         .get();
 
-        querySnapshot.forEach((doc) => {
-            const comment = doc.data();
-            // Assuming the comment data includes `username` and `rating`
-            const commentElement = document.createElement('div');
-            commentElement.classList.add('comment');
+    querySnapshot.forEach(async (doc) => {
+      const comment = doc.data();
+      const userDoc = await firestore.collection('users').doc(comment.userId).get();
+      const username = userDoc.exists ? userDoc.data().username : "Anonymous"; // Assuming there's a 'username' field
 
-            // Creating the username element
-            const userNameElement = document.createElement('h4');
-            userNameElement.textContent = comment.username; // Adjust according to your field name
-            commentElement.appendChild(userNameElement);
+      const commentElement = document.createElement('div');
+      const usernameElement = document.createElement('span');
+      const commentTextElement = document.createElement('p');
 
-            // Creating the comment text element
-            const commentTextElement = document.createElement('p');
-            commentTextElement.textContent = comment.text;
-            commentElement.appendChild(commentTextElement);
+      usernameElement.textContent = username + ': ';
+      commentTextElement.textContent = comment.text;
 
-            // Creating the rating element
-            const ratingElement = document.createElement('p');
-            ratingElement.textContent = `Rating: ${comment.rating}`; // Adjust according to your field name
-            commentElement.appendChild(ratingElement);
+      commentElement.appendChild(usernameElement);
+      commentElement.appendChild(commentTextElement);
+      // Here you would also add buttons or links for edit, reply, and delete functionalities
+      // For example:
+      // const editButton = document.createElement('button');
+      // editButton.textContent = 'Edit';
+      // editButton.onclick = function() { /* Your edit logic here */ };
+      // commentElement.appendChild(editButton);
 
-            // Appending the entire comment element to the comments list
-            commentsList.appendChild(commentElement);
-        });
-    } catch (error) {
-        console.error('Error fetching comments:', error);
-        showToast('Failed to fetch comments.');
-    }
+      commentsList.appendChild(commentElement);
+    });
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+    showToast('Failed to fetch comments.');
+  }
 }
-
-
-
 
 async function fetchAndDisplayLikes(gameId) {
     try {
-        const likesRef = firestore.collection('likes').doc(gameId);
-        const doc = await likesRef.get();
+        // Assuming `likes` collection stores likes per game ID
+        const likesDoc = await firestore.collection('likes').doc(gameId).get();
 
-        if (doc.exists) {
-            const likes = doc.data();
-            // Assuming you have an element to display the like count
-            const likesCountElement = document.getElementById('likesCount');
-            // This is a simple example. You might want to iterate over the likes to count them or display them differently.
-            likesCountElement.innerText = `Likes: ${Object.keys(likes).length}`;
+        if (likesDoc.exists) {
+            const likesData = likesDoc.data();
+            const likesCount = Object.values(likesData).filter(value => value === true).length;
+
+            // Assuming you have an element with ID 'likesCount' to display the number of likes
+            document.getElementById('likesCount').textContent = `Likes: ${likesCount}`;
         } else {
-            console.log('No likes found for this game.');
+            console.log('No likes data found for this game.');
         }
     } catch (error) {
         console.error('Error fetching likes:', error);
@@ -4283,14 +4279,34 @@ async function fetchAndDisplayLikes(gameId) {
     }
 }
 
+
+
+
+async function fetchAndDisplayRating(gameId) {
+  try {
+    const ratingDoc = await firestore.collection('ratings').doc(gameId).get();
+    if (ratingDoc.exists) {
+      const ratingData = ratingDoc.data();
+      const userRating = ratingData[auth.currentUser.uid]; // Assumes rating is stored with user UID as the key
+      document.getElementById('ratingDisplay').textContent = `Your Rating: ${userRating}`;
+    } else {
+      console.log('No rating found for this game.');
+    }
+  } catch (error) {
+    console.error('Error fetching rating:', error);
+    showToast('Failed to fetch rating.');
+  }
+}
+
+
 document.addEventListener('DOMContentLoaded', async function() {
-    // Now calling handleAuthStateChanges first ensures it's defined
+    const gameId = 'animalcrossingnewhorizons'; // Replace with the actual game ID
     await handleAuthStateChanges();
     setupEventListeners();
-    const gameId = 'animalcrossingnewhorizons'; // example gameId
     await fetchAndDisplayComments(gameId);
-    await fetchAndDisplayLikes(gameId);
+    await fetchAndDisplayLikes(gameId); // Ensure this call is correctly placed
 });
+
 
 
 // Event listeners setup and other functions (omitted for brevity)
