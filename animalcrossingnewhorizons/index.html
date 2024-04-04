@@ -4131,6 +4131,8 @@ const auth = firebase.auth();
 const storage = firebase.storage();
 const firestore = firebase.firestore();
 
+let gameId = 'animalcrossingnewhorizons'; // example gameId, ensure this is the correct ID used in Firestore
+
 
 function showToast(message) {
     const toast = document.createElement('div');
@@ -4147,23 +4149,34 @@ function showToast(message) {
     setTimeout(() => document.body.removeChild(toast), 3000); // Remove after 3 seconds
 }
 
-// Define the handleLikeClick function
-function handleLikeClick() {
-    console.log('Like button clicked');
-    // Add your logic for handling a like click here
+function isUserSignedIn() {
+    return !!firebase.auth().currentUser;
 }
+
+
+// Define the handleLikeClick function
+async function handleLikeClick() {
+  if (!isUserSignedIn()) {
+         showToast('You must be signed in to like.');
+         return;
+     }
+     // Perform like logic, update Firestore, and then:
+     showToast('Like updated successfully.');
+ }
+
 
 // Define the handleCommentClick function
-function handleCommentClick() {
-    console.log('Comment button clicked');
-    // Add your logic for handling a comment click here
+async function handleCommentClick() {
+  if (!isUserSignedIn()) {
+      showToast('You must be signed in to comment.');
+      return;
+  }
+  const commentText = prompt("Enter your comment:");
+  if (commentText) {
+      await addComment(gameId, commentText);
+  }
 }
 
-// Define the handleRateClick function
-function handleRateClick() {
-    console.log('Rate button clicked');
-    // Add your logic for handling a rate click here
-}
 
 // Now setup your event listeners
 function setupEventListeners() {
@@ -4177,11 +4190,13 @@ function setupEventListeners() {
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
-    // Ensure that handleAuthStateChanges and other necessary functions are defined here as well
-    await handleAuthStateChanges();
-    setupEventListeners();
-    // Continue with the rest of your initialization code
+  // Call auth state changes, setup listeners, fetch comments and likes
+   await handleAuthStateChanges();
+   setupEventListeners();
+   await fetchAndDisplayComments(gameId);
+   await fetchAndDisplayLikes(gameId);
 });
+
 
 async function handleAuthStateChanges() {
     auth.onAuthStateChanged(async user => {
@@ -4283,25 +4298,15 @@ async function saveRating(gameId, rating) {
     }
 }
 
-// Modifications in handleCommentButtonClick() and handleRateButtonClick() to use addComment and saveRating respectively
-async function handleCommentButtonClick() {
-    if (!isUserSignedIn()) {
-        showToast('You must be signed in to add comments.');
-        return;
-    }
-    const gameId = 'animalcrossingnewhorizons'; // Replace with actual logic to obtain gameId
-    const commentText = prompt("Enter your comment:");
-    if (commentText) {
-        await addComment(gameId, commentText);
-    }
-}
 
-async function handleRateButtonClick() {
+// Define the handleRateClick function
+async function handleRateClick() {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to rate.');
         return;
     }
-    const gameId = 'animalcrossingnewhorizons'; // Replace with actual logic to obtain gameId
+    // Assuming you need the gameId to rate a game
+    const gameId = 'animalcrossingnewhorizons'; // Replace with logic to obtain the actual gameId
     const rating = prompt("Enter your rating (1-5):");
     if (rating) {
         await saveRating(gameId, rating);
