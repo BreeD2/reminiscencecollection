@@ -4137,85 +4137,82 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function showToast(message) {
-  const toast = document.createElement('div');
-  toast.textContent = message;
-  toast.style.position = 'fixed';
-  toast.style.bottom = '20px';
-  toast.style.left = '50%';
-  toast.style.transform = 'translateX(-50%)';
-  toast.style.backgroundColor = 'black';
-  toast.style.color = 'white';
-  toast.style.padding = '10px';
-  toast.style.borderRadius = '5px';
-  document.body.appendChild(toast);
-  setTimeout(() => document.body.removeChild(toast), 3000); // Remove after 3 seconds
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    toast.style.position = 'fixed';
+    toast.style.bottom = '20px';
+    toast.style.left = '50%';
+    toast.style.transform = 'translateX(-50%)';
+    toast.style.backgroundColor = 'black';
+    toast.style.color = 'white';
+    toast.style.padding = '10px';
+    toast.style.borderRadius = '5px';
+    document.body.appendChild(toast);
+    setTimeout(() => document.body.removeChild(toast), 3000); // Remove after 3 seconds
 }
 
+function setupEventListeners() {
+    const likeButton = document.getElementById('likeButton');
+    const commentButton = document.getElementById('commentButton');
+    const rateButton = document.getElementById('rateButton');
 
-async function logoutUser() {
-    try {
-        await auth.signOut();
-        console.log('User logged out');
-        window.location.href = 'index.html';
-    } catch (error) {
-        console.error('Logout Error:', error);
-    }
+    if(likeButton) likeButton.addEventListener('click', () => handleLikeOrRateClick('like'));
+    if(commentButton) commentButton.addEventListener('click', () => handleCommentButtonClick());
+    if(rateButton) rateButton.addEventListener('click', () => handleRateButtonClick());
+}
+
+async function handleAuthStateChanges() {
+    auth.onAuthStateChanged(async user => {
+        if (user) {
+            // User is signed in.
+            const userNameDisplay = document.getElementById('userName');
+            userNameDisplay.textContent = user.displayName || 'User';
+            try {
+                const url = await storage.ref(`profilePictures/${user.uid}`).getDownloadURL();
+                document.getElementById('userProfilePic').src = url;
+            } catch (error) {
+                console.log('Profile picture not found. Using default.');
+            }
+        } else {
+            // User is signed out.
+            console.log('User is signed out');
+        }
+    });
 }
 
 async function handleLikeOrRateClick(action) {
-  // Check if user is signed in
-  if (!isUserSignedIn()) {
-    showToast('You must be signed in to perform this action.');
-    return;
-  }
-  const gameId = document.querySelector('.game-container').getAttribute('data-game-id');
-  const userId = auth.currentUser.uid;
+    const userId = auth.currentUser ? auth.currentUser.uid : null;
+    if (!userId) {
+        showToast('You must be signed in to perform this action.');
+        return;
+    }
+    // Assuming your game's ID is available as an attribute or can be derived
+    // This is a placeholder; replace with your actual logic to obtain gameId
+    const gameId = 'your_game_id_here';
 
-  if (action === 'like') {
-    // Toggle like status
-    const liked = !document.getElementById('likeButton').classList.contains('liked');
-    const success = await sendLikeToServer(userId, gameId, liked);
-    if (success) {
-      updateLikeButtonUI(liked);
-      showToast(liked ? 'Like added successfully.' : 'Like removed successfully.');
-      // Optionally refresh likes display here
-    } else {
-      showToast('Failed to update like.');
+    if (action === 'like') {
+        // Toggle like status
+        // This should be replaced with actual logic to toggle like status based on current state
+        const liked = true; // Placeholder for toggling logic
+        await sendLikeToServer(userId, gameId, liked);
+    } else if (action === 'rate') {
+        // Handle rating action
+        // Placeholder: replace with actual logic for handling rating
+        console.log('Handle rating logic here');
     }
-  } else if (action === 'rate') {
-    // Prompt for rating input
-    const rating = prompt("Enter your rating (1-5):");
-    if (rating) {
-      const success = await saveRating(userId, gameId, rating);
-      if (success) {
-        showToast('Rating saved successfully.');
-        // Optionally refresh rating display here
-      } else {
-        showToast('Failed to save rating.');
-      }
-    }
-  }
 }
 
 async function sendLikeToServer(userId, gameId, liked) {
     try {
-        // Example: Call to an external API or initial processing
-        // const response = await someAPI.sendLikeStatus(userId, gameId, liked);
-        // Assuming the above call was successful and you now want to update Firestore:
-
-        await firebase.firestore().collection('likes').doc(gameId).set({
-            [userId]: liked
-        }, { merge: true });
-
-        console.log('Like status updated in Firestore');
-        // You can show a toast notification here or update the UI accordingly
-        showToast(liked ? 'You liked this game.' : 'Like removed.');
+        await firestore.collection('likes').doc(gameId).set({ [userId]: liked }, { merge: true });
+        console.log('Like status updated');
+        showToast(liked ? 'Like added!' : 'Like removed!');
     } catch (error) {
         console.error('Error updating like status:', error);
-        // Show an error toast notification or handle the error
         showToast('Failed to update like status.');
     }
 }
+
 
 async function saveRating(userId, gameId, rating) {
     try {
