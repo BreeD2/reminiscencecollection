@@ -4233,23 +4233,24 @@ async function handleAuthStateChanges() {
     });
 }
 
-async function editComment(commentId, oldText) {
-    const newText = prompt("Edit your comment:", oldText);
-    if (newText && newText.trim() !== '') {
+async function editComment(commentId, currentText) {
+    console.log(`Editing comment ID: ${commentId} with text: ${currentText}`);
+    const newText = prompt('Edit your comment:', currentText);
+    if (newText !== null && newText.trim() !== '') {
         try {
             await firestore.collection('comments').doc(commentId).update({
-                text: newText,
-                // Optionally, update the timestamp to reflect the edit time
-                // timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                text: newText.trim()
             });
+            console.log('Comment updated successfully');
             showToast('Comment updated successfully.');
-            fetchAndDisplayComments(gameId);
+            fetchAndDisplayComments(gameId); // Refresh the comments display
         } catch (error) {
             console.error('Error updating comment:', error);
             showToast('Failed to update comment.');
         }
     }
 }
+
 
 
 
