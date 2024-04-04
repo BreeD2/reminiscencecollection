@@ -4415,7 +4415,10 @@ margin-top: 20px;
     opacity: 0.8;
 }
 #commentsList > div > button {
-  border: none
+  border: none;
+  background-color: red;
+  padding: 5px;
+  border-radius: 5px
 }
 
 /* Ensure strong tags within the comments section are bold and slightly larger for emphasis */
@@ -4423,4 +4426,47 @@ margin-top: 20px;
     font-weight: bold;
     font-size: 1.1rem;;
 
+}
+
+
+.house-navigation ul {
+    list-style: none;
+    padding-left: 0;
+    background-color: #eee;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    z-index: 1000;
+}
+
+.house-navigation li {
+    display: inline-block;
+}
+
+.house-navigation a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.house-navigation a:hover {
+    background-color: #ddd;
+}
+
+.room {
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.room + .room {
+    margin-top: 40px;
+}
+
+h2 {
+    color: #333;
 }
