@@ -4145,6 +4145,41 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const storage = firebase.storage();
 const firestore = firebase.firestore();
+const db = firebase.firestore();
+const userId = firebase.auth().currentUser.uid;
+const gameId = 'someGameId';
+
+db.collection('games').doc(gameId).collection('likes').doc(userId).set({
+  liked: true, // or current timestamp
+});
+
+db.collection('games').doc(gameId).collection('likes').doc(userId).get()
+  .then(doc => {
+    if (doc.exists) {
+      console.log("User has liked this game.");
+    } else {
+      console.log("User has not liked this game.");
+    }
+  });
+
+  // When loading the game's details page
+  window.onload = function() {
+      const userId = firebase.auth().currentUser.uid;
+      const gameId = 'someGameId';
+
+      // Check if the game has been liked by the current user
+      db.collection('games').doc(gameId).collection('likes').doc(userId).get()
+        .then(doc => {
+          if (doc.exists) {
+            console.log("User has liked this game.");
+            // Update UI accordingly
+          } else {
+            console.log("User has not liked this game.");
+            // Update UI accordingly
+          }
+        });
+  };
+
 
 let gameId = 'animalcrossingnewhorizons'; // example gameId, ensure this is the correct ID used in Firestore
 
