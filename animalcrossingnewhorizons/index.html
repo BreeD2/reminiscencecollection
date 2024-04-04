@@ -4217,34 +4217,15 @@ async function sendLikeToServer(userId, gameId, liked) {
         });
         const data = await response.json();
         console.log('Like response:', data);
-        // Update Firestore database
-        const likesRef = firestore.collection('likes').doc(userId);
-        await likesRef.set({ [gameId]: liked }, { merge: true });
+        // Update Firestore database...
+        alert('Your like has been successfully recorded!'); // Confirmation after successful operation
     } catch (error) {
         console.error('Error sending like:', error);
     }
 }
-function handleAuthStateChanges() {
-    auth.onAuthStateChanged(user => {
-        const dropdownContent = document.querySelector('.dropdown-content2');
-        if (user) {
-            // Update UI for logged in user
-            updateUIForLoggedInUser(user);
-            // Now also fetch and display comments for the current game
-            const gameContainer = document.querySelector('.game-container');
-            if (gameContainer) { // Ensure gameContainer exists
-                const gameId = gameContainer.getAttribute('data-game-id');
-                fetchAndDisplayComments(gameId);
-            }
-        } else {
-            updateUIForLoggedOutUser();
-        }
-    });
-}
 
 
-
-async function saveRating(userId, gameId, rating) {
+async saveRating(userId, gameId, rating) {
     try {
         const response = await fetch('https://script.google.com/macros/s/AKfycbw8_1wnOr1r5NuCbb-ivFNifjxiF4Cap-tvOqt8qjchRLoq8lqIYumQhxzzQO6Ep10j/exec', {
             method: 'POST',
