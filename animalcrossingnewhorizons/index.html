@@ -4165,17 +4165,28 @@ async function handleLikeClick() {
  }
 
 
-// Define the handleCommentClick function
-async function handleCommentClick() {
-  if (!isUserSignedIn()) {
-      showToast('You must be signed in to comment.');
-      return;
-  }
-  const commentText = prompt("Enter your comment:");
-  if (commentText) {
-      await addComment(gameId, commentText);
-  }
-}
+ async function handleCommentClick() {
+   const gameId = 'animalcrossingnewhorizons'; // Replace with your actual game ID logic
+   const commentText = prompt("Enter your comment:");
+   if (commentText && auth.currentUser) {
+     try {
+       await firestore.collection('comments').add({
+         gameId: gameId,
+         text: commentText,
+         userId: auth.currentUser.uid, // Assuming the user is logged in
+         timestamp: firebase.firestore.FieldValue.serverTimestamp()
+       });
+       showToast('Comment added successfully');
+       fetchAndDisplayComments(gameId); // Refresh comments display
+     } catch (error) {
+       console.error('Error adding comment:', error);
+       showToast('Failed to add comment');
+     }
+   } else {
+     showToast('You must be signed in to add comments.');
+   }
+ }
+
 
 
 // Now setup your event listeners
@@ -4314,47 +4325,6 @@ async function handleRateClick() {
 }
 
 
-  async function fetchAndDisplayComments(gameId) {
-      const commentsRef = firestore.collection('comments');
-      const commentsQuerySnapshot = await commentsRef.where('gameId', '==', gameId).get();
-      const commentsListElement = document.getElementById('commentsList');
-
-      commentsListElement.innerHTML = ''; // Clear existing comments
-
-      for (const doc of commentsQuerySnapshot.docs) {
-          const comment = doc.data();
-          const userRef = firestore.collection('users').doc(comment.userId);
-          const userDoc = await userRef.get();
-
-          if (!userDoc.exists) {
-              console.log("No such user!");
-              continue;
-          }
-
-          const user = userDoc.data();
-          const userName = user.name; // Assuming user's name is stored in 'name' field
-
-          // You can also fetch ratings here if stored separately
-
-          // Create elements for displaying the comment
-          const commentElement = document.createElement('div');
-          const userNameElement = document.createElement('span');
-          const commentTextElement = document.createElement('p');
-
-          userNameElement.textContent = userName;
-          commentTextElement.textContent = comment.text;
-
-          // Style your elements as needed
-          userNameElement.style.fontWeight = 'bold';
-
-          // Append to the comment element
-          commentElement.appendChild(userNameElement);
-          commentElement.appendChild(commentTextElement);
-
-          // Append the comment element to the comments list
-          commentsListElement.appendChild(commentElement);
-      }
-  }
 
 
   // Define the logoutUser function
