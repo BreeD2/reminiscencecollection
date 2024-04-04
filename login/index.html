@@ -4174,6 +4174,20 @@ const searchFunction = () => {
             });
     });
 
+    firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        console.log(`Signed in as ${user.email}`);
+        // You can also redirect the user or update UI elements here
+    } else {
+        // User is signed out
+        console.log('User is signed out');
+        // Update UI to reflect that the user is signed out, or redirect
+    }
+});
+
+
     // Forgot password handler
     document.getElementById('forgotPasswordLink').addEventListener('click', function(event) {
         event.preventDefault();
