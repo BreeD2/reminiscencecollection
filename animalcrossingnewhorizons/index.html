@@ -4217,13 +4217,7 @@ function setupEventListeners() {
     if (rateButton) rateButton.addEventListener('click', handleRateClick);
 }
 
-document.addEventListener('DOMContentLoaded', async function() {
-  // Call auth state changes, setup listeners, fetch comments and likes
-   await handleAuthStateChanges();
-   setupEventListeners();
-   await fetchAndDisplayComments(gameId);
-   await fetchAndDisplayLikes(gameId);
-});
+
 
 
 async function handleAuthStateChanges() {
