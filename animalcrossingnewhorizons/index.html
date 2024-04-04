@@ -4115,13 +4115,14 @@ const searchFunction = () => {
 <script>
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAMEkIdecNerz3qFFa1uWdIfNlXgK4siTM",
-    authDomain: "thereminiscencecollection.firebaseapp.com",
-    projectId: "thereminiscencecollection",
-    storageBucket: "thereminiscencecollection.appspot.com",
-    messagingSenderId: "1092408379840",
-    appId: "1:1092408379840:web:6e5d0ba1c7d4d8100fa025",
-    measurementId: "G-3B8XEPCE0T"
+  apiKey: "AIzaSyDlAK0_2IR70q2L4TTdQRE3jkHEC2fRs9Q",
+  authDomain: "reminiscence-collection.firebaseapp.com",
+  databaseURL: "https://reminiscence-collection-default-rtdb.firebaseio.com",
+  projectId: "reminiscence-collection",
+  storageBucket: "reminiscence-collection.appspot.com",
+  messagingSenderId: "974064770925",
+  appId: "1:974064770925:web:6fbcf7df2266829b3f0464",
+  measurementId: "G-PJ426H3WZN"
 };
 
 // Initialize Firebase
@@ -4221,27 +4222,26 @@ async function handleAuthStateChanges() {
 }
 
 async function fetchAndDisplayComments(gameId) {
-  const commentsList = document.getElementById('commentsList');
-  commentsList.innerHTML = ''; // Clear existing comments before displaying new ones
+    try {
+        const commentsRef = firestore.collection('comments');
+        const querySnapshot = await commentsRef.where('gameId', '==', gameId).get();
 
-  try {
-    const querySnapshot = await firestore.collection('comments')
-                                         .where('gameId', '==', gameId)
-                                         .orderBy('timestamp', 'desc') // Order by timestamp if you want the newest comments first
-                                         .get();
+        const commentsList = document.getElementById('commentsList');
+        commentsList.innerHTML = ''; // Clear existing comments
 
-    querySnapshot.forEach((doc) => {
-      const comment = doc.data();
-      const commentElement = document.createElement('div');
-      commentElement.textContent = comment.text; // Add more details as needed
-      commentsList.appendChild(commentElement);
-    });
-  } catch (error) {
-    console.error('Error fetching comments:', error);
-    showToast('Failed to fetch comments.');
-  }
+        querySnapshot.forEach((doc) => {
+            const comment = doc.data();
+            const commentElement = document.createElement('div');
+            commentElement.innerText = comment.text; // Assuming comment has a text field
+            commentsList.appendChild(commentElement);
+        });
+
+        console.log('Comments displayed successfully.');
+    } catch (error) {
+        console.error('Error fetching comments:', error);
+        showToast('Failed to fetch comments.');
+    }
 }
-
 
 
 
@@ -4276,24 +4276,23 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 
 // Event listeners setup and other functions (omitted for brevity)
+
 async function addComment(gameId, commentText) {
-  if (!auth.currentUser) {
-    showToast('You must be signed in to add comments.');
-    return;
-  }
-  try {
-    await firestore.collection('comments').add({
-      gameId,
-      text: commentText,
-      userId: auth.currentUser.uid,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    showToast('Comment added successfully');
-    // Optionally, clear the comment input field here
-  } catch (error) {
-    console.error('Error adding comment:', error);
-    showToast('Failed to add comment');
-  }
+    // Replace this logic with your actual Firestore path and data structure
+    try {
+        await firestore.collection('comments').add({
+            gameId: gameId,
+            text: commentText,
+            // Include other fields as necessary, e.g., userId or timestamp
+            userId: auth.currentUser.uid,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        showToast('Comment added successfully');
+        fetchAndDisplayComments(gameId); // Refresh comments display
+    } catch (error) {
+        console.error('Error adding comment:', error);
+        showToast('Failed to add comment');
+    }
 }
 
 async function saveRating(gameId, rating) {
