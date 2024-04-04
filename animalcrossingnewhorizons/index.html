@@ -4221,26 +4221,45 @@ async function handleAuthStateChanges() {
 }
 
 async function fetchAndDisplayComments(gameId) {
-    try {
-        const commentsRef = firestore.collection('comments');
-        const querySnapshot = await commentsRef.where('gameId', '==', gameId).get();
+    const commentsList = document.getElementById('commentsList');
+    commentsList.innerHTML = ''; // Clear existing comments before displaying new ones
 
-        const commentsList = document.getElementById('commentsList');
-        commentsList.innerHTML = ''; // Clear existing comments
+    try {
+        const querySnapshot = await firestore.collection('comments')
+                                             .where('gameId', '==', gameId)
+                                             .orderBy('timestamp', 'desc') // Order by timestamp if you want the newest comments first
+                                             .get();
 
         querySnapshot.forEach((doc) => {
             const comment = doc.data();
+            // Assuming the comment data includes `username` and `rating`
             const commentElement = document.createElement('div');
-            commentElement.innerText = comment.text; // Assuming comment has a text field
+            commentElement.classList.add('comment');
+
+            // Creating the username element
+            const userNameElement = document.createElement('h4');
+            userNameElement.textContent = comment.username; // Adjust according to your field name
+            commentElement.appendChild(userNameElement);
+
+            // Creating the comment text element
+            const commentTextElement = document.createElement('p');
+            commentTextElement.textContent = comment.text;
+            commentElement.appendChild(commentTextElement);
+
+            // Creating the rating element
+            const ratingElement = document.createElement('p');
+            ratingElement.textContent = `Rating: ${comment.rating}`; // Adjust according to your field name
+            commentElement.appendChild(ratingElement);
+
+            // Appending the entire comment element to the comments list
             commentsList.appendChild(commentElement);
         });
-
-        console.log('Comments displayed successfully.');
     } catch (error) {
         console.error('Error fetching comments:', error);
         showToast('Failed to fetch comments.');
     }
 }
+
 
 
 
