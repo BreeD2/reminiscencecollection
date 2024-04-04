@@ -4470,3 +4470,7 @@ margin-top: 20px;
 h2 {
     color: #333;
 }
+
+#commentsList > div > div > button {
+  color:red
+}
