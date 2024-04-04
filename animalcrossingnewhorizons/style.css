@@ -4330,7 +4330,7 @@ margin-top: 20px;
 
 
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  
 }
 
 /* Add Comment Section */
@@ -4473,4 +4473,29 @@ h2 {
 
 #commentsList > div > div > button {
   color:red
+}
+
+#commentsList > div > div > div > button {
+    margin-top: 0px;
+    border: none
+}
+
+.replies-container {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 500px;
+    max-width: 600px;
+    margin: 20px;
+    padding: 5px;
+}
+
+#commentsList > div > div > div > span {
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    min-height: 200px;
+    max-width: 600px;
+    margin: 20px;
+    padding: 5px;
+}
+.reply {
+    max-width: 500px;
+    max-height: 500px;
 }

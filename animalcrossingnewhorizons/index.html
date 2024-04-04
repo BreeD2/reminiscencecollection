@@ -4364,7 +4364,7 @@ async function editReply(replyId, currentText) {
         }
     }
 }
-// Within fetchAndDisplayComments function, inside the loop where replies are fetched and displayed:
+/// Within fetchAndDisplayComments function, when fetching and displaying replies:
 repliesQuerySnapshot.forEach(async replyDoc => {
     const reply = replyDoc.data();
     const replyElement = document.createElement('div');
@@ -4374,16 +4374,24 @@ repliesQuerySnapshot.forEach(async replyDoc => {
     const replyUserDoc = await firestore.collection('users').doc(reply.userId).get();
     const replyUsername = replyUserDoc.exists ? replyUserDoc.data().username : "Anonymous";
 
+    // Format the timestamp
+    const replyDate = reply.timestamp ? reply.timestamp.toDate().toLocaleString() : "Unknown date";
+
+    // Create a span for displaying the reply username and date
+    const replyUserElement = document.createElement('span');
+    replyUserElement.textContent = `${replyUsername} on ${replyDate}: `;
+    replyElement.appendChild(replyUserElement);
+
+    // Create a span for displaying the reply text
     const replyTextElement = document.createElement('span');
-    replyTextElement.textContent = `${replyUsername}: ${reply.text}`; // Display username and reply text
+    replyTextElement.textContent = reply.text;
     replyElement.appendChild(replyTextElement);
 
     // Only show edit and delete buttons for the user's own replies
     if (auth.currentUser && auth.currentUser.uid === reply.userId) {
         const editReplyButton = document.createElement('button');
         editReplyButton.textContent = 'Edit';
-        // Call editReply function when edit button is clicked
-        editReplyButton.onclick = () => editReply(replyDoc.id, reply.text);
+        editReplyButton.onclick = () => editReply(replyDoc.id, reply.text); // Adjust this to your actual editReply function
         replyElement.appendChild(editReplyButton);
 
         const deleteReplyButton = document.createElement('button');
