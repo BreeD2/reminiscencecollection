@@ -4231,7 +4231,9 @@ async function editComment(commentId, oldText) {
     if (newText && newText.trim() !== '') {
         try {
             await firestore.collection('comments').doc(commentId).update({
-                text: newText
+                text: newText,
+                // Optionally, update the timestamp to reflect the edit time
+                // timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
             showToast('Comment updated successfully.');
             fetchAndDisplayComments(gameId);
@@ -4243,8 +4245,6 @@ async function editComment(commentId, oldText) {
 }
 
 
-
-// Correct: This fetches comments regardless of the user's sign-in state.
 async function fetchAndDisplayComments(gameId) {
     const commentsList = document.getElementById('commentsList');
     commentsList.innerHTML = ''; // Clear existing comments
@@ -4252,42 +4252,97 @@ async function fetchAndDisplayComments(gameId) {
     try {
         const querySnapshot = await firestore.collection('comments')
                                              .where('gameId', '==', gameId)
+                                             .orderBy('timestamp', 'desc')
                                              .get();
 
-        querySnapshot.forEach((doc) => {
-            // Processing and displaying each comment
+        querySnapshot.forEach(async (doc) => {
+            const comment = doc.data();
+            const userDoc = await firestore.collection('users').doc(comment.userId).get();
+            const username = userDoc.exists ? userDoc.data().username : "Anonymous";
+            const date = comment.timestamp ? comment.timestamp.toDate().toLocaleString() : "Unknown date";
+
+            // Create comment display elements
+            const commentElement = document.createElement('div');
+            const usernameElement = document.createElement('span');
+            usernameElement.textContent = `${username} on ${date}: `;
+            const commentTextElement = document.createElement('p');
+            commentTextElement.textContent = comment.text;
+
+            // Buttons for edit, delete, and reply
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Edit';
+            editButton.onclick = function() {
+                // Implement edit functionality here
+                editComment(doc.id, comment.text);
+            };
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                // Implement delete functionality here
+                deleteComment(doc.id);
+            };
+
+            const replyButton = document.createElement('button');
+            replyButton.textContent = 'Reply';
+            replyButton.onclick = function() {
+                // Implement reply functionality here
+                console.log("Replying to comment ID: ", doc.id);
+            };
+
+            commentElement.appendChild(usernameElement);
+            commentElement.appendChild(commentTextElement);
+            if (auth.currentUser && auth.currentUser.uid === comment.userId) {
+                // Show edit and delete buttons only for the user who made the comment
+                commentElement.appendChild(editButton);
+                commentElement.appendChild(deleteButton);
+            }
+            // Show reply button to all users
+            commentElement.appendChild(replyButton);
+
+            commentsList.appendChild(commentElement);
         });
     } catch (error) {
         console.error('Error fetching comments:', error);
+        showToast('Failed to fetch comments.');
+    }
+}
+
+async function replyToComment(commentId) {
+    const replyText = prompt("Enter your reply:");
+    if (replyText && replyText.trim() !== '') {
+        try {
+            await firestore.collection('replies').add({
+                commentId: commentId,
+                text: replyText,
+                userId: auth.currentUser.uid,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            showToast('Reply added successfully.');
+            // Refresh the comments to include the new reply
+            fetchAndDisplayComments(gameId);
+        } catch (error) {
+            console.error('Error adding reply:', error);
+            showToast('Failed to add reply.');
+        }
     }
 }
 
 
 
 async function deleteComment(commentId) {
-    try {
-        await firestore.collection('comments').doc(commentId).delete();
-        showToast('Comment deleted successfully.');
-        // Refresh comments display
-        await fetchAndDisplayComments(gameId);
-    } catch (error) {
-        console.error('Error deleting comment:', error);
-        showToast('Failed to delete comment.');
+    if (confirm("Are you sure you want to delete this comment?")) {
+        try {
+            await firestore.collection('comments').doc(commentId).delete();
+            showToast('Comment deleted successfully.');
+            fetchAndDisplayComments(gameId);
+        } catch (error) {
+            console.error('Error deleting comment:', error);
+            showToast('Failed to delete comment.');
+        }
     }
 }
 
-
-
-async function deleteComment(commentId) {
-  try {
-    await firestore.collection('comments').doc(commentId).delete();
-    showToast('Comment deleted successfully');
-    // Optionally, refresh the comments list here
-  } catch (error) {
-    console.error('Error deleting comment:', error);
-    showToast('Failed to delete comment.');
-  }
-}
 
 document.addEventListener('DOMContentLoaded', function() {
     const submitCommentButton = document.getElementById('submitComment');
