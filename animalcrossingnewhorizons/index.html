@@ -373,6 +373,13 @@
      <div id="addCommentSection">
          <textarea id="commentInput" placeholder="Write a comment..."></textarea><br>
          <button id="submitComment">Submit Comment</button>
+         <!-- Reply Popup Structure (hidden by default) -->
+<div id="replyPopup" style="display:none; position:fixed; left:50%; top:50%; transform:translate(-50%, -50%); background-color:white; padding:20px; border-radius:5px; box-shadow:0 2px 4px rgba(0,0,0,0.5);">
+    <textarea id="replyText" placeholder="Type your reply here..." style="width:100%;"></textarea>
+    <button id="sendReply">Send Reply</button>
+    <button id="cancelReply">Cancel</button>
+</div>
+
      </div>
  </div>
 </div>
@@ -4283,12 +4290,14 @@ async function fetchAndDisplayComments(gameId) {
                 deleteComment(doc.id);
             };
 
-            const replyButton = document.createElement('button');
-            replyButton.textContent = 'Reply';
-            replyButton.onclick = function() {
-                // Implement reply functionality here
-                console.log("Replying to comment ID: ", doc.id);
-            };
+            // Inside fetchAndDisplayComments function
+  replyButton.onclick = () => {
+      document.getElementById('replyPopup').style.display = 'block';
+
+      // Store comment ID in a data attribute for later
+      document.getElementById('sendReply').setAttribute('data-commentId', doc.id);
+  };
+
 
             commentElement.appendChild(usernameElement);
             commentElement.appendChild(commentTextElement);
@@ -4342,6 +4351,34 @@ async function deleteComment(commentId) {
         }
     }
 }
+
+// Adjusted replyToComment to work with the popup
+async function sendReply() {
+    const replyText = document.getElementById('replyText').value.trim();
+    const commentId = document.getElementById('sendReply').getAttribute('data-commentId');
+
+    if (replyText) {
+        try {
+            await firestore.collection('replies').add({
+                commentId: commentId,
+                text: replyText,
+                userId: auth.currentUser.uid,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            showToast('Reply added successfully.');
+            document.getElementById('replyPopup').style.display = 'none';
+            document.getElementById('replyText').value = ''; // Clear text area
+            fetchAndDisplayComments(gameId);
+        } catch (error) {
+            console.error('Error adding reply:', error);
+            showToast('Failed to add reply.');
+        }
+    }
+}
+
+// Attach event listener to send reply button
+document.getElementById('sendReply').addEventListener('click', sendReply);
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
