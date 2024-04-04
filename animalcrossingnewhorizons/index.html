@@ -364,12 +364,18 @@
  </p>
 
  <!-- Comments Section -->
-    <div id="commentsSection">
-        <h2>User Comments</h2>
-        <div id="commentsList">
-            <!-- User comments will be appended here -->
-        </div>
-</div>
+ <div id="commentsSection">
+     <h2>User Comments</h2>
+     <div id="commentsList">
+         <!-- User comments will be appended here -->
+     </div>
+     <!-- Add Comment Section -->
+     <div id="addCommentSection">
+         <textarea id="commentInput" placeholder="Write a comment..."></textarea>
+         <button id="submitComment">Submit Comment</button>
+     </div>
+ </div>
+
 </div>
    <div class="footer">
      <div class="copy">Copyright &copy; 2024 Reminiscence Collection. All rights reserved.</div>
@@ -4220,44 +4226,81 @@ async function handleAuthStateChanges() {
     });
 }
 
+
+
+
 async function fetchAndDisplayComments(gameId) {
-  const commentsList = document.getElementById('commentsList');
-  commentsList.innerHTML = ''; // Clear existing comments
+    const commentsListElement = document.getElementById('commentsList');
+    commentsListElement.innerHTML = ''; // Clear current comments
 
-  try {
-    const querySnapshot = await firestore.collection('comments')
-                                         .where('gameId', '==', gameId)
-                                         .orderBy('timestamp', 'desc')
-                                         .get();
+    const commentsSnapshot = await firestore.collection('comments')
+                                            .where('gameId', '==', gameId)
+                                            .orderBy('timestamp', 'desc')
+                                            .get();
 
-    querySnapshot.forEach(async (doc) => {
-      const comment = doc.data();
-      const userDoc = await firestore.collection('users').doc(comment.userId).get();
-      const username = userDoc.exists ? userDoc.data().username : "Anonymous"; // Assuming there's a 'username' field
+    commentsSnapshot.forEach(doc => {
+        const comment = doc.data();
+        const commentElement = document.createElement('div');
+        const textElement = document.createElement('p');
+        textElement.textContent = comment.text;
 
-      const commentElement = document.createElement('div');
-      const usernameElement = document.createElement('span');
-      const commentTextElement = document.createElement('p');
+        // Include buttons for Edit, Delete, Reply
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        // Attach event listener to handle edit
+        // editButton.addEventListener('click', () => handleEditComment(doc.id, comment.text));
 
-      usernameElement.textContent = username + ': ';
-      commentTextElement.textContent = comment.text;
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        // Attach event listener to handle delete
+        // deleteButton.addEventListener('click', () => handleDeleteComment(doc.id));
 
-      commentElement.appendChild(usernameElement);
-      commentElement.appendChild(commentTextElement);
-      // Here you would also add buttons or links for edit, reply, and delete functionalities
-      // For example:
-      // const editButton = document.createElement('button');
-      // editButton.textContent = 'Edit';
-      // editButton.onclick = function() { /* Your edit logic here */ };
-      // commentElement.appendChild(editButton);
+        const replyButton = document.createElement('button');
+        replyButton.textContent = 'Reply';
+        // Attach event listener to handle reply
+        // replyButton.addEventListener('click', () => handleReplyComment(doc.id));
 
-      commentsList.appendChild(commentElement);
+        commentElement.appendChild(textElement);
+        commentElement.appendChild(editButton);
+        commentElement.appendChild(deleteButton);
+        commentElement.appendChild(replyButton);
+
+        commentsListElement.appendChild(commentElement);
     });
+}
+
+
+async function deleteComment(commentId) {
+  try {
+    await firestore.collection('comments').doc(commentId).delete();
+    showToast('Comment deleted successfully');
+    // Optionally, refresh the comments list here
   } catch (error) {
-    console.error('Error fetching comments:', error);
-    showToast('Failed to fetch comments.');
+    console.error('Error deleting comment:', error);
+    showToast('Failed to delete comment.');
   }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const submitCommentButton = document.getElementById('submitComment');
+    if (submitCommentButton) {
+        submitCommentButton.addEventListener('click', async () => {
+            const commentText = document.getElementById('commentInput').value;
+            if (commentText) {
+                // Assume addComment is a function that adds the comment to Firestore
+                await addComment(gameId, commentText);
+                document.getElementById('commentInput').value = ''; // Clear the textarea after submission
+                // Optionally, refresh the displayed comments
+                await fetchAndDisplayComments(gameId);
+            } else {
+                showToast('Please enter a comment.');
+            }
+        });
+    } else {
+        console.error('Submit Comment button not found.');
+    }
+});
+
 
 async function fetchAndDisplayLikes(gameId) {
     try {
