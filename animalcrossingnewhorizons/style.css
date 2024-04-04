@@ -4502,13 +4502,13 @@ h2 {
 
 
 #likesCount {
-  padding: 7px;
+  padding: 5px 10px;
   margin-top: 10px;
   font-size: 14px;
   color: white;
   background-color: dodgerblue;
   border: none;
   border-radius: 5px;
-
   cursor: pointer;
+  width:100px
 }
