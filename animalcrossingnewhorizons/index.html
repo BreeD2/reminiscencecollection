@@ -4136,48 +4136,7 @@ document.addEventListener('DOMContentLoaded', function() {
     handleAuthStateChanges();
 });
 
-function setupEventListeners() {
-    const likeButton = document.getElementById('likeButton');
-    const commentButton = document.getElementById('commentButton');
-    const rateButton = document.getElementById('rateButton');
 
-    likeButton.addEventListener('click', () => handleLikeOrRateClick('like'));
-    commentButton.addEventListener('click', handleCommentButtonClick);
-    rateButton.addEventListener('click', () => handleLikeOrRateClick('rate'));
-}
-
-function handleAuthStateChanges() {
-    auth.onAuthStateChanged(user => {
-        const dropdownContent = document.querySelector('.dropdown-content2');
-        if (user) {
-            updateUIForLoggedInUser(user);
-        } else {
-            updateUIForLoggedOutUser();
-        }
-    });
-}
-
-async function updateUIForLoggedInUser(user) {
-    document.getElementById('userName').textContent = user.displayName || 'User';
-    try {
-        const url = await storage.ref('profilePictures/' + user.uid).getDownloadURL();
-        document.getElementById('userProfilePic').src = url;
-    } catch {
-        console.log('Profile picture not found. Using default.');
-    }
-    document.querySelector('.dropdown-content2').innerHTML = `
-      <a href="..//dashboard/index.html">Dashboard</a>
-      <a href="javascript:void(0);" id="logoutBtn">Logout</a>
-    `;
-    document.getElementById('logoutBtn').addEventListener('click', logoutUser);
-}
-
-function updateUIForLoggedOutUser() {
-    document.querySelector('.dropdown-content2').innerHTML = `
-      <a href="..//login/index.html">Login</a>
-      <a href="..//signup/index.html">Signup</a>
-    `;
-}
 
 async function logoutUser() {
     try {
@@ -4301,6 +4260,48 @@ async function fetchAndDisplayRating(gameId, userId) {
     // Here, you'd update the UI to reflect the user's rating
 }
 
+function setupEventListeners() {
+    const likeButton = document.getElementById('likeButton');
+    const commentButton = document.getElementById('commentButton');
+    const rateButton = document.getElementById('rateButton');
+
+    likeButton.addEventListener('click', () => handleLikeOrRateClick('like'));
+    commentButton.addEventListener('click', handleCommentButtonClick);
+    rateButton.addEventListener('click', () => handleLikeOrRateClick('rate'));
+}
+
+function handleAuthStateChanges() {
+    auth.onAuthStateChanged(user => {
+        const dropdownContent = document.querySelector('.dropdown-content2');
+        if (user) {
+            updateUIForLoggedInUser(user);
+        } else {
+            updateUIForLoggedOutUser();
+        }
+    });
+}
+
+async function updateUIForLoggedInUser(user) {
+    document.getElementById('userName').textContent = user.displayName || 'User';
+    try {
+        const url = await storage.ref('profilePictures/' + user.uid).getDownloadURL();
+        document.getElementById('userProfilePic').src = url;
+    } catch {
+        console.log('Profile picture not found. Using default.');
+    }
+    document.querySelector('.dropdown-content2').innerHTML = `
+      <a href="..//dashboard/index.html">Dashboard</a>
+      <a href="javascript:void(0);" id="logoutBtn">Logout</a>
+    `;
+    document.getElementById('logoutBtn').addEventListener('click', logoutUser);
+}
+
+function updateUIForLoggedOutUser() {
+    document.querySelector('.dropdown-content2').innerHTML = `
+      <a href="..//login/index.html">Login</a>
+      <a href="..//signup/index.html">Signup</a>
+    `;
+}
 
 </script>
 
