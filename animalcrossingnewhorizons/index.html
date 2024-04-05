@@ -345,7 +345,7 @@
       <span class="star" data-value="4">&#9733;</span>
       <span class="star" data-value="5">&#9733;</span>
   </div>
-  <div id="likesCount">Likes:</div>
+  <div id="likesCount">Likes: 0</div>
   <div id="ratingDisplay">Ratings</div>
 
 
@@ -4177,6 +4177,9 @@ function isUserSignedIn() {
 }
 
 
+
+
+
 async function handleLikeClick() {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to like.');
@@ -4598,9 +4601,14 @@ async function fetchAndDisplayRating(gameId) {
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Call fetchAndDisplayRating here
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    // User is signed in, safe to fetch the rating
     fetchAndDisplayRating('animalcrossingnewhorizons');
+  } else {
+    // No user is signed in.
+    console.log("No user signed in.");
+  }
 });
 
 
