@@ -4292,22 +4292,30 @@ document.getElementById('updateEmailBtn').addEventListener('click', async () => 
     showToast('Please enter a new email.');
   }
 });
-  // Update privacy settings
-  document.getElementById('updatePrivacyBtn').addEventListener('click', async () => {
-    const privacySetting = document.getElementById('privacySetting').value;
-    const user = firebase.auth().currentUser; // Directly use the currentUser property
-    if (user) {
-      try {
-        await firestore.collection('users').doc(user.uid).set({
-          privacySetting: privacySetting
-        }, { merge: true });
-        showToast('Privacy settings updated successfully');
-      } catch (error) {
-        console.error('Error updating privacy settings:', error);
-        showToast('Failed to update privacy settings.');
-      }
+
+document.getElementById('updatePrivacyBtn').addEventListener('click', async () => {
+  const privacySetting = document.getElementById('privacySetting').value;
+
+  // Fetch the current user within the function
+  const currentUser = firebase.auth().currentUser;
+
+  // Check if currentUser is not null before proceeding
+  if (currentUser) {
+    try {
+      await firestore.collection('users').doc(currentUser.uid).set({
+        privacySetting: privacySetting
+      }, { merge: true });
+      showToast('Privacy settings updated successfully');
+    } catch (error) {
+      console.error('Error updating privacy settings:', error);
+      showToast('Failed to update privacy settings.');
     }
-  });
+  } else {
+    // Handle the case where no user is signed in
+    showToast('No user is signed in.');
+  }
+});
+
 
   // Delete user account
   document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
@@ -4329,6 +4337,29 @@ document.getElementById('updateEmailBtn').addEventListener('click', async () => 
     // Handle not authenticated scenario
   }
 });
+document.getElementById('saveDescriptionBtn').addEventListener('click', async () => {
+  // Fetch the current user within the function
+  const currentUser = firebase.auth().currentUser;
+
+  const userDescriptionInput = document.getElementById('userDescriptionInput').value;
+
+  // Check if currentUser is not null before proceeding
+  if (currentUser) {
+    try {
+      await firestore.collection('users').doc(currentUser.uid).set({
+        description: userDescriptionInput
+      }, { merge: true });
+      showToast('Description saved successfully.');
+    } catch (error) {
+      console.error('Error saving description:', error);
+      showToast('Failed to save description.');
+    }
+  } else {
+    // Handle the case where no user is signed in
+    showToast('No user is signed in.');
+  }
+});
+
 
 
 // Filter Activity
