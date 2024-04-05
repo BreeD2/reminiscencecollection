@@ -4556,31 +4556,24 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('replyText').value = ''; // Optionally clear the textarea
     });
 });
-
 async function fetchAndDisplayLikes(gameId) {
   try {
     const likesDoc = await firestore.collection('likes').doc(gameId).get();
     if (likesDoc.exists) {
       const likesData = likesDoc.data();
       let likeCount = 0;
-      // Count the number of true values
       for (const key in likesData) {
-        if (likesData.hasOwnProperty(key) && likesData[key] === true) {
-          likeCount++;
-        }
+        if (likesData[key] === true) likeCount++;
       }
-      console.log(`Likes found: ${likeCount}`);
-      document.getElementById('ratingDisplay').textContent = `Likes: ${likeCount}`;
+      document.getElementById('likesCount').textContent = `Likes: ${likeCount}`; // Update the correct element
     } else {
-      console.log('No likes found for this game.');
-      document.getElementById('ratingDisplay').textContent = "Likes: 0";
+      document.getElementById('likesCount').textContent = "Likes: 0"; // Update the correct element
     }
   } catch (error) {
     console.error('Error fetching likes:', error);
     showToast('Failed to fetch likes.');
   }
 }
-
 
 
 
