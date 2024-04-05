@@ -4158,67 +4158,22 @@
     const auth = firebase.auth();
     const storage = firebase.storage();
     const firestore = firebase.firestore();
-    const db = firebase.firestore();
 
     // Define the showToast function
-function showToast(message) {
-    const toast = document.createElement('div');
-    toast.textContent = message;
-    toast.style.position = 'fixed';
-    toast.style.bottom = '20px';
-    toast.style.left = '50%';
-    toast.style.transform = 'translateX(-50%)';
-    toast.style.backgroundColor = 'black';
-    toast.style.color = 'white';
-    toast.style.padding = '10px';
-    toast.style.borderRadius = '5px';
-    document.body.appendChild(toast);
-    setTimeout(() => document.body.removeChild(toast), 3000); // Remove after 3 seconds
-}
-
-// Handle authentication state changes
-auth.onAuthStateChanged(user => {
-  if (user) {
-    // User is logged in
-    const userId = user.uid;
-
-    // Attempt to load the user's profile picture
-    storage.ref('profilePictures/' + userId).getDownloadURL().then((url) => {
-      document.getElementById('userProfilePic').src = url;
-    }).catch(() => {
-      console.log('Profile picture not found. Using default.');
-    });
-
-    document.getElementById('updateProfileBtn').addEventListener('click', async () => {
-      const usernameInput = document.getElementById('usernameInput').value;
-      const userDescriptionInput = document.getElementById('userDescriptionInput').value;
-
-      try {
-        // Update username and description in Firestore
-        await firestore.collection('users').doc(userId).set({
-          username: usernameInput,
-          description: userDescriptionInput
-        }, { merge: true });
-
-        // Update displayName in Firebase Authentication
-        await user.updateProfile({
-          displayName: usernameInput
-        });
-
-        showToast('Profile updated successfully');
-      } catch (error) {
-        console.error('Error updating profile:', error);
-        showToast('Failed to update profile.');
-      }
-    });
-
-    // Include other operations that require the userId here...
-
-  } else {
-    // No user is logged in
-    console.log('No user logged in.');
-  }
-});
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.textContent = message;
+      toast.style.position = 'fixed';
+      toast.style.bottom = '20px';
+      toast.style.left = '50%';
+      toast.style.transform = 'translateX(-50%)';
+      toast.style.backgroundColor = 'black';
+      toast.style.color = 'white';
+      toast.style.padding = '10px';
+      toast.style.borderRadius = '5px';
+      document.body.appendChild(toast);
+      setTimeout(() => document.body.removeChild(toast), 3000); // Remove after 3 seconds
+    }
 
     // Define the logoutUser function
     function logoutUser() {
@@ -4228,113 +4183,40 @@ auth.onAuthStateChanged(user => {
         window.location.href = 'index.html';
       }).catch((error) => {
         console.error('Logout Error:', error);
+        showToast('Failed to log out.');
       });
     }
 
     // Handle authentication state changes
     auth.onAuthStateChanged(user => {
       if (user) {
-        // Display user's display name, or 'User' if not available
-        document.getElementById('userName').textContent = user.displayName || 'User';
-
+        // User is logged in
         // Attempt to load the user's profile picture
-        const userProfilePicRef = storage.ref('profilePictures/' + user.uid);
-        userProfilePicRef.getDownloadURL().then((url) => {
+        storage.ref('profilePictures/' + user.uid).getDownloadURL().then((url) => {
           document.getElementById('userProfilePic').src = url;
         }).catch(() => {
           console.log('Profile picture not found. Using default.');
         });
 
-        // Ensure userId is available in this scope
-        const userId = user.uid;
-
-        // Update user profile
-        document.getElementById('updateProfileBtn').addEventListener('click', async () => {
-          const usernameInput = document.getElementById('usernameInput').value;
+        // Save user description
+        document.getElementById('saveDescriptionBtn').addEventListener('click', async () => {
           const userDescriptionInput = document.getElementById('userDescriptionInput').value;
-
-          // Use userId directly here, guaranteed to be available
           try {
-            // Update username and description in Firestore
-            await firebase.firestore().collection('users').doc(userId).set({
-              username: usernameInput,
+            await firestore.collection('users').doc(user.uid).set({
               description: userDescriptionInput
             }, { merge: true });
-
-            // Update displayName in auth profile if necessary
-            await user.updateProfile({
-              displayName: usernameInput
-            });
-
-            showToast('Profile updated successfully');
+            showToast('Description saved successfully');
           } catch (error) {
-            console.error('Error updating profile:', error);
-            showToast('Failed to update profile.');
+            console.error('Error saving description:', error);
+            showToast('Failed to save description.');
           }
         });
-
-        // All other event listeners that require userId should be defined in this scope
-        // This ensures userId is defined when the event listeners are triggered
-
       } else {
-        // Handle the case where there is no authenticated user
-        console.log('No user logged in');
+        // No user is logged in
+        console.log('No user logged in.');
       }
     });
 
-    // Define showToast function here or elsewhere in your script
-    function showToast(message) {
-        const toast = document.createElement('div');
-        toast.textContent = message;
-        toast.style.position = 'fixed';
-        toast.style.bottom = '20px';
-        toast.style.left = '50%';
-        toast.style.transform = 'translateX(-50%)';
-        toast.style.backgroundColor = 'black';
-        toast.style.color = 'white';
-        toast.style.padding = '10px';
-        toast.style.borderRadius = '5px';
-        document.body.appendChild(toast);
-        setTimeout(() => document.body.removeChild(toast), 3000); // Remove after 3 seconds
-    }
-
-
-
-    document.getElementById('updateProfileBtn').addEventListener('click', async () => {
-  const usernameInput = document.getElementById('usernameInput').value;
-  const userDescriptionInput = document.getElementById('userDescriptionInput').value;
-
-  const user = firebase.auth().currentUser;
-  if (user) {
-    try {
-      // Update username in Firestore
-      await firebase.firestore().collection('users').doc(user.uid).set({
-        username: usernameInput,
-        description: userDescriptionInput
-      }, { merge: true });
-
-      // Update displayName in Firebase Authentication
-      await user.updateProfile({
-        displayName: usernameInput
-      });
-      showToast('Profile updated successfully');
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      showToast('Failed to update profile.');
-    }
-  }
-});
-
-      // Define the logoutUser function
-      function logoutUser() {
-        auth.signOut().then(() => {
-          console.log('User logged out');
-          // Optionally redirect the user to login page or home page after logout
-          window.location.href = 'index.html';
-        }).catch((error) => {
-          console.error('Logout Error:', error);
-        });
-      }
       async function fetchAndDisplayGameDetails(gameId) {
     const gameRef = firestore.collection('games').doc(gameId);
     const doc = await gameRef.get();
@@ -4349,38 +4231,6 @@ auth.onAuthStateChanged(user => {
     }
 }
 
-
-
-  // Update user profile
-  document.getElementById('updateProfileBtn').addEventListener('click', async () => {
-    const usernameInput = document.getElementById('usernameInput').value;
-    const userDescriptionInput = document.getElementById('userDescriptionInput').value;
-    if (userId) {
-      // Update username and description in Firestore
-      await firebase.firestore().collection('users').doc(userId).set({
-        username: usernameInput,
-        description: userDescriptionInput
-      }, { merge: true });
-
-      // Update displayName in auth profile if necessary
-      firebase.auth().currentUser.updateProfile({
-        displayName: usernameInput
-      });
-
-      alert('Profile updated successfully');
-    }
-  });
-
-  // Save user description
-  document.getElementById('saveDescriptionBtn').addEventListener('click', async () => {
-    const userDescriptionInput = document.getElementById('userDescriptionInput').value;
-    if (userId) {
-      await firebase.firestore().collection('users').doc(userId).set({
-        description: userDescriptionInput
-      }, { merge: true });
-      alert('Description saved successfully');
-    }
-  });
 
   // Change user password
   document.getElementById('changePasswordBtn').addEventListener('click', async () => {
@@ -4405,15 +4255,20 @@ auth.onAuthStateChanged(user => {
       });
     }
   });
-
   // Update privacy settings
   document.getElementById('updatePrivacyBtn').addEventListener('click', async () => {
     const privacySetting = document.getElementById('privacySetting').value;
-    if (userId) {
-      await firebase.firestore().collection('users').doc(userId).set({
-        privacySetting: privacySetting
-      }, { merge: true });
-      alert('Privacy settings updated successfully');
+    const user = firebase.auth().currentUser; // Directly use the currentUser property
+    if (user) {
+      try {
+        await firestore.collection('users').doc(user.uid).set({
+          privacySetting: privacySetting
+        }, { merge: true });
+        showToast('Privacy settings updated successfully');
+      } catch (error) {
+        console.error('Error updating privacy settings:', error);
+        showToast('Failed to update privacy settings.');
+      }
     }
   });
 
