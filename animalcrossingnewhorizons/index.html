@@ -345,7 +345,9 @@
       <span class="star" data-value="4">&#9733;</span>
       <span class="star" data-value="5">&#9733;</span>
   </div>
-<div id="likesCount">Likes:</div>
+  <div id="likesCount">Likes:</div>
+  <div id="ratingDisplay">Ratings</div>
+
 
 
        <p class="game-info"><strong>Developer(s):</strong><br>Nintendo EPD<br></p>
@@ -4580,22 +4582,25 @@ async function fetchAndDisplayLikes(gameId) {
 
 
 
-
 async function fetchAndDisplayRating(gameId) {
   try {
+    console.log(`Fetching rating for game ID: ${gameId}`);
     const ratingDoc = await firestore.collection('ratings').doc(gameId).get();
     if (ratingDoc.exists) {
       const ratingData = ratingDoc.data();
-      const userRating = ratingData[auth.currentUser.uid]; // Assumes rating is stored with user UID as the key
+      const userRating = ratingData[auth.currentUser.uid]; // Make sure this UID matches how you've stored ratings
+      console.log(`Rating found: ${userRating}`);
       document.getElementById('ratingDisplay').textContent = `Your Rating: ${userRating}`;
     } else {
       console.log('No rating found for this game.');
+      document.getElementById('ratingDisplay').textContent = "You haven't rated this game yet."; // Optionally handle the case where there's no rating
     }
   } catch (error) {
     console.error('Error fetching rating:', error);
     showToast('Failed to fetch rating.');
   }
 }
+
 
 document.addEventListener('DOMContentLoaded', function() {
     // Your existing code to handle DOMContentLoaded
@@ -4684,7 +4689,7 @@ async function handleRateClick() {
           // Display user's display name or fallback to 'User'
           document.getElementById('userName').textContent = user.displayName || 'User';
 
-        
+
 
           // Update dropdown content for logged-in users
           dropdownContent.innerHTML = `

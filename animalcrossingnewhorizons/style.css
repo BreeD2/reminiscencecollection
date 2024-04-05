@@ -4512,3 +4512,15 @@ h2 {
   cursor: pointer;
   width:100px
 }
+
+#ratingDisplay {
+  padding: 5px 10px;
+  margin: 10px;
+  font-size: 14px;
+  color: white;
+  background-color: dodgerblue;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width:100px
+}
