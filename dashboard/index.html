@@ -371,12 +371,15 @@
 <button id="filterActivityBtn">Filter Activity</button>
 
 
-          <div id="historySection">
-    <h2>My Activity</h2>
-    <div id="likesHistory">Your likes will appear here.</div>
-    <div id="commentsHistory">Your comments will appear here.</div>
-    <div id="ratingsHistory">Your ratings will appear here.</div>
-</div>
+<div id="userActivity">
+    <h3>Likes History</h3>
+    <p id="likesHistory"></p>
+    <h3>Comments History</h3>
+    <p id="commentsHistory"></p>
+    <h3>Ratings History</h3>
+    <p id="ratingsHistory"></p>
+  </div>
+
 
 
 
@@ -4178,32 +4181,23 @@
             });
           }
 
-          // Handle authentication state changes
           auth.onAuthStateChanged(user => {
-            if (user) {
-              // Display user's display name, or 'User' if not available
-              document.getElementById('userName').textContent = user.displayName || 'User';
+      if (user) {
+        // Assuming you have set the user's displayName and photoURL during account creation or profile update
+        document.getElementById('userName').textContent = user.displayName || 'User';
+        document.getElementById('userProfilePic').src = user.photoURL || 'default-profile-pic.jpg';
+        document.getElementById('userDescriptionDisplay').textContent = ''; // Clear previous description
+        fetchUserDescription(user.uid);
+        fetchUserLikes(user.uid);
+        fetchUserComments(user.uid);
+        fetchUserRatings(user.uid);
+      } else {
+        // Handle case when there is no user logged in
+        console.log('No user logged in.');
+        // Optionally, redirect to login page or hide dashboard content
+      }
+    });
 
-              // Attempt to load the user's profile picture
-              const userProfilePicRef = storage.ref('profilePictures/' + user.uid);
-              userProfilePicRef.getDownloadURL().then((url) => {
-                document.getElementById('userProfilePic').src = url;
-              }).catch(() => {
-                console.log('Profile picture not found. Using default.');
-              });
-
-              // Attach the logoutUser function to the logout button's click event
-              document.getElementById('logoutBtn').addEventListener('click', (e) => {
-                e.preventDefault();
-                logoutUser(); // Call logoutUser function here
-              });
-            } else {
-              // If no user is logged in, you might want to clear or set default values
-              document.getElementById('userName').textContent = 'User';
-              // Optionally, set a default or placeholder image for 'userProfilePic'
-              // document.getElementById('userProfilePic').src = 'path/to/default/image';
-            }
-          });
 
           function fetchUserLikes(userId) {
         const userLikesRef = firebase.firestore().collection('users').doc(userId).collection('likes');
@@ -4412,7 +4406,39 @@ function filterUserActivity() {
 
         </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const spotlight = document.getElementById('spotlight');
 
+    // Function to update spotlight position
+    function moveSpotlight(e) {
+        spotlight.style.display = 'block';
+        spotlight.style.left = e.pageX - spotlight.offsetWidth / 2 + 'px';
+        spotlight.style.top = e.pageY - spotlight.offsetHeight / 2 + 'px';
+    }
+
+    // Show the spotlight effect on mouse move
+    document.addEventListener('mousemove', moveSpotlight);
+
+    // Brighten images under the spotlight
+    document.addEventListener('mousemove', function(e) {
+        document.querySelectorAll('.highlighted-image').forEach(img => {
+            const imgRect = img.getBoundingClientRect();
+            const imgCenter = {
+                x: imgRect.left + imgRect.width / 2,
+                y: imgRect.top + imgRect.height / 2
+            };
+            const distance = Math.sqrt(Math.pow(imgCenter.x - e.pageX, 2) + Math.pow(imgCenter.y - e.pageY, 2));
+
+            if (distance < spotlight.offsetWidth / 2) {
+                img.style.filter = 'brightness(100%)';
+            } else {
+                img.style.filter = 'brightness(30%)';
+            }
+        });
+    });
+});
+</script>
 
 </body>
 </html>
