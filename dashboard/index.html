@@ -4182,6 +4182,93 @@
     }
 }
 
+const userId = firebase.auth().currentUser?.uid; // Get the current user's ID
+
+  // Update user profile
+  document.getElementById('updateProfileBtn').addEventListener('click', async () => {
+    const usernameInput = document.getElementById('usernameInput').value;
+    const userDescriptionInput = document.getElementById('userDescriptionInput').value;
+    if (userId) {
+      // Update username and description in Firestore
+      await firebase.firestore().collection('users').doc(userId).set({
+        username: usernameInput,
+        description: userDescriptionInput
+      }, { merge: true });
+
+      // Update displayName in auth profile if necessary
+      firebase.auth().currentUser.updateProfile({
+        displayName: usernameInput
+      });
+
+      alert('Profile updated successfully');
+    }
+  });
+
+  // Save user description
+  document.getElementById('saveDescriptionBtn').addEventListener('click', async () => {
+    const userDescriptionInput = document.getElementById('userDescriptionInput').value;
+    if (userId) {
+      await firebase.firestore().collection('users').doc(userId).set({
+        description: userDescriptionInput
+      }, { merge: true });
+      alert('Description saved successfully');
+    }
+  });
+
+  // Change user password
+  document.getElementById('changePasswordBtn').addEventListener('click', async () => {
+    const newPassword = document.getElementById('newPasswordInput').value;
+    if (newPassword) {
+      firebase.auth().currentUser.updatePassword(newPassword).then(() => {
+        alert('Password updated successfully');
+      }).catch((error) => {
+        console.error('Error updating password:', error);
+      });
+    }
+  });
+
+  // Update user email
+  document.getElementById('updateEmailBtn').addEventListener('click', async () => {
+    const newEmail = document.getElementById('emailInput').value;
+    if (newEmail) {
+      firebase.auth().currentUser.updateEmail(newEmail).then(() => {
+        alert('Email updated successfully');
+      }).catch((error) => {
+        console.error('Error updating email:', error);
+      });
+    }
+  });
+
+  // Update privacy settings
+  document.getElementById('updatePrivacyBtn').addEventListener('click', async () => {
+    const privacySetting = document.getElementById('privacySetting').value;
+    if (userId) {
+      await firebase.firestore().collection('users').doc(userId).set({
+        privacySetting: privacySetting
+      }, { merge: true });
+      alert('Privacy settings updated successfully');
+    }
+  });
+
+  // Delete user account
+  document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
+    const confirmation = confirm('Are you sure you want to delete your account? This cannot be undone.');
+    if (confirmation) {
+      firebase.auth().currentUser.delete().then(() => {
+        alert('Account deleted successfully');
+        window.location.href = 'index.html'; // Redirect to homepage or login page
+      }).catch((error) => {
+        console.error('Error deleting account:', error);
+      });
+    }
+  });
+
+  // Fetch and display user activities based on the selected filter
+  document.getElementById('filterActivityBtn').addEventListener('click', () => {
+    const filter = document.getElementById('activityFilter').value;
+    // Call a function to fetch and display activities based on the selected filter
+    // This function needs to be implemented based on your app's structure
+  });
 
       // Handle authentication state changes
       auth.onAuthStateChanged(user => {
