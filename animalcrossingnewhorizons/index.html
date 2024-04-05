@@ -4604,10 +4604,7 @@ async function fetchAndDisplayRating(gameId) {
 }
 
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Your existing code to handle DOMContentLoaded
-    fetchAndDisplayLikes('gameId'); // Replace 'gameId' with your actual game ID variable or value
-});
+
 document.addEventListener('DOMContentLoaded', function() {
     // Call fetchAndDisplayRating here
     fetchAndDisplayRating('aniimalcrossingnewhorizons');
@@ -4619,7 +4616,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     await handleAuthStateChanges();
     setupEventListeners();
     await fetchAndDisplayComments(gameId);
-    await fetchAndDisplayLikes(gameId); // Ensure this call is correctly placed
+  
 });
 
 
