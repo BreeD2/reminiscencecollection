@@ -4464,3 +4464,26 @@ border: 1px solid #ccc;
 box-sizing: border-box;
 
  }
+
+ #updateProfileBtn {
+  max-width: 400px; /* Make the button take up the full width */
+   padding: 10px; /* Add padding inside the button */
+   background-color: #007bff; /* Use a blue background */
+   color: white; /* White text color */
+   border: none; /* No border */
+   border-radius: 4px; /* Round the corners of the button */
+   cursor: pointer; /* Change mouse cursor to indicate clickable */
+   font-size: 16px; /* Increase font size */
+ }
+#saveDescriptionBtn {
+
+ max-width: 400px; /* Make the button take up the full width */
+ padding: 10px; /* Add padding inside the button */
+ background-color: #007bff; /* Use a blue background */
+ color: white; /* White text color */
+ border: none; /* No border */
+ border-radius: 4px; /* Round the corners of the button */
+ cursor: pointer; /* Change mouse cursor to indicate clickable */
+ font-size: 16px; /* Increase font size */
+ margin: 10px
+}
