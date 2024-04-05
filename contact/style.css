@@ -4394,3 +4394,47 @@ color:white
 .form-group button[type="submit"]:hover {
   background-color: cornflowerblue;
 }
+
+#contactForm {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  
+  border-radius: 8px;
+}
+
+#contactForm input[type="text"],
+#contactForm input[type="email"],
+#contactForm textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#contactForm input[type="text"]:focus,
+#contactForm input[type="email"]:focus,
+#contactForm textarea:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+#contactForm textarea {
+  resize: vertical;
+  height: 150px;
+}
+
+#contactForm button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#contactForm button[type="submit"]:hover {
+  background-color: #0056b3;
+}

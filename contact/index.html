@@ -347,26 +347,13 @@
 
  <div class="contact-form">
      <h2>Contact Us</h2>
-     <form action="submitform.php" method="post">
-         <div class="form-group">
-             <label for="firstName">First Name</label>
-             <input type="text" id="firstName" name="firstName" required>
-         </div>
-         <div class="form-group">
-             <label for="lastName">Last Name</label>
-             <input type="text" id="lastName" name="lastName" required>
-         </div>
-         <div class="form-group">
-             <label for="email">Email</label>
-             <input type="email" id="email" name="email" required>
-         </div>
+     <form id="contactForm">
+   <input type="text" id="name" placeholder="Your Name">
+   <input type="email" id="email" placeholder="Your Email">
+   <textarea id="message" placeholder="Your Message"></textarea>
+   <button type="submit">Send</button>
+ </form>
 
-         <div class="form-group">
-             <label for="message">Message</label>
-             <textarea id="message" name="message" rows="4" required></textarea>
-         </div>
-         <button type="submit">Submit</button>
-     </form>
  </div>
 
 
@@ -4171,6 +4158,33 @@
         });
       }
 
+      // Reference to Firestore
+      const db = firebase.firestore();
+
+      // Form submission handler
+      document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+
+        // Add a new document with a generated ID to "contacts" collection
+        db.collection("contacts").add({
+          name: name,
+          email: email,
+          message: message,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp() // Optional: add a timestamp
+        })
+        .then(function() {
+          console.log("Document successfully written!");
+          // Handle successful submission (e.g., show a message, clear the form)
+        })
+        .catch(function(error) {
+          console.error("Error writing document: ", error);
+          // Handle errors here
+        });
+      });
       // Handle authentication state changes
       auth.onAuthStateChanged(user => {
         const dropdownContent = document.querySelector('.dropdown-content2');
@@ -4188,7 +4202,7 @@
 
           // Update dropdown content for logged-in users
           dropdownContent.innerHTML = `
-            <a href="dashboard/index.html">Dashboard</a>
+            <a href="..//dashboard/index.html">Dashboard</a>
             <a href="javascript:void(0);" id="logoutBtn">Logout</a>
           `;
 
@@ -4200,8 +4214,8 @@
         } else {
           // Update dropdown content for guests
           dropdownContent.innerHTML = `
-            <a href="login/index.html">Login</a>
-            <a href="signup/index.html">Signup</a>
+            <a href="..//login/index.html">Login</a>
+            <a href="..//signup/index.html">Signup</a>
           `;
         }
       });
