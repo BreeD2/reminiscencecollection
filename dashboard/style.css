@@ -4448,7 +4448,8 @@ form input[type="text"] {
 
  #userDescriptionInput {
      font-family: arial;
-     width: 100%;
+     min-width: 400px;
+    width:60%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -4456,7 +4457,7 @@ form input[type="text"] {
     box-sizing: border-box;
     font-size: 14px;
     border-radius:5px;
-    width: 100%;
+
 padding: 12px 20px;
 margin: 8px 0;
 display: inline-block;
@@ -4539,7 +4540,7 @@ box-sizing: border-box;
 }
 
 #filterActivityBtn {
-  max-width: 400px; /* Make the button take up the full width */;
+
   width: 80%;
   padding: 10px; /* Add padding inside the button */
   background-color: #007bff; /* Use a blue background */
@@ -4552,6 +4553,31 @@ box-sizing: border-box;
 }
 
 #emailInput {
-  width: 40%;
+  max-width: 400px; /* Make the button take up the full width */;
     height: 40px;
+}
+
+#userDescriptionDisplay {
+
+    width: 80%;
+    padding: 10px; /* Add padding inside the button */
+    background-color: #007bff; /* Use a blue background */
+    color: white; /* White text color */
+    border: none; /* No border */
+    border-radius: 4px; /* Round the corners of the button */
+    cursor: pointer; /* Change mouse cursor to indicate clickable */
+    font-size: 16px; /* Increase font size */
+    margin: 10px
+}
+
+#emailDisplay {
+  width: 80%;
+  padding: 10px; /* Add padding inside the button */
+  background-color: #007bff; /* Use a blue background */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-radius: 4px; /* Round the corners of the button */
+  cursor: pointer; /* Change mouse cursor to indicate clickable */
+  font-size: 16px; /* Increase font size */
+  margin: 10px
 }

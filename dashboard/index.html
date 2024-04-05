@@ -327,17 +327,17 @@
       <div id="userProfile">
           <h2>User Profile</h2>
           <!-- Display User Email and Profile Picture -->
-          <div id="emailDisplay"></div>
+          <div id="emailDisplay">Email Display</div>
 
           <!-- Input for Updating Username -->
           <input type="text" id="usernameInput" placeholder="New username">
           <div id="displayedUsername"></div>
-
+  <button id="updateProfileBtn">Update Profile</button>
           <!-- Input for User Description -->
           <textarea id="userDescriptionInput" placeholder="Write your description here"></textarea>
-           <div id="userDescriptionDisplay"></div>
+           <div id="userDescriptionDisplay">Description</div>
           <!-- Button to Submit Profile Updates -->
-          <button id="updateProfileBtn">Update Profile</button>
+
           <!-- Button to Save User Description -->
           <button id="saveDescriptionBtn">Save Description</button>
           <div id="messageDisplay"></div>
@@ -4215,6 +4215,9 @@
       });
     }
 
+
+
+
     document.getElementById('updateProfileBtn').addEventListener('click', async () => {
       const usernameInput = document.getElementById('usernameInput').value;
       const userDescriptionInput = document.getElementById('userDescriptionInput').value;
@@ -4263,22 +4266,47 @@
         console.log("No such game!");
     }
 }
-
-// Change User Password
 document.getElementById('changePasswordBtn').addEventListener('click', async () => {
   const newPassword = document.getElementById('newPasswordInput').value;
+  const currentUser = firebase.auth().currentUser;
+
+  // Function to prompt user for their current password and re-authenticate
+  const reauthenticate = async (currentPassword) => {
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      currentUser.email,
+      currentPassword
+    );
+    return currentUser.reauthenticateWithCredential(credential);
+  };
+
   if (newPassword) {
     try {
-      await firebase.auth().currentUser.updatePassword(newPassword);
-      showToast('Password updated successfully.');
+      // Prompt the user to enter their current password
+      const currentPassword = prompt("Please enter your current password:");
+      // Check if a password was entered
+      if (currentPassword) {
+        await reauthenticate(currentPassword);
+
+        // Proceed with updating the password after re-authentication
+        await currentUser.updatePassword(newPassword);
+        showToast('Password updated successfully.');
+      } else {
+        showToast('Current password not provided.');
+      }
     } catch (error) {
       console.error('Error updating password:', error);
-      showToast('Failed to update password. You might need to log in again if your session is too old.');
+      if (error.code === 'auth/requires-recent-login') {
+        showToast('Please sign in again to update your password.');
+        // Redirect user to sign-in page or show sign-in modal
+      } else {
+        showToast('Failed to update password.');
+      }
     }
   } else {
     showToast('Please enter a new password.');
   }
 });
+
 
 // Update User Email
 document.getElementById('updateEmailBtn').addEventListener('click', async () => {
