@@ -4563,22 +4563,28 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('replyText').value = ''; // Optionally clear the textarea
     });
 });
-async function fetchAndDisplayLikes(itemId) {
-  try {
-    const docRef = await firestore.collection('likes').doc(itemId).get();
-    if (docRef.exists) {
-      const data = docRef.data();
-      let likeCount = 0;
-      Object.values(data).forEach(value => {
-        if (value === true) likeCount++;
-      });
-      document.getElementById('likesCount').textContent = `Likes: ${likeCount}`;
-    } else {
-      document.getElementById('likesCount').textContent = "Likes: 0";
+async function fetchAndDisplayLikes(gameId) {
+    console.log(`Fetching likes for game ID: ${gameId}`);
+    try {
+        const likesDoc = await firestore.collection('likes').doc(gameId).get();
+        if (likesDoc.exists) {
+            const likesData = likesDoc.data();
+            let likeCount = 0;
+            // Assuming each key in likesData with a true value represents a like
+            Object.values(likesData).forEach(value => {
+                if (value === true) likeCount++;
+            });
+            console.log(`Likes found: ${likeCount}`);
+            document.getElementById('likesCount').textContent = `Likes: ${likeCount}`;
+        } else {
+            console.log('No likes data found for this game.');
+            document.getElementById('likesCount').textContent = "Likes: 0";
+        }
+    } catch (error) {
+        console.error('Error fetching likes:', error);
+        // Assuming showToast is a function to display messages to the user
+        showToast('Failed to fetch likes.');
     }
-  } catch (error) {
-    console.error('Error fetching likes:', error);
-  }
 }
 
 
