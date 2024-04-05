@@ -4176,7 +4176,6 @@ function isUserSignedIn() {
     return !!firebase.auth().currentUser;
 }
 
-
 async function handleLikeClick() {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to like.');
@@ -4187,26 +4186,19 @@ async function handleLikeClick() {
     const likesRef = firestore.collection('likes').doc(gameId);
 
     try {
+        // Fetch the current likes document
         const doc = await likesRef.get();
-        let likes = {};
-        if (doc.exists) {
-            likes = doc.data();
+
+        // Toggle the like status based on the current state
+        if (doc.exists && doc.data()[userId]) {
+            // If the user has already liked the game, remove their like
+            await likesRef.update({ [userId]: firebase.firestore.FieldValue.delete() });
+            showToast('Like removed.');
+        } else {
+            // If the user hasn't liked the game yet, add their like
+            await likesRef.update({ [userId]: true });
+            showToast('Like added.');
         }
-
-        // Check if the user has already liked the game and toggle the like status
-  if (likes[userId]) {
-      // If the user has liked, unlike by removing the user's uid from the likes object
-      await likesRef.update({ [userId]: firebase.firestore.FieldValue.delete() });
-      showToast('Like removed.');
-  } else {
-      // If the user hasn't liked yet, add their uid to the likes object with a value of true
-      await likesRef.update({ [userId]: true });
-      showToast('Like added.');
-  }
-
-
-        // Update the document with the new likes object
-        await likesRef.update(likes);
 
         // Refresh the displayed likes
         fetchAndDisplayLikes(gameId);
@@ -4215,6 +4207,7 @@ async function handleLikeClick() {
         showToast('Failed to update like status.');
     }
 }
+
 
 
 
