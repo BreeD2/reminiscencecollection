@@ -4153,10 +4153,12 @@
       measurementId: "G-3B8XEPCE0T"
     };
 
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      const auth = firebase.auth();
-      const storage = firebase.storage();
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const storage = firebase.storage();
+    const firestore = firebase.firestore();
+    const db = firebase.firestore();
 
       // Define the logoutUser function
       function logoutUser() {
@@ -4182,7 +4184,7 @@
     }
 }
 
-const userId = firebase.auth().currentUser?.uid; // Get the current user's ID
+
 
   // Update user profile
   document.getElementById('updateProfileBtn').addEventListener('click', async () => {
@@ -4262,6 +4264,15 @@ const userId = firebase.auth().currentUser?.uid; // Get the current user's ID
       });
     }
   });
+  auth.onAuthStateChanged(user => {
+  if (user) {
+    const userId = user.uid; // Now you can be sure user is available
+    // Use userId here for operations that require authentication
+  } else {
+    // Handle not authenticated scenario
+  }
+});
+
 
   // Fetch and display user activities based on the selected filter
   document.getElementById('filterActivityBtn').addEventListener('click', () => {
