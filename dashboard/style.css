@@ -4487,3 +4487,71 @@ box-sizing: border-box;
  font-size: 16px; /* Increase font size */
  margin: 10px
 }
+
+#changePasswordBtn {
+  max-width: 400px; /* Make the button take up the full width */
+  padding: 10px; /* Add padding inside the button */
+  background-color: #007bff; /* Use a blue background */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-radius: 4px; /* Round the corners of the button */
+  cursor: pointer; /* Change mouse cursor to indicate clickable */
+  font-size: 16px; /* Increase font size */
+  margin: 10px
+}
+
+#updateEmailBtn {
+  max-width: 400px; /* Make the button take up the full width */
+  padding: 10px; /* Add padding inside the button */
+  background-color: #007bff; /* Use a blue background */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-radius: 4px; /* Round the corners of the button */
+  cursor: pointer; /* Change mouse cursor to indicate clickable */
+  font-size: 16px; /* Increase font size */
+  margin: 10px
+}
+
+#updatePrivacyBtn {
+  max-width: 400px; /* Make the button take up the full width */
+  padding: 10px; /* Add padding inside the button */
+  background-color: #007bff; /* Use a blue background */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-radius: 4px; /* Round the corners of the button */
+  cursor: pointer; /* Change mouse cursor to indicate clickable */
+  font-size: 16px; /* Increase font size */
+  margin: 10px;
+  width: 80%;
+}
+
+#deleteAccountBtn {
+  max-width: 400px; /* Make the button take up the full width */
+  padding: 10px; /* Add padding inside the button */
+  background-color: #007bff; /* Use a blue background */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-radius: 4px; /* Round the corners of the button */
+  cursor: pointer; /* Change mouse cursor to indicate clickable */
+  font-size: 16px; /* Increase font size */
+  margin: 10px;
+  width: 80%;
+}
+
+#filterActivityBtn {
+  max-width: 400px; /* Make the button take up the full width */;
+  width: 80%;
+  padding: 10px; /* Add padding inside the button */
+  background-color: #007bff; /* Use a blue background */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-radius: 4px; /* Round the corners of the button */
+  cursor: pointer; /* Change mouse cursor to indicate clickable */
+  font-size: 16px; /* Increase font size */
+  margin: 10px
+}
+
+#emailInput {
+  width: 40%;
+    height: 40px;
+}
