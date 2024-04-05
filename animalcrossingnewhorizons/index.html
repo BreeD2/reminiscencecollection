@@ -4177,23 +4177,48 @@ function isUserSignedIn() {
 }
 
 
-
-
-
 async function handleLikeClick() {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to like.');
         return;
     }
+
+    const userId = firebase.auth().currentUser.uid;
     const likesRef = firestore.collection('likes').doc(gameId);
-    const doc = await likesRef.get();
-    let likes = doc.exists ? doc.data().likes || {} : {};
-    likes[auth.currentUser.uid] = !likes[auth.currentUser.uid]; // Toggle like
-    await likesRef.set({ likes }, { merge: true }).then(() => {
-        fetchAndDisplayLikes(gameId); // Refresh likes count after update
-    });
-    showToast('Like updated successfully.');
+
+    try {
+        const doc = await likesRef.get();
+        let likes = {};
+        if (doc.exists) {
+            likes = doc.data();
+        }
+
+        // Check if the user has already liked the game and toggle the like status
+  if (likes[userId]) {
+      // If the user has liked, unlike by removing the user's uid from the likes object
+      await likesRef.update({ [userId]: firebase.firestore.FieldValue.delete() });
+      showToast('Like removed.');
+  } else {
+      // If the user hasn't liked yet, add their uid to the likes object with a value of true
+      await likesRef.update({ [userId]: true });
+      showToast('Like added.');
+  }
+
+
+        // Update the document with the new likes object
+        await likesRef.update(likes);
+
+        // Refresh the displayed likes
+        fetchAndDisplayLikes(gameId);
+    } catch (error) {
+        console.error("Error toggling like status: ", error);
+        showToast('Failed to update like status.');
+    }
 }
+
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
   const gameId = "animalcrossingnewhorizons"; // Make sure this is set correctly
   fetchAndDisplayLikes(gameId);
