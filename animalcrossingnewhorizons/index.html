@@ -94,34 +94,35 @@
    <div id="searchResults2" class="search-results2"></div>
 
 
-<aside class="sidebar">
-    <h3>All Games</h3>
-<input type="text" placeholder="Search..">
-<br>
-<label class="custom-checkbox">
-<input type="checkbox" id="filterCheckbox" hidden>
-<span class="checkmark"></span><div class=sort>Sort</div>
-</label>
+   <aside class="sidebar">
+       <h3>All Games</h3>
+   <input type="text" placeholder="Search..">
+   <br>
+   <label class="custom-checkbox">
+   <input type="checkbox" id="filterCheckbox" hidden>
+   <span class="checkmark"></span><div class=sort>Sort</div>
+   </label>
 
 
-<div id="filterOptions" style="display: none;">
-    <select id="mainCategory" onchange="updateSubCategory()">
-        <option value="" disabled selected hidden>Choose a category</option>
-        <option value="publisher">Publisher</option>
-        <option value="developer">Developer</option>
-        <option value="series">Series</option>
-        <option value="platform">Platform</option>
-        <option value="releasedDate">Released Dates</option>
-        <option value="genre">Genre</option>
-        <option value="mode">Mode</option>
-    </select>
+   <div id="filterOptions" style="display: none;">
+       <select id="mainCategory" onchange="updateSubCategory()">
+           <option value="" disabled selected hidden>Choose a category</option>
+           <option value="publisher">Publisher</option>
+           <option value="developer">Developer</option>
+           <option value="series">Series</option>
+           <option value="platform">Platform</option>
+           <option value="releasedDate">Released Dates</option>
+           <option value="genre">Genre</option>
+           <option value="mode">Mode</option>
+       </select>
 
-    <select id="subCategory" onchange="sortAndDisplayGames()">
-        <option value="" disabled selected hidden>Select a subcategory</option>
-        <!-- Additional options will be dynamically filled based on the main category selection -->
-    </select>
-      <div id="games-list">Choose from the categories above</div>
-</div>
+       <select id="subCategory" onchange="sortAndDisplayGames()">
+           <option value="" disabled selected hidden>Select a subcategory</option>
+           <!-- Additional options will be dynamically filled based on the main category selection -->
+       </select>
+         <div id="games-list">Choose from the categories above</div>
+   </div>
+
 
 
 
@@ -306,17 +307,17 @@
      </div>
  </aside>
 
- <!-- Sidebar Toggle Button -->
- <!-- Sidebar Toggle Button -->
- <div class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle Sidebar">
-   <i class="fa fa-gamepad"></i><br>
- </div>
 
- <div id="searchResults">
+   <!-- Sidebar Toggle Button -->
+   <div class="menu-toggle" aria-label="Toggle Sidebar">
+     <i class="fa fa-gamepad"></i><br>
+   </div>
+
+   <div id="searchResults">
 
 
 
-     </div>
+       </div>
 
 
 
@@ -3116,93 +3117,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-
 <script>
   document.querySelector('.menu-toggle').addEventListener('click', function() {
-      var sidebar = document.getElementById('sidebar');
-      var content = document.getElementById('main-content');
-      var isSmallScreen = window.innerWidth < 768;
-
-      // Toggle sidebar visibility and adjust content size
-      if (sidebar.style.left === '-250px') {
-          sidebar.style.left = '0px';
-          content.classList.add(isSmallScreen ? 'small-screen' : 'big-screen');
-      } else {
-          sidebar.style.left = '-250px';
-          content.classList.remove(isSmallScreen ? 'small-screen' : 'big-screen');
-      }
-  });
+    document.body.classList.toggle('sidebar-visible');
+});
 
 </script>
-    <script>
-      document.querySelector('.menu-toggle').addEventListener('click', function() {
-        document.body.classList.toggle('sidebar-visible');
-    });
-
-    </script>
 
 
 
-    <script>
-        function toggleSidebar() {
-            var sidebar = document.querySelector('.sidebar');
-            var mainContent = document.querySelector('main');
 
-            if (sidebar.style.left === '0px') {
-                sidebar.style.left = '-250px';
-                mainContent.style.marginLeft = '0px';
-            } else {
-                sidebar.style.left = '0px';
-                mainContent.style.marginLeft = '250px';
-            }
-        }
-
-        function liveSearch(query) {
-            var searchResultsContainer = document.getElementById('searchResults');
-            searchResultsContainer.innerHTML = ''; // Clear previous results
-
-            // Simulate fetching results from a server (Replace with actual data retrieval)
-            var simulatedResults = [
-                'Game 1 Result',
-                'Game 2 Result',
-                'Another Game Result',
-                'Yet Another Result',
-                'Example Game Result'
-            ];
-
-            // Filter results based on the query
-            var filteredResults = simulatedResults.filter(function (result) {
-                return result.toLowerCase().includes(query.toLowerCase());
-            });
-
-            // Display filtered results in the sidebar
-            filteredResults.forEach(function (result) {
-                var listItem = document.createElement('li');
-                listItem.textContent = result;
-                searchResultsContainer.appendChild(listItem);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            // Your existing JavaScript code for modal functionality or other features
-            // ...
-        });
-    </script>
-
-
-
-    <!-- JavaScript for Sidebar Toggle and Game Details (unchanged from the previous example) -->
-    <script>
-        function toggleSidebar() {
-            var sidebar = document.querySelector('.sidebar');
-            sidebar.style.width = sidebar.style.width === '250px' ? '0' : '250px';
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            // Your existing JavaScript code for modal functionality
-            // ...
-        });
-    </script>
 
     <script>
         function toggleDropdown() {
@@ -3342,130 +3266,17 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 </script>
 
-<script>
-    function toggleSidebar() {
-        var sidebar = document.querySelector('.sidebar');
-        var mainContent = document.querySelector('main');
-
-        if (sidebar.style.left === '0px') {
-            sidebar.style.left = '-250px';
-            mainContent.style.marginLeft = '0px';
-        } else {
-            sidebar.style.left = '0px';
-            mainContent.style.marginLeft = '250px';
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        // Your existing JavaScript code for modal functionality
-        // ...
-    });
-</script>
-
-<!-- JavaScript for Sidebar Toggle and Live Search -->
-<script>
-    function toggleSidebar() {
-        var sidebar = document.querySelector('.sidebar');
-        var mainContent = document.querySelector('main');
-
-        if (sidebar.style.left === '0px') {
-            sidebar.style.left = '-250px';
-            mainContent.style.marginLeft = '0px';
-        } else {
-            sidebar.style.left = '0px';
-            mainContent.style.marginLeft = '250px';
-        }
-    }
-
-    async function liveSearch(query) {
-        var searchResultsContainer = document.getElementById('searchResults');
-        searchResultsContainer.innerHTML = ''; // Clear previous results
-
-        try {
-            // Simulate fetching results from a server (Replace with actual data retrieval)
-            var response = await fetch(`https://api.example.com/search?q=${encodeURIComponent(query)}`);
-            var serverResults = await response.json();
-
-            // Display server results in the sidebar
-            serverResults.forEach(function (result) {
-                var listItem = document.createElement('li');
-                listItem.textContent = result;
-                searchResultsContainer.appendChild(listItem);
-            });
-        } catch (error) {
-            console.error('Error fetching results:', error);
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        // Your existing JavaScript code for modal functionality or other features
-        // ...
-    });
-</script>
 
 <script>
-    function toggleSidebar() {
-        var sidebar = document.querySelector('.sidebar');
-        var mainContent = document.querySelector('main');
-
-        if (sidebar.style.left === '0px') {
-            sidebar.style.left = '-250px';
-            mainContent.style.marginLeft = '0px';
-        } else {
-            sidebar.style.left = '0px';
-            mainContent.style.marginLeft = '250px';
-        }
+document.getElementById('filterCheckbox').addEventListener('change', function() {
+    var filterOptionsDiv = document.getElementById('filterOptions');
+    if (this.checked) {
+        filterOptionsDiv.style.display = 'block';
+    } else {
+        filterOptionsDiv.style.display = 'none';
     }
-
-    async function liveSearch(query) {
-        var searchResultsContainer = document.getElementById('searchResults');
-        var gameListContainer = document.getElementById('game-list2');
-        searchResultsContainer.innerHTML = ''; // Clear previous results
-
-        try {
-            // Simulate fetching results from a server (Replace with actual data retrieval)
-            var response = await fetch(`https://api.example.com/search?q=${encodeURIComponent(query)}`);
-            var serverResults = await response.json();
-
-            // Display server results in the search results list
-            serverResults.forEach(function (result) {
-                var listItem = document.createElement('li');
-                listItem.textContent = result;
-                searchResultsContainer.appendChild(listItem);
-            });
-
-            // Update game list based on the query
-            gameListContainer.innerHTML = ''; // Clear previous game list
-
-            // Simulate updating the game list based on the search query
-            // Replace with your logic to filter and update game list
-            var filteredGames = [
-                'Animal Crossing: New Horizons',
-                'Animal Crossing: New Leaf',
-                'Assassins Creed Odyssey',
-                'Yet Another Game Title',
-                'Example Game Title'
-            ];
-
-            // Display filtered games in the game list
-            filteredGames.forEach(function (game) {
-                var gameLink = document.createElement('a');
-                gameLink.href = '#'; // Replace with actual link or action
-                gameLink.setAttribute('data-game', game);
-                gameLink.textContent = game;
-                gameListContainer.appendChild(gameLink);
-            });
-        } catch (error) {
-            console.error('Error fetching results:', error);
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        // Your existing JavaScript code for modal functionality or other features
-        // ...
-    });
+});
 </script>
-
 
 
 <script>
