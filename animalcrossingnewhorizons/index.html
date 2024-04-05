@@ -4194,6 +4194,10 @@ async function handleLikeClick() {
     });
     showToast('Like updated successfully.');
 }
+document.addEventListener('DOMContentLoaded', function() {
+  const gameId = "animalcrossingnewhorizons"; // Make sure this is set correctly
+  fetchAndDisplayLikes(gameId);
+});
 
 
 
@@ -4559,24 +4563,25 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('replyText').value = ''; // Optionally clear the textarea
     });
 });
-async function fetchAndDisplayLikes(gameId) {
+async function fetchAndDisplayLikes(itemId) {
   try {
-    const likesDoc = await firestore.collection('likes').doc(gameId).get();
-    if (likesDoc.exists) {
-      const likesData = likesDoc.data();
+    const docRef = await firestore.collection('likes').doc(itemId).get();
+    if (docRef.exists) {
+      const data = docRef.data();
       let likeCount = 0;
-      for (const key in likesData) {
-        if (likesData[key] === true) likeCount++;
-      }
-      document.getElementById('likesCount').textContent = `Likes: ${likeCount}`; // Update the correct element
+      Object.values(data).forEach(value => {
+        if (value === true) likeCount++;
+      });
+      document.getElementById('likesCount').textContent = `Likes: ${likeCount}`;
     } else {
-      document.getElementById('likesCount').textContent = "Likes: 0"; // Update the correct element
+      document.getElementById('likesCount').textContent = "Likes: 0";
     }
   } catch (error) {
     console.error('Error fetching likes:', error);
-    showToast('Failed to fetch likes.');
   }
 }
+
+
 
 
 
