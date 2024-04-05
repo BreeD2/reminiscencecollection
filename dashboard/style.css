@@ -4447,114 +4447,160 @@ form input[type="text"] {
  #logoutLink { display: none; }
 
  #userDescriptionInput {
-     font-family: arial;
-     min-width: 400px;
-    width:60%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    font-size: 14px;
-    border-radius:5px;
+   min-width: 200px;
+   width:80%;
+margin: 10px;
+   background-color: white;
+   padding: 8px;
+   border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+   border:none;
+   font-family: arial;
 
-padding: 12px 20px;
-margin: 8px 0;
-display: inline-block;
-border: 1px solid #ccc;
-box-sizing: border-box;
+ }
 
+ #newPasswordInput {
+   min-width: 200px;
+   width:80%;
+margin: 10px;
+   background-color: white;
+   padding: 8px;
+   border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+   border:none;
+   font-family: arial;
  }
 
  #updateProfileBtn {
-  max-width: 400px; /* Make the button take up the full width */
-   padding: 10px; /* Add padding inside the button */
+
+   width:80%;
+   background-color: white;
+   padding: 8px;
+   border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+   font-family: arial;
    background-color: #007bff; /* Use a blue background */
    color: white; /* White text color */
-   border: none; /* No border */
-   border-radius: 4px; /* Round the corners of the button */
-   cursor: pointer; /* Change mouse cursor to indicate clickable */
    font-size: 16px; /* Increase font size */
+   border: none;
+   margin: 10px
  }
 #saveDescriptionBtn {
 
- max-width: 400px; /* Make the button take up the full width */
- padding: 10px; /* Add padding inside the button */
- background-color: #007bff; /* Use a blue background */
- color: white; /* White text color */
- border: none; /* No border */
- border-radius: 4px; /* Round the corners of the button */
- cursor: pointer; /* Change mouse cursor to indicate clickable */
- font-size: 16px; /* Increase font size */
- margin: 10px
+
+  width:80%;
+  background-color: white;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-family: arial;
+  background-color: #007bff; /* Use a blue background */
+  color: white; /* White text color */
+  font-size: 16px; /* Increase font size */
+  border: none;
+  margin: 10px
 }
 
 #changePasswordBtn {
-  max-width: 400px; /* Make the button take up the full width */
-  padding: 10px; /* Add padding inside the button */
+
+  width:80%;
+  background-color: white;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-family: arial;
   background-color: #007bff; /* Use a blue background */
   color: white; /* White text color */
-  border: none; /* No border */
-  border-radius: 4px; /* Round the corners of the button */
-  cursor: pointer; /* Change mouse cursor to indicate clickable */
   font-size: 16px; /* Increase font size */
-  margin: 10px
+  border: none;
+  margin: 10px;
 }
 
 #updateEmailBtn {
-  max-width: 400px; /* Make the button take up the full width */
-  padding: 10px; /* Add padding inside the button */
+
+  width:80%;
+  background-color: white;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-family: arial;
   background-color: #007bff; /* Use a blue background */
   color: white; /* White text color */
-  border: none; /* No border */
-  border-radius: 4px; /* Round the corners of the button */
-  cursor: pointer; /* Change mouse cursor to indicate clickable */
   font-size: 16px; /* Increase font size */
-  margin: 10px
+  border: none;
+  margin: 10px;
 }
 
 #updatePrivacyBtn {
-  max-width: 400px; /* Make the button take up the full width */
-  padding: 10px; /* Add padding inside the button */
+
+
+  background-color: white;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-family: arial;
   background-color: #007bff; /* Use a blue background */
   color: white; /* White text color */
-  border: none; /* No border */
-  border-radius: 4px; /* Round the corners of the button */
-  cursor: pointer; /* Change mouse cursor to indicate clickable */
   font-size: 16px; /* Increase font size */
+  border: none;
+  width:80%;
   margin: 10px;
-  width: 80%;
 }
 
 #deleteAccountBtn {
-  max-width: 400px; /* Make the button take up the full width */
-  padding: 10px; /* Add padding inside the button */
+
+  width:80%;
+  background-color: white;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-family: arial;
   background-color: #007bff; /* Use a blue background */
   color: white; /* White text color */
-  border: none; /* No border */
-  border-radius: 4px; /* Round the corners of the button */
-  cursor: pointer; /* Change mouse cursor to indicate clickable */
   font-size: 16px; /* Increase font size */
-  margin: 10px;
-  width: 80%;
+  border: none;
+    margin: 10px
 }
 
 #filterActivityBtn {
 
-  width: 80%;
-  padding: 10px; /* Add padding inside the button */
+  width:80%;
+  background-color: white;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-family: arial;
   background-color: #007bff; /* Use a blue background */
   color: white; /* White text color */
-  border: none; /* No border */
-  border-radius: 4px; /* Round the corners of the button */
-  cursor: pointer; /* Change mouse cursor to indicate clickable */
   font-size: 16px; /* Increase font size */
-  margin: 10px
+  border: none;
+    margin: 10px
+}
+#usernameInput {
+  width:80%;
+  background-color: white;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-family: arial;
+  background-color: white; /* Use a blue background */
+  color: white; /* White text color */
+  font-size: 16px; /* Increase font size */
+  border: none;
+    margin: 10px
 }
 
 #emailInput {
-  max-width: 400px; /* Make the button take up the full width */;
-    height: 40px;
+  width:80%;
+  background-color: white;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-family: arial;
+  color: white; /* White text color */
+  font-size: 16px; /* Increase font size */
+  border: none;
+  margin: 10px
 }
 
 #userDescriptionDisplay {
@@ -4567,7 +4613,8 @@ box-sizing: border-box;
     border-radius: 4px; /* Round the corners of the button */
     cursor: pointer; /* Change mouse cursor to indicate clickable */
     font-size: 16px; /* Increase font size */
-    margin: 10px
+    margin: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 #emailDisplay {
@@ -4579,5 +4626,50 @@ box-sizing: border-box;
   border-radius: 4px; /* Round the corners of the button */
   cursor: pointer; /* Change mouse cursor to indicate clickable */
   font-size: 16px; /* Increase font size */
-  margin: 10px
+  margin: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#privacySetting {
+  width: 80%;
+  padding: 10px; /* Add padding inside the button */
+  background-color: white; /* Use a blue background */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-radius: 4px; /* Round the corners of the button */
+  cursor: pointer; /* Change mouse cursor to indicate clickable */
+  font-size: 16px; /* Increase font size */
+  margin: 10px;
+  color:grey;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+#activityFilter {
+  width: 80%;
+  padding: 10px; /* Add padding inside the button */
+  background-color: white; /* Use a blue background */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-radius: 4px; /* Round the corners of the button */
+  cursor: pointer; /* Change mouse cursor to indicate clickable */
+  font-size: 16px; /* Increase font size */
+  margin: 10px;
+  color:grey;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+#userActivity > h3 {
+  width: 80%;
+  padding: 10px; /* Add padding inside the button */
+  background-color: #007bff; /* Use a blue background */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-radius: 4px; /* Round the corners of the button */
+  cursor: pointer; /* Change mouse cursor to indicate clickable */
+  font-size: 16px; /* Increase font size */
+  margin: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+body > center > div > h1 {
+  margin-top: 100px;
+  line-height: 50px
 }

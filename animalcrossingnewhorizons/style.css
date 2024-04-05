@@ -4545,15 +4545,3 @@ body.dark-mode {
     max-width: 100%; /* Ensure images are responsive */
     margin: 0 auto; /* Center images if alone on a line */
 }
-
-/* Spotlight styling */
-.spotlight {
-    display: none; /* Hidden by default, shown via JS in dark mode */
-    position: fixed;
-    width: 200px; /* Adjust the size of the spotlight */
-    height: 200px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 70%);
-    pointer-events: none; /* Allows interaction with elements under the spotlight */
-    z-index: 10; /* Ensure it's above other content but below modal dialogs if any */
-}
