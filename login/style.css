@@ -4556,23 +4556,23 @@ color:black;
 list-style: none
  }
 
-#firebaseui-auth-container > div > div.firebaseui-card-content > form > ul {
-  list-style: none
-}
-#firebaseui-auth-container > div > form > div.firebaseui-card-header > h1 {
-  font-size: 15px
-}
 
-#firebaseui-auth-container > div > form > div.firebaseui-card-actions > div > button.firebaseui-id-secondary-link.firebaseui-button.mdl-button.mdl-js-button.mdl-button--primary {
-    font-size: 15px
+
+#firebaseui-auth-container > div > div.firebaseui-card-content > form > ul > li:nth-child(1) > button > span.firebaseui-idp-text.firebaseui-idp-text-long {
+  max-width: 400px;
+
 }
-#firebaseui-auth-container > div > form > div.firebaseui-card-actions > div > button.firebaseui-id-submit.firebaseui-button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored {
-    font-size: 15px
+#firebaseui-auth-container > div > div.firebaseui-card-content > form > ul {
+  max-width:500px;
+  margin-right:100px
 }
-#firebaseui-auth-container > div > form > div.firebaseui-card-content > div > div.firebaseui-textfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.is-upgraded > input {
-  width:100%;
-  padding: 5px
+#firebaseui-auth-container > div > div.firebaseui-card-content > form > ul > li:nth-child(1) > button {
+
+  margin-left: 50px;
+  max-width: 400px
 }
-#firebaseui-auth-container > div > form > div.firebaseui-card-footer > ul {
-  list-style: none
+#firebaseui-auth-container > div > div.firebaseui-card-content > form > ul > li:nth-child(2) > button {
+
+  margin-left: 50px;
+  max-width: 400px
 }
