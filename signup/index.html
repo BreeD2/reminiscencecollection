@@ -338,9 +338,10 @@
 
         <div id="main-content" class="content">
           <div id="signup-container">
-              <h2>Sign Up</h2>
+
               <form id="signup-form">
                   <div>
+                    <div class="signup">Sign Up</div>
                       <label for="signup-email">Email:</label>
                       <input type="email" id="signup-email" required placeholder="Enter your email">
                   </div>
@@ -4150,29 +4151,48 @@ document.getElementById('searchInput2').addEventListener('input', searchFunction
       const db = firebase.firestore();
 
 
-      // Correctly selecting the button by its ID 'signupBtn'
-     document.getElementById('signupBtn').addEventListener('click', async (e) => {
-       e.preventDefault(); // Prevent form submission if using a form button
+      // Define the showToast function for displaying messages
+      function showToast(message, isSuccess = true) {
+        const toast = document.createElement('div');
+        toast.textContent = message;
+        toast.style.position = 'fixed';
+        toast.style.bottom = '20px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.backgroundColor = isSuccess ? 'green' : 'red';
+        toast.style.color = 'white';
+        toast.style.padding = '10px';
+        toast.style.borderRadius = '5px';
+        toast.style.zIndex = '1000';
+        document.body.appendChild(toast);
+        setTimeout(() => document.body.removeChild(toast), 3000);
+      }
 
-      const email = document.getElementById('signup-email').value;
-      const password = document.getElementById('signup-password').value;
+      document.getElementById('signupBtn').addEventListener('click', async (e) => {
+        e.preventDefault();
 
-      try {
-          const userCredential = await firebase.auth().createUserWithEmailAndPassword(auth, email, password);
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+
+        try {
+          const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
           console.log('User created:', userCredential.user);
 
           // Send an email verification
           await firebase.auth().sendEmailVerification(userCredential.user);
-          console.log('Verification email sent.');
-          alert('Please verify your email. Check your inbox.');
+          showToast('Verification email sent. Please check your inbox.', true);
 
-          // Optionally ask for additional info here or redirect to another page
+          // Optionally redirect to another page
           window.location.href = '..//dashboard/index.html'; // Update with the correct path
-      } catch (error) {
+        } catch (error) {
           console.error('Signup error:', error);
-          document.getElementById('signup-error').innerText = error.message;
-      }
-  });
+          if (error.code === 'auth/email-already-in-use') {
+            showToast('This email is already in use. Please log in or reset your password.', false);
+          } else {
+            showToast('Signup error: ' + error.message, false);
+          }
+        }
+      });
 
 
         auth.onAuthStateChanged(async user => {

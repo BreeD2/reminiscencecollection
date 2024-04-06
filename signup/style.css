@@ -25,6 +25,7 @@ body {
   font-size: 17px;
 }
 
+
 .active {
   background-color: black;
   color: white;
@@ -4501,3 +4502,13 @@ form input[type="text"] {
    margin-bottom: 15px;
    color: #cc0000;
  }
+
+
+.signup {
+  font-size:  30px;
+  margin-bottom: 20px
+}
+
+#signupBtn {
+    margin-top: 20px
+}
