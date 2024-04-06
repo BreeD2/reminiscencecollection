@@ -4456,6 +4456,7 @@ margin: 10px;
    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
    border:none;
    font-family: arial;
+   font-size: 16px; /* Increase font size */
 
  }
 
@@ -4469,6 +4470,7 @@ margin: 10px;
    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
    border:none;
    font-family: arial;
+   font-size: 16px; /* Increase font size */
  }
 
  #updateProfileBtn {
@@ -4578,13 +4580,13 @@ margin: 10px;
 }
 #usernameInput {
   width:80%;
-  background-color: white;
+  background-color: n;
   padding: 8px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   font-family: arial;
   background-color: white; /* Use a blue background */
-  color: white; /* White text color */
+  color: gray; /* White text color */
   font-size: 16px; /* Increase font size */
   border: none;
     margin: 10px
@@ -4597,7 +4599,7 @@ margin: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   font-family: arial;
-  color: white; /* White text color */
+  color: gray; /* White text color */
   font-size: 16px; /* Increase font size */
   border: none;
   margin: 10px

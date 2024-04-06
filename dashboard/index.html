@@ -376,7 +376,11 @@
 
 <div id="userActivity">
     <h3>Likes History</h3>
+    <!-- Trigger Button -->
+<button id="showLikedGames">Show Liked Games</button>
     <p id="likesHistory"></p>
+    <!-- Place to Display Liked Games -->
+<div id="likedGamesList"></div>
     <h3>Comments History</h3>
     <p id="commentsHistory"></p>
     <h3>Ratings History</h3>
@@ -4401,6 +4405,44 @@ document.getElementById('filterActivityBtn').addEventListener('click', () => {
   showToast(`Filtering activities by ${filter}. Implementation required.`);
 });
 
+// JavaScript to Fetch and Display Liked Games
+document.getElementById('showLikedGames').addEventListener('click', fetchGamesBasedOnLikes);
+
+async function fetchGamesBasedOnLikes() {
+  // Assume auth.currentUser is available and you have a reference to Firestore
+  const userId = auth.currentUser.uid;
+  const likedGames = await firestore.collection('likes').where('userId', '==', userId).get();
+
+  let gamesHtml = '';
+  likedGames.forEach(doc => {
+    const game = doc.data();
+    gamesHtml += `<p>${game.title}</p>`; // Example: Create a simple list of game titles
+  });
+
+  // Update the DOM
+  document.getElementById('likedGamesList').innerHTML = gamesHtml;
+}
+
+  // Fetch user preferences
+  const userLikesSnapshot = await firestore.collection('userPreferences')
+    .doc(user.uid).collection('likes').get();
+
+  const gameIds = userLikesSnapshot.docs.map(doc => doc.id);
+
+  // Fetch games based on likes
+  const games = await Promise.all(
+    gameIds.map(gameId => firestore.collection('games').doc(gameId).get())
+  );
+
+  // Display games
+  games.forEach(gameDoc => {
+    if (gameDoc.exists) {
+      const gameData = gameDoc.data();
+      console.log('Game:', gameData.title); // Example of displaying game title
+      // Here you can append game details to the HTML
+    }
+  });
+}
       // Handle authentication state changes
       auth.onAuthStateChanged(user => {
         const dropdownContent = document.querySelector('.dropdown-content2');
