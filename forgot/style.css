@@ -4430,7 +4430,7 @@ form input[type="text"] {
 #loginForm button[type="submit"] {
   width: 100%; /* Make the button take up the full width */
   padding: 10px; /* Add padding inside the button */
-  background-color: #007bff; /* Use a blue background */
+  background-color: dodgerblue; /* Use a blue background */
   color: white; /* White text color */
   border: none; /* No border */
   border-radius: 4px; /* Round the corners of the button */
@@ -4445,3 +4445,27 @@ form input[type="text"] {
 #loader { display: none; }
  #userDropdown { display: none; }
  #logoutLink { display: none; }
+
+ #forgotPasswordForm {
+   max-width: 300px;
+   margin: 0 auto;
+   padding: 20px;
+   text-align: center;
+   margin-top: 100px;
+   border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ }
+
+ #forgotPasswordForm input,
+ #forgotPasswordForm button {
+   width: 100%;
+   padding: 10px;
+   margin-top: 20px;
+
+ }
+ .forgottitle {
+   font-size:25px;
+   font-family:arial;
+   margin-top: 20px;
+
+ }
