@@ -4409,94 +4409,52 @@ document.getElementById('filterActivityBtn').addEventListener('click', () => {
 document.getElementById('showLikedGames').addEventListener('click', fetchGamesBasedOnLikes);
 
 async function fetchGamesBasedOnLikes() {
-  // Assume auth.currentUser is available and you have a reference to Firestore
-  const userId = auth.currentUser.uid;
-  const likedGames = await firestore.collection('likes').where('userId', '==', userId).get();
+   const user = auth.currentUser;
+   if (!user) {
+     console.log('No user logged in');
+     return;
+   }
 
-  let gamesHtml = '';
-  likedGames.forEach(doc => {
-    const game = doc.data();
-    gamesHtml += `<p>${game.title}</p>`; // Example: Create a simple list of game titles
-  });
+   const userLikesRef = firestore.collection('userPreferences').doc(user.uid).collection('likes');
+   const likesSnapshot = await userLikesRef.get();
 
-  // Update the DOM
-  document.getElementById('likedGamesList').innerHTML = gamesHtml;
-}
-async function fetchUserLikedGames() {
-    // Access the currently signed-in user
-    const user = firebase.auth().currentUser;
+   let gamesHtml = '';
 
-    if (!user) {
-        console.log('No user logged in');
-        return;
-    }
+   for (const likeDoc of likesSnapshot.docs) {
+     const gameId = likeDoc.id;
+     const gameDoc = await firestore.collection('games').doc(gameId).get();
+     if (gameDoc.exists) {
+       const gameData = gameDoc.data();
+       gamesHtml += `<p>${gameData.title}</p>`;
 
-    // Proceed with fetching user preferences and games
-    const userLikesSnapshot = await firestore.collection('userPreferences')
-        .doc(user.uid).collection('likes').get();
+       // Fetch and display comments
+       const commentSnapshot = await firestore.collection('comments').where('userId', '==', user.uid).where('gameId', '==', gameId).get();
+       commentSnapshot.forEach(doc => {
+         const commentData = doc.data();
+         gamesHtml += `<div>Comment: ${commentData.comment}</div>`;
+       });
 
-    const gameIds = userLikesSnapshot.docs.map(doc => doc.id);
+       // Fetch and display ratings
+       const ratingSnapshot = await firestore.collection('ratings').where('userId', '==', user.uid).where('gameId', '==', gameId).get();
+       ratingSnapshot.forEach(doc => {
+         const ratingData = doc.data();
+         gamesHtml += `<div>Rating: ${ratingData.rating}</div>`;
+       });
+     }
+   }
 
-    const games = await Promise.all(
-        gameIds.map(gameId => firestore.collection('games').doc(gameId).get())
-    );
+   document.getElementById('likedGamesList').innerHTML = gamesHtml;
+ }
 
-    games.forEach(gameDoc => {
-        if (gameDoc.exists) {
-            const gameData = gameDoc.data();
-            console.log(gameData.title); // Example: Log the title of each liked game
-            // Append game details to the DOM here
-        }
-    });
-}
-
-// Ensure Firebase Auth module is correctly initialized before calling this function
-fetchUserLikedGames().catch(console.error);
-
-// Example function to fetch games liked by the user and their interactions
-async function fetchUserInteractions() {
-    const user = firebase.auth().currentUser;
-    if (!user) {
-        console.log('No user logged in');
-        return;
-    }
-
-    // Fetch liked games
-    const likesSnapshot = await firestore.collection('userPreferences')
-        .doc(user.uid).collection('likes').get();
-
-    // For each liked game, fetch game details, comments, and ratings
-    for (const likeDoc of likesSnapshot.docs) {
-        const gameId = likeDoc.id;
-        const gameRef = firestore.collection('games').doc(gameId);
-        const gameDoc = await gameRef.get();
-
-        if (gameDoc.exists) {
-            const gameData = gameDoc.data();
-            console.log('Liked game:', gameData.title);
-            // Display game details (as previously)
-
-            // Fetch and display the user's comment on the game
-            const commentSnapshot = await firestore.collection('comments')
-                .where('userId', '==', user.uid).where('gameId', '==', gameId).get();
-            commentSnapshot.forEach(doc => {
-                console.log('Comment:', doc.data().comment);
-                // Display comment
-            });
-
-            // Fetch and display the user's rating on the game
-            const ratingSnapshot = await firestore.collection('ratings')
-                .where('userId', '==', user.uid).where('gameId', '==', gameId).get();
-            ratingSnapshot.forEach(doc => {
-                console.log('Rating:', doc.data().rating);
-                // Display rating
-            });
-        }
-    }
-}
+ // Call the function after ensuring the user is authenticated
+ auth.onAuthStateChanged((user) => {
+   if (user) {
+     fetchGamesBasedOnLikes().catch(console.error);
+   }
+ });
 
 // Call this function where appropriate, for example, after user login
-fetchUserInteractions().catch(console.error);
+fetchGamesBasedOnLikes().catch(console.error);
 
 
       // Handle authentication state changes
