@@ -4471,9 +4471,73 @@ margin-top: 20px;
   width:100px
 }
 
-.dark-mode #ratingDisplay,.dark-mode  #likesCount, .dark-mode .reply {
+.dark-mode #ratingDisplay,
+.dark-mode #likesCount,
+.dark-mode #commentsList > div > div > div > span,
+.dark-mode #commentsList > div > div > button,
+.dark-mode #commentsList > div > button,
+.dark-mode #cancelReply,
+.dark-mode #sendReply,
+.dark-mode #commentsList > div,
 
-    color: white;
-    background-color:  #222;
+
+{
+  color: white;
+  background-color: #222;
+}
+
+.dark-mode #submitComment {
+  background-color: dimgrey
+}
+
+
+
+#commentsSection > strong {
+  color: black
+}
+
+
+.dark-mode #ratingDisplay,
+.dark-mode #likesCount {
 
 }
+
+
+
+
+
+
+.light-mode #ratingDisplay,
+.light-mode #likesCount,
+.light-mode #commentsList > div > div > div > span,
+.light-mode #commentsList > div > div > button,
+.light-mode #commentsList > div > button,
+.light-mode #cancelReply,
+.light-mode #sendReply,
+.light-mode #commentsList > div,
+
+
+{
+  color: black;
+  background-color: white;
+}
+
+.light-mode #submitComment {
+  background-color: white;
+  color:black
+}
+
+
+
+.light-mode #commentsSection > strong {
+  color: black
+}
+
+
+.light-mode #ratingDisplay,
+.light-mode #likesCount {
+  color: black;
+  background-color: white;
+}
+
+#submitComment
