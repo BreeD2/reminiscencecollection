@@ -4423,16 +4423,34 @@ async function fetchGamesBasedOnLikes() {
   document.getElementById('likedGamesList').innerHTML = gamesHtml;
 }
 
-  // Fetch user preferences
-  const userLikesSnapshot = await firestore.collection('userPreferences')
-    .doc(user.uid).collection('likes').get();
+// Wrap your code in an async function
+async function fetchUserLikedGames() {
+    // Assuming 'user' is already defined and holds the current user's information
+    if (!user) {
+        console.log('No user logged in');
+        return;
+    }
 
-  const gameIds = userLikesSnapshot.docs.map(doc => doc.id);
+    // Fetch user preferences
+    const userLikesSnapshot = await firestore.collection('userPreferences')
+        .doc(user.uid).collection('likes').get();
 
-  // Fetch games based on likes
-  const games = await Promise.all(
-    gameIds.map(gameId => firestore.collection('games').doc(gameId).get())
-  );
+    const gameIds = userLikesSnapshot.docs.map(doc => doc.id);
+
+    // Fetch games based on likes
+    const games = await Promise.all(
+        gameIds.map(gameId => firestore.collection('games').doc(gameId).get())
+    );
+
+    // Process games data here
+    games.forEach(doc => {
+        if (doc.exists) {
+            const gameData = doc.data();
+            console.log(gameData.title); // Example: Log the title of each liked game
+            // You can also update the DOM here based on fetched games
+        }
+    });
+}
 
   // Display games
   games.forEach(gameDoc => {
