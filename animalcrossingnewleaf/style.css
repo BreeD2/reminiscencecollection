@@ -4471,8 +4471,7 @@ margin-top: 20px;
   width:100px
 }
 
-.dark-mode #ratingDisplay,
-.dark-mode #likesCount,
+
 .dark-mode #commentsList > div > div > div > span,
 .dark-mode #commentsList > div > div > button,
 .dark-mode #commentsList > div > button,
@@ -4490,6 +4489,16 @@ margin-top: 20px;
   background-color: dimgrey
 }
 
+.dark-mode #likesCount {
+  color: white;
+  background-color: #222;
+}
+
+.dark-mode #ratingDisplay {
+  color: white;
+  background-color: #222;
+}
+
 
 
 #commentsSection > strong {
@@ -4497,10 +4506,7 @@ margin-top: 20px;
 }
 
 
-.dark-mode #ratingDisplay,
-.dark-mode #likesCount {
 
-}
 
 
 

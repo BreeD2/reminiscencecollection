@@ -3127,43 +3127,26 @@ Australia: June 15, 2013
         </script>
 
 
-    <script>
-        function toggleLightMode() {
-            // Remove other classes that might affect the background
-            document.body.classList.remove('dark-mode');
-            document.body.classList.remove('invert-colors');
-            // Add or remove the 'light-mode' class based on the current state
-            document.body.classList.toggle('light-mode');
 
-            // Close the dropup after the action
-            closeAccessibilityDropup();
-        }
-
-        // JavaScript function as shown above
-        function closeAccessibilityMenu() {
-            var dropdownContent = document.querySelector('.dropdown .dropdown-content');
-            dropdownContent.style.display = 'none';
-        }
-    </script>
 
     <!-- JavaScript -->
     <script>
-        function toggleLightMode() {
-            // Remove other classes that might affect the background
-            document.body.classList.remove('dark-mode');
-            document.body.classList.remove('invert-colors');
-            // Add or remove the 'light-mode' class based on the current state
-            document.body.classList.toggle('light-mode');
+    function toggleLightMode() {
+      // Ensure that 'dark-mode' is removed when 'light-mode' is toggled
+      document.body.classList.remove('dark-mode');
+      document.body.classList.toggle('light-mode');
 
-            // Close the dropup after the action
-            closeAccessibilityDropup();
-        }
+      closeAccessibilityDropup();
+  }
 
-        // Add this function to close the dropup
-        function closeAccessibilityDropup() {
-            var dropup = document.getElementById('accessibility-dropup');
-            dropup.style.display = 'none';
-        }
+  function toggleDarkMode() {
+      // Ensure that 'light-mode' is removed when 'dark-mode' is toggled
+      document.body.classList.remove('light-mode');
+      document.body.classList.toggle('dark-mode');
+
+      closeAccessibilityDropup();
+  }
+
     </script>
 
 
@@ -3245,17 +3228,7 @@ Australia: June 15, 2013
         </script>
 
 
-    <script>
-      function toggleDarkMode() {
-        document.body.classList.toggle("dark-mode");
 
-        // Toggle dark mode on the navbar (assuming your navbar has a specific ID or class)
-        var navbar = document.getElementById("yourNavbarId"); // Replace "yourNavbarId" with the actual ID or class of your navbar
-        if (navbar) {
-          navbar.classList.toggle("dark-mode");
-        }
-      }
-    </script>
 
 
     <script>

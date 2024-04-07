@@ -2486,16 +2486,17 @@ border:2px solid white;
   }
 
 
+
   .footer {
-      width: 100%;
-      background-color: #f1f1f1;
-      text-align: center;
-      padding: 20px;
-      position: relative;
-      background-color: black;
-      margin-top: 100px;
-        color:white;
-    }
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    background-color: black;
+    margin-top: 100px;
+      color:white;
+  }
 
       body.dark-mode #sort-section, body.sort-section * {
 
@@ -3867,7 +3868,13 @@ button {
     font-size: 30px; /* Default font size */
 }
 
+/* Media query for screens smaller than 600px */
+@media (max-width: 600px) {
+    .game-title {
+        font-size: 25px; /* Smaller font size on small screens */
+    }
 
+}
 .star {
     cursor: pointer;
     color: grey;
@@ -4190,7 +4197,7 @@ border:2px solid white;
     font-size: 10px
   }
   .game-title {
-    font-size: 25px
+    font-size: 18px
   }
   #likeButton, #commentButton, #rateButton {
     font-size: 10px
@@ -4236,7 +4243,7 @@ margin-top: 20px;
        padding: 20px;
        border-radius: 8px;
        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-       top:65px;
+       top:100px;
        position: relative;
 
 
@@ -4274,13 +4281,6 @@ margin-top: 20px;
    cursor: pointer;
 }
 
-.liked {
-  color: blue; /* Example style */
-}
-
-.highlighted {
-  color: gold; /* Example style */
-}
 
 #commentInput {
   max-width: 300px;
@@ -4470,3 +4470,80 @@ margin-top: 20px;
   cursor: pointer;
   width:100px
 }
+
+
+.dark-mode #commentsList > div > div > div > span,
+.dark-mode #commentsList > div > div > button,
+.dark-mode #commentsList > div > button,
+.dark-mode #cancelReply,
+.dark-mode #sendReply,
+.dark-mode #commentsList > div,
+
+
+{
+  color: white;
+  background-color: #222;
+}
+
+.dark-mode #submitComment {
+  background-color: dimgrey
+}
+
+.dark-mode #likesCount {
+  color: white;
+  background-color: #222;
+}
+
+.dark-mode #ratingDisplay {
+  color: white;
+  background-color: #222;
+}
+
+
+
+#commentsSection > strong {
+  color: black
+}
+
+
+
+
+
+
+
+
+
+.light-mode #ratingDisplay,
+.light-mode #likesCount,
+.light-mode #commentsList > div > div > div > span,
+.light-mode #commentsList > div > div > button,
+.light-mode #commentsList > div > button,
+.light-mode #cancelReply,
+.light-mode #sendReply,
+.light-mode #commentsList > div,
+
+
+{
+  color: black;
+  background-color: white;
+}
+
+.light-mode #submitComment {
+  background-color: white;
+  color:black
+}
+
+
+
+.light-mode #commentsSection > strong {
+  color: black
+}
+
+
+.light-mode #ratingDisplay,
+.light-mode #likesCount {
+  color: black;
+  background-color: white;
+}
+
+#submitComment
