@@ -4423,7 +4423,6 @@ async function fetchGamesBasedOnLikes() {
   document.getElementById('likedGamesList').innerHTML = gamesHtml;
 }
 
-// Wrap your code in an async function
 async function fetchUserLikedGames() {
     // Assuming 'user' is already defined and holds the current user's information
     if (!user) {
@@ -4452,14 +4451,9 @@ async function fetchUserLikedGames() {
     });
 }
 
-  // Display games
-  games.forEach(gameDoc => {
-    if (gameDoc.exists) {
-      const gameData = gameDoc.data();
-      console.log('Game:', gameData.title); // Example of displaying game title
-      // Here you can append game details to the HTML
-    }
-  });
+// Call fetchUserLikedGames and catch any errors
+fetchUserLikedGames().catch(console.error);
+
 
       // Handle authentication state changes
       auth.onAuthStateChanged(user => {
