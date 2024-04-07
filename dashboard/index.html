@@ -4257,19 +4257,6 @@
     });
 
 
-      async function fetchAndDisplayGameDetails(gameId) {
-    const gameRef = firestore.collection('games').doc(gameId);
-    const doc = await gameRef.get();
-    if (doc.exists) {
-        const gameData = doc.data();
-        // Assume there are elements with these IDs in your HTML
-        document.getElementById('gameTitle').textContent = gameData.title;
-        document.getElementById('gameDescription').textContent = gameData.description;
-        document.getElementById('gameImage').src = gameData.imageUrl;
-    } else {
-        console.log("No such game!");
-    }
-}
 document.getElementById('changePasswordBtn').addEventListener('click', async () => {
   const newPassword = document.getElementById('newPasswordInput').value;
   const currentUser = firebase.auth().currentUser;
@@ -4405,58 +4392,56 @@ document.getElementById('filterActivityBtn').addEventListener('click', () => {
   showToast(`Filtering activities by ${filter}. Implementation required.`);
 });
 
-// JavaScript to Fetch and Display Liked Games
-document.getElementById('showLikedGames').addEventListener('click', fetchGamesBasedOnLikes);
+// Fetch and display liked games along with comments and ratings
+async function fetchAndDisplayUserInteractions() {
+  const user = auth.currentUser;
+  if (!user) {
+    console.log('No user logged in');
+    return;
+  }
 
-async function fetchGamesBasedOnLikes() {
-   const user = auth.currentUser;
-   if (!user) {
-     console.log('No user logged in');
-     return;
-   }
+  // Fetch liked games
+  const likesRef = firestore.collection('userPreferences').doc(user.uid).collection('likes');
+  const likesSnapshot = await likesRef.get();
+  let gamesHtml = '';
 
-   const userLikesRef = firestore.collection('userPreferences').doc(user.uid).collection('likes');
-   const likesSnapshot = await userLikesRef.get();
+  for (const doc of likesSnapshot.docs) {
+    const gameId = doc.id;
+    // Fetch game details
+    const gameDoc = await firestore.collection('games').doc(gameId).get();
+    if (!gameDoc.exists) {
+      console.log('Game not found:', gameId);
+      continue;
+    }
+    const gameData = gameDoc.data();
+    gamesHtml += `<div><h3>${gameData.title}</h3><p>${gameData.description}</p></div>`;
 
-   let gamesHtml = '';
+    // Fetch comments
+    const commentsRef = firestore.collection('comments').where('userId', '==', user.uid).where('gameId', '==', gameId);
+    const commentsSnapshot = await commentsRef.get();
+    commentsSnapshot.forEach(commentDoc => {
+      gamesHtml += `<div>Comment: ${commentDoc.data().comment}</div>`;
+    });
 
-   for (const likeDoc of likesSnapshot.docs) {
-     const gameId = likeDoc.id;
-     const gameDoc = await firestore.collection('games').doc(gameId).get();
-     if (gameDoc.exists) {
-       const gameData = gameDoc.data();
-       gamesHtml += `<p>${gameData.title}</p>`;
+    // Fetch ratings
+    const ratingsRef = firestore.collection('ratings').where('userId', '==', user.uid).where('gameId', '==', gameId);
+    const ratingsSnapshot = await ratingsRef.get();
+    ratingsSnapshot.forEach(ratingDoc => {
+      gamesHtml += `<div>Rating: ${ratingDoc.data().rating}</div>`;
+    });
+  }
 
-       // Fetch and display comments
-       const commentSnapshot = await firestore.collection('comments').where('userId', '==', user.uid).where('gameId', '==', gameId).get();
-       commentSnapshot.forEach(doc => {
-         const commentData = doc.data();
-         gamesHtml += `<div>Comment: ${commentData.comment}</div>`;
-       });
+  document.getElementById('likedGamesList').innerHTML = gamesHtml;
+}
 
-       // Fetch and display ratings
-       const ratingSnapshot = await firestore.collection('ratings').where('userId', '==', user.uid).where('gameId', '==', gameId).get();
-       ratingSnapshot.forEach(doc => {
-         const ratingData = doc.data();
-         gamesHtml += `<div>Rating: ${ratingData.rating}</div>`;
-       });
-     }
-   }
-
-   document.getElementById('likedGamesList').innerHTML = gamesHtml;
- }
-
- // Call the function after ensuring the user is authenticated
- auth.onAuthStateChanged((user) => {
-   if (user) {
-     fetchGamesBasedOnLikes().catch(console.error);
-   }
- });
-
-// Call this function where appropriate, for example, after user login
-fetchGamesBasedOnLikes().catch(console.error);
-
-
+auth.onAuthStateChanged(user => {
+  if (user) {
+    document.getElementById('userName').textContent = user.displayName || 'User';
+    fetchAndDisplayUserInteractions().catch(console.error);
+  } else {
+    console.log('User is logged out');
+  }
+});
       // Handle authentication state changes
       auth.onAuthStateChanged(user => {
         const dropdownContent = document.querySelector('.dropdown-content2');
