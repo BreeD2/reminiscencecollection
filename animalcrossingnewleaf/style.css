@@ -4549,14 +4549,32 @@ margin-top: 20px;
 .dark-mode #commentsList > div > button {
     border: none;
     background-color: black;
+    color:white
 
 }
 
 .dark-mode #commentsSection {
     background-color: #222;
+    color:white
 
 }
 
-.dark-mode#commentsSection > strong {
+.dark-mode #commentsSection > strong {
     color: white;
+}
+
+.light-mode #commentsList > div > button {
+    border: none;
+    background-color: whitesmoke;
+    padding: 5px;
+}
+
+#commentsList > div {
+    background-color: #222;
+    color:white
+}
+
+.dark-mode .replies-container {
+  background-color: #222;
+  color:white  
 }

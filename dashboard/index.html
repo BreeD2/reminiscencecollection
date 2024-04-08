@@ -4127,25 +4127,6 @@ document.getElementById('updateEmailBtn').addEventListener('click', async () => 
 });
 
 
-  // Fetch the current user within the function
-  const currentUser = firebase.auth().currentUser;
-
-  // Check if currentUser is not null before proceeding
-  if (currentUser) {
-    try {
-      await firestore.collection('users').doc(currentUser.uid).set({
-        privacySetting: privacySetting
-      }, { merge: true });
-      showToast('Privacy settings updated successfully');
-    } catch (error) {
-      console.error('Error updating privacy settings:', error);
-      showToast('Failed to update privacy settings.');
-    }
-  } else {
-    // Handle the case where no user is signed in
-    showToast('No user is signed in.');
-  }
-});
 
 
   // Delete user account
