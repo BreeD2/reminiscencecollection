@@ -353,41 +353,16 @@
 <input type="email" id="emailInput" placeholder="New Email">
 <button id="updateEmailBtn">Update Email</button>
 
-<!-- Privacy Settings -->
-<select id="privacySetting">
-  <option value="public">Public</option>
-  <option value="friends">Friends</option>
-  <option value="onlyMe">Only Me</option>
-</select>
-<button id="updatePrivacyBtn">Update Privacy Settings</button>
 
 <!-- Account Deletion Button -->
 <button id="deleteAccountBtn">Delete Account</button>
 
-<!-- Activity Filters -->
-<select id="activityFilter">
-  <option value="all">All</option>
-  <option value="likes">Likes</option>
-  <option value="comments">Comments</option>
-  <option value="ratings">Ratings</option>
-</select>
-<button id="filterActivityBtn">Filter Activity</button>
-
-
-<div id="userActivity">
-    <h3>Likes History</h3>
-    <!-- Trigger Button -->
-<button id="showLikedGames">Show Liked Games</button>
-    <p id="likesHistory"></p>
-    <!-- Place to Display Liked Games -->
-<div id="likedGamesList"></div>
-    <h3>Comments History</h3>
-    <p id="commentsHistory"></p>
-    <button id="showCommentsHistory">Show Comments History</button>
-    <h3>Ratings History</h3>
-    <p id="ratingsHistory"></p>
-    <button id="showRatingsHistory">Show Ratings History</button>
-  </div>
+<div id="recentActivity">
+    <h2>Recent Activity</h2>
+    <ul id="activityLog">
+        <!-- Dynamically populated list of user activities -->
+    </ul>
+</div>
 
 
 
@@ -4220,214 +4195,46 @@ document.getElementById('saveDescriptionBtn').addEventListener('click', async ()
 
 
 
-// Filter Activity
-document.getElementById('filterActivityBtn').addEventListener('click', () => {
-  const filter = document.getElementById('activityFilter').value;
-  // The implementation for filtering and displaying the activities goes here.
-  // This is a placeholder toast to indicate the filter operation is in progress.
-  showToast(`Filtering activities by ${filter}. Implementation required.`);
-});
+// Assume 'firebase' has already been initialized elsewhere in your code
 
-// Assuming you have an array of game IDs:
-const allGameIds = ["animalcrossingnewhorizons", "animalcrossingnewleaf", "assassinscreedodyssey", "batmanarkhamcity"]; // replace ... with actual IDs
-
-// Function to fetch game details in batches
-async function fetchGameDetailsInBatches(gameIds) {
-    const batchSize = 10; // Firestore limit for 'in' queries
-    for (let i = 0; i < gameIds.length; i += batchSize) {
-        const batch = gameIds.slice(i, i + batchSize);
-        await fetchBatchOfGames(batch);
-    }
-}
-
-// Helper function to fetch a batch of games by IDs and process them
-async function fetchBatchOfGames(batchOfGameIds) {
-    const gamesRef = firestore.collection('games');
-    const snapshot = await gamesRef.where(firebase.firestore.FieldPath.documentId(), 'in', batchOfGameIds).get();
-
-    snapshot.forEach(doc => {
-        const gameData = doc.data();
-        console.log(gameData.title); // Process each game as needed
-        // For example, you could append the game details to the DOM here
-    });
-}
-
-// Example usage:
-fetchGameDetailsInBatches(allGameIds)
-  .then(() => console.log('Fetched all game details'))
-  .catch(error => console.error('Error fetching game details:', error));
-
-
-async function fetchAndDisplayUserInteractions() {
-  const user = auth.currentUser;
-  if (!user) {
-    console.log('No user logged in');
-    return;
-  }
-
-  const likesRef = firestore.collection('userPreferences').doc(user.uid).collection('likes');
-  const likesSnapshot = await likesRef.get();
-
-  const likedGamesList = document.getElementById('likedGamesList');
-  // Clear previous content
-  likedGamesList.innerHTML = '';
-
-  for (const doc of likesSnapshot.docs) {
-    const gameId = doc.id;
-    const gameDoc = await firestore.collection('games').doc(gameId).get();
-    if (!gameDoc.exists) {
-      console.log('Game not found:', gameId);
-      continue;
-    }
-    const gameData = gameDoc.data();
-
-    // Create game element
-    const gameElement = document.createElement('div');
-    gameElement.classList.add('game');
-
-    const titleElement = document.createElement('h3');
-    titleElement.textContent = gameData.title;
-
-    const descriptionElement = document.createElement('p');
-    descriptionElement.textContent = gameData.description;
-
-    gameElement.appendChild(titleElement);
-    gameElement.appendChild(descriptionElement);
-
-    // Fetch and append comments
-    const commentsRef = firestore.collection('comments').where('userId', '==', user.uid).where('gameId', '==', gameId);
-    const commentsSnapshot = await commentsRef.get();
-    commentsSnapshot.forEach(commentDoc => {
-      const commentElement = document.createElement('div');
-      commentElement.textContent = `Comment: ${commentDoc.data().comment}`;
-      gameElement.appendChild(commentElement);
-    });
-
-    // Fetch and append ratings
-    const ratingsRef = firestore.collection('ratings').where('userId', '==', user.uid).where('gameId', '==', gameId);
-    const ratingsSnapshot = await ratingsRef.get();
-    ratingsSnapshot.forEach(ratingDoc => {
-      const ratingElement = document.createElement('div');
-      ratingElement.textContent = `Rating: ${ratingDoc.data().rating}`;
-      gameElement.appendChild(ratingElement);
-    });
-
-    likedGamesList.appendChild(gameElement);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('showLikedGames').addEventListener('click', fetchAndDisplayUserInteractions);
-});
-
-
-auth.onAuthStateChanged(user => {
-  if (user) {
-    document.getElementById('userName').textContent = user.displayName || 'User';
-    fetchAndDisplayUserInteractions().catch(console.error);
-  } else {
-    console.log('User is logged out');
-  }
-});
-
-async function fetchAndDisplayUserComments() {
-    const user = firebase.auth().currentUser;
-    if (!user) {
-        console.log('No user logged in');
-        return;
-    }
-
-    const commentsRef = firestore.collection('comments').where('userId', '==', user.uid);
-    const commentsSnapshot = await commentsRef.get();
-
-    let commentsHtml = '';
-    for (const doc of commentsSnapshot.docs) {
-        const commentData = doc.data();
-
-        // Ensure gameId is defined.
-        if (!commentData.gameId) {
-            console.log(`Game ID missing in comment document: ${doc.id}`);
-            continue;
-        }
-
-        console.log(`Fetching game details for gameId: ${commentData.gameId}`); // Debugging line
-
-        const gameDoc = await firestore.collection('games').doc(commentData.gameId).get();
-        if (!gameDoc.exists) {
-            console.log(`Game not found: ${commentData.gameId}`);
-            continue; // Skip this iteration if the game document doesn't exist.
-        }
-        const gameData = gameDoc.data();
-
-        commentsHtml += `
-          <div>
-            <strong>Game:</strong> ${gameData.title || 'Unknown Game'}<br>
-            <strong>Comment:</strong> ${commentData.text || 'No comment provided'}<br>
-            <strong>Date:</strong> ${commentData.timestamp ? new Date(commentData.timestamp.seconds * 1000).toLocaleString() : 'Unknown date'}
-          </div>
-        `;
-    }
-
-    // Display the comments in the 'commentsHistory' element.
-    document.getElementById('commentsHistory').innerHTML = commentsHtml;
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('showCommentsHistory').addEventListener('click', fetchAndDisplayUserComments);
-});
-
-
-async function fetchAndDisplayUserRatings() {
+// Function to fetch and display recent user activities
+async function fetchAndDisplayRecentActivities() {
   const user = firebase.auth().currentUser;
   if (!user) {
     console.log('No user logged in');
     return;
   }
 
-  const ratingsRef = firestore.collection('ratings').where('userId', '==', user.uid);
-  const ratingsSnapshot = await ratingsRef.get();
+  const activityLogElement = document.getElementById('activityLog');
+  activityLogElement.innerHTML = ''; // Clear existing activities
 
-  let ratingsHtml = '';
-  for (const doc of ratingsSnapshot.docs) {
-    const ratingData = doc.data();
-    const gameDoc = await firestore.collection('games').doc(ratingData.gameId).get();
-    let gameTitle = gameDoc.exists ? gameDoc.data().title : "Unknown Game";
-    ratingsHtml += `<div><strong>Game:</strong> ${gameTitle}<br><strong>Rating:</strong> ${ratingData.rating}</div>`;
+  // Replace 'userActivities' with the actual name of your collection
+  const activitiesRef = firebase.firestore().collection('userActivities')
+    .where('userId', '==', user.uid) // Filter activities by user ID
+    .orderBy('timestamp', 'desc') // Order by timestamp, most recent first
+    .limit(10); // Limit to the last 10 activities
+
+  try {
+    const snapshot = await activitiesRef.get();
+    snapshot.forEach(doc => {
+      const activity = doc.data();
+      const activityItem = document.createElement('li');
+      activityItem.textContent = `${activity.type} - ${activity.gameName} on ${activity.timestamp.toDate().toLocaleString()}`;
+      activityLogElement.appendChild(activityItem);
+    });
+  } catch (error) {
+    console.error('Error fetching recent activities:', error);
   }
-
-  document.getElementById('ratingsHistory').innerHTML = ratingsHtml;
 }
 
-
-document.getElementById('showCommentsHistory').addEventListener('click', () => {
-    // Example: Fetch and display comments for a specific game
-    // You would need to set gameId based on your application's logic, e.g., user selection
-    const gameId = 'exampleGameId'; // This needs to be dynamically set based on your application
-    fetchAndDisplayUserComments(gameId);
+// Example usage:
+// Call this function after ensuring the user is authenticated or when the page loads
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    fetchAndDisplayRecentActivities().catch(console.error);
+  }
 });
 
-async function fetchAndDisplayUserComments(gameId) {
-    const user = firebase.auth().currentUser;
-    if (!user) {
-        console.log('No user logged in');
-        return;
-    }
-
-    console.log("Attempting to fetch game with ID:", gameId);
-    // Now using gameId that's passed as a parameter
-    firestore.collection('games').doc(gameId).get().then(doc => {
-        if (!doc.exists) {
-            console.log("Game not found:", gameId);
-        } else {
-            const gameData = doc.data();
-            console.log("Game found:", gameData.title);
-            // Proceed with fetching and displaying comments now that you have the game data
-            // Further code to fetch comments goes here
-        }
-    }).catch(error => {
-        console.error("Error fetching game details:", error);
-    });
-}
 
 
       // Handle authentication state changes
