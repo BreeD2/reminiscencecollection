@@ -3496,49 +3496,10 @@
     }
     </script>
 
-    <script>
-    document.getElementById('speakSelectedText').addEventListener('click', function() {
-        // Get selected text
-        var text = getSelectedText();
-        if (text) {
-            speakText(text);
-        } else {
-            console.log('No text selected.');
-        }
-    });
-
-    function getSelectedText() {
-        var text = '';
-        if (typeof window.getSelection != "undefined") {
-            text = window.getSelection().toString();
-        } else if (typeof document.selection != "undefined" && document.selection.type == "Text") {
-            text = document.selection.createRange().text;
-        }
-        return text;
-    }
-
-    function speakText(textToSpeak) {
-        if ('speechSynthesis' in window) {
-            const msg = new SpeechSynthesisUtterance();
-            msg.text = textToSpeak;
-            window.speechSynthesis.speak(msg);
-        } else {
-            console.log('Text-to-Speech not supported.');
-        }
-    }
-    </script>
 
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const stopButton = document.getElementById('stopButton');
-        stopButton.addEventListener('click', function() {
-            if ('speechSynthesis' in window) {
-                speechSynthesis.cancel();
-            }
-        });
-    });
-    </script>
+
+
 
 
 
@@ -3675,37 +3636,7 @@
     }
     </script>
 
-    <script>
-    document.getElementById('speakSelectedText').addEventListener('click', function() {
-        // Get selected text
-        var text = getSelectedText();
-        if (text) {
-            speakText(text);
-        } else {
-            console.log('No text selected.');
-        }
-    });
 
-    function getSelectedText() {
-        var text = '';
-        if (typeof window.getSelection != "undefined") {
-            text = window.getSelection().toString();
-        } else if (typeof document.selection != "undefined" && document.selection.type == "Text") {
-            text = document.selection.createRange().text;
-        }
-        return text;
-    }
-
-    function speakText(textToSpeak) {
-        if ('speechSynthesis' in window) {
-            const msg = new SpeechSynthesisUtterance();
-            msg.text = textToSpeak;
-            window.speechSynthesis.speak(msg);
-        } else {
-            console.log('Text-to-Speech not supported.');
-        }
-    }
-    </script>
 
 
     <script>
@@ -3771,97 +3702,15 @@
     }
     </script>
 
-    <script>
-    document.getElementById('speakSelectedText').addEventListener('click', function() {
-        // Get selected text
-        var text = getSelectedText();
-        if (text) {
-            speakText(text);
-        } else {
-            console.log('No text selected.');
-        }
-    });
-
-    function getSelectedText() {
-        var text = '';
-        if (typeof window.getSelection != "undefined") {
-            text = window.getSelection().toString();
-        } else if (typeof document.selection != "undefined" && document.selection.type == "Text") {
-            text = document.selection.createRange().text;
-        }
-        return text;
-    }
-
-    function speakText(textToSpeak) {
-        if ('speechSynthesis' in window) {
-            const msg = new SpeechSynthesisUtterance();
-            msg.text = textToSpeak;
-            window.speechSynthesis.speak(msg);
-        } else {
-            console.log('Text-to-Speech not supported.');
-        }
-    }
-    </script>
 
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const stopButton = document.getElementById('stopButton');
-        stopButton.addEventListener('click', function() {
-            if ('speechSynthesis' in window) {
-                speechSynthesis.cancel();
-            }
-        });
-    });
-    </script>
 
 
 
     <!-- Heyo This is Important -->
 
-    <script>
-    document.getElementById('speakSelectedText').addEventListener('click', function() {
-        // Get selected text
-        var text = getSelectedText();
-        if (text) {
-            speakText(text);
-        } else {
-            console.log('No text selected.');
-        }
-    });
-
-    function getSelectedText() {
-        var text = '';
-        if (typeof window.getSelection != "undefined") {
-            text = window.getSelection().toString();
-        } else if (typeof document.selection != "undefined" && document.selection.type == "Text") {
-            text = document.selection.createRange().text;
-        }
-        return text;
-    }
-
-    function speakText(textToSpeak) {
-        if ('speechSynthesis' in window) {
-            const msg = new SpeechSynthesisUtterance();
-            msg.text = textToSpeak;
-            window.speechSynthesis.speak(msg);
-        } else {
-            console.log('Text-to-Speech not supported.');
-        }
-    }
-    </script>
 
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const stopButton = document.getElementById('stopButton');
-        stopButton.addEventListener('click', function() {
-            if ('speechSynthesis' in window) {
-                speechSynthesis.cancel();
-            }
-        });
-    });
-    </script>
 
 
 
@@ -4377,7 +4226,6 @@ document.getElementById('filterActivityBtn').addEventListener('click', () => {
   showToast(`Filtering activities by ${filter}. Implementation required.`);
 });
 
-// Fetch and display liked games along with comments and ratings
 async function fetchAndDisplayUserInteractions() {
   const user = auth.currentUser;
   if (!user) {
@@ -4385,38 +4233,55 @@ async function fetchAndDisplayUserInteractions() {
     return;
   }
 
-  // Fetch liked games
   const likesRef = firestore.collection('userPreferences').doc(user.uid).collection('likes');
   const likesSnapshot = await likesRef.get();
-  let gamesHtml = '';
+
+  const likedGamesList = document.getElementById('likedGamesList');
+  // Clear previous content
+  likedGamesList.innerHTML = '';
 
   for (const doc of likesSnapshot.docs) {
     const gameId = doc.id;
-    // Fetch game details
     const gameDoc = await firestore.collection('games').doc(gameId).get();
     if (!gameDoc.exists) {
       console.log('Game not found:', gameId);
       continue;
     }
     const gameData = gameDoc.data();
-    gamesHtml += `<div><h3>${gameData.title}</h3><p>${gameData.description}</p></div>`;
 
-    // Fetch comments
+    // Create game element
+    const gameElement = document.createElement('div');
+    gameElement.classList.add('game');
+
+    const titleElement = document.createElement('h3');
+    titleElement.textContent = gameData.title;
+
+    const descriptionElement = document.createElement('p');
+    descriptionElement.textContent = gameData.description;
+
+    gameElement.appendChild(titleElement);
+    gameElement.appendChild(descriptionElement);
+
+    // Fetch and append comments
     const commentsRef = firestore.collection('comments').where('userId', '==', user.uid).where('gameId', '==', gameId);
     const commentsSnapshot = await commentsRef.get();
     commentsSnapshot.forEach(commentDoc => {
-      gamesHtml += `<div>Comment: ${commentDoc.data().comment}</div>`;
+      const commentElement = document.createElement('div');
+      commentElement.textContent = `Comment: ${commentDoc.data().comment}`;
+      gameElement.appendChild(commentElement);
     });
 
-    // Fetch ratings
+    // Fetch and append ratings
     const ratingsRef = firestore.collection('ratings').where('userId', '==', user.uid).where('gameId', '==', gameId);
     const ratingsSnapshot = await ratingsRef.get();
     ratingsSnapshot.forEach(ratingDoc => {
-      gamesHtml += `<div>Rating: ${ratingDoc.data().rating}</div>`;
+      const ratingElement = document.createElement('div');
+      ratingElement.textContent = `Rating: ${ratingDoc.data().rating}`;
+      gameElement.appendChild(ratingElement);
     });
-  }
 
-  document.getElementById('likedGamesList').innerHTML = gamesHtml;
+    likedGamesList.appendChild(gameElement);
+  }
 }
 
 auth.onAuthStateChanged(user => {
@@ -4427,6 +4292,10 @@ auth.onAuthStateChanged(user => {
     console.log('User is logged out');
   }
 });
+
+
+
+
       // Handle authentication state changes
       auth.onAuthStateChanged(user => {
         const dropdownContent = document.querySelector('.dropdown-content2');
