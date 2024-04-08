@@ -4228,6 +4228,34 @@ document.getElementById('filterActivityBtn').addEventListener('click', () => {
   showToast(`Filtering activities by ${filter}. Implementation required.`);
 });
 
+// Assuming you have an array of game IDs:
+const allGameIds = ["animalcrossingnewhorizons", "animalcrossingnewleaf", "assassinscreedodyssey", "batmanarkhamcity"]; // replace ... with actual IDs
+
+// Function to fetch game details in batches
+async function fetchGameDetailsInBatches(gameIds) {
+    const batchSize = 10; // Firestore limit for 'in' queries
+    for (let i = 0; i < gameIds.length; i += batchSize) {
+        const batch = gameIds.slice(i, i + batchSize);
+        await fetchBatchOfGames(batch);
+    }
+}
+
+// Helper function to fetch a batch of games by IDs and process them
+async function fetchBatchOfGames(batchOfGameIds) {
+    const gamesRef = firestore.collection('games');
+    const snapshot = await gamesRef.where(firebase.firestore.FieldPath.documentId(), 'in', batchOfGameIds).get();
+
+    snapshot.forEach(doc => {
+        const gameData = doc.data();
+        console.log(gameData.title); // Process each game as needed
+        // For example, you could append the game details to the DOM here
+    });
+}
+
+// Example usage:
+fetchGameDetailsInBatches(allGameIds)
+  .then(() => console.log('Fetched all game details'))
+  .catch(error => console.error('Error fetching game details:', error));
 
 
 async function fetchAndDisplayUserInteractions() {
@@ -4371,20 +4399,35 @@ async function fetchAndDisplayUserRatings() {
 }
 
 
-document.getElementById('showCommentsHistory').addEventListener('click', fetchAndDisplayUserComments);
-document.getElementById('showRatingsHistory').addEventListener('click', fetchAndDisplayUserRatings);
-
-console.log("Attempting to fetch game with ID:", gameId);
-firestore.collection('games').doc(gameId).get().then(doc => {
-    if (!doc.exists) {
-        console.log("Game not found:", gameId);
-    } else {
-        const gameData = doc.data();
-        console.log("Game found:", gameData.title);
-    }
-}).catch(error => {
-    console.error("Error fetching game details:", error);
+document.getElementById('showCommentsHistory').addEventListener('click', () => {
+    // Example: Fetch and display comments for a specific game
+    // You would need to set gameId based on your application's logic, e.g., user selection
+    const gameId = 'exampleGameId'; // This needs to be dynamically set based on your application
+    fetchAndDisplayUserComments(gameId);
 });
+
+async function fetchAndDisplayUserComments(gameId) {
+    const user = firebase.auth().currentUser;
+    if (!user) {
+        console.log('No user logged in');
+        return;
+    }
+
+    console.log("Attempting to fetch game with ID:", gameId);
+    // Now using gameId that's passed as a parameter
+    firestore.collection('games').doc(gameId).get().then(doc => {
+        if (!doc.exists) {
+            console.log("Game not found:", gameId);
+        } else {
+            const gameData = doc.data();
+            console.log("Game found:", gameData.title);
+            // Proceed with fetching and displaying comments now that you have the game data
+            // Further code to fetch comments goes here
+        }
+    }).catch(error => {
+        console.error("Error fetching game details:", error);
+    });
+}
 
 
       // Handle authentication state changes
