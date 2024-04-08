@@ -4172,64 +4172,63 @@ document.getElementById('saveDescriptionBtn').addEventListener('click', async ()
   }
 });
 
+console.log(`Fetching activities for user ID: ${userId}`);
 
 
-// Assume 'firebase' has already been initialized elsewhere in your code
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async () => {
     const user = firebase.auth().currentUser;
     if (user) {
-        fetchAndDisplayRecentActivities(user.uid).catch(console.error);
+        try {
+            await fetchAndDisplayRecentActivities(user.uid);
+        } catch (error) {
+            console.error("Error fetching recent activities: ", error);
+        }
     }
 });
 
-async function fetchAndDisplayRecentActivities(userId) {
-    const activityLogElement = document.getElementById('activityLog');
-    activityLogElement.innerHTML = ''; // Clear existing activities
 
-    const activities = await fetchUserActivities(userId);
+document.addEventListener('DOMContentLoaded', () => {
+    // This event listener waits for Firebase Auth to initialize and check the user's auth state
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            // If the user is logged in, `user` is an object that contains their information
+            // You can access the user's ID with `user.uid`
+            const userId = user.uid;
 
-    // Sort activities by timestamp
-    activities.sort((a, b) => b.timestamp - a.timestamp);
-
-    // Display each activity
-    activities.forEach(activity => {
-        const activityItem = document.createElement('li');
-        activityItem.textContent = `${activity.type} - ${activity.gameName} on ${new Date(activity.timestamp).toLocaleString()}`;
-        activityLogElement.appendChild(activityItem);
+            console.log(`Fetching activities for user ID: ${userId}`);
+            // Now that you have `userId`, you can pass it to your function that fetches activities
+            fetchAndDisplayRecentActivities(userId).catch(console.error);
+        } else {
+            // No user is logged in.
+            console.log('No user logged in.');
+        }
     });
-}
+});
 
-async function fetchUserActivities(userId) {
-    const firestore = firebase.firestore();
+async function fetchAndDisplayRecentActivities(userId) {
     const activities = [];
 
-    // Fetch likes
-    const likes = await firestore.collection('likes').where('userId', '==', userId).get();
-    likes.forEach(doc => {
-        const data = doc.data();
-        activities.push({ type: 'Like', gameName: data.gameName, timestamp: data.timestamp });
+    // Example: Fetching likes
+    const likesSnapshot = await firebase.firestore().collection('likes').where('userId', '==', userId).get();
+    likesSnapshot.forEach(doc => {
+        activities.push({ type: 'Like', ...doc.data() });
     });
 
-    // Fetch comments
-    const comments = await firestore.collection('comments').where('userId', '==', userId).get();
-    comments.forEach(doc => {
-        const data = doc.data();
-        activities.push({ type: 'Comment', gameName: data.gameName, text: data.text, timestamp: data.timestamp });
+    // Add fetching logic for comments and ratings in a similar fashion
+
+    // Sort activities based on timestamp
+    activities.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds);
+
+    // Display activities
+    const activityLogElement = document.getElementById('activityLog');
+    activityLogElement.innerHTML = ''; // Clear existing content
+    activities.forEach(activity => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${activity.type} - ${activity.gameName} on ${new Date(activity.timestamp.seconds * 1000).toLocaleDateString()}`;
+        activityLogElement.appendChild(listItem);
     });
-
-    // Fetch ratings (add similar logic as above for ratings)
-
-    return activities;
 }
 
-// Example usage:
-// Call this function after ensuring the user is authenticated or when the page loads
-firebase.auth().onAuthStateChanged(user => {
-  if (user) {
-    fetchAndDisplayRecentActivities().catch(console.error);
-  }
-});
 
 
 
