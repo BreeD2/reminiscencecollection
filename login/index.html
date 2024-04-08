@@ -4113,6 +4113,19 @@ const searchFunction = () => {
 });
 
 
+// Inside your login/signup page script
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    console.log(`Welcome back, ${user.displayName || "User"}! Redirecting to your dashboard...`);
+    // Redirect to dashboard/home page
+    window.location.href = '..//dashboard/index.html'; // Adjust the path as necessary
+  } else {
+    console.log('Please log in or sign up.');
+    // Show the login/signup form if not already visible
+  }
+});
+
+
     // Forgot password handler
     document.getElementById('forgotPasswordLink').addEventListener('click', function(event) {
         event.preventDefault();
