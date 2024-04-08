@@ -4303,34 +4303,46 @@ auth.onAuthStateChanged(user => {
 });
 
 async function fetchAndDisplayUserComments() {
-  const user = firebase.auth().currentUser;
-  if (!user) {
-    console.log('No user logged in');
-    return;
-  }
-
-  const commentsRef = firestore.collection('comments').where('userId', '==', user.uid);
-  const commentsSnapshot = await commentsRef.get();
-  let commentsHtml = '';
-
-  for (const doc of commentsSnapshot.docs) {
-    const commentData = doc.data();
-    const gameDoc = await firestore.collection('games').doc(commentData.gameId).get();
-
-    if (!gameDoc.exists) {
-      console.log(`Game not found: ${commentData.gameId}`);
-      commentsHtml += `<div><strong>Game:</strong> Unknown Game<br><strong>Comment:</strong> ${commentData.text}<br><strong>Date:</strong> ${commentData.timestamp ? new Date(commentData.timestamp.seconds * 1000).toLocaleString() : 'Unknown date'}</div>`;
-    } else {
-      const gameData = gameDoc.data();
-      commentsHtml += `<div><strong>Game:</strong> ${gameData.title || 'Unknown Game'}<br><strong>Comment:</strong> ${commentData.text}<br><strong>Date:</strong> ${commentData.timestamp ? new Date(commentData.timestamp.seconds * 1000).toLocaleString() : 'Unknown date'}</div>`;
+    const user = firebase.auth().currentUser;
+    if (!user) {
+        console.log('No user logged in');
+        return;
     }
-  }
 
-  document.getElementById('commentsHistory').innerHTML = commentsHtml;
+    const commentsRef = firestore.collection('comments').where('userId', '==', user.uid);
+    const commentsSnapshot = await commentsRef.get();
+
+    let commentsHtml = '';
+    for (const doc of commentsSnapshot.docs) {
+        const commentData = doc.data();
+
+        // Ensure gameId is defined.
+        if (!commentData.gameId) {
+            console.log(`Game ID missing in comment document: ${doc.id}`);
+            continue;
+        }
+
+        console.log(`Fetching game details for gameId: ${commentData.gameId}`); // Debugging line
+
+        const gameDoc = await firestore.collection('games').doc(commentData.gameId).get();
+        if (!gameDoc.exists) {
+            console.log(`Game not found: ${commentData.gameId}`);
+            continue; // Skip this iteration if the game document doesn't exist.
+        }
+        const gameData = gameDoc.data();
+
+        commentsHtml += `
+          <div>
+            <strong>Game:</strong> ${gameData.title || 'Unknown Game'}<br>
+            <strong>Comment:</strong> ${commentData.text || 'No comment provided'}<br>
+            <strong>Date:</strong> ${commentData.timestamp ? new Date(commentData.timestamp.seconds * 1000).toLocaleString() : 'Unknown date'}
+          </div>
+        `;
+    }
+
+    // Display the comments in the 'commentsHistory' element.
+    document.getElementById('commentsHistory').innerHTML = commentsHtml;
 }
-
-// Call this function appropriately, for example, after user login or when initializing the comments display.
-
 
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('showCommentsHistory').addEventListener('click', fetchAndDisplayUserComments);
