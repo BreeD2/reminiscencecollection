@@ -4374,6 +4374,18 @@ async function fetchAndDisplayUserRatings() {
 document.getElementById('showCommentsHistory').addEventListener('click', fetchAndDisplayUserComments);
 document.getElementById('showRatingsHistory').addEventListener('click', fetchAndDisplayUserRatings);
 
+console.log("Attempting to fetch game with ID:", gameId);
+firestore.collection('games').doc(gameId).get().then(doc => {
+    if (!doc.exists) {
+        console.log("Game not found:", gameId);
+    } else {
+        const gameData = doc.data();
+        console.log("Game found:", gameData.title);
+    }
+}).catch(error => {
+    console.error("Error fetching game details:", error);
+});
+
 
       // Handle authentication state changes
       auth.onAuthStateChanged(user => {
