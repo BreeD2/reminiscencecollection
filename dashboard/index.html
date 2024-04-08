@@ -383,8 +383,10 @@
 <div id="likedGamesList"></div>
     <h3>Comments History</h3>
     <p id="commentsHistory"></p>
+    <button id="showCommentsHistory">Show Comments History</button>
     <h3>Ratings History</h3>
     <p id="ratingsHistory"></p>
+    <button id="showRatingsHistory">Show Ratings History</button>
   </div>
 
 
@@ -4300,7 +4302,50 @@ auth.onAuthStateChanged(user => {
   }
 });
 
+async function fetchAndDisplayUserComments() {
+  const user = firebase.auth().currentUser;
+  if (!user) {
+    console.log('No user logged in');
+    return;
+  }
 
+  const commentsRef = firestore.collection('comments').where('userId', '==', user.uid);
+  const commentsSnapshot = await commentsRef.get();
+
+  let commentsHtml = '';
+  for (const doc of commentsSnapshot.docs) {
+    const commentData = doc.data();
+    const gameDoc = await firestore.collection('games').doc(commentData.gameId).get();
+    let gameTitle = gameDoc.exists ? gameDoc.data().title : "Unknown Game";
+    commentsHtml += `<div><strong>Game:</strong> ${gameTitle}<br><strong>Comment:</strong> ${commentData.comment}</div>`;
+  }
+
+  document.getElementById('commentsHistory').innerHTML = commentsHtml;
+}
+async function fetchAndDisplayUserRatings() {
+  const user = firebase.auth().currentUser;
+  if (!user) {
+    console.log('No user logged in');
+    return;
+  }
+
+  const ratingsRef = firestore.collection('ratings').where('userId', '==', user.uid);
+  const ratingsSnapshot = await ratingsRef.get();
+
+  let ratingsHtml = '';
+  for (const doc of ratingsSnapshot.docs) {
+    const ratingData = doc.data();
+    const gameDoc = await firestore.collection('games').doc(ratingData.gameId).get();
+    let gameTitle = gameDoc.exists ? gameDoc.data().title : "Unknown Game";
+    ratingsHtml += `<div><strong>Game:</strong> ${gameTitle}<br><strong>Rating:</strong> ${ratingData.rating}</div>`;
+  }
+
+  document.getElementById('ratingsHistory').innerHTML = ratingsHtml;
+}
+
+
+document.getElementById('showCommentsHistory').addEventListener('click', fetchAndDisplayUserComments);
+document.getElementById('showRatingsHistory').addEventListener('click', fetchAndDisplayUserRatings);
 
 
       // Handle authentication state changes
