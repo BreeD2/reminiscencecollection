@@ -4173,43 +4173,63 @@ document.getElementById('saveDescriptionBtn').addEventListener('click', async ()
   }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-  const user = firebase.auth().currentUser;
-  if (user) {
-    fetchAndDisplayRecentActivities(user.uid).catch(console.error);
-  }
-});
 async function fetchAndDisplayRecentActivities(userId) {
     const activityLogElement = document.getElementById('activityLog');
+    if (!activityLogElement) {
+        console.error('Activity log element not found.');
+        return;
+    }
+
     activityLogElement.innerHTML = ''; // Clear existing activities
 
-    const activitiesRef = firestore.collection('userActivities')
-        .where('userId', '==', userId)
-        .orderBy('timestamp', 'desc')
-        .limit(10); // Adjust as necessary
+    try {
+        const activitiesRef = firestore.collection('userActivities')
+            .where('userId', '==', userId)
+            .orderBy('timestamp', 'desc')
+            .limit(10);
 
-    const snapshot = await activitiesRef.get();
-    snapshot.forEach(doc => {
-        const activity = doc.data();
-        let activityText = '';
+        const snapshot = await activitiesRef.get();
 
-        switch (activity.type) {
-            case 'like':
-                activityText = `Liked ${activity.gameName} on ${activity.timestamp.toDate().toLocaleString()}`;
-                break;
-            case 'comment':
-                activityText = `Commented on ${activity.gameName}: "${activity.text}" on ${activity.timestamp.toDate().toLocaleString()}`;
-                break;
-            case 'rating':
-                activityText = `Rated ${activity.gameName}: ${activity.rating} stars on ${activity.timestamp.toDate().toLocaleString()}`;
-                break;
+        if (snapshot.empty) {
+            console.log('No recent activities found.');
+            activityLogElement.textContent = 'No recent activities found.';
+            return;
         }
 
-        const activityItem = document.createElement('li');
-        activityItem.textContent = activityText;
-        activityLogElement.appendChild(activityItem);
-    });
+        snapshot.forEach(doc => {
+            const activity = doc.data();
+            let activityText = '';
+
+            switch (activity.type) {
+                case 'like':
+                    activityText = `Liked ${activity.gameName} on ${activity.timestamp.toDate().toLocaleString()}`;
+                    break;
+                case 'comment':
+                    activityText = `Commented on ${activity.gameName}: "${activity.text}" on ${activity.timestamp.toDate().toLocaleString()}`;
+                    break;
+                case 'rating':
+                    activityText = `Rated ${activity.gameName}: ${activity.rating} stars on ${activity.timestamp.toDate().toLocaleString()}`;
+                    break;
+            }
+
+            const activityItem = document.createElement('li');
+            activityItem.textContent = activityText;
+            activityLogElement.appendChild(activityItem);
+        });
+    } catch (error) {
+        console.error('Error fetching recent activities:', error);
+    }
 }
+
+// Call this function after ensuring the user is authenticated or when the page loads
+firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+        fetchAndDisplayRecentActivities(user.uid).catch(console.error);
+    } else {
+        console.log('No user logged in.');
+    }
+});
+
 
 
 // Call this function after ensuring the user is authenticated or when the page loads
