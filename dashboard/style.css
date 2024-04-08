@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 body {
-    font-family: Verdana, sans-serif;
+    font-family: arial;
 
       height:auto
 }
@@ -1151,7 +1151,7 @@ body {
 
 body {
   background-color: ghostwhite;
-  font-family: 'arial', sans-serif;
+  font-family: arial;
   height:auto
 }
 #searchResults {font-family: 'arial', sans-serif; /* Add the desired font-family */;
@@ -4674,4 +4674,8 @@ margin: 10px;
 body > center > div > h1 {
   margin-top: 100px;
   line-height: 50px
+}
+
+#userProfile h2 {
+  margin-top: 100px
 }
