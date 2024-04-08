@@ -4546,4 +4546,17 @@ margin-top: 20px;
   background-color: white;
 }
 
-#submitComment
+.dark-mode #commentsList > div > button {
+    border: none;
+    background-color: black;
+
+}
+
+.dark-mode #commentsSection {
+    background-color: #222;
+
+}
+
+.dark-mode#commentsSection > strong {
+    color: white;
+}
