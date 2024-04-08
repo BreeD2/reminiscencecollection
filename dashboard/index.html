@@ -4179,30 +4179,36 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchAndDisplayRecentActivities(user.uid).catch(console.error);
   }
 });
-
 async function fetchAndDisplayRecentActivities(userId) {
-  const activityLogElement = document.getElementById('activityLog');
-  activityLogElement.innerHTML = ''; // Clear existing activities
+    const activityLogElement = document.getElementById('activityLog');
+    activityLogElement.innerHTML = ''; // Clear existing activities
 
-  const activitiesRef = firebase.firestore().collection('userActivities')
-    .where('userId', '==', userId)
-    .orderBy('timestamp', 'desc')
-    .limit(10);
+    const activitiesRef = firestore.collection('userActivities')
+        .where('userId', '==', userId)
+        .orderBy('timestamp', 'desc')
+        .limit(10); // Adjust as necessary
 
-  const snapshot = await activitiesRef.get();
+    const snapshot = await activitiesRef.get();
+    snapshot.forEach(doc => {
+        const activity = doc.data();
+        let activityText = '';
 
-  if (snapshot.empty) {
-    console.log('No activities found for the user.');
-    activityLogElement.textContent = 'No recent activities.';
-    return;
-  }
+        switch (activity.type) {
+            case 'like':
+                activityText = `Liked ${activity.gameName} on ${activity.timestamp.toDate().toLocaleString()}`;
+                break;
+            case 'comment':
+                activityText = `Commented on ${activity.gameName}: "${activity.text}" on ${activity.timestamp.toDate().toLocaleString()}`;
+                break;
+            case 'rating':
+                activityText = `Rated ${activity.gameName}: ${activity.rating} stars on ${activity.timestamp.toDate().toLocaleString()}`;
+                break;
+        }
 
-  snapshot.forEach(doc => {
-    const activity = doc.data();
-    const activityItem = document.createElement('li');
-    activityItem.textContent = `${activity.type} - ${activity.details.gameId || 'Unknown Game'} on ${activity.timestamp.toDate().toLocaleString()}`;
-    activityLogElement.appendChild(activityItem);
-  });
+        const activityItem = document.createElement('li');
+        activityItem.textContent = activityText;
+        activityLogElement.appendChild(activityItem);
+    });
 }
 
 
