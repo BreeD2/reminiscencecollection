@@ -4172,7 +4172,6 @@ document.getElementById('saveDescriptionBtn').addEventListener('click', async ()
     showToast('No user is signed in.');
   }
 });
-
 async function fetchAndDisplayRecentActivities(userId) {
     const activityLogElement = document.getElementById('activityLog');
     if (!activityLogElement) {
@@ -4182,12 +4181,12 @@ async function fetchAndDisplayRecentActivities(userId) {
 
     activityLogElement.innerHTML = ''; // Clear existing activities
 
-    try {
-        const activitiesRef = firestore.collection('userActivities')
-            .where('userId', '==', userId)
-            .orderBy('timestamp', 'desc')
-            .limit(10);
+    const activitiesRef = firestore.collection('userActivities')
+        .where('userId', '==', userId)
+        .orderBy('timestamp', 'desc')
+        .limit(10);
 
+    try {
         const snapshot = await activitiesRef.get();
 
         if (snapshot.empty) {
@@ -4220,6 +4219,16 @@ async function fetchAndDisplayRecentActivities(userId) {
         console.error('Error fetching recent activities:', error);
     }
 }
+
+// Call this after ensuring the user is authenticated
+firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+        fetchAndDisplayRecentActivities(user.uid).catch(console.error);
+    } else {
+        console.log('No user logged in.');
+    }
+});
+
 // Inside your dashboard/home page script
 document.addEventListener('DOMContentLoaded', () => {
   firebase.auth().onAuthStateChanged(user => {

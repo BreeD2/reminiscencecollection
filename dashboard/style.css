@@ -4518,6 +4518,23 @@ margin: 10px;
   margin: 10px;
 }
 
+
+.dark-mode #changePasswordBtn {
+
+  width:80%;
+  background-color: white;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-family: arial;
+  background-color: #007bff; /* Use a blue background */
+  color: white; /* White text color */
+  font-size: 16px; /* Increase font size */
+  border: none;
+  margin: 10px;
+}
+
+
 #updateEmailBtn {
 
   width:80%;
@@ -4531,6 +4548,23 @@ margin: 10px;
   font-size: 16px; /* Increase font size */
   border: none;
   margin: 10px;
+}
+
+.dark-mode #updateEmailBtn {
+
+
+  background-color: #222; /* Use a blue background */
+  color: white; /* White text color */
+
+}
+
+
+.light-mode #updateEmailBtn {
+
+
+  background-color: white; /* Use a blue background */
+  color: black; /* White text color */
+
 }
 
 #updatePrivacyBtn {
@@ -4549,6 +4583,8 @@ margin: 10px;
   margin: 10px;
 }
 
+
+
 #deleteAccountBtn {
 
   width:80%;
@@ -4563,6 +4599,23 @@ margin: 10px;
   border: none;
     margin: 10px
 }
+
+.dark-mode #deleteAccountBtn {
+
+
+  background-color: #222; /* Use a blue background */
+  color: white; /* White text color */
+
+}
+
+.light-mode #deleteAccountBtn {
+
+
+  background-color: white; /* Use a blue background */
+  color: black; /* White text color */
+
+}
+
 
 #filterActivityBtn {
 
@@ -4580,7 +4633,7 @@ margin: 10px;
 }
 #usernameInput {
   width:80%;
-  background-color: n;
+
   padding: 8px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -4590,6 +4643,19 @@ margin: 10px;
   font-size: 16px; /* Increase font size */
   border: none;
     margin: 10px
+}
+
+.light-mode #usernameInput {
+
+
+  background-color: white; /* Use a blue background */
+  color:black
+}
+.dark-mode #usernameInput {
+
+
+  background-color: #222; /* Use a blue background */
+  color:white
 }
 
 #emailInput {
@@ -4603,6 +4669,18 @@ margin: 10px;
   font-size: 16px; /* Increase font size */
   border: none;
   margin: 10px
+}
+
+
+.dark-mode #emailInput {
+  background-color: #222;
+  color:white
+}
+
+.light-mode #emailInput {
+
+  background-color: white;
+  color:black
 }
 
 #userDescriptionDisplay {
