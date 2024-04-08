@@ -4619,6 +4619,20 @@ margin: 10px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+.light-mode #userDescriptionDisplay {
+
+
+    background-color: white; /* Use a blue background */
+    color: black; /* White text color */
+}
+
+.dark-mode #userDescriptionDisplay {
+
+
+    background-color: black; /* Use a blue background */
+    color: white; /* White text color */
+}
+
 #emailDisplay {
   width: 80%;
   padding: 10px; /* Add padding inside the button */
@@ -4630,6 +4644,22 @@ margin: 10px;
   font-size: 16px; /* Increase font size */
   margin: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.light-mode #emailDisplay {
+
+  background-color: white; /* Use a blue background */
+  color: black; /* White text color */
+
+}
+
+
+
+.dark-mode #emailDisplay {
+
+  background-color: #222; /* Use a blue background */
+  color: white; /* White text color */
+
 }
 
 #privacySetting {
@@ -4659,16 +4689,25 @@ margin: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 #userActivity > h3 {
-  width: 80%;
-  padding: 10px; /* Add padding inside the button */
-  background-color: #007bff; /* Use a blue background */
+
+  background-color: white; /* Use a blue background */
+  color: black; /* White text color */
+
+}
+.light-mode #userActivity > h3 {
+
+
+  color: black; /* White text color */
+
+
+}
+
+.light-mode #userActivity > h3 {
+
+
   color: white; /* White text color */
-  border: none; /* No border */
-  border-radius: 4px; /* Round the corners of the button */
-  cursor: pointer; /* Change mouse cursor to indicate clickable */
-  font-size: 16px; /* Increase font size */
-  margin: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+
 }
 
 body > center > div > h1 {
@@ -4679,6 +4718,22 @@ body > center > div > h1 {
 #userProfile h2 {
   margin-top: 100px
 }
+.light-mode #userProfile h2 {
+  color:black
+}
+.light-mode #recentActivity h2 {
+  color:black
+}
+
+.dark-mode #recentActivity h2 {
+  color:white
+}
+
+
+.dark-mode #userProfile h2 {
+  color:white
+}
+
 
 .dropdown-content button:hover{
  background-color: grey;
