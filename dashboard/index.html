@@ -4315,25 +4315,11 @@ async function fetchAndDisplayUserComments() {
   let commentsHtml = '';
   for (const doc of commentsSnapshot.docs) {
     const commentData = doc.data();
-    // Fetch the game title using gameId
     const gameDoc = await firestore.collection('games').doc(commentData.gameId).get();
-    if (!gameDoc.exists) {
-      console.log('Game not found:', commentData.gameId); // Debugging
-      continue; // Skip this iteration if the game document doesn't exist
-    }
-    const gameData = gameDoc.data();
-
-    // Construct the HTML for this comment
-    commentsHtml += `
-      <div>
-        <strong>Game:</strong> ${gameData.title || 'Unknown Game'}<br>
-        <strong>Comment:</strong> ${commentData.text || 'No comment provided'}<br>
-        <strong>Date:</strong> ${commentData.timestamp ? new Date(commentData.timestamp.seconds * 1000).toLocaleString() : 'Unknown date'}
-      </div>
-    `;
+    let gameTitle = gameDoc.exists ? gameDoc.data().title : "Unknown Game";
+    commentsHtml += `<div><strong>Game:</strong> ${gameTitle}<br><strong>Comment:</strong> ${commentData.comment}</div>`;
   }
 
-  // Display the comments in the 'commentsHistory' element
   document.getElementById('commentsHistory').innerHTML = commentsHtml;
 }
 async function fetchAndDisplayUserRatings() {
@@ -4358,10 +4344,7 @@ async function fetchAndDisplayUserRatings() {
 }
 
 
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('showCommentsHistory').addEventListener('click', fetchAndDisplayUserComments);
-});
-
+document.getElementById('showCommentsHistory').addEventListener('click', fetchAndDisplayUserComments);
 document.getElementById('showRatingsHistory').addEventListener('click', fetchAndDisplayUserRatings);
 
 
