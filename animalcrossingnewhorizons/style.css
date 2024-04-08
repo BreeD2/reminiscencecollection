@@ -78,7 +78,8 @@ body {
   display: block;
   text-align: left;
   border: none;
-  font-size: 15px
+  font-size: 15px;
+
 
 
 
@@ -117,10 +118,18 @@ body {
   padding: 12px 16px;
   text-decoration: none;
   display: block;
-  text-align: left;
+
     outline:none;
     background-color: transparent;
-    font-size: 15px
+    font-size: 15px;
+        width: 100%;
+
+}
+
+
+/* Style for links and buttons within the dropdown */
+.dropdown-content a:hover,.dropdown-content button:hover {
+        width: 100%;
 
 }
 
@@ -327,6 +336,7 @@ width: 108px;
 .dropdown-content2 a:hover {
   background-color: #ddd;
   color: black;
+
 }
 
 /* Show the dropdown menu when the user moves the mouse over the dropdown button */
@@ -418,7 +428,8 @@ width: 108px;
   display: block;
   text-align: left;
     outline:none;
-    background-color: transparent
+    background-color: transparent;
+
 
 }
 
@@ -430,7 +441,13 @@ width: 108px;
     text-align: left;
     outline: none;
     background-color: transparent;
-    font-size: 15px
+    font-size: 15px;
+
+}
+
+.dropdown-content2 a:hover, .dropdown-content2 button:hover {
+  width:100%;
+  text-align: left;
 }
 @media (max-width: 1060px) {
   .dropdown-content  {width:100%;
@@ -651,6 +668,7 @@ body.light-mode .topnav a:hover {
  .dropdown-content button:hover{
   background-color: grey;
   color: white;
+      width: 100%;
 }
 
 
@@ -2486,24 +2504,31 @@ border:2px solid white;
   }
 
 
+
   .footer {
-      width: 100%;
-      background-color: #f1f1f1;
-      text-align: center;
-      padding: 20px;
-      position: relative;
-      background-color: black;
-      margin-top: 100px;
-        color:white;
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    background-color: black;
+    margin-top: 100px;
+      color:white;
+  }
+
+  .light-mode .footer {
+
+    background-color: #f1f1f1;
+
+  }
+
+
+    .light-mode .copy {
+
+    color:black
+
     }
-    body.light-mode .footer, body.light-mode .footer * {
-        width: 100%;
-        background-color: #f1f1f1; /* Light grey background for the footer */
-        text-align: center;
-        padding: 20px;
-        color: #000; /* Dark text color for readability */
-        margin-top: auto; /* Ensures that the footer is pushed to the bottom */
-      }
+
       body.dark-mode #sort-section, body.sort-section * {
 
     background-color: #f1f1f1; /* Light grey background for the footer */
@@ -3874,7 +3899,13 @@ button {
     font-size: 30px; /* Default font size */
 }
 
+/* Media query for screens smaller than 600px */
+@media (max-width: 600px) {
+    .game-title {
+        font-size: 25px; /* Smaller font size on small screens */
+    }
 
+}
 .star {
     cursor: pointer;
     color: grey;
@@ -4197,7 +4228,7 @@ border:2px solid white;
     font-size: 10px
   }
   .game-title {
-    font-size: 25px
+    font-size: 18px
   }
   #likeButton, #commentButton, #rateButton {
     font-size: 10px
@@ -4243,7 +4274,7 @@ margin-top: 20px;
        padding: 20px;
        border-radius: 8px;
        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-       top:65px;
+       top:100px;
        position: relative;
 
 
@@ -4281,13 +4312,6 @@ margin-top: 20px;
    cursor: pointer;
 }
 
-.liked {
-  color: blue; /* Example style */
-}
-
-.highlighted {
-  color: gold; /* Example style */
-}
 
 #commentInput {
   max-width: 300px;
@@ -4476,4 +4500,118 @@ margin-top: 20px;
   border-radius: 5px;
   cursor: pointer;
   width:100px
+}
+
+
+.dark-mode #commentsList > div > div > div > span,
+.dark-mode #commentsList > div > div > button,
+.dark-mode #commentsList > div > button,
+.dark-mode #cancelReply,
+.dark-mode #sendReply,
+.dark-mode #commentsList > div,
+
+
+{
+  color: white;
+  background-color: #222;
+}
+
+.dark-mode #submitComment {
+  background-color: dimgrey
+}
+
+.dark-mode #likesCount {
+  color: white;
+  background-color: #222;
+}
+
+.dark-mode #ratingDisplay {
+  color: white;
+  background-color: #222;
+}
+
+
+
+#commentsSection > strong {
+  color: black
+}
+
+
+
+
+
+
+
+
+
+.light-mode #ratingDisplay,
+.light-mode #likesCount,
+.light-mode #commentsList > div > div > div > span,
+.light-mode #commentsList > div > div > button,
+.light-mode #commentsList > div > button,
+.light-mode #cancelReply,
+.light-mode #sendReply,
+.light-mode #commentsList > div,
+
+
+{
+  color: black;
+  background-color: white;
+}
+
+.light-mode #submitComment {
+  background-color: white;
+  color:black
+}
+
+
+
+.light-mode #commentsSection > strong {
+  color: black
+}
+
+
+.light-mode #ratingDisplay,
+.light-mode #likesCount {
+  color: black;
+  background-color: white;
+}
+
+.dark-mode #commentsList > div > button {
+    border: none;
+    background-color: black;
+    color:white
+
+}
+
+.dark-mode #commentsSection {
+    background-color: #222;
+    color:white
+
+}
+
+.dark-mode #commentsSection > strong {
+    color: white;
+}
+
+.light-mode #commentsList > div > button {
+    border: none;
+    background-color: whitesmoke;
+    padding: 5px;
+    color:black
+}
+
+.light-mode #commentsList > div > button  {
+  color:black
+}
+
+
+.dark-mode #commentsList > div {
+    background-color: dimgrey;
+    color:white
+}
+
+.dark-mode .replies-container {
+  background-color: dimgrey;
+  color:white
 }

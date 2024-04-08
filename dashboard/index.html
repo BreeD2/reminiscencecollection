@@ -4175,60 +4175,44 @@ document.getElementById('saveDescriptionBtn').addEventListener('click', async ()
 
 
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const user = firebase.auth().currentUser;
-    if (user) {
-        try {
-            await fetchAndDisplayRecentActivities(user.uid);
-        } catch (error) {
-            console.error("Error fetching recent activities: ", error);
-        }
-    }
-});
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    // This event listener waits for Firebase Auth to initialize and check the user's auth state
-    firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-            // If the user is logged in, `user` is an object that contains their information
-            // You can access the user's ID with `user.uid`
-            const userId = user.uid;
-
-            console.log(`Fetching activities for user ID: ${userId}`);
-            // Now that you have `userId`, you can pass it to your function that fetches activities
-            fetchAndDisplayRecentActivities(userId).catch(console.error);
-        } else {
-            // No user is logged in.
-            console.log('No user logged in.');
-        }
-    });
-});
-
 async function fetchAndDisplayRecentActivities(userId) {
-    const activities = [];
-
-    // Example: Fetching likes
-    const likesSnapshot = await firebase.firestore().collection('likes').where('userId', '==', userId).get();
-    likesSnapshot.forEach(doc => {
-        activities.push({ type: 'Like', ...doc.data() });
-    });
-
-    // Add fetching logic for comments and ratings in a similar fashion
-
-    // Sort activities based on timestamp
-    activities.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds);
-
-    // Display activities
     const activityLogElement = document.getElementById('activityLog');
-    activityLogElement.innerHTML = ''; // Clear existing content
-    activities.forEach(activity => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${activity.type} - ${activity.gameName} on ${new Date(activity.timestamp.seconds * 1000).toLocaleDateString()}`;
-        activityLogElement.appendChild(listItem);
-    });
+    activityLogElement.innerHTML = ''; // Clear existing activities
+
+    console.log(`Fetching activities for user ID: ${userId}`);
+
+    const activitiesRef = firebase.firestore().collection('userActivities')
+        .where('userId', '==', userId)
+        .orderBy('timestamp', 'desc')
+        .limit(10);
+
+    try {
+        const snapshot = await activitiesRef.get();
+        if (snapshot.empty) {
+            console.log('No activities found for the user.');
+            activityLogElement.innerHTML = 'No recent activity.';
+            return;
+        }
+
+        snapshot.forEach(doc => {
+            const activity = doc.data();
+            const activityItem = document.createElement('li');
+            activityItem.textContent = `${activity.type} - ${activity.gameName} on ${activity.timestamp.toDate().toLocaleString()}`;
+            activityLogElement.appendChild(activityItem);
+        });
+    } catch (error) {
+        console.error('Error fetching recent activities:', error);
+    }
 }
 
+// Call this function after ensuring the user is authenticated or when the page loads
+firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+        fetchAndDisplayRecentActivities(user.uid).catch(console.error);
+    } else {
+        console.log('No user logged in.');
+    }
+});
 
 
 
