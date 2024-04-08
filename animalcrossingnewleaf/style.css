@@ -2498,6 +2498,19 @@ border:2px solid white;
       color:white;
   }
 
+  .light-mode .footer {
+
+    background-color: #f1f1f1;
+
+  }
+
+
+    .light-mode .copy {
+
+    color:black
+
+    }
+
       body.dark-mode #sort-section, body.sort-section * {
 
     background-color: #f1f1f1; /* Light grey background for the footer */
@@ -4567,14 +4580,20 @@ margin-top: 20px;
     border: none;
     background-color: whitesmoke;
     padding: 5px;
+    color:black
 }
 
-#commentsList > div {
-    background-color: #222;
+.light-mode #commentsList > div > button  {
+  color:black
+}
+
+
+.dark-mode #commentsList > div {
+    background-color: dimgrey;
     color:white
 }
 
 .dark-mode .replies-container {
-  background-color: #222;
-  color:white  
+  background-color: dimgrey;
+  color:white
 }

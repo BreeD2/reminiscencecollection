@@ -4176,34 +4176,51 @@ document.getElementById('saveDescriptionBtn').addEventListener('click', async ()
 
 // Assume 'firebase' has already been initialized elsewhere in your code
 
-// Function to fetch and display recent user activities
-async function fetchAndDisplayRecentActivities() {
-  const user = firebase.auth().currentUser;
-  if (!user) {
-    console.log('No user logged in');
-    return;
-  }
+document.addEventListener('DOMContentLoaded', function() {
+    const user = firebase.auth().currentUser;
+    if (user) {
+        fetchAndDisplayRecentActivities(user.uid).catch(console.error);
+    }
+});
 
-  const activityLogElement = document.getElementById('activityLog');
-  activityLogElement.innerHTML = ''; // Clear existing activities
+async function fetchAndDisplayRecentActivities(userId) {
+    const activityLogElement = document.getElementById('activityLog');
+    activityLogElement.innerHTML = ''; // Clear existing activities
 
-  // Replace 'userActivities' with the actual name of your collection
-  const activitiesRef = firebase.firestore().collection('userActivities')
-    .where('userId', '==', user.uid) // Filter activities by user ID
-    .orderBy('timestamp', 'desc') // Order by timestamp, most recent first
-    .limit(10); // Limit to the last 10 activities
+    const activities = await fetchUserActivities(userId);
 
-  try {
-    const snapshot = await activitiesRef.get();
-    snapshot.forEach(doc => {
-      const activity = doc.data();
-      const activityItem = document.createElement('li');
-      activityItem.textContent = `${activity.type} - ${activity.gameName} on ${activity.timestamp.toDate().toLocaleString()}`;
-      activityLogElement.appendChild(activityItem);
+    // Sort activities by timestamp
+    activities.sort((a, b) => b.timestamp - a.timestamp);
+
+    // Display each activity
+    activities.forEach(activity => {
+        const activityItem = document.createElement('li');
+        activityItem.textContent = `${activity.type} - ${activity.gameName} on ${new Date(activity.timestamp).toLocaleString()}`;
+        activityLogElement.appendChild(activityItem);
     });
-  } catch (error) {
-    console.error('Error fetching recent activities:', error);
-  }
+}
+
+async function fetchUserActivities(userId) {
+    const firestore = firebase.firestore();
+    const activities = [];
+
+    // Fetch likes
+    const likes = await firestore.collection('likes').where('userId', '==', userId).get();
+    likes.forEach(doc => {
+        const data = doc.data();
+        activities.push({ type: 'Like', gameName: data.gameName, timestamp: data.timestamp });
+    });
+
+    // Fetch comments
+    const comments = await firestore.collection('comments').where('userId', '==', userId).get();
+    comments.forEach(doc => {
+        const data = doc.data();
+        activities.push({ type: 'Comment', gameName: data.gameName, text: data.text, timestamp: data.timestamp });
+    });
+
+    // Fetch ratings (add similar logic as above for ratings)
+
+    return activities;
 }
 
 // Example usage:
