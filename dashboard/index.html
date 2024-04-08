@@ -4220,14 +4220,6 @@ async function fetchAndDisplayRecentActivities(userId) {
     }
 }
 
-// Call this after ensuring the user is authenticated
-firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-        fetchAndDisplayRecentActivities(user.uid).catch(console.error);
-    } else {
-        console.log('No user logged in.');
-    }
-});
 
 // Inside your dashboard/home page script
 document.addEventListener('DOMContentLoaded', () => {
@@ -4241,17 +4233,6 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.href = '..//login/index.html'; // Adjust the path as necessary
     }
   });
-});
-
-
-
-// Call this function after ensuring the user is authenticated or when the page loads
-firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-        fetchAndDisplayRecentActivities(user.uid).catch(console.error);
-    } else {
-        console.log('No user logged in.');
-    }
 });
 
 
