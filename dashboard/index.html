@@ -4226,6 +4226,8 @@ document.getElementById('filterActivityBtn').addEventListener('click', () => {
   showToast(`Filtering activities by ${filter}. Implementation required.`);
 });
 
+
+
 async function fetchAndDisplayUserInteractions() {
   const user = auth.currentUser;
   if (!user) {
@@ -4283,6 +4285,11 @@ async function fetchAndDisplayUserInteractions() {
     likedGamesList.appendChild(gameElement);
   }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('showLikedGames').addEventListener('click', fetchAndDisplayUserInteractions);
+});
+
 
 auth.onAuthStateChanged(user => {
   if (user) {
