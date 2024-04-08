@@ -4464,6 +4464,29 @@ async function handleRateClick() {
     }
 }
 
+async function addLikeActivity(gameId, gameName) {
+  const user = firebase.auth().currentUser;
+
+  if (user) {
+    const activityRef = firestore.collection('userActivities').doc();
+    const activity = {
+      userId: user.uid, // Current user's uid
+      type: 'like',
+      gameName: gameName,
+      gameId: gameId,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    try {
+      await activityRef.set(activity);
+      console.log('Activity recorded successfully');
+    } catch (error) {
+      console.error('Error recording activity:', error);
+    }
+  } else {
+    console.log('No user is signed in.');
+  }
+}
 
 
   // Define the logoutUser function
