@@ -4302,6 +4302,7 @@ auth.onAuthStateChanged(user => {
   }
 });
 
+// Corrected function to fetch and display user comments
 async function fetchAndDisplayUserComments() {
   const user = firebase.auth().currentUser;
   if (!user) {
@@ -4317,11 +4318,18 @@ async function fetchAndDisplayUserComments() {
     const commentData = doc.data();
     const gameDoc = await firestore.collection('games').doc(commentData.gameId).get();
     let gameTitle = gameDoc.exists ? gameDoc.data().title : "Unknown Game";
-    commentsHtml += `<div><strong>Game:</strong> ${gameTitle}<br><strong>Comment:</strong> ${commentData.comment}</div>`;
+    // Use commentData.text instead of commentData.comment
+    commentsHtml += `<div><strong>Game:</strong> ${gameTitle}<br><strong>Comment:</strong> ${commentData.text || 'No comment provided'}<br><strong>Date:</strong> ${commentData.timestamp ? new Date(commentData.timestamp.seconds * 1000).toLocaleString() : 'Unknown date'}</div>`;
   }
 
   document.getElementById('commentsHistory').innerHTML = commentsHtml;
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('showCommentsHistory').addEventListener('click', fetchAndDisplayUserComments);
+});
+
+
 async function fetchAndDisplayUserRatings() {
   const user = firebase.auth().currentUser;
   if (!user) {
