@@ -4377,33 +4377,6 @@ async function addCommentActivity(gameId, gameName, commentText) {
   }
 }
 
-async function handleCommentClick() {
-    if (!isUserSignedIn()) {
-        showToast('You must be signed in to add comments.');
-        return;
-    }
-    const commentText = prompt("Enter your comment:");
-    if (commentText && commentText.trim() !== "") {
-        try {
-            // Assuming gameId and gameName are correctly defined elsewhere
-            await firestore.collection('comments').add({
-                gameId: gameId, // Ensure this is the correct gameId for the game being commented on
-                text: commentText,
-                userId: firebase.auth().currentUser.uid,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            });
-            showToast('Comment added successfully');
-            // Now record the comment activity
-            await addCommentActivity(gameId, "Animal Crossing: New Horizons", commentText);
-            fetchAndDisplayComments(gameId);
-        } catch (error) {
-            console.error('Error adding comment:', error);
-            showToast('Failed to add comment');
-        }
-    } else {
-        showToast('Please enter a comment.');
-    }
-}
 
 
 async function fetchAndDisplayLikes(gameId) {
