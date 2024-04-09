@@ -4393,10 +4393,7 @@ form input[type="text"] {
   padding: 20px;
 }
 
-#games-list2 h2 {
-  text-align: center;
-  color: black;
-}
+
 .light-mode #games-list2 h2 {
 
   color: black;
@@ -4688,4 +4685,179 @@ color:white
 #game-quiz h2 {
     color: black; /* Dark grey color for the title */
 
+}
+
+.game-info {
+  max-width: 1000px;
+  margin-top: 100px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+
+h2 {
+    color: #333;
+}
+
+/* Styling for the Games List */
+#games-list2 {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-width: 1000px
+
+}
+
+#gamesContainer {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+#gamesContainer a {
+    display: block;
+    background: dodgerblue;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+#gamesContainer a:hover {
+    background-color: blue;
+}
+
+
+.featured-image {
+    width: 200px;
+    border-radius: 5px;
+}
+
+.game-details {
+    flex: 1;
+}
+
+.play-now-btn {
+    background: dodgerblue;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.play-now-btn:hover {
+    background-color: blue;
+}
+
+/* Styling for Game Quiz */
+#game-quiz {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.quiz-btn {
+    background: dodgerblue;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+.quiz-btn:hover {
+    background-color: blue;
+}
+
+#quiz-result p {
+    margin-top: 20px;
+    color: dodgerblue;
+}
+
+.featured-game-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    text-align: center; /* Centers the content */
+}
+
+
+
+.featured-content {
+    display: flex;
+    flex-direction: column; /* Stacks items vertically */
+    align-items: center; /* Centers items horizontally */
+    gap: 20px;
+}
+
+.featured-image {
+    max-width: 50%; /* Adjust based on desired size, ensures responsiveness */
+    height: auto;
+    border-radius: 5px;
+    /* Image automatically centered by flexbox */
+}
+
+.game-details {
+    /* Text alignment adjustments if necessary */
+}
+
+.game-title {
+    margin-top: 0;
+}
+
+.game-description {
+    margin: 16px auto 0; /* Centers the description with margin */
+    max-width: 80%; /* Limits width for readability */
+    /* Text automatically centered by container */
+}
+
+.play-now-btn {
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 16px; /* Adds space above the button */
+}
+
+.play-now-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Adjust image size for smaller screens */
+@media (max-width: 768px) {
+    .featured-image {
+        max-width: 80%; /* Larger on small screens for visibility */
+    }
+
+    .game-description {
+        max-width: 90%; /* Allows more room for text on small screens */
+    }
+}
+
+.featured-game-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    text-align: center; /* This centers the text for all child elements, including the title */
+}
+
+.section-title {
+    margin-bottom: 16px;
+    text-align: center; /* Specifically ensures the title is centered, should be redundant given the container's style */
 }

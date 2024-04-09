@@ -329,10 +329,11 @@
 
         <div id="main-content" class="content">
           <!-- Container for the image gallery -->
+              <div class="game-info">
           <section id="games-list2">
             <h2>Games</h2>
-            <button id="showGamesBtn"></button>
-            <ul id="gamesContainer" style="display: none;">
+
+           <ul id="gamesContainer" class="games-list">
               <a href="..//animalcrossingnewhorizons/index.html" data-game="Animal Crossing: New Horizons
               ">Animal Crossing: <br>New Horizons</a>
              <a href="..//animalcrossingnewleaf/index.html" data-game="Animal Crossing: New Leaf
@@ -342,7 +343,7 @@
              <a href="..//bigbrainacademywiidegree/index.html" data-game="Big Brain Academy: Wii Degree">Big Brain Academy: <br> Wii Degree</a>
              <a href="..//blur/index.html" data-game="Blur">Blur</a>
              <a href="..//cars/index.html" data-game="Cars">Cars</a>
-             <a href="..//darksoulsremastered/index.html" data-game="Dark Souls Remastered">Dark Souls<br>Remastered</a>
+             <a href="..//darksoulsremastered/index.html" data-game="Dark Souls Remastered">Dark Souls <br>Remastered</a>
              <a href="..//deadpool/index.html" data-game="Deadpool">Deadpool</a>
              <a href="..//despicablememinionmayhem/index.html" data-game="Despicable Me: Minion Mayhem ">Despicable Me: <br>Minion Mayhem</a>
              <a href="..//disneyinfinity/index.html" data-game="Disney Infinity">Disney Infinity</a>
@@ -512,10 +513,12 @@
 
             </ul>
         </section>
+
+
         <section id="featured-game" class="featured-game-section">
             <h2 class="section-title">Featured Game of the Month</h2>
             <div class="featured-content">
-                <img src="../supermariobroswonder/supermariobroswonder.jpg" alt="Super Mario Bros. Wonder" class="featured-image">
+                <img src="..//supermariobroswonder/supermariobroswonder.jpg" alt="Super Mario Bros. Wonder" class="featured-image">
                 <div class="game-details">
                     <h3 class="game-title">Super Mario Bros. Wonder</h3>
                     <p class="game-description">A side-scrolling platformer that features Mario and his friends, Peach, Luigi, Daisy, and more, who go on an adventure in the Flower Kingdom to stop Bowser. Along the journey, there are multiple collectibles named "Wonder Seeds" that change how the stages look. This game is special for gamers who love platforming games and fans of the Mario series.</p>
@@ -531,6 +534,7 @@
   <div class="quiz-question">
     <p>What genre do you prefer?</p>
     <button class="quiz-btn" data-genre="Action">Action</button>
+    <button class="quiz-btn" data-genre="Adventure">Adventure</button>
     <button class="quiz-btn" data-genre="Puzzle">Puzzle</button>
     <button class="quiz-btn" data-genre="Role-playing">Role-playing</button>
     <!-- Add more options as needed -->
@@ -539,13 +543,49 @@
     <p id="suggested-game">We suggest you play: <span></span></p>
   </div>
 </section>
-
+</div>
 
 
 
 <div class="footer">
   <div class="copy">Copyright &copy; 2024 Reminiscence Collection. All rights reserved.</div>
 </div></div>
+
+<script>
+document.querySelectorAll('.quiz-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const genre = this.dataset.genre;
+        let gameName = ""; // Initialize the variable to hold the game suggestion
+
+        // Suggest a game based on the genre
+        switch(genre) {
+            case 'Action':
+                gameName = "The Legend of Zelda: Breath of the Wild";
+                break;
+            case 'Puzzle':
+                gameName = "LittleBigPlanet 2";
+                break;
+            case 'Role-playing':
+                gameName = "Fallout 4";
+                break;
+            case 'Adventure':
+                gameName = "Uncharted 4: A Thief’s End";
+                break;
+            // Add more cases for additional genres
+            default:
+                gameName = "a game";
+        }
+
+        // Display the suggestion
+        document.getElementById('quiz-result').style.display = 'block';
+        document.getElementById('suggested-game').querySelector('span').textContent = gameName;
+    });
+});
+
+</script>
+
+
+
 
 <script>
   // Corrected Categories Data
