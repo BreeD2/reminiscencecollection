@@ -4010,22 +4010,27 @@ document.getElementById('commentButton').addEventListener('click', handleComment
 
 
 
-// Now setup your event listeners correctly to pass gameId and gameName
 function setupEventListeners() {
-    const gameId = 'animalcrossingnewhorizons'; // Ensure this is correctly determined based on your app's context
+    // Ensure these are correctly determined based on your app's context
+    const gameId = 'animalcrossingnewhorizons';
     const gameName = 'Animal Crossing: New Horizons';
 
+    // Find buttons by their IDs
     const likeButton = document.getElementById('likeButton');
     const commentButton = document.getElementById('commentButton');
     const rateButton = document.getElementById('rateButton');
 
-    if (likeButton) likeButton.addEventListener('click', (e) => handleLikeClick(e, gameId, gameName).catch(console.error));
-    // Add similar adjustments for commentButton and rateButton as needed
+    // Attach event listeners
+    if (likeButton) {
+        likeButton.addEventListener('click', () => handleLikeClick(gameId, gameName).catch(console.error));
+    }
+    if (commentButton) {
+        commentButton.addEventListener('click', () => handleCommentClick(gameId, gameName).catch(console.error));
+    }
+    if (rateButton) {
+        rateButton.addEventListener('click', () => handleRateClick(gameId, gameName).catch(console.error));
+    }
 }
-
-// Call setupEventListeners on DOMContentLoaded or when it's appropriate to attach event listeners
-document.addEventListener('DOMContentLoaded', setupEventListeners);
-
 
 
 
