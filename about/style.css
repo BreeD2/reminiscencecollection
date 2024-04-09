@@ -2493,17 +2493,11 @@ border:2px solid white;
       padding: 20px;
       position: relative;
       background-color: black;
-      margin-top: 100px;
+      margin-top: 200px;
         color:white;
+
     }
-    body.light-mode .footer, body.light-mode .footer * {
-        width: 100%;
-        background-color: #f1f1f1; /* Light grey background for the footer */
-        text-align: center;
-        padding: 20px;
-        color: #000; /* Dark text color for readability */
-        margin-top: auto; /* Ensures that the footer is pushed to the bottom */
-      }
+
       body.dark-mode #sort-section, body.sort-section * {
 
     background-color: #f1f1f1; /* Light grey background for the footer */
@@ -2563,14 +2557,7 @@ body.light-mode .featured-games-title {
 background-color: grey;
 color:white
 }
-body.dark-mode .footer, body.dark-mode .footer * {
-    width: 100%;
-    background-color: black; /* Light grey background for the footer */
-    text-align: center;
-    padding: 20px;
-    color: white; /* Dark text color for readability */
-    margin-top: auto; /* Ensures that the footer is pushed to the bottom */
-  }
+
 
 body.dark-mode h2, body.sort-section h2 * {
 
@@ -4386,4 +4373,96 @@ margin-top: 20px;
 
 .light-mode .research-focus p {
     color:black
+}
+
+.about-container {
+       max-width: 800px;
+       margin: auto;
+       background-color: white;
+       padding: 20px;
+       border-radius: 8px;
+       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+       top:100px;
+       position: relative;
+
+
+
+   }
+
+
+   .dark-mode .about-container {
+
+          background-color: #222;
+          color:white
+
+
+      }
+
+      .dark-mode .about-container a {
+
+
+             color:white;
+             text-decoration: underline
+
+
+         }
+
+               .dark-mode .about-container a:hover {
+
+
+                      color:grey;
+                      text-decoration: underline
+
+
+                  }
+
+
+   /* Responsive styling */
+@media (max-width: 768px) {
+    .about-container {
+        padding: 15px;
+        font-size: 14px;
+    }
+
+    .header1 {
+        font-size: 1.5em;
+    }
+
+    .development-story h2{
+      font-size: 1.5em;
+    }
+
+    .research-focus h2 {
+      font-size: 1.5em;
+    }
+}
+
+@media (max-width: 576px) {
+    .about-container {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .header1 {
+        font-size: 1.2em;
+    }
+
+    .development-story h2{
+      font-size: 1.2em;
+    }
+
+    .research-focus h2 {
+      font-size: 1.2em;
+    }
+}
+
+.dropdown-content button:hover{
+ background-color: grey;
+ color: white;
+     width: 100%;
+}
+.light-mode .footer {
+
+  background-color: #f1f1f1;
+
 }

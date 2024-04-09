@@ -4512,3 +4512,10 @@ form input[type="text"] {
 #signupBtn {
     margin-top: 20px
 }
+
+
+.light-mode .footer {
+
+  background-color: #f1f1f1;
+
+}

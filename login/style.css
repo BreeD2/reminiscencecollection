@@ -4576,3 +4576,14 @@ list-style: none
   margin-left: 50px;
   max-width: 400px
 }
+.dropdown-content button:hover{
+ background-color: grey;
+ color: white;
+     width: 100%;
+}
+
+.light-mode .footer {
+
+  background-color: #f1f1f1;
+
+}

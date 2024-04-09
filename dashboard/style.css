@@ -4460,6 +4460,33 @@ margin: 10px;
 
  }
 
+ #userDescriptionInput {
+   min-width: 200px;
+   width:80%;
+margin: 10px;
+   background-color: white;
+   padding: 8px;
+   border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+   border:none;
+   font-family: arial;
+   font-size: 16px; /* Increase font size */
+
+ }
+ .dark-mode #userDescriptionInput {
+
+   background-color: #222;
+   color:white
+
+ }
+
+ .light-mode #userDescriptionInput {
+
+   background-color: white;
+   color:black
+
+ }
+
  #newPasswordInput {
    min-width: 200px;
    width:80%;
@@ -4471,6 +4498,18 @@ margin: 10px;
    border:none;
    font-family: arial;
    font-size: 16px; /* Increase font size */
+ }
+
+ .light-mode #newPasswordInput {
+
+   background-color: white;
+   color:black
+ }
+
+ .dark-mode #newPasswordInput {
+
+   background-color: #222;
+   color:white
  }
 
  #updateProfileBtn {
@@ -4487,6 +4526,17 @@ margin: 10px;
    border: none;
    margin: 10px
  }
+ .light-mode #updateProfileBtn {
+
+    background-color: white;
+    color: black;
+}
+
+.dark-mode #updateProfileBtn {
+
+   background-color: #222;
+   color: white;
+}
 #saveDescriptionBtn {
 
 

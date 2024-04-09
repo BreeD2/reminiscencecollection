@@ -4615,3 +4615,9 @@ margin-top: 20px;
   background-color: dimgrey;
   color:white
 }
+
+.light-mode .footer {
+
+  background-color: #f1f1f1;
+
+}

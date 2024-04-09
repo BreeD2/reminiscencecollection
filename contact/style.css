@@ -4303,7 +4303,7 @@ margin-top: 20px;
 }
 
 .dark-mode .contact-form {
-  background-color: #555;
+  background-color: #222;
   color:white
 
 }
@@ -4423,4 +4423,35 @@ color:white
 
 #contactForm button[type="submit"]:hover {
   background-color: #0056b3;
+}
+
+.dropdown-content button:hover{
+ background-color: grey;
+ color: white;
+     width: 100%;
+}
+
+.light-mode #contactForm {
+  background-color: white;
+  color:black
+}
+
+.dark-mode #contactForm {
+  background-color: #222;
+  color:white
+}
+
+.dark-mode #contactForm button[type="submit"] {
+  background-color: grey;
+  color:white
+}
+
+.light-mode #contactForm button[type="submit"] {
+  background-color: #ddd;;
+  color:black
+}
+
+.light-mode #contactForm button:hover[type="submit"] {
+  background-color: darkgrey;;
+  color:black
 }
