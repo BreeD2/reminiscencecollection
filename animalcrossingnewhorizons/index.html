@@ -3939,16 +3939,22 @@ function showToast(message) {
 function isUserSignedIn() {
     return !!firebase.auth().currentUser;
 }
-// Example correction
+
+console.log(typeof gameId, gameId); // This should log: "string" followed by the gameId value
+
 async function handleLikeClick(gameId) {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to like.');
         return;
     }
 
+    if (typeof gameId !== 'string' || gameId.trim() === '') {
+        console.error('Invalid gameId:', gameId);
+        showToast('Game ID is invalid. Like action not performed.');
+        return;
+    }
+
     const userId = firebase.auth().currentUser.uid;
-    // Remove the const declaration if gameName is declared outside or passed as a parameter
-    // const gameName = "Animal Crossing: New Horizons";
     const likesRef = firestore.collection('likes').doc(gameId);
 
     try {
@@ -3959,8 +3965,8 @@ async function handleLikeClick(gameId) {
         } else {
             await likesRef.update({ [userId]: true });
             showToast('Like added.');
-            // Record the like activity
-            await addLikeActivity(gameId, gameName); // Ensure gameName is accessible here
+            // Ensure gameName is defined and valid before calling addLikeActivity
+            await addLikeActivity(gameId, gameName);
         }
         fetchAndDisplayLikes(gameId);
     } catch (error) {
@@ -4498,6 +4504,37 @@ async function addComment(gameId, commentText) {
         showToast('Failed to add comment');
     }
 }
+
+async function rateGame(gameId, rating) {
+    if (!isUserSignedIn()) {
+        showToast('You must be signed in to rate.');
+        return;
+    }
+
+    // Example: Logic to determine gameName based on gameId
+    // This could involve fetching game details from Firestore or another source
+    const gameDetails = await fetchGameDetails(gameId);
+    const gameName = gameDetails.name; // Assuming the fetched game details include a name
+
+    if (!gameName) {
+        console.error('Game name not found for gameId:', gameId);
+        showToast('Failed to find game name. Rating not saved.');
+        return;
+    }
+
+    // Call saveRating with gameId, rating, and the determined gameName
+    await saveRating(gameId, rating, gameName);
+}
+
+// Dummy function to represent fetching game details
+// Replace this with your actual function to fetch game details based on gameId
+async function fetchGameDetails(gameId) {
+    // Your logic to fetch game details
+    return { name: "Example Game Name" }; // Example return value
+}
+
+// Your existing saveRating function...
+
 async function saveRating(gameId, rating, gameName) {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to rate.');
