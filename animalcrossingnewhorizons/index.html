@@ -4018,27 +4018,46 @@ async function handleCommentClick() {
         showToast('You must be signed in to add comments.');
         return;
     }
+
     const commentText = prompt("Enter your comment:");
     console.log(`Comment text entered: ${commentText}`); // Debugging: Log the captured comment text
 
     if (commentText) {
         try {
-            await firestore.collection('comments').add({
+            // Save the comment to Firestore
+            const commentRef = await firestore.collection('comments').add({
                 gameId: gameId,
                 text: commentText,
                 userId: auth.currentUser.uid,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             });
+
             showToast('Comment added successfully');
             fetchAndDisplayComments(gameId);
+
+            // Prepare activity object for logging
+            const activity = {
+                userId: auth.currentUser.uid,
+                type: 'comment',
+                gameId: gameId,
+                commentText: commentText,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                commentId: commentRef.id, // Optionally log the comment ID for reference
+            };
+
+            // Save the activity log to Firestore
+            await firestore.collection('userActivities').add(activity);
+            console.log('Comment activity recorded successfully');
+
         } catch (error) {
-            console.error('Error adding comment:', error);
+            console.error('Error adding comment or logging activity:', error);
             showToast('Failed to add comment');
         }
     } else {
         console.log('No comment text entered.'); // Debugging: Log when no comment text is entered
     }
 }
+
 
 
 
@@ -4154,21 +4173,7 @@ async function fetchAndDisplayComments(gameId) {
                 .orderBy('timestamp', 'asc')
                 .get();
                 // New function to edit a reply
-async function editReply(replyId, currentText) {
-    const newText = prompt('Edit your reply:', currentText);
-    if (newText !== null && newText.trim() !== '') {
-        try {
-            await firestore.collection('replies').doc(replyId).update({
-                text: newText.trim()
-            });
-            showToast('Reply updated successfully.');
-            fetchAndDisplayComments(gameId); // Refresh to show changes
-        } catch (error) {
-            console.error('Error updating reply:', error);
-            showToast('Failed to update reply.');
-        }
-    }
-}
+
 
 // New function to edit a reply
 async function editReply(replyId, currentText) {
@@ -4247,21 +4252,7 @@ repliesQuerySnapshot.forEach(async replyDoc => {
 
 
 
-function createElement(tag, options = {}) {
-    const element = document.createElement(tag);
-    Object.keys(options).forEach(prop => {
-        if (prop === 'events') {
-            Object.keys(options.events).forEach(event => {
-                element.addEventListener(event, options.events[event]);
-            });
-        } else if (prop === 'textContent') {
-            element.textContent = options[prop];
-        } else {
-            element.setAttribute(prop, options[prop]);
-        }
-    });
-    return element;
-}
+
 
 // This function is already defined in your script, included here to avoid the syntax error
 async function editComment(commentId, currentText) {
@@ -4355,6 +4346,33 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+async function handleSubmitComment() {
+    const submitCommentButton = document.getElementById('submitComment');
+    const commentInput = document.getElementById('commentInput');
+    const commentText = commentInput.value.trim();
+
+    // Disable the button to prevent multiple submissions
+    submitCommentButton.disabled = true;
+
+    if (commentText) {
+        try {
+            // Assuming addComment is a function that adds the comment
+            await addComment(commentText);
+            commentInput.value = ''; // Clear the input field after successful submission
+            showToast('Comment added successfully.');
+            // Optionally, refresh the displayed comments
+            await fetchAndDisplayComments();
+        } catch (error) {
+            console.error('Error adding comment:', error);
+            showToast('Failed to add comment.');
+        }
+    } else {
+        showToast('Please enter a comment.');
+    }
+
+    // Re-enable the button after the operation is complete
+    submitCommentButton.disabled = false;
+}
 
 
 

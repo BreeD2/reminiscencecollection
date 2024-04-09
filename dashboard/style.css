@@ -4879,3 +4879,16 @@ light-mode .footer {
 .light-mode .copy {
 color:black
 }
+
+
+element.style {
+}
+#activityLog {
+    background: #007bff;
+    color: white;
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
