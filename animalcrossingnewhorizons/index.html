@@ -4012,14 +4012,15 @@ document.addEventListener('DOMContentLoaded', function() {
   fetchAndDisplayLikes(gameId);
 });
 
-
 async function handleCommentClick() {
-    const gameId = 'animalcrossingnewhorizons'; // Example gameId, replace as needed
+    const gameId = 'animalcrossingnewhorizons'; // Ensure this matches your intended game ID
     if (!isUserSignedIn()) {
         showToast('You must be signed in to add comments.');
         return;
     }
     const commentText = prompt("Enter your comment:");
+    console.log(`Comment text entered: ${commentText}`); // Debugging: Log the captured comment text
+
     if (commentText) {
         try {
             await firestore.collection('comments').add({
@@ -4034,8 +4035,11 @@ async function handleCommentClick() {
             console.error('Error adding comment:', error);
             showToast('Failed to add comment');
         }
+    } else {
+        console.log('No comment text entered.'); // Debugging: Log when no comment text is entered
     }
 }
+
 
 document.getElementById('commentButton').addEventListener('click', handleCommentClick);
 
