@@ -3967,6 +3967,8 @@ async function handleLikeClick(gameId, gameName) {
     }
 }
 
+console.log(`gameId: ${gameId}, Type: ${typeof gameId}`);
+const likesRef = firestore.collection('likes').doc(gameId);
 
 
 
@@ -4442,26 +4444,26 @@ async function saveRating(gameId, rating, gameName) {
         showToast('Failed to save rating');
     }
 }
-
-// Define the handleRateClick function
+// Adjusted handleRateClick function to include gameName
 async function handleRateClick() {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to rate.');
         return;
     }
 
-    // Assuming you need the gameId to rate a game
-    const gameId = 'animalcrossingnewhorizons'; // Replace with logic to obtain the actual gameId
+    const gameId = 'animalcrossingnewhorizons'; // Example gameId
+    const gameName = "Animal Crossing: New Horizons"; // You need to set this dynamically based on gameId
+
     let rating = parseInt(prompt("Enter your rating (1-5):"), 10); // Convert string input to integer
 
-    // Validate rating is within the 1-5 range
+    // Validate rating
     if (!rating || rating < 1 || rating > 5) {
         showToast('Please enter a valid rating between 1 and 5.');
-        return; // Exit the function if the rating is not valid
+        return;
     }
 
     try {
-        await saveRating(gameId, rating);
+        await saveRating(gameId, rating, gameName); // Pass gameName here
     } catch (error) {
         console.error('Error during rating:', error);
         showToast('Failed to save rating');
