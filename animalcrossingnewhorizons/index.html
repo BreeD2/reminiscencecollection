@@ -4486,13 +4486,6 @@ firebase.auth().onAuthStateChanged(user => {
 });
 
 
-// Your existing DOMContentLoaded listener
-document.addEventListener('DOMContentLoaded', async function() {
-    const gameId = 'animalcrossingnewhorizons'; // Replace with the actual game ID
-    await handleAuthStateChanges();
-    setupEventListeners(); // Ensure this is defined before calling it
-    await fetchAndDisplayComments(gameId);
-});
 
 
 
