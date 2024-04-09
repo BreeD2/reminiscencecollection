@@ -4007,6 +4007,22 @@ document.addEventListener('DOMContentLoaded', function() {
    }
  }
 
+ document.getElementById('commentButton').addEventListener('click', function() {
+     const commentSection = document.getElementById('addCommentSection');
+
+     // Check if the comment section exists
+     if (commentSection) {
+         // Scroll to the comment section
+         commentSection.scrollIntoView({ behavior: 'smooth' });
+
+         // Optionally, focus the textarea to prompt the user to start typing immediately
+         const commentInput = document.getElementById('commentInput');
+         if (commentInput) {
+             commentInput.focus();
+         }
+     }
+ });
+
 
 
 
@@ -4474,21 +4490,6 @@ async function handleRateClick() {
     }
 }
 
-document.getElementById('commentButton').addEventListener('click', function() {
-    const commentSection = document.getElementById('addCommentSection');
-
-    // Check if the comment section exists
-    if (commentSection) {
-        // Scroll to the comment section
-        commentSection.scrollIntoView({ behavior: 'smooth' });
-
-        // Optionally, focus the textarea to prompt the user to start typing immediately
-        const commentInput = document.getElementById('commentInput');
-        if (commentInput) {
-            commentInput.focus();
-        }
-    }
-});
 
 
 async function addLikeActivity(gameId, gameName) {
