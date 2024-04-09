@@ -362,12 +362,7 @@
 <!-- Account Deletion Button -->
 <button id="deleteAccountBtn">Delete Account</button>
 
-<div id="recentActivity">
-    <h2>Recent Activity</h2>
-    <ul id="activityLog">
-        <!-- Dynamically populated list of user activities -->
-    </ul>
-</div>
+
 
 
     <div class="footer">
@@ -4172,47 +4167,6 @@ document.getElementById('saveDescriptionBtn').addEventListener('click', async ()
     showToast('No user is signed in.');
   }
 });
-// Assuming Firebase has already been initialized as shown in your script.
-// Example function to set the current game context
-function setCurrentGame(gameId, gameName) {
-  window.currentGameId = gameId; // Store globally or manage via a state management solution
-  window.currentGameName = gameName;
-}
-
-// Example usage
-setCurrentGame('animalcrossingnewleaf', 'Animal Crossing: New Leaf');
-
-// Use the current game context for activities
-async function handleUserActivity(activityType, additionalData = {}) {
-  const user = firebase.auth().currentUser;
-
-  if (!user) {
-    showToast('You must be signed in to perform this action.');
-    return;
-  }
-
-  const activityRef = firestore.collection('userActivities').doc();
-  const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-
-  const activity = {
-    userId: user.uid,
-    type: activityType,
-    gameId: window.currentGameId,
-    gameName: window.currentGameName,
-    timestamp: timestamp,
-    ...additionalData
-  };
-
-  try {
-    await activityRef.set(activity);
-    console.log(`${activityType} activity recorded successfully for ${window.currentGameName}`);
-    showToast(`${activityType} activity recorded successfully.`);
-  } catch (error) {
-    console.error(`Error recording ${activityType} activity for ${window.currentGameName}:`, error);
-    showToast(`Failed to record ${activityType} activity.`);
-  }
-}
-
 async function fetchAndDisplayRecentActivities(userId) {
     const activityLogElement = document.getElementById('activityLog');
     if (!activityLogElement) {
@@ -4222,13 +4176,13 @@ async function fetchAndDisplayRecentActivities(userId) {
 
     activityLogElement.innerHTML = ''; // Clear existing activities
 
-    try {
-        const activitiesRef = firestore.collection('userActivities')
-            .where('userId', '==', userId)
-            .orderBy('timestamp', 'desc');
+    const activitiesRef = firestore.collection('userActivities')
+        .where('userId', '==', userId)
+        .orderBy('timestamp', 'desc')
+        .limit(10);
 
+    try {
         const snapshot = await activitiesRef.get();
-        console.log(`Activities fetched: ${snapshot.docs.length}`); // Debugging line
 
         if (snapshot.empty) {
             console.log('No recent activities found.');
@@ -4238,8 +4192,19 @@ async function fetchAndDisplayRecentActivities(userId) {
 
         snapshot.forEach(doc => {
             const activity = doc.data();
-            console.log(activity); // Debugging line
-            let activityText = `${activity.type} - ${activity.gameName}`;
+            let activityText = '';
+
+            switch (activity.type) {
+                case 'like':
+                    activityText = `Liked ${activity.gameName} on ${activity.timestamp.toDate().toLocaleString()}`;
+                    break;
+                case 'comment':
+                    activityText = `Commented on ${activity.gameName}: "${activity.text}" on ${activity.timestamp.toDate().toLocaleString()}`;
+                    break;
+                case 'rating':
+                    activityText = `Rated ${activity.gameName}: ${activity.rating} stars on ${activity.timestamp.toDate().toLocaleString()}`;
+                    break;
+            }
 
             const activityItem = document.createElement('li');
             activityItem.textContent = activityText;
@@ -4251,8 +4216,20 @@ async function fetchAndDisplayRecentActivities(userId) {
 }
 
 
-// Similar modifications can be applied to handleLikeClick, handleCommentClick, etc.,
-// where you use window.currentGameId and window.currentGameName.
+// Inside your dashboard/home page script
+document.addEventListener('DOMContentLoaded', () => {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      console.log(`Welcome, ${user.displayName || "User"}!`);
+      fetchAndDisplayRecentActivities(user.uid).catch(console.error);
+    } else {
+      console.log('User is not signed in. Redirecting to login page...');
+      // Redirect to login page
+      window.location.href = '..//login/index.html'; // Adjust the path as necessary
+    }
+  });
+});
+
 
 
       // Handle authentication state changes
