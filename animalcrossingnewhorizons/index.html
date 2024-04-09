@@ -3896,7 +3896,7 @@ const auth = firebase.auth();
 const storage = firebase.storage();
 const firestore = firebase.firestore();
 const db = firebase.firestore();
-const gameId = 'animalcrossingnewhorizons'; // Assume this is set appropriately elsewhere
+const gameId = 'Animal Crossing New Horizons'; // Assume this is set appropriately elsewhere
 
 // Use an auth state observer to wait for the auth state to be initialized
 firebase.auth().onAuthStateChanged((user) => {
@@ -3939,18 +3939,16 @@ function showToast(message) {
 function isUserSignedIn() {
     return !!firebase.auth().currentUser;
 }
-
-async function handleLikeClick(gameId, gameName) {
+// Example correction
+async function handleLikeClick(gameId) {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to like.');
         return;
     }
 
-    // You've declared gameName here again which might cause an error if you've already passed it as a function argument.
-    // So, remove the line below if gameName is passed as an argument to the function.
-    // const gameName = "Animal Crossing: New Horizons"; // Example game name, should be dynamically determined
-
     const userId = firebase.auth().currentUser.uid;
+    // Remove the const declaration if gameName is declared outside or passed as a parameter
+    // const gameName = "Animal Crossing: New Horizons";
     const likesRef = firestore.collection('likes').doc(gameId);
 
     try {
@@ -3961,16 +3959,14 @@ async function handleLikeClick(gameId, gameName) {
         } else {
             await likesRef.update({ [userId]: true });
             showToast('Like added.');
-            // Record the like activity after successfully updating the like status.
-            await addLikeActivity(gameId, gameName).catch(console.error);
+            // Record the like activity
+            await addLikeActivity(gameId, gameName); // Ensure gameName is accessible here
         }
-        // Consider placing fetchAndDisplayLikes(gameId); here if you want to refresh likes display after every action.
+        fetchAndDisplayLikes(gameId);
     } catch (error) {
         console.error("Error toggling like status: ", error);
         showToast('Failed to update like status.');
     }
-    // Optionally, you can also refresh the likes display here if it makes sense for your app's flow.
-    fetchAndDisplayLikes(gameId);
 }
 
 
@@ -3980,13 +3976,13 @@ async function handleLikeClick(gameId, gameName) {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-  const gameId = "animalcrossingnewhorizons"; // Make sure this is set correctly
+  const gameId = "Animal Crossing New Horizons"; // Make sure this is set correctly
   fetchAndDisplayLikes(gameId);
 });
 
 
 async function handleCommentClick() {
-    const gameId = 'animalcrossingnewhorizons'; // Example gameId, replace as needed
+    const gameId = 'Animal Crossing New Horizons'; // Example gameId, replace as needed
     if (!isUserSignedIn()) {
         showToast('You must be signed in to add comments.');
         return;
@@ -4429,19 +4425,29 @@ async function fetchAndDisplayLikes(gameId) {
 
 
 
-
 async function fetchAndDisplayRating(gameId) {
   try {
     console.log(`Fetching rating for game ID: ${gameId}`);
     const ratingDoc = await firestore.collection('ratings').doc(gameId).get();
     if (ratingDoc.exists) {
       const ratingData = ratingDoc.data();
-      const userRating = ratingData[auth.currentUser.uid]; // Make sure this UID matches how you've stored ratings
-      console.log(`Rating found: ${userRating}`);
-      document.getElementById('ratingDisplay').textContent = `Your Rating: ${userRating}`;
+      console.log('Rating Data:', ratingData); // Debug: log the entire rating data
+
+      // Ensure the user is signed in before trying to access their UID
+      if (isUserSignedIn()) {
+        const userRating = ratingData[auth.currentUser.uid];
+        console.log(`Rating found for user ${auth.currentUser.uid}: ${userRating}`); // Debug: log the fetched rating
+
+        // Update the display based on whether a rating was found
+        const displayText = userRating ? `Your Rating: ${userRating}` : "You haven't rated this game yet.";
+        document.getElementById('ratingDisplay').textContent = displayText;
+      } else {
+        console.log('No user is signed in to fetch rating.');
+        document.getElementById('ratingDisplay').textContent = "Sign in to see your rating.";
+      }
     } else {
       console.log('No rating found for this game.');
-      document.getElementById('ratingDisplay').textContent = "You haven't rated this game yet."; // Optionally handle the case where there's no rating
+      document.getElementById('ratingDisplay').textContent = "You haven't rated this game yet.";
     }
   } catch (error) {
     console.error('Error fetching rating:', error);
@@ -4451,10 +4457,11 @@ async function fetchAndDisplayRating(gameId) {
 
 
 
+
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
     // User is signed in, safe to fetch the rating
-    fetchAndDisplayRating('animalcrossingnewhorizons');
+    fetchAndDisplayRating('Animal Crossing New Horizons');
   } else {
     // No user is signed in.
     console.log("No user signed in.");
@@ -4463,7 +4470,7 @@ firebase.auth().onAuthStateChanged(user => {
 
 
 document.addEventListener('DOMContentLoaded', async function() {
-    const gameId = 'animalcrossingnewhorizons'; // Replace with the actual game ID
+    const gameId = 'Animal Crossing New Horizons'; // Replace with the actual game ID
     await handleAuthStateChanges();
     setupEventListeners();
     await fetchAndDisplayComments(gameId);
@@ -4491,15 +4498,34 @@ async function addComment(gameId, commentText) {
         showToast('Failed to add comment');
     }
 }
+async function saveRating(gameId, rating, gameName) {
+    if (!isUserSignedIn()) {
+        showToast('You must be signed in to rate.');
+        return;
+    }
 
-async function saveRating(gameId, rating) {
-    // Replace this logic with your actual Firestore path and data structure
+    const userId = firebase.auth().currentUser.uid;
+
+    // Attempt to save the rating to the ratings collection
     try {
         await firestore.collection('ratings').doc(gameId).set({
-            [auth.currentUser.uid]: rating
+            [userId]: rating
         }, { merge: true });
+
+        // Once the rating is successfully saved, record the rating activity
+        const activity = {
+            type: 'rating',
+            gameId: gameId,
+            gameName: gameName, // This should be dynamically determined based on gameId
+            rating: rating,
+            userId: userId,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        await firestore.collection('userActivities').add(activity);
+
         showToast('Rating saved successfully');
-        fetchAndDisplayRating(gameId, auth.currentUser.uid); // Refresh rating display
+        fetchAndDisplayRating(gameId); // Refresh rating display
     } catch (error) {
         console.error('Error saving rating:', error);
         showToast('Failed to save rating');
@@ -4514,7 +4540,7 @@ async function handleRateClick() {
     }
 
     // Assuming you need the gameId to rate a game
-    const gameId = 'animalcrossingnewhorizons'; // Replace with logic to obtain the actual gameId
+    const gameId = 'Animal Crossing New Horizons'; // Replace with logic to obtain the actual gameId
     let rating = parseInt(prompt("Enter your rating (1-5):"), 10); // Convert string input to integer
 
     // Validate rating is within the 1-5 range
