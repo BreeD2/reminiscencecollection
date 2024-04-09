@@ -4172,54 +4172,49 @@ document.getElementById('saveDescriptionBtn').addEventListener('click', async ()
     showToast('No user is signed in.');
   }
 });
-async function fetchAndDisplayRecentActivities(userId) {
-    const activityLogElement = document.getElementById('activityLog');
-    if (!activityLogElement) {
-        console.error('Activity log element not found.');
-        return;
-    }
-
-    activityLogElement.innerHTML = ''; // Clear existing activities
-
-    const activitiesRef = firestore.collection('userActivities')
-        .where('userId', '==', userId)
-        .orderBy('timestamp', 'desc')
-        .limit(10);
-
-    try {
-        const snapshot = await activitiesRef.get();
-
-        if (snapshot.empty) {
-            console.log('No recent activities found.');
-            activityLogElement.textContent = 'No recent activities found.';
-            return;
-        }
-
-        snapshot.forEach(doc => {
-            const activity = doc.data();
-            let activityText = '';
-
-            switch (activity.type) {
-                case 'like':
-                    activityText = `Liked ${activity.gameName} on ${activity.timestamp.toDate().toLocaleString()}`;
-                    break;
-                case 'comment':
-                    activityText = `Commented on ${activity.gameName}: "${activity.text}" on ${activity.timestamp.toDate().toLocaleString()}`;
-                    break;
-                case 'rating':
-                    activityText = `Rated ${activity.gameName}: ${activity.rating} stars on ${activity.timestamp.toDate().toLocaleString()}`;
-                    break;
-            }
-
-            const activityItem = document.createElement('li');
-            activityItem.textContent = activityText;
-            activityLogElement.appendChild(activityItem);
-        });
-    } catch (error) {
-        console.error('Error fetching recent activities:', error);
-    }
+// Assuming Firebase has already been initialized as shown in your script.
+// Example function to set the current game context
+function setCurrentGame(gameId, gameName) {
+  window.currentGameId = gameId; // Store globally or manage via a state management solution
+  window.currentGameName = gameName;
 }
 
+// Example usage
+setCurrentGame('animalcrossingnewleaf', 'Animal Crossing: New Leaf');
+
+// Use the current game context for activities
+async function handleUserActivity(activityType, additionalData = {}) {
+  const user = firebase.auth().currentUser;
+
+  if (!user) {
+    showToast('You must be signed in to perform this action.');
+    return;
+  }
+
+  const activityRef = firestore.collection('userActivities').doc();
+  const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+
+  const activity = {
+    userId: user.uid,
+    type: activityType,
+    gameId: window.currentGameId,
+    gameName: window.currentGameName,
+    timestamp: timestamp,
+    ...additionalData
+  };
+
+  try {
+    await activityRef.set(activity);
+    console.log(`${activityType} activity recorded successfully for ${window.currentGameName}`);
+    showToast(`${activityType} activity recorded successfully.`);
+  } catch (error) {
+    console.error(`Error recording ${activityType} activity for ${window.currentGameName}:`, error);
+    showToast(`Failed to record ${activityType} activity.`);
+  }
+}
+
+// Similar modifications can be applied to handleLikeClick, handleCommentClick, etc.,
+// where you use window.currentGameId and window.currentGameName.
 
 
       // Handle authentication state changes
