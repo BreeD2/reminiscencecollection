@@ -4449,20 +4449,71 @@ async function saveRating(gameId, rating) {
     }
 }
 
-
 // Define the handleRateClick function
 async function handleRateClick() {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to rate.');
         return;
     }
+
     // Assuming you need the gameId to rate a game
     const gameId = 'animalcrossingnewhorizons'; // Replace with logic to obtain the actual gameId
-    const rating = prompt("Enter your rating (1-5):");
-    if (rating) {
+    let rating = parseInt(prompt("Enter your rating (1-5):"), 10); // Convert string input to integer
+
+    // Validate rating is within the 1-5 range
+    if (!rating || rating < 1 || rating > 5) {
+        showToast('Please enter a valid rating between 1 and 5.');
+        return; // Exit the function if the rating is not valid
+    }
+
+    try {
         await saveRating(gameId, rating);
+    } catch (error) {
+        console.error('Error during rating:', error);
+        showToast('Failed to save rating');
     }
 }
+
+document.getElementById('commentButton').addEventListener('click', async function() {
+    const user = firebase.auth().currentUser;
+    const commentInput = document.getElementById('commentInput');
+    const commentText = commentInput.value.trim();
+
+    // Check if the user is signed in
+    if (!user) {
+        alert('You must be signed in to comment.');
+        return;
+    }
+
+    // Validate the comment input
+    if (!commentText) {
+        alert('Please enter a comment before submitting.');
+        return;
+    }
+
+    // Assuming you need the gameId to associate the comment with a game
+    const gameId = 'exampleGameId'; // Use the actual logic to obtain the gameId
+
+    // Replace this logic with your actual Firestore path and data structure
+    try {
+        const commentRef = await firebase.firestore().collection('comments').add({
+            gameId: gameId,
+            userId: user.uid,
+            comment: commentText,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        // Clear the comment input after successful submission
+        commentInput.value = '';
+
+        console.log('Comment added with ID:', commentRef.id);
+        alert('Comment submitted successfully.');
+    } catch (error) {
+        console.error('Error adding comment:', error);
+        alert('Failed to submit comment.');
+    }
+});
+
 
 async function addLikeActivity(gameId, gameName) {
   const user = firebase.auth().currentUser;
