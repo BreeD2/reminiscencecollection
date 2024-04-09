@@ -3989,34 +3989,35 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+// Assuming you're trying to add a comment and have a text input for the gameId and the comment
+async function handleCommentClick() {
+   const gameIdInput = document.getElementById('gameIdInput'); // Assuming your input field's ID is gameIdInput
+   const commentInput = document.getElementById('commentInput'); // And the comment input field's ID is commentInput
+   const gameId = gameIdInput.value; // Get the value, not the input element itself
+   const commentText = commentInput.value;
 
-async function handleCommentClick(gameId, gameName) {
-  if (!isUserSignedIn()) {
-    showToast('You must be signed in to add comments.');
-    return;
-  }
-  const commentText = prompt("Enter your comment:");
-  if (commentText) {
-    try {
-      // Add comment to the comments collection
-      await firestore.collection('comments').add({
-        text: commentText,
-        userId: firebase.auth().currentUser.uid,
-        gameId: gameId,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      });
+   if (!isUserSignedIn()) {
+     showToast('You must be signed in to add comments.');
+     return;
+   }
 
-      // Record the comment activity
-      await addCommentActivity(gameId, gameName, commentText);
-
-      showToast('Comment added successfully');
-      fetchAndDisplayComments(gameId);
-    } catch (error) {
-      console.error('Error adding comment:', error);
-      showToast('Failed to add comment');
-    }
-  }
+   if (commentText && gameId) {
+     try {
+       await firestore.collection('comments').add({
+         text: commentText,
+         userId: firebase.auth().currentUser.uid,
+         gameId: gameId, // Ensure this is a string
+         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+       });
+       showToast('Comment added successfully');
+       // Continue with your logic here...
+     } catch (error) {
+       console.error('Error adding comment:', error);
+       showToast('Failed to add comment');
+     }
+   }
 }
+
 
 
 
