@@ -4011,32 +4011,29 @@ document.addEventListener('DOMContentLoaded', function() {
   const gameId = "animalcrossingnewhorizons"; // Make sure this is set correctly
   fetchAndDisplayLikes(gameId);
 });
-
 async function handleCommentClick() {
-    const gameId = 'animalcrossingnewhorizons'; // Ensure this matches your intended game ID
     if (!isUserSignedIn()) {
         showToast('You must be signed in to add comments.');
         return;
     }
     const commentText = prompt("Enter your comment:");
-    console.log(`Comment text entered: ${commentText}`); // Debugging: Log the captured comment text
-
-    if (commentText) {
+    if (commentText) { // Check if commentText is not null or empty
         try {
+            const userId = firebase.auth().currentUser.uid; // Move this inside try for better error handling
             await firestore.collection('comments').add({
-                gameId: gameId,
+                gameId: 'animalcrossingnewhorizons', // Ensure gameId is correct and not causing the issue
                 text: commentText,
-                userId: auth.currentUser.uid,
+                userId: userId,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             });
             showToast('Comment added successfully');
-            fetchAndDisplayComments(gameId);
+            fetchAndDisplayComments('animalcrossingnewhorizons'); // Ensure this function call is correct
         } catch (error) {
             console.error('Error adding comment:', error);
             showToast('Failed to add comment');
         }
     } else {
-        console.log('No comment text entered.'); // Debugging: Log when no comment text is entered
+        showToast('Comment cannot be empty.');
     }
 }
 
