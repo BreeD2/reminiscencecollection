@@ -3942,7 +3942,7 @@ function isUserSignedIn() {
 
 console.log(typeof gameId, gameId); // This should log: "string" followed by the gameId value
 
-async function handleLikeClick(gameId) {
+async function handleLikeClick(gameId, gameName) {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to like.');
         return;
@@ -3965,8 +3965,7 @@ async function handleLikeClick(gameId) {
         } else {
             await likesRef.update({ [userId]: true });
             showToast('Like added.');
-            // Ensure gameName is defined and valid before calling addLikeActivity
-            await addLikeActivity(gameId, gameName);
+            await addLikeActivity(gameId, gameName); // Assuming gameName is correctly passed here
         }
         fetchAndDisplayLikes(gameId);
     } catch (error) {
@@ -3975,6 +3974,11 @@ async function handleLikeClick(gameId) {
     }
 }
 
+document.getElementById('likeButton').addEventListener('click', (event) => {
+  const gameId = "animal-crossing-new-horizons"; // Use a valid gameId here
+  const gameName = "Animal Crossing: New Horizons"; // Corresponding game name
+  handleLikeClick(gameId, gameName);
+});
 
 
 
@@ -4568,31 +4572,24 @@ async function saveRating(gameId, rating, gameName) {
         showToast('Failed to save rating');
     }
 }
-
-// Define the handleRateClick function
-async function handleRateClick() {
-    if (!isUserSignedIn()) {
-        showToast('You must be signed in to rate.');
-        return;
-    }
-
-    // Assuming you need the gameId to rate a game
-    const gameId = 'Animal Crossing: New Horizons'; // Replace with logic to obtain the actual gameId
-    let rating = parseInt(prompt("Enter your rating (1-5):"), 10); // Convert string input to integer
-
-    // Validate rating is within the 1-5 range
-    if (!rating || rating < 1 || rating > 5) {
-        showToast('Please enter a valid rating between 1 and 5.');
-        return; // Exit the function if the rating is not valid
-    }
-
-    try {
-        await saveRating(gameId, rating);
-    } catch (error) {
-        console.error('Error during rating:', error);
-        showToast('Failed to save rating');
-    }
+async function handleRateClick(gameId, gameName) { // Ensure gameId and gameName are correctly passed as arguments
+  if (!isUserSignedIn()) {
+    showToast('You must be signed in to rate.');
+    return;
+  }
+  let rating = parseInt(prompt("Enter your rating (1-5):"), 10);
+  if (!rating || rating < 1 || rating > 5) {
+    showToast('Please enter a valid rating between 1 and 5.');
+    return;
+  }
+  try {
+    await saveRating(gameId, rating, gameName); // Pass gameName here
+  } catch (error) {
+    console.error('Error during rating:', error);
+    showToast('Failed to save rating');
+  }
 }
+
 
 
 async function addLikeActivity(gameId, gameName) {
