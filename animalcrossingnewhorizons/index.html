@@ -4064,7 +4064,6 @@ async function editComment(commentId, currentText) {
         }
     }
 }
-
 async function fetchAndDisplayComments(gameId) {
     const commentsList = document.getElementById('commentsList');
     commentsList.innerHTML = ''; // Clear existing comments
@@ -4075,53 +4074,40 @@ async function fetchAndDisplayComments(gameId) {
             .orderBy('timestamp', 'desc')
             .get();
 
-        if (querySnapshot.empty) {
-            commentsList.textContent = 'No comments yet.';
-            return;
-        }
-
-        for (const doc of querySnapshot.docs) {
+        querySnapshot.forEach(async (doc) => {
             const comment = doc.data();
             const userDoc = await firestore.collection('users').doc(comment.userId).get();
             const username = userDoc.exists ? userDoc.data().username : "Anonymous";
             const date = comment.timestamp ? comment.timestamp.toDate().toLocaleString() : "Unknown date";
 
+            // Creating comment element
             const commentElement = document.createElement('div');
             commentElement.classList.add('comment');
-            commentElement.textContent = `${username} on ${date}: "${comment.text}"`;
-            commentsList.appendChild(commentElement);
+            commentElement.textContent = `${username} on ${date}: ${comment.text}`;
 
-            // Create and append the container for replies to each comment
-            const repliesContainer = document.createElement('div');
-            repliesContainer.classList.add('replies-container');
-            commentElement.appendChild(repliesContainer);
+            // Only show edit and delete buttons for the user's own comments
+            if (firebase.auth().currentUser && firebase.auth().currentUser.uid === comment.userId) {
+                const editButton = document.createElement('button');
+                editButton.textContent = 'Edit';
+                editButton.addEventListener('click', () => editComment(doc.id, comment.text));
+                commentElement.appendChild(editButton);
 
-            // Fetch and display replies for each comment
-            const repliesQuerySnapshot = await firestore.collection('replies')
-                .where('commentId', '==', doc.id)
-                .orderBy('timestamp', 'asc')
-                .get();
-
-            if (!repliesQuerySnapshot.empty) {
-                for (const replyDoc of repliesQuerySnapshot.docs) {
-                    const reply = replyDoc.data();
-                    const replyUserDoc = await firestore.collection('users').doc(reply.userId).get();
-                    const replyUsername = replyUserDoc.exists ? replyUserDoc.data().username : "Anonymous";
-                    const replyDate = reply.timestamp ? reply.timestamp.toDate().toLocaleString() : "Unknown date";
-
-                    const replyElement = document.createElement('div');
-                    replyElement.classList.add('reply');
-                    replyElement.textContent = `${replyUsername} on ${replyDate}: "${reply.text}"`;
-
-                    // Append edit and delete buttons here if needed
-
-                    repliesContainer.appendChild(replyElement);
-                }
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.addEventListener('click', () => deleteComment(doc.id));
+                commentElement.appendChild(deleteButton);
             }
-        }
+
+            const replyButton = document.createElement('button');
+            replyButton.textContent = 'Reply';
+            replyButton.addEventListener('click', () => replyToComment(doc.id));
+            commentElement.appendChild(replyButton);
+
+            // Append the comment element to the comments list
+            commentsList.appendChild(commentElement);
+        });
     } catch (error) {
         console.error('Error fetching comments:', error);
-        showToast('Failed to fetch comments.');
     }
 }
 
@@ -4235,25 +4221,29 @@ document.getElementById('sendReply').addEventListener('click', sendReply);
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
-    const submitCommentButton = document.getElementById('submitComment');
-    if (submitCommentButton) {
-        submitCommentButton.addEventListener('click', async () => {
-            const commentText = document.getElementById('commentInput').value;
-            if (commentText) {
-                // Assume addComment is a function that adds the comment to Firestore
-                await addComment(gameId, commentText);
-                document.getElementById('commentInput').value = ''; // Clear the textarea after submission
-                // Optionally, refresh the displayed comments
-                await fetchAndDisplayComments(gameId);
-            } else {
-                showToast('Please enter a comment.');
-            }
-        });
+ddocument.getElementById('submitComment').addEventListener('click', async () => {
+    const commentText = document.getElementById('commentInput').value.trim();
+    if (commentText) {
+        try {
+            // Assuming gameId is known and auth.currentUser.uid is the user ID
+            await firestore.collection('comments').add({
+                text: commentText,
+                userId: firebase.auth().currentUser.uid,
+                gameId: 'yourGameId', // Example, replace with actual gameId
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+            showToast('Comment added successfully');
+            document.getElementById('commentInput').value = ''; // Clear the textarea
+            fetchAndDisplayComments('yourGameId'); // Refresh comments display
+        } catch (error) {
+            console.error('Error adding comment:', error);
+            showToast('Failed to add comment');
+        }
     } else {
-        console.error('Submit Comment button not found.');
+        showToast('Please enter a comment.');
     }
 });
+
 
 document.getElementById('cancelReply').addEventListener('click', function() {
     document.getElementById('replyPopup').style.display = 'none';
