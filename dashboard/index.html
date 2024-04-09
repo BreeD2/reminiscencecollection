@@ -361,6 +361,7 @@
 
 <!-- Account Deletion Button -->
 <button id="deleteAccountBtn">Delete Account</button>
+<div id="activityLog">This is the activity log.</div>
 
 
 
@@ -4214,6 +4215,17 @@ async function fetchAndDisplayRecentActivities(userId) {
         console.error('Error fetching recent activities:', error);
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  const activityLog = document.getElementById('activityLog');
+  if (activityLog) {
+    // Element exists, you can safely work with it here
+    console.log('Activity log element found:', activityLog);
+  } else {
+    console.error('Activity log element not found.');
+  }
+});
+
 
 
 // Inside your dashboard/home page script
