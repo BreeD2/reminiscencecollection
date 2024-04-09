@@ -4667,6 +4667,18 @@ margin-top: 20px;
     line-height: 1.5; /* Spacing between lines for readability */
 }
 
+.dark-mode .reply {
+
+    background-color: grey; /* Light background color for the reply */
+    color:white
+}
+
+.light-mode .reply {
+
+    background-color: #f9f9f9; /* Light background color for the reply */
+    color:black
+}
+
 #commentsList > div {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
     max-height: 200px; /* Limits the height to keep the layout consistent */
@@ -4696,12 +4708,14 @@ margin-top: 20px;
 
     background-color: black;
     color: white;
+    border:grey
 }
 
 .light-mode #commentsList p {
 
     background-color: #f9f9f9;
     color: black;
+
 }
 
 
@@ -4713,4 +4727,11 @@ margin-top: 20px;
   line-height: 1.4; /* Adjusts line spacing for readability */;
     border: 1px solid #e0e0e0; /* Adds a subtle border for definition */;
       padding: 8px; /* Increases padding for better content spacing */
+}
+
+
+.dark-mode #commentsList span {
+  color:white;
+    background-color: black; /* Light background color for the reply */
+  border: 1px solid grey; /* Adds a subtle border for definition */;
 }

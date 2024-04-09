@@ -3936,20 +3936,37 @@ function showToast(message) {
     setTimeout(() => document.body.removeChild(toast), 3000); // Remove after 3 seconds
 }
 
-function isUserSignedIn() {
+// Function to check if user is signed in
+  function isUserSignedIn() {
     return !!firebase.auth().currentUser;
-}
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+      // Define gameId and gameName here if they're not already defined globally
+      const gameId = 'animalcrossingnewhorizons';
+      const gameName = 'Animal Crossing: New Horizons';
+
+      const likeButton = document.getElementById('likeButton');
+      if (likeButton) {
+          // Attach the event listener using an arrow function that calls handleLikeClick with the correct arguments
+          likeButton.addEventListener('click', () => handleLikeClick(gameId, gameName));
+      }
+  });
+
+
+
+
 async function handleLikeClick(gameId, gameName) {
+    console.log(`handleLikeClick called with gameId: ${gameId}, gameName: ${gameName}`); // Debugging log
+
     if (!isUserSignedIn()) {
         showToast('You must be signed in to like.');
         return;
     }
 
-    // You've declared gameName here again which might cause an error if you've already passed it as a function argument.
-    // So, remove the line below if gameName is passed as an argument to the function.
-    // const gameName = "Animal Crossing: New Horizons"; // Example game name, should be dynamically determined
-
     const userId = firebase.auth().currentUser.uid;
+    console.log(`Attempting to toggle like for userId: ${userId}, gameId: ${gameId}`); // Debugging log
+
     const likesRef = firestore.collection('likes').doc(gameId);
 
     try {
@@ -3960,28 +3977,14 @@ async function handleLikeClick(gameId, gameName) {
         } else {
             await likesRef.update({ [userId]: true });
             showToast('Like added.');
-            // Record the like activity after successfully updating the like status.
             await addLikeActivity(gameId, gameName).catch(console.error);
         }
-        // Consider placing fetchAndDisplayLikes(gameId); here if you want to refresh likes display after every action.
+        fetchAndDisplayLikes(gameId); // Refresh likes display
     } catch (error) {
         console.error("Error toggling like status: ", error);
         showToast('Failed to update like status.');
     }
-    // Optionally, you can also refresh the likes display here if it makes sense for your app's flow.
-    fetchAndDisplayLikes(gameId);
 }
-
-
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
-  const gameId = "animalcrossingnewhorizons"; // Make sure this is set correctly
-  fetchAndDisplayLikes(gameId);
-});
 
 
 
@@ -4022,18 +4025,6 @@ document.getElementById('commentButton').addEventListener('click', handleComment
 
 
 
-
-
-// Now setup your event listeners
-function setupEventListeners() {
-    const likeButton = document.getElementById('likeButton');
-    const commentButton = document.getElementById('commentButton');
-    const rateButton = document.getElementById('rateButton');
-
-    if (likeButton) likeButton.addEventListener('click', handleLikeClick);
-    if (commentButton) commentButton.addEventListener('click', handleCommentClick);
-    if (rateButton) rateButton.addEventListener('click', handleRateClick);
-}
 
 
 
