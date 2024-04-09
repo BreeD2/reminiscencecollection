@@ -4588,11 +4588,15 @@ margin-top: 20px;
 {
   color: black;
   background-color: white;
+  background-color: #f9f9f9;
+    border: 1px solid #e0e0e0; /* Adds a subtle border for definition */;
 }
 
 .light-mode #submitComment {
-  background-color: white;
-  color:black
+  background-color: #f9f9f9;
+    border: 1px solid #e0e0e0; /* Adds a subtle border for definition */;
+  color:black;
+  background-color: #f9f9f9;
 }
 
 
@@ -4687,6 +4691,19 @@ margin-top: 20px;
     border: 1px solid #e0e0e0; /* Adds a subtle border for definition */;
       padding: 8px; /* Increases padding for better content spacing */
 }
+
+.dark-mode #commentsList p {
+
+    background-color: black;
+    color: white;
+}
+
+.light-mode #commentsList p {
+
+    background-color: #f9f9f9;
+    color: black;
+}
+
 
 #commentsList span {
   color:black;

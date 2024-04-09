@@ -3939,7 +3939,6 @@ function showToast(message) {
 function isUserSignedIn() {
     return !!firebase.auth().currentUser;
 }
-
 async function handleLikeClick(gameId, gameName) {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to like.');
@@ -3973,6 +3972,16 @@ async function handleLikeClick(gameId, gameName) {
     fetchAndDisplayLikes(gameId);
 }
 
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const gameId = "animalcrossingnewhorizons"; // Make sure this is set correctly
+  fetchAndDisplayLikes(gameId);
+});
 
 
 
