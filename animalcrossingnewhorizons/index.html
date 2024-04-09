@@ -3947,6 +3947,11 @@ async function handleLikeClick(gameId, gameName) {
 
     const userId = firebase.auth().currentUser.uid;
     // Removed the re-declaration of gameName
+
+    console.log(`gameId: ${gameId}, Type: ${typeof gameId}`);
+    const likesRef = firestore.collection('likes').doc(gameId);
+
+
     const likesRef = firestore.collection('likes').doc(gameId);
 
     try {
@@ -3966,10 +3971,6 @@ async function handleLikeClick(gameId, gameName) {
         showToast('Failed to update like status.');
     }
 }
-
-console.log(`gameId: ${gameId}, Type: ${typeof gameId}`);
-const likesRef = firestore.collection('likes').doc(gameId);
-
 
 
 
