@@ -3946,12 +3946,28 @@ function showToast(message) {
       const gameId = 'animalcrossingnewhorizons';
       const gameName = 'Animal Crossing: New Horizons';
 
+      // Setup Like Button
       const likeButton = document.getElementById('likeButton');
       if (likeButton) {
           // Attach the event listener using an arrow function that calls handleLikeClick with the correct arguments
           likeButton.addEventListener('click', () => handleLikeClick(gameId, gameName));
       }
+
+      // Setup Comment Button
+      const commentButton = document.getElementById('commentButton');
+      if (commentButton) {
+          // Attach the event listener for comment button
+          commentButton.addEventListener('click', () => handleCommentClick(gameId));
+      }
+
+      // Setup Rate Button
+      const rateButton = document.getElementById('rateButton');
+      if (rateButton) {
+          // Attach the event listener for rate button
+          rateButton.addEventListener('click', () => handleRateClick(gameId, gameName));
+      }
   });
+
 
 
 
@@ -4470,12 +4486,12 @@ firebase.auth().onAuthStateChanged(user => {
 });
 
 
+// Your existing DOMContentLoaded listener
 document.addEventListener('DOMContentLoaded', async function() {
     const gameId = 'animalcrossingnewhorizons'; // Replace with the actual game ID
     await handleAuthStateChanges();
-    setupEventListeners();
+    setupEventListeners(); // Ensure this is defined before calling it
     await fetchAndDisplayComments(gameId);
-
 });
 
 
