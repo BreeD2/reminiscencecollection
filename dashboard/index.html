@@ -4221,21 +4221,6 @@ async function fetchAndDisplayRecentActivities(userId) {
 }
 
 
-// Inside your dashboard/home page script
-document.addEventListener('DOMContentLoaded', () => {
-  firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-      console.log(`Welcome, ${user.displayName || "User"}!`);
-      fetchAndDisplayRecentActivities(user.uid).catch(console.error);
-    } else {
-      console.log('User is not signed in. Redirecting to login page...');
-      // Redirect to login page
-      window.location.href = '..//login/index.html'; // Adjust the path as necessary
-    }
-  });
-});
-
-
 
       // Handle authentication state changes
       auth.onAuthStateChanged(user => {

@@ -3940,7 +3940,7 @@ function isUserSignedIn() {
     return !!firebase.auth().currentUser;
 }
 
-async function handleLikeClick() {
+async function handleLikeClick(gameId, gameName) {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to like.');
         return;
@@ -3948,10 +3948,10 @@ async function handleLikeClick() {
 
     const userId = firebase.auth().currentUser.uid;
     const likesRef = firestore.collection('likes').doc(gameId);
-
     try {
         // Fetch the current likes document
         const doc = await likesRef.get();
+        let likeAdded = false;
 
         // Toggle the like status based on the current state
         if (doc.exists && doc.data()[userId]) {
@@ -3961,7 +3961,13 @@ async function handleLikeClick() {
         } else {
             // If the user hasn't liked the game yet, add their like
             await likesRef.update({ [userId]: true });
+            likeAdded = true;
             showToast('Like added.');
+        }
+
+        // Record the like activity
+        if (likeAdded) {
+            await addLikeActivity(gameId, gameName);
         }
 
         // Refresh the displayed likes
@@ -3976,6 +3982,7 @@ async function handleLikeClick() {
 
 
 
+
 document.addEventListener('DOMContentLoaded', function() {
   const gameId = "animalcrossingnewhorizons"; // Make sure this is set correctly
   fetchAndDisplayLikes(gameId);
@@ -3983,29 +3990,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
- async function handleCommentClick() {
-   const gameId = 'animalcrossingnewhorizons'; // Example gameId, replace as needed
-   if (!isUserSignedIn()) {
-     showToast('You must be signed in to add comments.');
-     return;
-   }
-   const commentText = prompt("Enter your comment:");
-   if (commentText) {
-     try {
-       await firestore.collection('comments').add({
+async function handleCommentClick(gameId, gameName) {
+  if (!isUserSignedIn()) {
+    showToast('You must be signed in to add comments.');
+    return;
+  }
+  const commentText = prompt("Enter your comment:");
+  if (commentText) {
+    try {
+      // Add comment to the comments collection
+      await firestore.collection('comments').add({
+        text: commentText,
+        userId: firebase.auth().currentUser.uid,
+        gameId: gameId,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      });
 
-         text: commentText,
-         userId: auth.currentUser.uid,
-         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-       });
-       showToast('Comment added successfully');
-       fetchAndDisplayComments(gameId);
-     } catch (error) {
-       console.error('Error adding comment:', error);
-       showToast('Failed to add comment');
-     }
-   }
- }
+      // Record the comment activity
+      await addCommentActivity(gameId, gameName, commentText);
+
+      showToast('Comment added successfully');
+      fetchAndDisplayComments(gameId);
+    } catch (error) {
+      console.error('Error adding comment:', error);
+      showToast('Failed to add comment');
+    }
+  }
+}
+
 
 
 
@@ -4463,30 +4475,33 @@ async function handleRateClick() {
         await saveRating(gameId, rating);
     }
 }
-
 async function addLikeActivity(gameId, gameName) {
   const user = firebase.auth().currentUser;
-
   if (user) {
-    const activityRef = firestore.collection('userActivities').doc();
-    const activity = {
-      userId: user.uid, // Current user's uid
+    await firestore.collection('userActivities').add({
+      userId: user.uid,
       type: 'like',
-      gameName: gameName,
       gameId: gameId,
+      gameName: gameName,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    };
-
-    try {
-      await activityRef.set(activity);
-      console.log('Activity recorded successfully');
-    } catch (error) {
-      console.error('Error recording activity:', error);
-    }
-  } else {
-    console.log('No user is signed in.');
+    });
   }
 }
+
+async function addCommentActivity(gameId, gameName, commentText) {
+  const user = firebase.auth().currentUser;
+  if (user) {
+    await firestore.collection('userActivities').add({
+      userId: user.uid,
+      type: 'comment',
+      gameId: gameId,
+      gameName: gameName,
+      text: commentText,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  }
+}
+
 
 
   // Define the logoutUser function
