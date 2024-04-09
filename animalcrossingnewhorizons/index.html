@@ -4352,20 +4352,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-document.getElementById('cancelReply').addEventListener('click', function() {
-    document.getElementById('replyPopup').style.display = 'none';
-    document.getElementById('replyText').value = ''; // Optionally clear the textarea
-});
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Setup other event listeners
-    setupEventListeners();
-    // Setup the cancel reply button
-    document.getElementById('cancelReply').addEventListener('click', function() {
-        document.getElementById('replyPopup').style.display = 'none';
-        document.getElementById('replyText').value = ''; // Optionally clear the textarea
-    });
-});
+
 
 async function addCommentActivity(gameId, gameName, commentText) {
   if (!firebase.auth().currentUser) {
@@ -4577,12 +4565,7 @@ async function saveRating(gameId, rating, gameName) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const rateButton = document.getElementById('rateButton');
-    if (rateButton) {
-        rateButton.addEventListener('click', handleRateClick);
-    }
-});
+
 async function handleRateClick() {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to rate.');
