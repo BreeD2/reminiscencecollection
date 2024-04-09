@@ -3941,43 +3941,51 @@ function isUserSignedIn() {
 }
 
 
-async function handleLikeClick(gameId, gameName) {
+// Adjusted handleLikeClick to accept event, gameId, and gameName as parameters
+async function handleLikeClick(event, gameId, gameName) {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to like.');
         return;
     }
 
     const userId = firebase.auth().currentUser.uid;
-
-    console.log(`gameId: ${gameId}, Type: ${typeof gameId}`);
     const likesRef = firestore.collection('likes').doc(gameId);
 
     try {
         const doc = await likesRef.get();
+
         if (doc.exists && doc.data()[userId]) {
             await likesRef.update({ [userId]: firebase.firestore.FieldValue.delete() });
             showToast('Like removed.');
         } else {
             await likesRef.update({ [userId]: true });
             showToast('Like added.');
-            // Record the like activity
-            await addLikeActivity(gameId, gameName).catch(console.error);
+            // Optionally, record the like activity here
         }
-        fetchAndDisplayLikes(gameId);
+
+        // Refresh the displayed likes, if applicable
     } catch (error) {
         console.error("Error toggling like status: ", error);
         showToast('Failed to update like status.');
     }
 }
 
+// Now setup your event listeners correctly to pass gameId and gameName
+function setupEventListeners() {
+    const gameId = 'animalcrossingnewhorizons'; // Ensure this is correctly determined based on your app's context
+    const gameName = 'Animal Crossing: New Horizons';
 
+    const likeButton = document.getElementById('likeButton');
+    const commentButton = document.getElementById('commentButton');
+    const rateButton = document.getElementById('rateButton');
 
+    if (likeButton) likeButton.addEventListener('click', (e) => handleLikeClick(e, gameId, gameName).catch(console.error));
+    // Add similar adjustments for commentButton and rateButton as needed
+}
 
+// Call setupEventListeners on DOMContentLoaded or when it's appropriate to attach event listeners
+document.addEventListener('DOMContentLoaded', setupEventListeners);
 
-document.addEventListener('DOMContentLoaded', function() {
-  const gameId = "animalcrossingnewhorizons"; // Make sure this is set correctly
-  fetchAndDisplayLikes(gameId);
-});
 
 
 async function handleCommentClick() {
