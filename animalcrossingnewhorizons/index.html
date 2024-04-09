@@ -3989,23 +3989,24 @@ document.addEventListener('DOMContentLoaded', function() {
      showToast('You must be signed in to add comments.');
      return;
    }
-  
+   const commentText = prompt("Enter your comment:");
+   if (commentText) {
+     try {
+       await firestore.collection('comments').add({
 
- document.getElementById('commentButton').addEventListener('click', function() {
-     const commentSection = document.getElementById('addCommentSection');
-
-     // Check if the comment section exists
-     if (commentSection) {
-         // Scroll to the comment section
-         commentSection.scrollIntoView({ behavior: 'smooth' });
-
-         // Optionally, focus the textarea to prompt the user to start typing immediately
-         const commentInput = document.getElementById('commentInput');
-         if (commentInput) {
-             commentInput.focus();
-         }
+         text: commentText,
+         userId: auth.currentUser.uid,
+         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+       });
+       showToast('Comment added successfully');
+       fetchAndDisplayComments(gameId);
+     } catch (error) {
+       console.error('Error adding comment:', error);
+       showToast('Failed to add comment');
      }
- });
+   }
+ }
+
 
 
 
