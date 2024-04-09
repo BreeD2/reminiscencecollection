@@ -3982,30 +3982,31 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+async function handleCommentClick() {
+    const gameId = 'animalcrossingnewhorizons'; // Example gameId, replace as needed
+    if (!isUserSignedIn()) {
+        showToast('You must be signed in to add comments.');
+        return;
+    }
+    const commentText = prompt("Enter your comment:");
+    if (commentText) {
+        try {
+            await firestore.collection('comments').add({
+                gameId: gameId,
+                text: commentText,
+                userId: auth.currentUser.uid,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+            showToast('Comment added successfully');
+            fetchAndDisplayComments(gameId);
+        } catch (error) {
+            console.error('Error adding comment:', error);
+            showToast('Failed to add comment');
+        }
+    }
+}
 
- async function handleCommentClick() {
-   const gameId = 'animalcrossingnewhorizons'; // Example gameId, replace as needed
-   if (!isUserSignedIn()) {
-     showToast('You must be signed in to add comments.');
-     return;
-   }
-   const commentText = prompt("Enter your comment:");
-   if (commentText) {
-     try {
-       await firestore.collection('comments').add({
-
-         text: commentText,
-         userId: auth.currentUser.uid,
-         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-       });
-       showToast('Comment added successfully');
-       fetchAndDisplayComments(gameId);
-     } catch (error) {
-       console.error('Error adding comment:', error);
-       showToast('Failed to add comment');
-     }
-   }
- }
+document.getElementById('commentButton').addEventListener('click', handleCommentClick);
 
 
 
