@@ -4213,6 +4213,44 @@ async function handleUserActivity(activityType, additionalData = {}) {
   }
 }
 
+async function fetchAndDisplayRecentActivities(userId) {
+    const activityLogElement = document.getElementById('activityLog');
+    if (!activityLogElement) {
+        console.error('Activity log element not found.');
+        return;
+    }
+
+    activityLogElement.innerHTML = ''; // Clear existing activities
+
+    try {
+        const activitiesRef = firestore.collection('userActivities')
+            .where('userId', '==', userId)
+            .orderBy('timestamp', 'desc');
+
+        const snapshot = await activitiesRef.get();
+        console.log(`Activities fetched: ${snapshot.docs.length}`); // Debugging line
+
+        if (snapshot.empty) {
+            console.log('No recent activities found.');
+            activityLogElement.textContent = 'No recent activities found.';
+            return;
+        }
+
+        snapshot.forEach(doc => {
+            const activity = doc.data();
+            console.log(activity); // Debugging line
+            let activityText = `${activity.type} - ${activity.gameName}`;
+
+            const activityItem = document.createElement('li');
+            activityItem.textContent = activityText;
+            activityLogElement.appendChild(activityItem);
+        });
+    } catch (error) {
+        console.error('Error fetching recent activities:', error);
+    }
+}
+
+
 // Similar modifications can be applied to handleLikeClick, handleCommentClick, etc.,
 // where you use window.currentGameId and window.currentGameName.
 
