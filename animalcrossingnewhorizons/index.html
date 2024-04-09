@@ -3947,30 +3947,27 @@ async function handleLikeClick() {
     }
 
     const userId = firebase.auth().currentUser.uid;
+    const gameName = "Animal Crossing: New Horizons"; // Example game name, should be dynamically determined
     const likesRef = firestore.collection('likes').doc(gameId);
 
     try {
-        // Fetch the current likes document
         const doc = await likesRef.get();
-
-        // Toggle the like status based on the current state
         if (doc.exists && doc.data()[userId]) {
-            // If the user has already liked the game, remove their like
             await likesRef.update({ [userId]: firebase.firestore.FieldValue.delete() });
             showToast('Like removed.');
         } else {
-            // If the user hasn't liked the game yet, add their like
             await likesRef.update({ [userId]: true });
             showToast('Like added.');
+            // Record the like activity
+            await addLikeActivity(gameId, gameName);
         }
-
-        // Refresh the displayed likes
         fetchAndDisplayLikes(gameId);
     } catch (error) {
         console.error("Error toggling like status: ", error);
         showToast('Failed to update like status.');
     }
 }
+
 
 
 
@@ -4347,6 +4344,54 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('replyText').value = ''; // Optionally clear the textarea
     });
 });
+
+async function addCommentActivity(gameId, gameName, commentText) {
+  if (!firebase.auth().currentUser) {
+    console.log('No user is signed in.');
+    return;
+  }
+
+  try {
+    const activity = {
+      userId: firebase.auth().currentUser.uid,
+      type: 'comment',
+      gameName: gameName,
+      gameId: gameId,
+      commentText: commentText,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    };
+    await firestore.collection('userActivities').add(activity);
+    console.log('Comment activity recorded successfully');
+  } catch (error) {
+    console.error('Error recording comment activity:', error);
+  }
+}
+
+async function handleCommentClick() {
+    if (!isUserSignedIn()) {
+        showToast('You must be signed in to add comments.');
+        return;
+    }
+    const commentText = prompt("Enter your comment:");
+    if (commentText) {
+        try {
+            await firestore.collection('comments').add({
+                gameId: gameId,
+                text: commentText,
+                userId: firebase.auth().currentUser.uid,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+            showToast('Comment added successfully');
+            // Record the comment activity
+            await addCommentActivity(gameId, "Animal Crossing: New Horizons", commentText); // Example game name
+            fetchAndDisplayComments(gameId);
+        } catch (error) {
+            console.error('Error adding comment:', error);
+            showToast('Failed to add comment');
+        }
+    }
+}
+
 async function fetchAndDisplayLikes(gameId) {
     console.log(`Fetching likes for game ID: ${gameId}`);
     try {
