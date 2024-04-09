@@ -4474,43 +4474,19 @@ async function handleRateClick() {
     }
 }
 
-document.getElementById('commentButton').addEventListener('click', async function() {
-    const user = firebase.auth().currentUser;
-    const commentInput = document.getElementById('commentInput');
-    const commentText = commentInput.value.trim();
+document.getElementById('commentButton').addEventListener('click', function() {
+    const commentSection = document.getElementById('addCommentSection');
 
-    // Check if the user is signed in
-    if (!user) {
-        alert('You must be signed in to comment.');
-        return;
-    }
+    // Check if the comment section exists
+    if (commentSection) {
+        // Scroll to the comment section
+        commentSection.scrollIntoView({ behavior: 'smooth' });
 
-    // Validate the comment input
-    if (!commentText) {
-        alert('Please enter a comment before submitting.');
-        return;
-    }
-
-    // Assuming you need the gameId to associate the comment with a game
-    const gameId = 'exampleGameId'; // Use the actual logic to obtain the gameId
-
-    // Replace this logic with your actual Firestore path and data structure
-    try {
-        const commentRef = await firebase.firestore().collection('comments').add({
-            gameId: gameId,
-            userId: user.uid,
-            comment: commentText,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
-
-        // Clear the comment input after successful submission
-        commentInput.value = '';
-
-        console.log('Comment added with ID:', commentRef.id);
-        alert('Comment submitted successfully.');
-    } catch (error) {
-        console.error('Error adding comment:', error);
-        alert('Failed to submit comment.');
+        // Optionally, focus the textarea to prompt the user to start typing immediately
+        const commentInput = document.getElementById('commentInput');
+        if (commentInput) {
+            commentInput.focus();
+        }
     }
 });
 
