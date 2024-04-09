@@ -3940,14 +3940,17 @@ function isUserSignedIn() {
     return !!firebase.auth().currentUser;
 }
 
-async function handleLikeClick() {
+async function handleLikeClick(gameId, gameName) {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to like.');
         return;
     }
 
+    // You've declared gameName here again which might cause an error if you've already passed it as a function argument.
+    // So, remove the line below if gameName is passed as an argument to the function.
+    // const gameName = "Animal Crossing: New Horizons"; // Example game name, should be dynamically determined
+
     const userId = firebase.auth().currentUser.uid;
-    const gameName = "Animal Crossing: New Horizons"; // Example game name, should be dynamically determined
     const likesRef = firestore.collection('likes').doc(gameId);
 
     try {
@@ -3958,15 +3961,18 @@ async function handleLikeClick() {
         } else {
             await likesRef.update({ [userId]: true });
             showToast('Like added.');
-            // Record the like activity
-            await addLikeActivity(gameId, gameName);
+            // Record the like activity after successfully updating the like status.
+            await addLikeActivity(gameId, gameName).catch(console.error);
         }
-        fetchAndDisplayLikes(gameId);
+        // Consider placing fetchAndDisplayLikes(gameId); here if you want to refresh likes display after every action.
     } catch (error) {
         console.error("Error toggling like status: ", error);
         showToast('Failed to update like status.');
     }
+    // Optionally, you can also refresh the likes display here if it makes sense for your app's flow.
+    fetchAndDisplayLikes(gameId);
 }
+
 
 
 
@@ -4373,24 +4379,28 @@ async function handleCommentClick() {
         return;
     }
     const commentText = prompt("Enter your comment:");
-    if (commentText) {
+    if (commentText && commentText.trim() !== "") {
         try {
+            // Assuming gameId and gameName are correctly defined elsewhere
             await firestore.collection('comments').add({
-                gameId: gameId,
+                gameId: gameId, // Ensure this is the correct gameId for the game being commented on
                 text: commentText,
                 userId: firebase.auth().currentUser.uid,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             });
             showToast('Comment added successfully');
-            // Record the comment activity
-            await addCommentActivity(gameId, "Animal Crossing: New Horizons", commentText); // Example game name
+            // Now record the comment activity
+            await addCommentActivity(gameId, "Animal Crossing: New Horizons", commentText);
             fetchAndDisplayComments(gameId);
         } catch (error) {
             console.error('Error adding comment:', error);
             showToast('Failed to add comment');
         }
+    } else {
+        showToast('Please enter a comment.');
     }
 }
+
 
 async function fetchAndDisplayLikes(gameId) {
     console.log(`Fetching likes for game ID: ${gameId}`);
@@ -4523,25 +4533,27 @@ async function handleRateClick() {
 
 
 async function addLikeActivity(gameId, gameName) {
-  if (!firebase.auth().currentUser) {
-    console.log('No user is signed in.');
-    return;
-  }
+    if (!firebase.auth().currentUser) {
+        showToast('No user is signed in.');
+        return;
+    }
 
-  try {
-    const activity = {
-      userId: firebase.auth().currentUser.uid,
-      type: 'like',
-      gameName: gameName,
-      gameId: gameId,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    };
-    await firestore.collection('userActivities').add(activity);
-    console.log('Activity recorded successfully');
-  } catch (error) {
-    console.error('Error recording activity:', error);
-  }
+    try {
+        const activity = {
+            userId: firebase.auth().currentUser.uid,
+            type: 'like',
+            gameName: gameName,
+            gameId: gameId,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        };
+        await firestore.collection('userActivities').add(activity);
+        showToast('Like activity recorded successfully');
+    } catch (error) {
+        console.error('Error recording like activity:', error);
+        showToast('Failed to record like activity');
+    }
 }
+
 
 
 
