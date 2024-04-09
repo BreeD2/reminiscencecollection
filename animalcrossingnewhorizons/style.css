@@ -4462,6 +4462,10 @@ margin-top: 20px;
   border: none;
   background-color: red;
   padding: 5px;
+  border-radius: 10px; /* Softens the corners for a modern look */
+  overflow-y: auto; /* Allows scrolling within the comment if content exceeds max height */
+  line-height: 1.4; /* Adjusts line spacing for readability */;
+    border: 1px solid #e0e0e0; /* Adds a subtle border for definition */;
 
 }
 
@@ -4485,10 +4489,10 @@ margin-top: 20px;
 }
 
 .replies-container {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
     max-height: 500px;
     max-width: 600px;
-    margin: 20px;
+    margin: 0px;
     padding: 5px;
 }
 
@@ -4641,4 +4645,55 @@ margin-top: 20px;
 .dark-mode .replies-container {
   background-color: dimgrey;
   color:white
+}
+
+.reply {
+    max-width: 500px;
+    max-height: 500px;
+    margin: 20px auto; /* Centers the reply and adds space around it */
+    padding: 15px; /* Adds space inside the reply for the content */
+    background-color: #f9f9f9; /* Light background color for the reply */
+    border: 1px solid #ddd; /* Subtle border around the reply */
+    border-radius: 8px; /* Rounds the corners of the reply */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Adds a subtle shadow for depth */
+    overflow-y: auto; /* Allows vertical scrolling if content exceeds max height */
+    font-family: Arial, sans-serif; /* Sets a clean, readable font */
+    font-size: 16px; /* Sets a comfortable reading size */
+    color: #333; /* Dark color for contrast and readability */
+    line-height: 1.5; /* Spacing between lines for readability */
+}
+
+#commentsList > div {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+    max-height: 200px; /* Limits the height to keep the layout consistent */
+    max-width: 600px; /* Ensures comments don’t stretch too wide */
+    margin: 20px auto; /* Centers the comments and adds vertical spacing */
+    padding: 20px; /* Increases padding for better content spacing */
+    background-color: #ffffff; /* Sets a white background for contrast */
+    border-radius: 10px; /* Softens the corners for a modern look */
+    overflow-y: auto; /* Allows scrolling within the comment if content exceeds max height */
+    border: 1px solid #e0e0e0; /* Adds a subtle border for definition */
+
+    color: #333; /* Dark color for text for better readability */
+    line-height: 1.4; /* Adjusts line spacing for readability */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition for hover effects */
+}
+#commentsList p {
+  color:black;
+    background-color: #f9f9f9; /* Light background color for the reply */
+  border-radius: 10px; /* Softens the corners for a modern look */
+  overflow-y: auto; /* Allows scrolling within the comment if content exceeds max height */
+  line-height: 1.4; /* Adjusts line spacing for readability */;
+    border: 1px solid #e0e0e0; /* Adds a subtle border for definition */;
+      padding: 8px; /* Increases padding for better content spacing */
+}
+
+#commentsList span {
+  color:black;
+    background-color: #f9f9f9; /* Light background color for the reply */
+  border-radius: 10px; /* Softens the corners for a modern look */
+  overflow-y: auto; /* Allows scrolling within the comment if content exceeds max height */
+  line-height: 1.4; /* Adjusts line spacing for readability */;
+    border: 1px solid #e0e0e0; /* Adds a subtle border for definition */;
+      padding: 8px; /* Increases padding for better content spacing */
 }
