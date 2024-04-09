@@ -3939,6 +3939,8 @@ function showToast(message) {
 function isUserSignedIn() {
     return !!firebase.auth().currentUser;
 }
+
+
 async function handleLikeClick(gameId, gameName) {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to like.');
@@ -3946,12 +3948,8 @@ async function handleLikeClick(gameId, gameName) {
     }
 
     const userId = firebase.auth().currentUser.uid;
-    // Removed the re-declaration of gameName
 
     console.log(`gameId: ${gameId}, Type: ${typeof gameId}`);
-    const likesRef = firestore.collection('likes').doc(gameId);
-
-
     const likesRef = firestore.collection('likes').doc(gameId);
 
     try {
@@ -3963,7 +3961,7 @@ async function handleLikeClick(gameId, gameName) {
             await likesRef.update({ [userId]: true });
             showToast('Like added.');
             // Record the like activity
-            await addLikeActivity(gameId, gameName).catch(console.error); // Moved inside the try block and added catch here
+            await addLikeActivity(gameId, gameName).catch(console.error);
         }
         fetchAndDisplayLikes(gameId);
     } catch (error) {
