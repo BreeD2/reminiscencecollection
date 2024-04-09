@@ -4266,6 +4266,40 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+async function displayUserActivities() {
+  const user = firebase.auth().currentUser;
+  if (!user) {
+    console.log('No user is signed in.');
+    return;
+  }
+
+  try {
+    const activitiesQuerySnapshot = await firestore.collection('userActivities')
+      .where('userId', '==', user.uid)
+      .orderBy('timestamp', 'desc')
+      .get();
+
+    const activityLogElement = document.getElementById('activityLog');
+    activityLogElement.innerHTML = ''; // Clear existing activities
+
+    if (activitiesQuerySnapshot.empty) {
+      activityLogElement.textContent = 'No recent activities found.';
+      return;
+    }
+
+    activitiesQuerySnapshot.forEach(doc => {
+      const activity = doc.data();
+      // Append each activity to the activityLogElement
+      const activityElement = document.createElement('div');
+      activityElement.textContent = `${activity.type} - ${activity.gameName}`;
+      activityLogElement.appendChild(activityElement);
+    });
+  } catch (error) {
+    console.error('Error fetching user activities:', error);
+  }
+}
+
+
 
       // Handle authentication state changes
       auth.onAuthStateChanged(user => {
