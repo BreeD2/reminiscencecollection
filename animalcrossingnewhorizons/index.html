@@ -331,7 +331,7 @@
              <div id="main-content" class="content">
 
  <div class="game-container" data-game-id="animalcrossingnewhorizons">
-       <img src="animalcrossingnewhorizons.png" alt="Animal Crossing: New Horizons" class="game-cover"download="Animal Crossing: New Horizons">
+       <img src="animalcrossingnewhorizons.png" alt="Animal Crossing: New Horizons" class="game-cover"download="Animal Crossing New Horizons">
        <h1 class="game-title">Animal Crossing: New Horizons</h1>
        <button id="likeButton" class="icon-button"><i class="far fa-thumbs-up"></i> Like</button>
 
@@ -410,7 +410,7 @@
 
          <!-- Zoom Out Button -->
          <button id="zoomOut" class="zoom-btn">Zoom Out</button>
-         <a href="animalcrossingnewhorizons.png" download="Animal Crossing: New Horizons">
+         <a href="animalcrossingnewhorizons.png" download="Animal Crossing New Horizons">
          <button id="downloadButton">Download</button>
 
    </div>
@@ -3896,7 +3896,7 @@ const auth = firebase.auth();
 const storage = firebase.storage();
 const firestore = firebase.firestore();
 const db = firebase.firestore();
-const gameId = 'Animal Crossing: New Horizons'; // Assume this is set appropriately elsewhere
+const gameId = 'animalcrossingnewhorizons'; // Assume this is set appropriately elsewhere
 
 // Use an auth state observer to wait for the auth state to be initialized
 firebase.auth().onAuthStateChanged((user) => {
@@ -3940,22 +3940,18 @@ function isUserSignedIn() {
     return !!firebase.auth().currentUser;
 }
 
-console.log(typeof gameId, gameId); // This should log: "string" followed by the gameId value
-
 async function handleLikeClick(gameId, gameName) {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to like.');
         return;
     }
 
-    if (typeof gameId !== 'string' || gameId.trim() === '') {
-        console.error('Invalid gameId:', gameId);
-        showToast('Game ID is invalid. Like action not performed.');
-        return;
-    }
-
     const userId = firebase.auth().currentUser.uid;
+    const gameName = "Animal Crossing: New Horizons"; // Example game name, should be dynamically determined
     const likesRef = firestore.collection('likes').doc(gameId);
+
+    addLikeActivity(gameId, gameName).catch(console.error);
+}
 
     try {
         const doc = await likesRef.get();
@@ -3965,7 +3961,8 @@ async function handleLikeClick(gameId, gameName) {
         } else {
             await likesRef.update({ [userId]: true });
             showToast('Like added.');
-            await addLikeActivity(gameId, gameName); // Assuming gameName is correctly passed here
+            // Record the like activity
+            await addLikeActivity(gameId, gameName);
         }
         fetchAndDisplayLikes(gameId);
     } catch (error) {
@@ -3974,25 +3971,19 @@ async function handleLikeClick(gameId, gameName) {
     }
 }
 
-document.getElementById('likeButton').addEventListener('click', (event) => {
-  const gameId = "animal-crossing-new-horizons"; // Use a valid gameId here
-  const gameName = "Animal Crossing: New Horizons"; // Corresponding game name
-  handleLikeClick(gameId, gameName);
-});
-
 
 
 
 
 
 document.addEventListener('DOMContentLoaded', function() {
-  const gameId = "Animal Crossing: New Horizons"; // Make sure this is set correctly
+  const gameId = "animalcrossingnewhorizons"; // Make sure this is set correctly
   fetchAndDisplayLikes(gameId);
 });
 
 
 async function handleCommentClick() {
-    const gameId = 'Animal Crossing: New Horizons'; // Example gameId, replace as needed
+    const gameId = 'animalcrossingnewhorizons'; // Example gameId, replace as needed
     if (!isUserSignedIn()) {
         showToast('You must be signed in to add comments.');
         return;
@@ -4471,7 +4462,7 @@ async function fetchAndDisplayRating(gameId) {
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
     // User is signed in, safe to fetch the rating
-    fetchAndDisplayRating('Animal Crossing: New Horizons');
+    fetchAndDisplayRating('animalcrossingnewhorizons');
   } else {
     // No user is signed in.
     console.log("No user signed in.");
@@ -4480,7 +4471,7 @@ firebase.auth().onAuthStateChanged(user => {
 
 
 document.addEventListener('DOMContentLoaded', async function() {
-    const gameId = 'Animal Crossing: New Horizons'; // Replace with the actual game ID
+    const gameId = 'animalcrossingnewhorizons'; // Replace with the actual game ID
     await handleAuthStateChanges();
     setupEventListeners();
     await fetchAndDisplayComments(gameId);
@@ -4508,37 +4499,6 @@ async function addComment(gameId, commentText) {
         showToast('Failed to add comment');
     }
 }
-
-async function rateGame(gameId, rating) {
-    if (!isUserSignedIn()) {
-        showToast('You must be signed in to rate.');
-        return;
-    }
-
-    // Example: Logic to determine gameName based on gameId
-    // This could involve fetching game details from Firestore or another source
-    const gameDetails = await fetchGameDetails(gameId);
-    const gameName = gameDetails.name; // Assuming the fetched game details include a name
-
-    if (!gameName) {
-        console.error('Game name not found for gameId:', gameId);
-        showToast('Failed to find game name. Rating not saved.');
-        return;
-    }
-
-    // Call saveRating with gameId, rating, and the determined gameName
-    await saveRating(gameId, rating, gameName);
-}
-
-// Dummy function to represent fetching game details
-// Replace this with your actual function to fetch game details based on gameId
-async function fetchGameDetails(gameId) {
-    // Your logic to fetch game details
-    return { name: "Example Game Name" }; // Example return value
-}
-
-// Your existing saveRating function...
-
 async function saveRating(gameId, rating, gameName) {
     if (!isUserSignedIn()) {
         showToast('You must be signed in to rate.');
@@ -4572,24 +4532,31 @@ async function saveRating(gameId, rating, gameName) {
         showToast('Failed to save rating');
     }
 }
-async function handleRateClick(gameId, gameName) { // Ensure gameId and gameName are correctly passed as arguments
-  if (!isUserSignedIn()) {
-    showToast('You must be signed in to rate.');
-    return;
-  }
-  let rating = parseInt(prompt("Enter your rating (1-5):"), 10);
-  if (!rating || rating < 1 || rating > 5) {
-    showToast('Please enter a valid rating between 1 and 5.');
-    return;
-  }
-  try {
-    await saveRating(gameId, rating, gameName); // Pass gameName here
-  } catch (error) {
-    console.error('Error during rating:', error);
-    showToast('Failed to save rating');
-  }
-}
 
+// Define the handleRateClick function
+async function handleRateClick() {
+    if (!isUserSignedIn()) {
+        showToast('You must be signed in to rate.');
+        return;
+    }
+
+    // Assuming you need the gameId to rate a game
+    const gameId = 'animalcrossingnewhorizons'; // Replace with logic to obtain the actual gameId
+    let rating = parseInt(prompt("Enter your rating (1-5):"), 10); // Convert string input to integer
+
+    // Validate rating is within the 1-5 range
+    if (!rating || rating < 1 || rating > 5) {
+        showToast('Please enter a valid rating between 1 and 5.');
+        return; // Exit the function if the rating is not valid
+    }
+
+    try {
+        await saveRating(gameId, rating);
+    } catch (error) {
+        console.error('Error during rating:', error);
+        showToast('Failed to save rating');
+    }
+}
 
 
 async function addLikeActivity(gameId, gameName) {
