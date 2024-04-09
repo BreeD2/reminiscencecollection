@@ -4096,6 +4096,14 @@ async function editComment(commentId, currentText) {
         }
     }
 }
+
+// Ensures comments are fetched and displayed as soon as the page loads
+document.addEventListener('DOMContentLoaded', async () => {
+    const gameId = 'animalcrossingnewhorizons'; // Ensure this is correctly set
+    console.log('Page loaded, fetching comments...');
+    await fetchAndDisplayComments(gameId);
+});
+
 async function fetchAndDisplayComments(gameId) {
     const commentsList = document.getElementById('commentsList');
     commentsList.innerHTML = ''; // Clear existing comments
@@ -4172,7 +4180,7 @@ async function fetchAndDisplayComments(gameId) {
                 .where('commentId', '==', doc.id)
                 .orderBy('timestamp', 'asc')
                 .get();
-                // New function to edit a reply
+
 
 
 // New function to edit a reply
@@ -4326,42 +4334,20 @@ document.getElementById('sendReply').addEventListener('click', sendReply);
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
-    const submitCommentButton = document.getElementById('submitComment');
-    if (submitCommentButton) {
-        submitCommentButton.addEventListener('click', async () => {
-            const commentText = document.getElementById('commentInput').value;
-            if (commentText) {
-                // Assume addComment is a function that adds the comment to Firestore
-                await addComment(gameId, commentText);
-                document.getElementById('commentInput').value = ''; // Clear the textarea after submission
-                // Optionally, refresh the displayed comments
-                await fetchAndDisplayComments(gameId);
-            } else {
-                showToast('Please enter a comment.');
-            }
-        });
-    } else {
-        console.error('Submit Comment button not found.');
-    }
-});
 
 async function handleSubmitComment() {
     const submitCommentButton = document.getElementById('submitComment');
     const commentInput = document.getElementById('commentInput');
     const commentText = commentInput.value.trim();
 
-    // Disable the button to prevent multiple submissions
-    submitCommentButton.disabled = true;
+    submitCommentButton.disabled = true; // Disable the button to prevent multiple submissions
 
     if (commentText) {
         try {
-            // Assuming addComment is a function that adds the comment
-            await addComment(commentText);
-            commentInput.value = ''; // Clear the input field after successful submission
+            await addComment(gameId, commentText); // Now passing gameId as well
+            commentInput.value = ''; // Clear the input field
             showToast('Comment added successfully.');
-            // Optionally, refresh the displayed comments
-            await fetchAndDisplayComments();
+            await fetchAndDisplayComments(gameId); // Refresh displayed comments
         } catch (error) {
             console.error('Error adding comment:', error);
             showToast('Failed to add comment.');
@@ -4370,9 +4356,17 @@ async function handleSubmitComment() {
         showToast('Please enter a comment.');
     }
 
-    // Re-enable the button after the operation is complete
-    submitCommentButton.disabled = false;
+    submitCommentButton.disabled = false; // Re-enable the button
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const submitCommentButton = document.getElementById('submitComment');
+    if (submitCommentButton) {
+        submitCommentButton.addEventListener('click', handleSubmitComment);
+    } else {
+        console.error('Submit Comment button not found.');
+    }
+});
 
 
 
