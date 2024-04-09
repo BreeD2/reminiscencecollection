@@ -4586,4 +4586,93 @@ list-style: none
 
   background-color: #f1f1f1;
 
+
+}
+
+.light-mode .copy {
+color:black
+}
+
+.light-mode #loginForm button {
+  background-color: white;
+  color:black
+}
+
+.dark-mode #loginForm button {
+  background-color: black;
+  color:white
+}
+
+#loginForm button {
+  background-color: dodgerblue;
+  color:white
+}
+
+#loginForm button:hover {
+  background-color: blue;
+  color:white
+}
+
+.light-mode #loginForm button {
+  background-color: whitesmoke;
+  color:black
+}
+
+.dark-mode #loginForm button {
+  background-color: grey;
+  color:white
+}
+
+.light-mode #loginForm button:hover {
+  background-color: grey;
+  color:white
+}
+
+.dark-mode #loginForm button:hover {
+  background-color: grey;
+  color:white
+}
+
+.light-mode #loginForm a:hover {
+
+  color:black
+}
+
+.light-mode #loginForm a {
+
+  color:black
+}
+
+
+.dark-mode #loginForm a {
+
+  color:white
+}
+
+
+.dark-mode #loginForm {
+  background-color: dimgrey;
+  color:white
+}
+
+.light-mode #loginForm {
+  background-color: white;
+  color:black
+}
+
+.dark-mode #loginForm label {
+  color:white
+}
+
+.light-mode #loginForm label {
+  color:black
+}
+
+#loginForm label {
+  color:black
+}
+
+.dark-mode #loginForm a {
+    color: white;
+    text-decoration: underline;
 }

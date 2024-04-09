@@ -4322,3 +4322,16 @@ margin-top: 20px;
  color: white;
      width: 100%;
 }
+
+
+
+.light-mode .footer {
+
+  background-color: #f1f1f1;
+
+
+}
+
+.light-mode .copy {
+color:black
+}

@@ -1,10 +1,15 @@
 * {
   box-sizing: border-box;
 }
+body {
+    font-family: Verdana, sans-serif;
+
+      height:auto
+}
 
 body {
   background-color:white;
-
+  height:auto  !important;
 
 
 
@@ -830,6 +835,7 @@ body.light-mode .dropdown-content2 a {
 
 html {
   font-family: arial;
+
 }
 
 .topnav {
@@ -1146,10 +1152,11 @@ body {
 body {
   background-color: ghostwhite;
   font-family: 'arial', sans-serif;
+  height:auto
 }
 #searchResults {font-family: 'arial', sans-serif; /* Add the desired font-family */;
 color:red;
-font-size: 15px
+font-size: 15px;
 
 
 }
@@ -2486,16 +2493,17 @@ border:2px solid white;
   }
 
 
+
   .footer {
-      width: 100%;
-      background-color: #f1f1f1;
-      text-align: center;
-      padding: 20px;
-      position: relative;
-      background-color: black;
-      margin-top: 100px;
-        color:white;
-    }
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    background-color: black;
+    margin-top:190px;
+      color:white;
+  }
 
       body.dark-mode #sort-section, body.sort-section * {
 
@@ -4234,6 +4242,7 @@ margin-top: 20px;
   background-color: black
 }
 
+
 .game-container {
        max-width: 800px;
        margin: auto;
@@ -4241,10 +4250,7 @@ margin-top: 20px;
        padding: 20px;
        border-radius: 8px;
        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-       top:100px;
-       position: relative;
-
-
+       margin-top:100px
    }
    .light-mode .game-container {
 
@@ -4279,191 +4285,175 @@ margin-top: 20px;
    cursor: pointer;
 }
 
-#toggleFormBtn {
-  background-color: dodgerblue;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+button#loginButton {
+    width: calc(100% - 22px);
+    padding: 10px;
+    background-color: #007bff; /* Example color, adjust as needed */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px
 }
+.light-mode button#loginButton {
 
-#toggleFormBtn:hover {
-  background-color: cornflowerblue;
-}
-
-.contact-form {
-  max-width: 500px;
-  margin-top: 100px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: grey; /* Example color, adjust as needed */
+    color: white;
 
 }
+.dark-mode button#loginButton {
 
-.dark-mode .contact-form {
-  background-color: #222;
+    background-color: black; /* Example color, adjust as needed */
+    color: white;
+
+}
+
+button#loginButton:hover {
+    background-color: grey;
+}
+
+.light-mode p a {
+    color: grey;
+
+}
+
+.dark-mode p a {
+    color: white
+
+}
+.dark-mode p {
+  color: white
+}
+.light-mode p {
+  color: grey
+}
+
+
+#formsContainer {
+    max-width:500px;
+    margin-top: 100px;
+    max-height: 600px;
+    font-family: Verdana, sans-serif;;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0,0,0,0.1)
+}
+
+.dark-mode #formsContainer {
+
+    background-color: #555;
   color:white
+}
 
+.light-mode #formsContainer {
+
+    background-color: white;
+  color:black
 }
 
 
+#loginSection h2 {
+    color: #333;
+    text-align: center;
+}
 
-.light-mode .contact-form {
-background-color: white;
-color:white
+.light-mode #loginSection h2 {
+    color: #333;
 
 }
 
-.form-group {
-  margin-bottom: 15px;
+.dark-mode #loginSection h2 {
+    color: white;
+
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.form-group input,
-.form-group textarea {
-  width: 100%;
+form input[type="password"] {
+  width: calc(100% - 22px);
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.form-group button[type="submit"] {
-  background-color: dodgerblue;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.dark-mode form button[type="submit"] {
-  background-color: black;
-  color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color:grey;
+  font-family:arial;
 
 }
-
-.dark-mode form button[type="submit"]:hover {
-  background-color: grey;
-  color: white;
-
-}
-
-.light-mode form button[type="submit"] {
-  background-color: black;
-  color: white;
-
-}
-
-.light-mode form button[type="submit"]:hover {
-  background-color: grey;
-  color: white;
-
-}
-
-.light-mode .contact-form h2 {
-
-  color: black;
-
-}
-
-.light-mode .form-group label {
-  color:black
+.form-group input {
+    font-family:arial
 }
 
 
-.form-group button[type="submit"]:hover {
-  background-color: cornflowerblue;
-}
 
-#contactForm {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-
-  border-radius: 8px;
-}
-
-#contactForm input[type="text"],
-#contactForm input[type="email"],
-#contactForm textarea {
-  width: 100%;
+form input[type="text"] {
+  width: calc(100% - 22px);
   padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 4px;
+  color:grey;
+  font-family:arial
 }
 
-#contactForm input[type="text"]:focus,
-#contactForm input[type="email"]:focus,
-#contactForm textarea:focus {
-  outline: none;
-  border-color: #007bff;
+/* Style placeholders */
+.form-group input::placeholder {
+    color: #888; /* Placeholder text color */
+    opacity: 1; /* Full opacity */
 }
 
-#contactForm textarea {
-  resize: vertical;
-  height: 150px;
+#loginForm {
+  max-width: 400px; /* Limit the width of the form */
+  margin: 40px auto; /* Center the form on the page */
+  padding: 20px; /* Add some padding inside the form */
+  border: 1px solid #ddd; /* Add a light border */
+  border-radius: 8px; /* Round the corners */
+  background-color: #f9f9f9; /* Light background color */;
+  margin-top: 100px
 }
 
-#contactForm button[type="submit"] {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
+#loginForm div {
+  margin-bottom: 20px; /* Add some space between form fields */
 }
 
-#contactForm button[type="submit"]:hover {
-  background-color: #0056b3;
-}
-
-.dropdown-content button:hover{
- background-color: grey;
- color: white;
-     width: 100%;
-}
-
-.light-mode #contactForm {
-  background-color: white;
+#loginForm label {
+  display: block; /* Make the label take up the full width */
+  margin-bottom: 5px; /* Space between the label and the input */
+  font-weight: bold; /* Make the label text a bit bolder */;
   color:black
 }
 
-.dark-mode #contactForm {
-  background-color: #222;
-  color:white
+#loginForm input[type="email"],
+#loginForm input[type="password"] {
+  width: 100%; /* Make the input fields take up the full width */
+  padding: 10px; /* Add some padding inside the input fields */
+  border: 1px solid #ccc; /* Slightly darker border for the inputs */
+  border-radius: 4px; /* Round the corners of the input fields */
 }
 
-.dark-mode #contactForm button[type="submit"] {
-  background-color: grey;
-  color:white
+#loginForm button[type="submit"] {
+  width: 100%; /* Make the button take up the full width */
+  padding: 10px; /* Add padding inside the button */
+  background-color: #007bff; /* Use a blue background */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-radius: 4px; /* Round the corners of the button */
+  cursor: pointer; /* Change mouse cursor to indicate clickable */
+  font-size: 16px; /* Increase font size */
 }
 
-.light-mode #contactForm button[type="submit"] {
-  background-color: #ddd;;
-  color:black
+#loginForm button[type="submit"]:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
 
-.light-mode #contactForm button:hover[type="submit"] {
-  background-color: darkgrey;;
-  color:black
-}
+#loader { display: none; }
+ #userDropdown { display: none; }
+ #logoutLink { display: none; }
 
 
-.light-mode .footer {
+ .light-mode .footer {
 
-  background-color: #f1f1f1;
+   background-color: #f1f1f1;
 
 
-}
+ }
 
-.light-mode .copy {
-color:black
-}
+ .light-mode .copy {
+ color:black
+ }
