@@ -4227,21 +4227,48 @@ border:2px solid white;
   .footer {
     font-size: 10px
   }
-  .game-title {
-    font-size: 18px
-  }
+
   #likeButton, #commentButton, #rateButton {
     font-size: 10px
   }
-
-
-
+  #submitComment, #commentsSection, #sendReply{
+    font-size: 10px
+  }
+   #ratingDisplay {
+    font-size: 10px !important;
+  }
+  #likesCount, #commentsList, #cancelReply, {
+    font-size: 10px
+  }
+  #commentsList, #cancelReply, #commentInput  {
+    font-size: 10px
+  }
+  #likesCount {
+    font-size: 10px !important;
+  }
+  .game-title {
+    font-size: 22px
+  }
+  .game-info p{
+    font-size: 6px;
 
 }
+.game-info strong {
+font-size: 15px
+}
+
+
+.game-info {
+font-size: 12px
+}
+}
+
+
 @media screen and (max-width: 350px) {
   #zoomIn {
 top: 10px;
 }
+
 
 #zoomOut {
 top: 10px;
