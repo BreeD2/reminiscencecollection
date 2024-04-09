@@ -4168,63 +4168,38 @@ document.getElementById('saveDescriptionBtn').addEventListener('click', async ()
     showToast('No user is signed in.');
   }
 });
-async function fetchAndDisplayRecentActivities(userId) {
-    const activityLogElement = document.getElementById('activityLog');
-    if (!activityLogElement) {
-        console.error('Activity log element not found.');
-        return;
-    }
 
-    activityLogElement.innerHTML = ''; // Clear existing activities
 
-    const activitiesRef = firestore.collection('userActivities')
-        .where('userId', '==', userId)
-        .orderBy('timestamp', 'desc')
-        .limit(10);
+async function logUserActivity(activityType, gameId, gameName) {
+  const user = firebase.auth().currentUser;
 
-    try {
-        const snapshot = await activitiesRef.get();
+  if (!user) {
+    console.log('No user is signed in.');
+    return;
+  }
 
-        if (snapshot.empty) {
-            console.log('No recent activities found.');
-            activityLogElement.textContent = 'No recent activities found.';
-            return;
-        }
-
-        snapshot.forEach(doc => {
-            const activity = doc.data();
-            let activityText = '';
-
-            switch (activity.type) {
-                case 'like':
-                    activityText = `Liked ${activity.gameName} on ${activity.timestamp.toDate().toLocaleString()}`;
-                    break;
-                case 'comment':
-                    activityText = `Commented on ${activity.gameName}: "${activity.text}" on ${activity.timestamp.toDate().toLocaleString()}`;
-                    break;
-                case 'rating':
-                    activityText = `Rated ${activity.gameName}: ${activity.rating} stars on ${activity.timestamp.toDate().toLocaleString()}`;
-                    break;
-            }
-
-            const activityItem = document.createElement('li');
-            activityItem.textContent = activityText;
-            activityLogElement.appendChild(activityItem);
-        });
-    } catch (error) {
-        console.error('Error fetching recent activities:', error);
-    }
+  try {
+    await firestore.collection('userActivities').add({
+      userId: user.uid,
+      type: activityType, // 'like', 'comment', 'rate', etc.
+      gameName: gameName,
+      gameId: gameId,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    console.log(`${activityType} activity recorded successfully`);
+  } catch (error) {
+    console.error(`Error recording ${activityType} activity:`, error);
+  }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  const activityLog = document.getElementById('activityLog');
-  if (activityLog) {
-    // Element exists, you can safely work with it here
-    console.log('Activity log element found:', activityLog);
-  } else {
-    console.error('Activity log element not found.');
-  }
+// Example usage:
+// Assuming you have a button for users to like a game
+document.getElementById('likeButton').addEventListener('click', async () => {
+  const gameId = 'animalcrossingnewhorizons'; // Example gameId, replace as needed
+  const gameName = 'Animal Crossing: New Horizons'; // Example gameName, replace as needed
+  await logUserActivity('like', gameId, gameName);
 });
+
 
 
 
