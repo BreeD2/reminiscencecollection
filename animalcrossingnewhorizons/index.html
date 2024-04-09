@@ -331,7 +331,7 @@
              <div id="main-content" class="content">
 
  <div class="game-container" data-game-id="animalcrossingnewhorizons">
-       <img src="animalcrossingnewhorizons.png" alt="Animal Crossing: New Horizons" class="game-cover"download="Animal Crossing New Horizons">
+       <img src="animalcrossingnewhorizons.png" alt="Animal Crossing: New Horizons" class="game-cover"download="Animal Crossing: New Horizons">
        <h1 class="game-title">Animal Crossing: New Horizons</h1>
        <button id="likeButton" class="icon-button"><i class="far fa-thumbs-up"></i> Like</button>
 
@@ -410,7 +410,7 @@
 
          <!-- Zoom Out Button -->
          <button id="zoomOut" class="zoom-btn">Zoom Out</button>
-         <a href="animalcrossingnewhorizons.png" download="Animal Crossing New Horizons">
+         <a href="animalcrossingnewhorizons.png" download="Animal Crossing: New Horizons">
          <button id="downloadButton">Download</button>
 
    </div>
@@ -3896,7 +3896,7 @@ const auth = firebase.auth();
 const storage = firebase.storage();
 const firestore = firebase.firestore();
 const db = firebase.firestore();
-const gameId = 'Animal Crossing New Horizons'; // Assume this is set appropriately elsewhere
+const gameId = 'Animal Crossing: New Horizons'; // Assume this is set appropriately elsewhere
 
 // Use an auth state observer to wait for the auth state to be initialized
 firebase.auth().onAuthStateChanged((user) => {
@@ -3976,13 +3976,13 @@ async function handleLikeClick(gameId) {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-  const gameId = "Animal Crossing New Horizons"; // Make sure this is set correctly
+  const gameId = "Animal Crossing: New Horizons"; // Make sure this is set correctly
   fetchAndDisplayLikes(gameId);
 });
 
 
 async function handleCommentClick() {
-    const gameId = 'Animal Crossing New Horizons'; // Example gameId, replace as needed
+    const gameId = 'Animal Crossing: New Horizons'; // Example gameId, replace as needed
     if (!isUserSignedIn()) {
         showToast('You must be signed in to add comments.');
         return;
@@ -4461,7 +4461,7 @@ async function fetchAndDisplayRating(gameId) {
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
     // User is signed in, safe to fetch the rating
-    fetchAndDisplayRating('Animal Crossing New Horizons');
+    fetchAndDisplayRating('Animal Crossing: New Horizons');
   } else {
     // No user is signed in.
     console.log("No user signed in.");
@@ -4470,7 +4470,7 @@ firebase.auth().onAuthStateChanged(user => {
 
 
 document.addEventListener('DOMContentLoaded', async function() {
-    const gameId = 'Animal Crossing New Horizons'; // Replace with the actual game ID
+    const gameId = 'Animal Crossing: New Horizons'; // Replace with the actual game ID
     await handleAuthStateChanges();
     setupEventListeners();
     await fetchAndDisplayComments(gameId);
@@ -4540,7 +4540,7 @@ async function handleRateClick() {
     }
 
     // Assuming you need the gameId to rate a game
-    const gameId = 'Animal Crossing New Horizons'; // Replace with logic to obtain the actual gameId
+    const gameId = 'Animal Crossing: New Horizons'; // Replace with logic to obtain the actual gameId
     let rating = parseInt(prompt("Enter your rating (1-5):"), 10); // Convert string input to integer
 
     // Validate rating is within the 1-5 range
