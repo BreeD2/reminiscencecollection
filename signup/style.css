@@ -1523,11 +1523,7 @@ body.dark-mode .cog-icon * {
             #mainContent {margin-left: 0;}
             .w3-sidebar.w3-bar-block {float: none;}
         }
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
+
 
 
         h1 {
@@ -2494,8 +2490,9 @@ border:2px solid white;
       padding: 20px;
       position: relative;
       background-color: black;
-      margin-top:160px;
+      margin-top:175px;
         color:white;
+
 }
 
   body.dark-mode h2, body.sort-section h2 * {
@@ -4413,7 +4410,7 @@ form input[type="text"] {
   background-color: #f7f7f7; /* Light grey background */
   border-radius: 8px; /* Rounded corners */
   box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */;
-  margin-top: 100px;
+  margin-top: 150px;
   font-family: arial;
 }
 
@@ -4469,9 +4466,11 @@ form input[type="text"] {
    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
    max-width: 400px;
    width: 100%;
-      margin-top: 100px
+      margin-top: 200px
 
  }
+
+
 
  #signin-form input[type="email"],
  #signin-form input[type="password"] {
@@ -4524,4 +4523,54 @@ form input[type="text"] {
 
 .light-mode .copy {
 color:black
+}
+
+#signup-form button#signupBtn {
+
+    background-color: dodgerblue;
+    color: white;
+    max-width:200px
+
+}
+
+#signup-form button#signupBtn:hover {
+
+    background-color: blue;
+    color: white;
+
+}
+
+.light-mode #signup-form button#signupBtn {
+
+    background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: black;
+
+}
+
+.light-mode #signup-form button#signupBtn:hover {
+
+    background-color: grey;
+    color: white;
+
+}
+
+.dark-mode #signup-form button#signupBtn {
+
+    background-color: #222;
+    color: white;
+
+}
+
+.dark-mode #signup-form button#signupBtn:hover {
+
+    background-color: grey;
+    color: white;
+
+}
+
+.dropdown-content button:hover{
+ background-color: grey;
+ color: white;
+     width: 100%;
 }
