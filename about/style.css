@@ -4572,3 +4572,72 @@ p {
 .header h1 {
   font-size: 30px
 }
+
+.light-mode #main-content > div.about-container {
+background-color: white;
+color:black
+}
+
+.dark-mode #main-content > div.about-container {
+background-color: dimgrey;
+color:white
+}
+
+.light-mode #main-content > div.about-container > section.research-focus {
+  background-color: white;
+  color:black
+}
+
+.dark-mode #main-content > div.about-container > section.research-focus {
+  background-color: black;
+  color:white
+}
+
+.light-mode #main-content > div.about-container > section.development-story {
+  background-color: white;
+  color:black
+}
+
+.dark-mode #main-content > div.about-container > section.development-story {
+  background-color: black;
+  color:white
+}
+
+.light-mode #main-content > div.about-container > section.about-archive {
+  background-color: white;
+  color:black
+}
+
+.dark-mode #main-content > div.about-container > section.about-archive {
+  background-color: black;
+  color:white
+}
+
+.light-mode #main-content > div.about-container > section.development-story > p > a {
+color:black;
+text-decoration: underline;
+}
+.light-mode #main-content > div.about-container > section.development-story > p > a:hover {
+color:grey;
+
+}
+.dark-mode #main-content > div.about-container > section.development-story > p > a {
+color:white;
+text-decoration: underline;
+}
+.dark-mode #main-content > div.about-container > section.development-story > p > a:hover {
+color:grey;
+
+}
+
+#main-content > div.about-container > section.development-story > p > a {
+  color:dodgerblue;
+  text-decoration: underline;
+
+}
+
+#main-content > div.about-container > section.development-story > p > a:hover {
+  color:blue;
+
+
+}
