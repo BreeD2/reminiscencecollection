@@ -3954,13 +3954,16 @@ function showToast(message) {
           likeButton.addEventListener('click', () => handleLikeClick(gameId, gameName));
       }
 
-      // Event listener for scrolling to the comment section
-    const commentButton = document.getElementById('commentButton');
-    if (commentButton) {
+      const commentButton = document.getElementById('commentButton');
+      if (commentButton) {
         commentButton.addEventListener('click', function() {
-            const commentSection = document.getElementById('commentSection');
-            if (commentSection) {
-                commentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Target the textarea by its ID "commentInput"
+          const commentInput = document.getElementById('commentInput');
+          if (commentInput) {
+            // Scrolls smoothly to the textarea
+            commentInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Optionally, focus the textarea to allow immediate typing
+            commentInput.focus();
             }
         });
     }
