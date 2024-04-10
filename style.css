@@ -1809,7 +1809,8 @@ select:hover {
     /* Styling for the heading within the about section */
 #about .what {
   color: white; /* Dark grey for readability */
-  font-size: 25px; /* Larger font size for heading */
+  font-size: 22px; /* Larger font size for heading */;
+  margin-top: 20px
 
 
 }
@@ -1894,7 +1895,7 @@ select:hover {
     }
 
     #about p {
-        font-size: 14px; /* Smaller font size for comfortable reading */
+        font-size: 10px; /* Smaller font size for comfortable reading */
     }
 }
 
