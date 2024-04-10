@@ -43,7 +43,7 @@
           <img src="..//rpa.png" alt="Reminiscence Collection" style="height: 23px;">&ensp;<span class="title-text">Reminiscence&ensp;Collection</span>
 
      </a>
-     <a href="https://breed2.github.io/reminiscencecollection//index.html">Home</a>
+     <a href="..//index.html">Home</a>
          <a href="index.html">Games</a>
          <a href="..//about/index.html">About</a>
          <a href="..//contact/index.html">Contact</a>
@@ -3554,7 +3554,7 @@ function decreaseFont() {
 
     // Store the original font sizes
     function storeOriginalFontSizes() {
-        const selector = '.sidebar *, #signupContainer, #signupContainer h2, .form-group label, button#signupButton, p, .featured-games, .featured-games-title, .footer, #enter-site-button';
+        const selector = '.sidebar *, #signupContainer, #signupContainer h2, .form-group label, #game-quiz > h2, #featured-game > div > div > h3, #featured-game, #game-quiz, button#signupButton, p, .featured-games, .featured-games-title, #games-list2, #games-list2 > h2, .footer, #enter-site-button';
         document.querySelectorAll(selector).forEach(element => {
             element.setAttribute('data-original-font-size', window.getComputedStyle(element).fontSize);
         });
@@ -3570,17 +3570,17 @@ function decreaseFont() {
 
     // Increase font size
     function increaseFont() {
-        adjustFontSize(1.1, '.sidebar *, #signupContainer, .underwelcome, .opening-screen button, p, .featured-games-title, .footer, .featured-games, .dropdown-content, #enter-site-button');
+        adjustFontSize(1.1, '.sidebar *, #signupContainer, .underwelcome, .opening-screen button, #game-quiz, #games-list2 > h2, #games-list2, p, .featured-games-title, .footer, #game-quiz > h2, #featured-game, .featured-games, #featured-game > div > div > h3, .dropdown-content, #enter-site-button');
     }
 
     // Decrease font size
     function decreaseFont() {
-        adjustFontSize(0.9, '.sidebar *, #signupContainer, .underwelcome, .dropdown-content, .dropdown, .opening-screen button, .featured-games, .featured-games-title, p, .footer, #enter-site-button');
+        adjustFontSize(0.9, '.sidebar *, #signupContainer, .underwelcome, .dropdown-content, #featured-game > div > div > h3, #games-list2, #game-quiz, .dropdown, .opening-screen button, .featured-games, #featured-game,  #games-list2 > h2, .featured-games-title, p, .footer, #game-quiz > h2, #enter-site-button');
     }
 
     // Reset font sizes to their original values
     function resetFont() {
-        const selector = '.sidebar *, #signupContainer, .underwelcome, .opening-screen button, .featured-games, .featured-games-title, p, .footer, #enter-site-button';
+        const selector = '.sidebar *, #signupContainer, .underwelcome, .opening-screen button, #featured-game > div > div > h3, #game-quiz > h2, #games-list2 > h2, #game-quiz, #games-list2, .featured-games, .featured-games-title, #featured-game, p, .footer, #enter-site-button';
         document.querySelectorAll(selector).forEach(element => {
             const originalFontSize = element.getAttribute('data-original-font-size');
             if (originalFontSize) element.style.fontSize = originalFontSize;
