@@ -47,7 +47,7 @@
         <img src="..//rpa.png" alt="Reminiscence Collection" style="height: 23px;">&ensp;<span class="title-text">Reminiscence&ensp;Collection</span>
 
    </a>
-   <a href="https://breed2.github.io/reminiscencecollection//index.html">Home</a>
+   <a href="..//index.html">Home</a>
        <a href="..//games/index.html">Games</a>
        <a href="..//about/index.html">About</a>
        <a href="..//contact/index.html">Contact</a>
@@ -3287,7 +3287,7 @@
 
         // Store the original font sizes
         function storeOriginalFontSizes() {
-            const selector = '.sidebar *, #signupContainer, #signupContainer h2, .form-group label, button#signupButton, p, .featured-games, .featured-games-title, .footer, #enter-site-button';
+            const selector = '.sidebar *, #signupContainer, #signupContainer h2, .form-group label, button#signupButton, p, .featured-games, .featured-games-title,#main-content > div.contact-form,#contactForm, #message, #contactForm > button, #name, #email, .footer, #enter-site-button';
             document.querySelectorAll(selector).forEach(element => {
                 element.setAttribute('data-original-font-size', window.getComputedStyle(element).fontSize);
             });
@@ -3303,17 +3303,17 @@
 
         // Increase font size
         function increaseFont() {
-            adjustFontSize(1.1, '.sidebar *, #signupContainer, .underwelcome, .opening-screen button, p, .featured-games-title, .footer, .featured-games, .dropdown-content, #enter-site-button');
+            adjustFontSize(1.1, '.sidebar *, #signupContainer, .underwelcome, .opening-screen button, p, #contactForm, .featured-games-title, .footer, .featured-games,#main-content > div.contact-form, .dropdown-content, #name, #contactForm > button, #message, #email, #enter-site-button');
         }
 
         // Decrease font size
         function decreaseFont() {
-            adjustFontSize(0.9, '.sidebar *, #signupContainer, .underwelcome, .dropdown-content, .dropdown, .opening-screen button, .featured-games, .featured-games-title, p, .footer, #enter-site-button');
+            adjustFontSize(0.9, '.sidebar *, #signupContainer, .underwelcome, .dropdown-content, .dropdown, #contactForm, .opening-screen button, .featured-games, #contactForm > button, .featured-games-title, p, #main-content > div.contact-form, #message, #name, #email,.footer, #enter-site-button');
         }
 
         // Reset font sizes to their original values
         function resetFont() {
-            const selector = '.sidebar *, #signupContainer, .underwelcome, .opening-screen button, .featured-games, .featured-games-title, p, .footer, #enter-site-button';
+            const selector = '.sidebar *, #signupContainer, .underwelcome, .opening-screen button,#contactForm > button, #contactForm, #main-content > div.contact-form, .featured-games, #email, #message, #name, .featured-games-title, p, .footer, #enter-site-button';
             document.querySelectorAll(selector).forEach(element => {
                 const originalFontSize = element.getAttribute('data-original-font-size');
                 if (originalFontSize) element.style.fontSize = originalFontSize;
@@ -3881,6 +3881,7 @@
         { name: 'Cars', url: 'cars/index.html' },
           { name: 'Contact', url: 'contact/index.html' },
         { name: 'Dark Souls Remastered', url: 'darksoulsremastered/index.html' },
+          { name: 'Dashboard', url: '..//dashboard/index.html' },
         { name: 'Deadpool', url: 'deadpool/index.html' },
         { name: 'Despicable Me: Minion Mayhem', url: 'despicablememinionmayhem/index.html' },
         { name: 'Disney Infinity', url: 'disneyinfinity/index.html' },
@@ -3972,7 +3973,6 @@
       { name: 'Midnight Club: Street Racing', url: 'midnightclubstreetracing/index.html' },
       { name: 'Midnight Club 3: Dub Edition', url: 'midnightclub3dubedition/index.html' },
       { name: 'Mortal Kombat 11: Aftermath', url: 'mortalkombat11aftermath/index.html' },
-        { name: 'My Profile', url: 'myprofile/index.html' },
       { name: 'My Street', url: 'mystreet/index.html' },
       { name: 'Mystery Masters MYSTERIES OF THE HEART COLLECTION 20 GAMES IN ALL Hidden Object PC Game', url: 'mysterymastersmysteriesoftheheartcollection20gamesinallhiddenobjectpcgame/index.html' },
       { name: 'NBA 08', url: 'nba08/index.html' },

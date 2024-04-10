@@ -45,7 +45,7 @@
         <img src="..//rpa.png" alt="Reminiscence Collection" style="height: 23px;">&ensp;<span class="title-text">Reminiscence&ensp;Collection</span>
 
    </a>
-   <a href="https://breed2.github.io/reminiscencecollection//index.html">Home</a>
+   <a href="..//index.html">Home</a>
        <a href="..//games/index.html">Games</a>
        <a href="..//about/index.html">About</a>
        <a href="..//contact/index.html">Contact</a>
@@ -3289,7 +3289,7 @@ document.getElementById('filterCheckbox').addEventListener('change', function() 
 
     // Store the original font sizes
     function storeOriginalFontSizes() {
-        const selector = '.sidebar *, .game-container, .game-title, #h1, .game-container, .game-info, #likeButton, .footer, #commentButton, #rateButton, .game-title';
+        const selector = '.sidebar *, .game-container, .game-title, #h1, .game-container, .game-info, #likeButton, .footer, #commentButton, #rateButton, #likesCount,#ratingDisplay,#commentsSection > strong, .game-title';
         document.querySelectorAll(selector).forEach(element => {
             element.setAttribute('data-original-font-size', window.getComputedStyle(element).fontSize);
         });
@@ -3297,7 +3297,7 @@ document.getElementById('filterCheckbox').addEventListener('change', function() 
 
     // Reset font sizes to their original values
     function resetFont() {
-        const selector = '.sidebar *, .game-container, .game-info, #likeButton, #commentButton, #rateButton, .game-title, .footer';
+        const selector = '.sidebar *, .game-container, .game-info, #likeButton, #commentButton,#commentsSection > strong, #rateButton, #likesCount,#ratingDisplay, .game-title, .footer';
         document.querySelectorAll(selector).forEach(element => {
             const originalFontSize = element.getAttribute('data-original-font-size');
             if (originalFontSize) element.style.fontSize = originalFontSize;
@@ -3314,12 +3314,12 @@ document.getElementById('filterCheckbox').addEventListener('change', function() 
 
     // Increase font size
     function increaseFont() {
-        adjustFontSize(1.1, '.sidebar *, .game-container, .game-info, #likeButton, #commentButton, #rateButton, .game-title, .footer');
+        adjustFontSize(1.1, '.sidebar *, .game-container, .game-info, #likeButton, #commentButton,#likesCount, #ratingDisplay, #rateButton, .game-title,#commentsSection > strong, .footer');
     }
 
     // Decrease font size
     function decreaseFont() {
-        adjustFontSize(0.9, '.sidebar *, .game-container, .game-info, #likeButton, #commentButton, #rateButton, .game-title, .footer');
+        adjustFontSize(0.9, '.sidebar *, .game-container, .game-info, #likeButton,#commentsSection > strong, #commentButton, #likesCount, #ratingDisplay, #rateButton, .game-title, .footer');
     }
 
     // Reset settings including font sizes and other visual modifications
@@ -3687,6 +3687,7 @@ const searchFunction = () => {
     { name: 'Cars', url: '..//cars/index.html' },
       { name: 'Contact', url: '..//contact/index.html' },
     { name: 'Dark Souls Remastered', url: '..//darksoulsremastered/index.html' },
+      { name: 'Dashboard', url: '..//dashboard/index.html' },
     { name: 'Deadpool', url: '..//deadpool/index.html' },
     { name: 'Despicable Me: Minion Mayhem', url: '..//despicablememinionmayhem/index.html' },
     { name: 'Disney Infinity', url: '..//disneyinfinity/index.html' },
@@ -3778,7 +3779,6 @@ const searchFunction = () => {
   { name: 'Midnight Club: Street Racing', url: '..//midnightclubstreetracing/index.html' },
   { name: 'Midnight Club 3: Dub Edition', url: '..//midnightclub3dubedition/index.html' },
   { name: 'Mortal Kombat 11: Aftermath', url: '..//mortalkombat11aftermath/index.html' },
-    { name: 'My Profile', url: '..//myprofile/index.html' },
   { name: 'My Street', url: '..//mystreet/index.html' },
   { name: 'Mystery Masters MYSTERIES OF THE HEART COLLECTION 20 GAMES IN ALL Hidden Object PC Game', url: '..//mysterymastersmysteriesoftheheartcollection20gamesinallhiddenobjectpcgame/index.html' },
   { name: 'NBA 08', url: '..//nba08/index.html' },

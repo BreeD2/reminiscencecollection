@@ -4518,7 +4518,7 @@ margin-top: 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width:100px
+  max-width: 100px
 }
 
 #ratingDisplay {
@@ -4530,7 +4530,7 @@ margin-top: 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width:100px
+    max-width: 100px
 }
 
 
