@@ -4221,6 +4221,46 @@ repliesQuerySnapshot.forEach(async replyDoc => {
     }
 }
 
+async function recordCommentActivity(userId, commentText, gameId) {
+  try {
+    await firestore.collection('activityLog').add({
+      userId: userId,
+      text: commentText,
+      gameId: gameId,
+      type: 'comment',
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    console.log('Comment activity recorded successfully');
+  } catch (error) {
+    console.error('Error recording comment activity:', error);
+  }
+}
+
+async function addComment(gameId, commentText) {
+  if (!isUserSignedIn()) {
+    showToast('Please sign in to add a comment.');
+    return;
+  }
+
+  try {
+    // Add the comment to the comments collection
+    const commentRef = await firestore.collection('comments').add({
+      gameId: gameId,
+      text: commentText,
+      userId: firebase.auth().currentUser.uid,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+
+    // Record the activity
+    await recordCommentActivity(firebase.auth().currentUser.uid, commentText, gameId);
+
+    showToast('Comment added successfully');
+    fetchAndDisplayComments(gameId); // Optionally refresh comments display
+  } catch (error) {
+    console.error('Error adding comment:', error);
+    showToast('Failed to add comment');
+  }
+}
 
 
 
