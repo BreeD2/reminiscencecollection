@@ -4827,3 +4827,43 @@ body::-webkit-scrollbar-thumb {
     border-radius: 8px;
 
 }
+
+
+/* General styling for the select element */
+#languageSelection {
+  padding: 8px 16px; /* Add padding inside the dropdown */
+
+  border-radius: 4px; /* Rounded corners for the dropdown */
+  background-color: white; /* White background color */
+  font-size: 16px; /* Text size */
+  cursor: pointer; /* Changes the cursor to indicate it's clickable */
+  appearance: none; /* Removes default system styling */
+  -webkit-appearance: none; /* Also for Safari */
+  -moz-appearance: none; /* Also for Firefox */
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 4 5"><path fill="white" d="M2 0L0 2h4L2 0zm0 5L0 3h4l-2 2z"/></svg>'); /* Custom dropdown arrow */
+  background-repeat: no-repeat;
+  background-position: right 10px center; /* Position for the custom arrow */
+  background-size: 12px; /* Size of the custom arrow */;
+  width: 100%;
+  overflow: auto;
+  background-color: dodgerblue;
+  color:white;
+  border: none
+}
+
+/* Styling for hover effect */
+#languageSelection:hover {
+  border-color: #888; /* Darker border color on hover */
+}
+
+/* Styling for focus to improve accessibility */
+#languageSelection:focus {
+  outline: none; /* Removes the default focus outline */
+  border-color: #0056b3; /* Sets a blue border color for focus */
+  box-shadow: 0 0 0 2px rgba(0,86,179,0.25); /* Adds a soft blue glow */
+}
+
+/* This is optional, for styling options */
+#languageSelection option {
+  padding: 8px; /* Adds padding to options */
+}
