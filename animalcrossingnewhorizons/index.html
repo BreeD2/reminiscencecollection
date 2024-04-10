@@ -3878,6 +3878,7 @@ const searchFunction = () => {
 };
 
 </script>
+
 <script>
 // Firebase configuration
 const firebaseConfig = {
@@ -3940,42 +3941,28 @@ function showToast(message) {
   function isUserSignedIn() {
     return !!firebase.auth().currentUser;
   }
+
   document.addEventListener('DOMContentLoaded', function() {
       // Define gameId and gameName here if they're not already defined globally
       const gameId = 'animalcrossingnewhorizons';
       const gameName = 'Animal Crossing: New Horizons';
 
-      // Call setupEventListeners directly within DOMContentLoaded
-      setupEventListeners();
-
-      // Immediately fetch and display comments without waiting for any user action
-      fetchAndDisplayComments(gameId);
-  });
-
-  function setupEventListeners() {
-      // Setup event listeners for like, comment, and rate buttons
+      // Setup Like Button
       const likeButton = document.getElementById('likeButton');
-      const commentButton = document.getElementById('commentButton');
-      const rateButton = document.getElementById('rateButton');
-      const submitCommentButton = document.getElementById('submitComment');
-
       if (likeButton) {
+          // Attach the event listener using an arrow function that calls handleLikeClick with the correct arguments
           likeButton.addEventListener('click', () => handleLikeClick(gameId, gameName));
       }
 
-      if (commentButton) {
-          commentButton.addEventListener('click', () => handleCommentClick(gameId));
-      }
 
+      // Setup Rate Button
+      const rateButton = document.getElementById('rateButton');
       if (rateButton) {
+          // Attach the event listener for rate button
           rateButton.addEventListener('click', () => handleRateClick(gameId, gameName));
       }
+  });
 
-      if (submitCommentButton) {
-          // Ensure this handler is attached only once to prevent duplicate submissions
-          submitCommentButton.addEventListener('click', () => handleSubmitComment(gameId));
-      }
-  }
 
 
 
@@ -4060,7 +4047,12 @@ async function editComment(commentId, currentText) {
     }
 }
 
-
+// Ensures comments are fetched and displayed as soon as the page loads
+document.addEventListener('DOMContentLoaded', async () => {
+    const gameId = 'animalcrossingnewhorizons'; // Ensure this is correctly set
+    console.log('Page loaded, fetching comments...');
+    await fetchAndDisplayComments(gameId);
+});
 
 async function fetchAndDisplayComments(gameId) {
     const commentsList = document.getElementById('commentsList');
@@ -4204,7 +4196,8 @@ repliesQuerySnapshot.forEach(async replyDoc => {
         replyElement.appendChild(deleteReplyButton);
     }
 
-
+    // Append the replyElement to its respective comment's repliesContainer
+    repliesContainer.appendChild(replyElement); // Ensure repliesContainer is defined in your fetchAndDisplayComments function
 });
             // Append the comment element (with replies) to the comments list
             commentsList.appendChild(commentElement);
@@ -4290,7 +4283,6 @@ async function sendReply() {
 document.getElementById('sendReply').addEventListener('click', sendReply);
 
 
-
 async function handleSubmitComment() {
     // First, check if the user is signed in
     if (!isUserSignedIn()) {
@@ -4298,18 +4290,21 @@ async function handleSubmitComment() {
         return; // Exit the function early if no user is signed in
     }
 
-    const submitCommentButton = document.getElementById('submitComment');
     const commentInput = document.getElementById('commentInput');
     const commentText = commentInput.value.trim();
-    const gameId = 'animalcrossingnewhorizons'; // Make sure to replace 'yourGameIdHere' with your actual game ID
+    const gameId = 'animalcrossingnewhorizons'; // Dynamically fetch this if necessary
 
-    submitCommentButton.disabled = true; // Disable the button to prevent multiple submissions
+    // Disable the button to prevent multiple submissions
+    const submitCommentButton = document.getElementById('submitComment');
+    submitCommentButton.disabled = true;
 
     if (commentText) {
         try {
+            // Consider merging additional logic here if needed from handleCommentClick
             await addComment(gameId, commentText);
             commentInput.value = ''; // Clear the input field after successful comment submission
             showToast('Comment added successfully.');
+            fetchAndDisplayComments(gameId); // Refresh comment display
         } catch (error) {
             console.error('Error adding comment:', error);
             showToast('Failed to add comment.');
@@ -4318,15 +4313,17 @@ async function handleSubmitComment() {
         showToast('Please enter a comment.');
     }
 
-    submitCommentButton.disabled = false; // Re-enable the submit button after the comment is processed
+    submitCommentButton.disabled = false; // Re-enable the submit button after processing
 }
 
+// Attach event listener once DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     const submitCommentButton = document.getElementById('submitComment');
     if (submitCommentButton) {
         submitCommentButton.addEventListener('click', handleSubmitComment);
     }
 });
+
 
 
 
@@ -4407,7 +4404,23 @@ firebase.auth().onAuthStateChanged(user => {
 
 // Event listeners setup and other functions (omitted for brevity)
 
-
+async function addComment(gameId, commentText) {
+    // Replace this logic with your actual Firestore path and data structure
+    try {
+        await firestore.collection('comments').add({
+            gameId: gameId,
+            text: commentText,
+            // Include other fields as necessary, e.g., userId or timestamp
+            userId: auth.currentUser.uid,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        showToast('Comment added successfully');
+        fetchAndDisplayComments(gameId); // Refresh comments display
+    } catch (error) {
+        console.error('Error adding comment:', error);
+        showToast('Failed to add comment');
+    }
+}
 
 async function rateGame(gameId, rating) {
     if (!isUserSignedIn()) {
