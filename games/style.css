@@ -1976,17 +1976,7 @@ select:hover {
     border-radius: 10px; /* Optional: Adds rounded corners to the images */
 }
 
-.game-info {
-    /* No need for position: absolute; */
-    text-align: center;
-    color: #fff; /* Text color */
-    background-color: black; /* Optional: Adds a semi-transparent background for readability */
-    padding: 10px 0; /* Padding for the info */
-    margin-top: 10px; /* Adds space between the image and the description */
-    border-radius: 10px; /* Rounded corners */
-    width: calc(100% - 20px); /* Adjust width to account for padding */
-    box-sizing: border-box; /* Ensures padding is included in the width */
-}
+
 
 .slideshow-container {
   position: relative;
@@ -2193,17 +2183,6 @@ select:hover {
 
 
 
-.game-info {
-    /* No need for position: absolute; */
-    text-align: center;
-    color: #fff; /* Text color */
-    background-color: rgba(0, 0, 0, 0.7); /* Optional: Adds a semi-transparent background for readability */
-    padding: 10px 0; /* Padding for the info */
-    margin-top: 10px; /* Adds space between the image and the description */
-    border-radius: 10px; /* Rounded corners */
-    width: calc(100% - 20px); /* Adjust width to account for padding */
-    box-sizing: border-box; /* Ensures padding is included in the width */
-}
 
 .games-grid {
     display: grid;
@@ -2222,16 +2201,7 @@ select:hover {
     border-radius: 10px; /* Optional: Adds rounded corners to the images for aesthetics */
 }
 
-.game-info {
-    text-align: center; /* Ensures the game information text is centered */
-    color: #fff; /* Text color, adjust as needed */
-    background-color: rgba(0, 0, 0, 0.7); /* Optional: Adds a semi-transparent background for readability */
-    padding: 10px 0; /* Adds padding around the text for spacing */
-    margin-top: 10px; /* Adds space between the image and the description */
-    border-radius: 10px; /* Optional: Adds rounded corners to the background of the text */
-    width: 100%; /* Ensures the text container matches the width of the image above */
-    box-sizing: border-box; /* Ensures the width calculation includes padding */
-}
+
 
 #featuredGameContainer {
   margin-top: 20px;
@@ -2725,35 +2695,17 @@ body.dark-mode .next {
   height: auto;
 }
 
-.game-info {
-  padding: 15px;
-}
 
 .game-title {
   margin: 10px 0 5px;
 }
 
-.game-info {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #666;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-    font-style: normal;
-}
 
 p {
   font-style: normal;
 }
 
-.game-info {
-    line-height: 1.5; /* Adjust line height for better readability */
-    font-size: 15px; /* Adjust font size as needed */;
-    padding: 20px
 
-}
 
 /* The Modal (background) */
 .modal {
@@ -3836,12 +3788,7 @@ button {
     vertical-align: middle;
 }
 
-.game-info {
-    line-height: 1.5; /* Adjust line height for better readability */
-    font-size: 15px; /* Adjust font size as needed */;
-    padding: 20px
 
-}
 
 .game-title {
     font-size: 30px; /* Default font size */
@@ -4243,15 +4190,6 @@ margin-top: 20px;
        color: #333;
    }
 
-   .game-info {
-       font-size: 16px;
-       line-height: 1.6;
-       color: #666;
-       background-color: white;
-       border-radius: 8px;
-       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-       font-family: Arial, sans-serif;
-   }
 
 
    /* Existing CSS for game-container */
@@ -4687,13 +4625,6 @@ color:white
 
 }
 
-.game-info {
-  max-width: 1000px;
-  margin-top: 100px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-}
 
 
 h2 {
@@ -4708,27 +4639,6 @@ h2 {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     max-width: 1000px
 
-}
-
-#gamesContainer {
-    list-style: none;
-    padding: 8px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-
-}
-
-#gamesContainer a {
-    display: block;
-    background: dodgerblue;
-    color: #ffffff;
-    text-decoration: none;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    transition: background-color 0.3s ease;
 }
 
 #gamesContainer a:hover {
@@ -4765,6 +4675,7 @@ h2 {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-width: 800px
 }
 
 .quiz-btn {
@@ -4839,27 +4750,196 @@ h2 {
     background-color: #0056b3;
 }
 
-/* Adjust image size for smaller screens */
-@media (max-width: 768px) {
-    .featured-image {
-        max-width: 80%; /* Larger on small screens for visibility */
-    }
-
-    .game-description {
-        max-width: 90%; /* Allows more room for text on small screens */
-    }
-}
-
-.featured-game-section {
-    background-color: #fff;
+/* Style for the game list container */
+.games-section {
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-    text-align: center; /* This centers the text for all child elements, including the title */
 }
 
-.section-title {
-    margin-bottom: 16px;
-    text-align: center; /* Specifically ensures the title is centered, should be redundant given the container's style */
+/* Style for the game list */
+.games-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Style for individual game links */
+.game-link {
+    margin-bottom: 10px;
+}
+
+/* Style for game titles */
+.game-link a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Style for alphabet sections */
+.alphabet-section {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+/* Style for the game list container */
+.games-list {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three equal-width columns */
+    gap: 20px; /* Adjust the gap between games */
+}
+
+/* Style for alphabet sections */
+.alphabet-section {
+    font-size: 1.2em; /* Larger font size for the first letter */
+    font-weight: bold;
+    margin-bottom: 10px; /* Add bottom margin to separate sections */
+}
+
+/* Style for individual game links */
+.game-link {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    margin-bottom: 10px; /* Adjust spacing between games */
+    width: 100%; /* Each game link takes the full width of its column */
+}
+
+/* Style for the game list container */
+.games-list {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three equal-width columns */
+    gap: 20px; /* Adjust the gap between games */
+}
+
+/* Style for alphabet sections */
+.alphabet-section {
+    font-size: 1.2em; /* Larger font size for the first letter */
+    font-weight: bold;
+    margin-bottom: 10px; /* Add bottom margin to separate sections */
+    grid-column: 1 / -1; /* Span across all columns */
+}
+
+/* Style for individual game links */
+.game-link {
+    text-decoration: none;
+    color: #333;
+    margin-bottom: 10px; /* Adjust spacing between games */
+    width: 100%; /* Each game link takes the full width of its column */
+}
+/* Style for game links */
+.game-link {
+  margin-bottom: 20px;
+}
+
+.game-link a {
+  text-decoration: none;
+  color: #333; /* Change the color as desired */
+  display: block;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.game-link a:hover {
+  background-color: #e0e0e0;
+}
+
+/* Style for alphabet sections */
+.alphabet-section {
+
+  margin-top: 20px;
+
+  color:black;
+
+
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#gamesContainer > li > a {
+  background-color: white;
+    color:black;
+      border: none;
+      background-color: white;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+
+
+}
+
+
+#gamesContainer > li {
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  color: black;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);;
+      border: 1px solid #ccc;
+
+}
+
+
+
+/* CSS for desktop screens */
+.games-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+/* CSS for smaller screens */
+@media only screen and (max-width: 768px) {
+  .games-list {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+
+/* CSS for even smaller screens */
+@media only screen and (max-width: 480px) {
+  .games-list {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+
+  }
+}
+
+/* Base styles for the section */
+#games-list2 {
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    margin-top: 100px;
+    border-radius: 8px
+}
+
+/* Styles for the heading */
+#games-list2 h2 {
+  margin-top: 100px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bolder;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 600px) {
+    /* Adjust styles for smaller screens */
+    #games-list2 {
+        padding: 10px;
+    }
+    #games-list2 h2 {
+        font-size: 20px;
+    }
+}
+#featured-game {
+max-width: 800px;
+text-align: center;
+background-color: white;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+margin-top: 10px;
 }
