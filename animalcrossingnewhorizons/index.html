@@ -4220,45 +4220,41 @@ repliesQuerySnapshot.forEach(async replyDoc => {
         showToast('Failed to fetch comments.');
     }
 }
-async function addCommentAndLogActivity(gameId, gameName, commentText) {
-    if (!isUserSignedIn()) {
-        showToast('Please sign in to add a comment.');
-        return;
-    }
 
-    const userId = firebase.auth().currentUser.uid;
+async function fetchAndDisplayUserActivities() {
+    const activityLog = document.getElementById('activityLog');
+    activityLog.innerHTML = 'This is the activity log.'; // Resetting the content
 
     try {
-        // First, add the comment to the 'comments' collection
-        await firestore.collection('comments').add({
-            gameId: gameId,
-            gameName: gameName, // Including gameName directly in the comment now
-            text: commentText,
-            userId: userId,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        const querySnapshot = await firestore.collection('userActivities')
+            .orderBy('timestamp', 'desc')
+            .get();
+
+        querySnapshot.forEach((doc) => {
+            const activity = doc.data();
+            const activityElement = document.createElement('div');
+            activityElement.classList.add('activity');
+
+            // Example: Create a simple text content based on activity type
+            let content = `Activity: ${activity.type}`;
+            if (activity.type === 'comment') {
+                content += ` - Commented on ${activity.gameName}: "${activity.commentText}"`;
+            } else if (activity.type === 'rating') {
+                content += ` - Rated ${activity.gameName}: ${activity.rating}`;
+            }
+            // Add more conditions based on different activity types as needed
+
+            activityElement.textContent = content;
+            activityLog.appendChild(activityElement);
         });
-
-        // After successfully adding the comment, log the activity in 'userActivities'
-        const activity = {
-            userId: userId,
-            type: 'comment',
-            gameId: gameId,
-            gameName: gameName,
-            commentText: commentText, // Storing the comment text directly in the activity
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        };
-
-        // Save the activity to 'userActivities' collection
-        await firestore.collection('userActivities').add(activity);
-
-        showToast('Comment added successfully and activity logged.');
-        fetchAndDisplayComments(gameId); // Optionally refresh comments display
     } catch (error) {
-        console.error('Error adding comment or logging activity:', error);
-        showToast('Failed to add comment or log activity.');
+        console.error('Error fetching activities:', error);
+        showToast('Failed to fetch activities.');
     }
 }
 
+// Call this function to load activities when the dashboard is loaded or when needed
+document.addEventListener('DOMContentLoaded', fetchAndDisplayUserActivities);
 
 
 
