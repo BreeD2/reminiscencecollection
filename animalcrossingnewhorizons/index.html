@@ -4012,47 +4012,6 @@ document.addEventListener('DOMContentLoaded', function() {
   fetchAndDisplayLikes(gameId);
 });
 
-async function handleCommentClick() {
-    const gameId = 'animalcrossingnewhorizons'; // This should be dynamic or contextually set
-    let gameName = 'Animal Crossing: New Horizons'; // Example static assignment, consider fetching dynamically if needed
-
-    // Example of dynamically fetching gameName (replace with your logic as needed)
-    // const gameDetails = await fetchGameDetails(gameId);
-    // gameName = gameDetails.name;
-
-    const commentInput = document.getElementById('commentInput'); // Assuming an input field with this ID exists
-    const commentText = commentInput ? commentInput.value.trim() : '';
-
-    if (!commentText) {
-        showToast('Please enter a comment.');
-        return;
-    }
-
-    if (!isUserSignedIn()) {
-        showToast('You must be signed in to add comments.');
-        return;
-    }
-
-    try {
-        await firestore.collection('comments').add({
-            gameId: gameId,
-            gameName: gameName, // Make sure this is not undefined
-            text: commentText,
-            userId: firebase.auth().currentUser.uid,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        });
-        showToast('Comment added successfully');
-        // Refresh the comments list to include the new comment
-        fetchAndDisplayComments(gameId);
-    } catch (error) {
-        console.error('Error adding comment:', error);
-        showToast('Failed to add comment');
-    }
-}
-
-// Make sure this is connected to your comment submission button
-document.getElementById('submitComment').addEventListener('click', handleCommentClick);
-
 
 
 
@@ -4093,12 +4052,7 @@ async function editComment(commentId, currentText) {
     }
 }
 
-// Ensures comments are fetched and displayed as soon as the page loads
-document.addEventListener('DOMContentLoaded', async () => {
-    const gameId = 'animalcrossingnewhorizons'; // Ensure this is correctly set
-    console.log('Page loaded, fetching comments...');
-    await fetchAndDisplayComments(gameId);
-});
+
 
 async function fetchAndDisplayComments(gameId) {
     const commentsList = document.getElementById('commentsList');
@@ -4242,8 +4196,7 @@ repliesQuerySnapshot.forEach(async replyDoc => {
         replyElement.appendChild(deleteReplyButton);
     }
 
-    // Append the replyElement to its respective comment's repliesContainer
-    repliesContainer.appendChild(replyElement); // Ensure repliesContainer is defined in your fetchAndDisplayComments function
+
 });
             // Append the comment element (with replies) to the comments list
             commentsList.appendChild(commentElement);
