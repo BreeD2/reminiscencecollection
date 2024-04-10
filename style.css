@@ -1919,7 +1919,7 @@ select:hover {
     height: 1200px; /* Fixed height for large screens */
     margin-top: -8%;
   width: calc(100%); /* Adds back the 5% margin from both sides */
-    background: url('featured/p1.webp') no-repeat center center/cover;
+    background: url('featured/co.jpeg') no-repeat center center/cover;
     background-color: black;
     display: flex;
     flex-direction: column;
