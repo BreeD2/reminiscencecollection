@@ -4735,3 +4735,15 @@ margin-top: 20px;
     background-color: black; /* Light background color for the reply */
   border: 1px solid grey; /* Adds a subtle border for definition */;
 }
+
+
+.dark-mode #commentsList > div > div > div > button {
+  color:white;
+    background-color: black; /* Light background color for the reply */
+}
+
+.light-mode #commentsList > div > div > div > button {
+  color: white;
+  background-color: black;
+  border: 1px solid grey;
+}
