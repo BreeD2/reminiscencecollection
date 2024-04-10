@@ -4220,43 +4220,45 @@ repliesQuerySnapshot.forEach(async replyDoc => {
         showToast('Failed to fetch comments.');
     }
 }
+async function addCommentAndLogActivity(gameId, gameName, commentText) {
+    if (!isUserSignedIn()) {
+        showToast('Please sign in to add a comment.');
+        return;
+    }
 
-async function addComment(gameId, commentText) {
-  if (!isUserSignedIn()) {
-    showToast('Please sign in to add a comment.');
-    return;
-  }
+    const userId = firebase.auth().currentUser.uid;
 
-  const userId = firebase.auth().currentUser.uid;
+    try {
+        // First, add the comment to the 'comments' collection
+        await firestore.collection('comments').add({
+            gameId: gameId,
+            gameName: gameName, // Including gameName directly in the comment now
+            text: commentText,
+            userId: userId,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        });
 
-  try {
-    // Add the comment to the comments collection
-    const commentRef = await firestore.collection('comments').add({
-      gameId: gameId,
-      text: commentText,
-      userId: userId,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    });
+        // After successfully adding the comment, log the activity in 'userActivities'
+        const activity = {
+            userId: userId,
+            type: 'comment',
+            gameId: gameId,
+            gameName: gameName,
+            commentText: commentText, // Storing the comment text directly in the activity
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        };
 
-    // Assuming comment was added successfully, log this activity
-    const activity = {
-      userId: userId,
-      type: 'comment',
-      gameId: gameId,
-      commentId: commentRef.id, // Reference to the added comment
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    };
+        // Save the activity to 'userActivities' collection
+        await firestore.collection('userActivities').add(activity);
 
-    // Save the activity to the userActivities collection
-    await firestore.collection('userActivities').add(activity);
-
-    showToast('Comment added successfully');
-    fetchAndDisplayComments(gameId); // Refresh comments display if necessary
-  } catch (error) {
-    console.error('Error adding comment or recording activity:', error);
-    showToast('Failed to add comment or record activity');
-  }
+        showToast('Comment added successfully and activity logged.');
+        fetchAndDisplayComments(gameId); // Optionally refresh comments display
+    } catch (error) {
+        console.error('Error adding comment or logging activity:', error);
+        showToast('Failed to add comment or log activity.');
+    }
 }
+
 
 
 
