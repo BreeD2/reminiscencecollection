@@ -4282,9 +4282,7 @@ margin-top: 20px;
 }
 
 
-.header {
-  margin-top:100px;
-}
+
 
 
 .header1 {
@@ -4428,12 +4426,19 @@ margin-top: 20px;
         font-size: 1.5em;
     }
 
+
+
     .development-story h2{
       font-size: 1.5em;
     }
 
     .research-focus h2 {
       font-size: 1.5em;
+    }
+
+    .about-archive h2 {
+        font-size: 1.5em;
+
     }
 }
 
@@ -4453,6 +4458,10 @@ margin-top: 20px;
 
     .research-focus h2 {
       font-size: 1.2em;
+    }
+    .about-archive h2 {
+        font-size: 1.2em;
+
     }
 }
 
@@ -4485,4 +4494,81 @@ color: white;
 
 #myTopnav > div.dropdown2 > div{
   width: 100px;
+}
+#main-content > div.about-container {
+  max-width: 800px;
+  margin: auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  top:100px;
+  position: relative;
+
+}
+
+.about {
+
+  padding: 20px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #666;
+  max-width: 500px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+
+.header {
+margin-top: 20px
+}
+
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header h1 {
+    text-align: center;
+    color: #333;
+}
+
+section {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.about-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header h1 {
+  font-size: 30px
 }
