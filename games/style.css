@@ -4846,7 +4846,7 @@ h2 {
 }
 
 .game-link a:hover {
-  background-color: #e0e0e0;
+  background-color: dodgerblue;
 }
 
 /* Style for alphabet sections */
@@ -4916,12 +4916,59 @@ h2 {
     border-radius: 8px
 }
 
+#gamesContainer > li:hover {
+  background-color: dodgerblue;
+  color:white
+}
+
+#gamesContainer > li > a:hover {
+    background-color: dodgerblue;
+    color:white;
+    border: none
+
+
+}
+
+.light-mode #gamesContainer > li:hover {
+  background-color: white;
+  color:black
+}
+
+.light-mode #gamesContainer > li > a:hover {
+    background-color: white;
+    color:black;
+    border: none
+
+
+}
+
+.dark-mode #gamesContainer > li:hover {
+  background-color: grey;
+  color:white
+}
+
+.dark-mode  #gamesContainer > li > a:hover {
+    background-color: grey;
+    color:white;
+    border: none
+
+
+}
 /* Styles for the heading */
 #games-list2 h2 {
   margin-top: 100px;
     text-align: center;
     font-size: 24px;
     font-weight: bolder;
+      color:black
+}
+/* Styles for the heading */
+.light-mode #games-list2 h2 {
+  color:black
+}
+/* Styles for the heading */
+.dark-mode #games-list2 h2 {
+color:white
 }
 
 /* Responsive styles */
