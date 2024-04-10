@@ -3954,6 +3954,16 @@ function showToast(message) {
           likeButton.addEventListener('click', () => handleLikeClick(gameId, gameName));
       }
 
+      // Event listener for scrolling to the comment section
+    const commentButton = document.getElementById('commentButton');
+    if (commentButton) {
+        commentButton.addEventListener('click', function() {
+            const commentSection = document.getElementById('commentSection');
+            if (commentSection) {
+                commentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
 
       // Setup Rate Button
       const rateButton = document.getElementById('rateButton');
