@@ -4013,50 +4013,46 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 async function handleCommentClick() {
-    const gameId = 'animalcrossingnewhorizons'; // Ensure this matches your intended game ID
+    const gameId = 'animalcrossingnewhorizons'; // This should be dynamic or contextually set
+    let gameName = 'Animal Crossing: New Horizons'; // Example static assignment, consider fetching dynamically if needed
+
+    // Example of dynamically fetching gameName (replace with your logic as needed)
+    // const gameDetails = await fetchGameDetails(gameId);
+    // gameName = gameDetails.name;
+
+    const commentInput = document.getElementById('commentInput'); // Assuming an input field with this ID exists
+    const commentText = commentInput ? commentInput.value.trim() : '';
+
+    if (!commentText) {
+        showToast('Please enter a comment.');
+        return;
+    }
+
     if (!isUserSignedIn()) {
         showToast('You must be signed in to add comments.');
         return;
     }
 
-    const commentText = prompt("Enter your comment:");
-    console.log(`Comment text entered: ${commentText}`); // Debugging: Log the captured comment text
-
-    if (commentText) {
-        try {
-            // Save the comment to Firestore
-            const commentRef = await firestore.collection('comments').add({
-                gameId: gameId,
-                text: commentText,
-                userId: auth.currentUser.uid,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            });
-
-            showToast('Comment added successfully');
-            fetchAndDisplayComments(gameId);
-
-            // Prepare activity object for logging
-            const activity = {
-                userId: auth.currentUser.uid,
-                type: 'comment',
-                gameId: gameId,
-                commentText: commentText,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                commentId: commentRef.id, // Optionally log the comment ID for reference
-            };
-
-            // Save the activity log to Firestore
-            await firestore.collection('userActivities').add(activity);
-            console.log('Comment activity recorded successfully');
-
-        } catch (error) {
-            console.error('Error adding comment or logging activity:', error);
-            showToast('Failed to add comment');
-        }
-    } else {
-        console.log('No comment text entered.'); // Debugging: Log when no comment text is entered
+    try {
+        await firestore.collection('comments').add({
+            gameId: gameId,
+            gameName: gameName, // Make sure this is not undefined
+            text: commentText,
+            userId: firebase.auth().currentUser.uid,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+        showToast('Comment added successfully');
+        // Refresh the comments list to include the new comment
+        fetchAndDisplayComments(gameId);
+    } catch (error) {
+        console.error('Error adding comment:', error);
+        showToast('Failed to add comment');
     }
 }
+
+// Make sure this is connected to your comment submission button
+document.getElementById('submitComment').addEventListener('click', handleCommentClick);
+
 
 
 
@@ -4334,20 +4330,25 @@ document.getElementById('sendReply').addEventListener('click', sendReply);
 
 
 
-
 async function handleSubmitComment() {
+    // First, check if the user is signed in
+    if (!isUserSignedIn()) {
+        showToast('Please sign in to add a comment.');
+        return; // Exit the function early if no user is signed in
+    }
+
     const submitCommentButton = document.getElementById('submitComment');
     const commentInput = document.getElementById('commentInput');
     const commentText = commentInput.value.trim();
+    const gameId = 'animalcrossingnewhorizons'; // Make sure to replace 'yourGameIdHere' with your actual game ID
 
     submitCommentButton.disabled = true; // Disable the button to prevent multiple submissions
 
     if (commentText) {
         try {
-            await addComment(gameId, commentText); // Now passing gameId as well
-            commentInput.value = ''; // Clear the input field
+            await addComment(gameId, commentText);
+            commentInput.value = ''; // Clear the input field after successful comment submission
             showToast('Comment added successfully.');
-            await fetchAndDisplayComments(gameId); // Refresh displayed comments
         } catch (error) {
             console.error('Error adding comment:', error);
             showToast('Failed to add comment.');
@@ -4356,41 +4357,19 @@ async function handleSubmitComment() {
         showToast('Please enter a comment.');
     }
 
-    submitCommentButton.disabled = false; // Re-enable the button
+    submitCommentButton.disabled = false; // Re-enable the submit button after the comment is processed
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     const submitCommentButton = document.getElementById('submitComment');
     if (submitCommentButton) {
         submitCommentButton.addEventListener('click', handleSubmitComment);
-    } else {
-        console.error('Submit Comment button not found.');
     }
 });
 
 
 
-async function addCommentActivity(gameId, gameName, commentText) {
-  if (!firebase.auth().currentUser) {
-    console.log('No user is signed in.');
-    return;
-  }
 
-  try {
-    const activity = {
-      userId: firebase.auth().currentUser.uid,
-      type: 'comment',
-      gameName: gameName,
-      gameId: gameId,
-      commentText: commentText,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    };
-    await firestore.collection('userActivities').add(activity);
-    console.log('Comment activity recorded successfully');
-  } catch (error) {
-    console.error('Error recording comment activity:', error);
-  }
-}
 
 
 
