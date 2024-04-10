@@ -218,8 +218,7 @@ body {
 .dropdown-content2 {
   display: none;
   position: absolute;
-  background-color: #555;
-width: 108px;
+
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   color:white
@@ -445,7 +444,11 @@ width: 108px;
 
 }
 
-.dropdown-content2 a:hover, .dropdown-content2 button:hover {
+.dropdown-content2 a:hover {
+  width:100%;
+  text-align: left;
+}
+.dropdown-content2 button:hover {
   width:100%;
   text-align: left;
 }
@@ -4835,7 +4838,7 @@ body::-webkit-scrollbar-thumb {
 
   border-radius: 4px; /* Rounded corners for the dropdown */
   background-color: white; /* White background color */
-  font-size: 16px; /* Text size */
+  font-size: 15px; /* Text size */
   cursor: pointer; /* Changes the cursor to indicate it's clickable */
   appearance: none; /* Removes default system styling */
   -webkit-appearance: none; /* Also for Safari */
@@ -4850,6 +4853,21 @@ body::-webkit-scrollbar-thumb {
   color:white;
   border: none
 }
+
+/* General styling for the select element */
+.dark-mode #languageSelection {
+
+  background-color: slategrey; /* White background color */
+  color:white
+}
+
+/* General styling for the select element */
+.light-mode #languageSelection {
+
+  background-color: darkgrey; /* White background color */
+  color:white
+}
+
 
 /* Styling for hover effect */
 #languageSelection:hover {

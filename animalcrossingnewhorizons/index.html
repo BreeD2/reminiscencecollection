@@ -78,15 +78,8 @@
            <button onclick="decreaseFont()">Decrease Font Size</button>
            <button onclick="toggleLightMode()">Toggle Light Mode</button>
            <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+     <button id="toggleTextToSpeech" aria-label="Toggle text to speech">Read Selected Text</button>
 
-
-           
- <select id="languageSelection" aria-label="Choose language for text to speech">
-   <option value="en-US">English (United States)</option>
-   <option value="es-ES">Spanish (Spain)</option>
-   <option value="fr-FR">French (France)</option>
-   <!-- Add other languages as needed -->
- </select>
 
 
 
@@ -3321,66 +3314,86 @@ document.getElementById('filterCheckbox').addEventListener('change', function() 
         // Add other reset actions here (e.g., removing classes, resetting filters)
         document.body.style.filter = '';
         document.body.style.webkitFilter = '';
-        // Uncomment the line below if you have a function defined to close the accessibility menu
-        // closeAccessibilityDropup();
+        document.body.classList.remove('dark-mode');
+        document.body.classList.remove('invert-colors');
+        document.body.classList.remove('light-mode');
+
     }
 </script>
-<script>
-  function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
 
-    // Toggle dark mode on the navbar (assuming your navbar has a specific ID or class)
-    var navbar = document.getElementById("yourNavbarId"); // Replace "yourNavbarId" with the actual ID or class of your navbar
-    if (navbar) {
-      navbar.classList.toggle("dark-mode");
+
+<script>
+    function toggleLightMode() {
+        // Remove other classes that might affect the background
+        document.body.classList.remove('dark-mode');
+        document.body.classList.remove('invert-colors');
+        // Add or remove the 'light-mode' class based on the current state
+        document.body.classList.toggle('light-mode');
+        // Set button styles explicitly for light mode
+        if (document.body.classList.contains('light-mode')) {
+            document.getElementById('accessibility-dropup').style.backgroundColor = 'white';
+            document.getElementById('accessibility-dropup').style.color = 'black';
+        } else {
+            // Set button styles explicitly for dark mode
+            document.getElementById('accessibility-dropup').style.backgroundColor = 'dodgerblue';
+            document.getElementById('accessibility-dropup').style.color = 'white';
+        }
     }
-  }
 </script>
+
+<!-- JavaScript -->
+<!-- JavaScript -->
 <script>
-  function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
-
-    // You can add more elements to toggle dark mode if needed
-    var elementsToToggle = document.querySelectorAll(".dark-mode-toggle");
-    elementsToToggle.forEach(function (element) {
-      element.classList.toggle("dark-mode");
-    });
-  }
-</script>
-<script>
-// Get the toggle button and language selection dropdown by their IDs
-const toggleBtn = document.getElementById('toggleTextToSpeech');
-const languageSelection = document.getElementById('languageSelection');
-
-// Function to start speech synthesis for selected text in the chosen language
-function speakSelectedText() {
-  if ('speechSynthesis' in window) {
-    // Stop any ongoing speech
-    window.speechSynthesis.cancel();
-
-    // Get the user's selected text
-    const selectedText = window.getSelection().toString();
-
-    if (selectedText.length > 0) {
-      // Create a new speech synthesis utterance instance with the selected text
-      const utterance = new SpeechSynthesisUtterance(selectedText);
-
-      // Set the language of the utterance based on the dropdown selection
-      utterance.lang = languageSelection.value;
-
-      // Speak the utterance
-      window.speechSynthesis.speak(utterance);
-    } else {
-      alert("Please select some text to read aloud.");
+function toggleLightMode() {
+    if (document.body.classList.contains('dark-mode')) {
+        document.body.classList.remove('dark-mode');
     }
-  } else {
-    alert("Sorry, your browser doesn't support text to speech!");
-  }
+    document.body.classList.toggle('light-mode');
+    updateAccessibilityDropupStyles();
+    updateOtherElementStylesForMode(); // Implement this function based on your needs
+    closeAccessibilityMenu();
 }
 
-// Add an event listener to the toggle button for click events
-toggleBtn.addEventListener('click', speakSelectedText);
+function toggleDarkMode() {
+    if (document.body.classList.contains('light-mode')) {
+        document.body.classList.remove('light-mode');
+    }
+    document.body.classList.toggle('dark-mode');
+    updateAccessibilityDropupStyles();
+    updateOtherElementStylesForMode(); // Implement this function based on your needs
+}
+
+function updateAccessibilityDropupStyles() {
+    var dropup = document.getElementById('accessibility-dropup');
+    if (document.body.classList.contains('light-mode')) {
+        dropup.style.backgroundColor = 'white';
+        dropup.style.color = 'black';
+    } else if (document.body.classList.contains('dark-mode')) {
+        dropup.style.backgroundColor = 'dodgerblue';
+        dropup.style.color = 'white';
+    } else {
+        // Define default styles if needed
+    }
+}
+
+// Assume this is the corrected function name for closing the menu
+function closeAccessibilityMenu() {
+    var dropdownContent = document.querySelector('.dropdown .dropdown-content');
+    if (dropdownContent) {
+        dropdownContent.style.display = 'none';
+    }
+}
+
+// Placeholder for a function to update other elements' styles based on the current mode
+function updateOtherElementStylesForMode() {
+    // Your implementation here
+    // This could involve setting or removing styles or classes on elements that need to change appearance between modes
+}
+
 </script>
+
+
+
 <script>
 // Get the toggle button by its ID
 const toggleBtn = document.getElementById('toggleTextToSpeech');
@@ -3437,83 +3450,11 @@ toggleBtn.addEventListener('click', () => {
 
 </script>
 
-!-- JavaScript -->
-<script>
-    function toggleLightMode() {
-        // Remove other classes that might affect the background
-        document.body.classList.remove('dark-mode');
-        document.body.classList.remove('invert-colors');
-
-        // Add or remove the 'light-mode' class based on the current state
-        document.body.classList.toggle('light-mode');
-
-        // Close the dropup after the action
-        closeAccessibilityDropup();
-    }
-
-    function toggleDarkMode() {
-        // Remove other classes that might affect the background
-        document.body.classList.remove('light-mode');
-        document.body.classList.remove('invert-colors');
-
-        // Add or remove the 'dark-mode' class based on the current state
-        document.body.classList.toggle('dark-mode');
-
-        // Close the dropup after the action
-        closeAccessibilityDropup();
-    }
-
-    // Add this function to close the dropup
-    function closeAccessibilityDropup() {
-        var dropup = document.getElementById('accessibility-dropup');
-        dropup.style.display = 'none';
-    }
-</script>
 
 
-<script>
-  function resetSettings() {
-    // Remove other classes that might affect the background
-    document.body.classList.remove('dark-mode');
-    document.body.classList.remove('invert-colors');
-    document.body.classList.remove('light-mode');
 
-    // Reset other variables if needed
-    grayscaleFilter = false;
-    redGreenFilter = 0;
-    saturation = 100;
-    contrast = 100;
-    sepia = 0;
-    brightness = 100;
 
-    // Reset font size to default
-    document.body.style.fontSize = "";
 
-    // Reset invert colors
-    document.body.classList.remove("invert-colors");
-
-    // Temporarily disable transitions during reset
-    document.body.classList.add("disable-transition");
-
-    // Update the styles to reflect the default settings
-    updateFilter();
-    updateStyles();
-    updateContrast();
-    updateBrightness();
-
-    // Close the dropup after the action
-    closeAccessibilityDropup();
-
-    // Enable transitions after the reset
-    setTimeout(function () {
-        document.body.classList.remove("disable-transition");
-    }, 1000); // Adjust the timeout value based on your transition duration
-}
-
-console.log("Before reset:", document.querySelector('.sidebar').offsetWidth);
-    // ... (existing code)
-    console.log("After reset:", document.querySelector('.sidebar').offsetWidth);
-</script>
 
 
 
@@ -3758,7 +3699,24 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var dropdown = document.querySelector('.dropdown');
+  var button = dropdown.querySelector('.dropbtn2');
+  var dropdownContent = dropdown.querySelector('.dropdown-content2');
 
+  // Function to adjust dropdown width
+  var adjustDropdownWidth = function() {
+    dropdownContent.style.width = button.offsetWidth + 'px';
+  };
+
+  // Initial adjustment
+  adjustDropdownWidth();
+
+  // Adjust on window resize
+  window.addEventListener('resize', adjustDropdownWidth);
+});
+</script>
 
 
 
