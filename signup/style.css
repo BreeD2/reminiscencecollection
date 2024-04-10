@@ -321,6 +321,7 @@ width: 108px;
   text-decoration: none;
   display: block;
   text-align: left;
+  width: 100%;
 }
 
 
@@ -4557,7 +4558,7 @@ color:black
 
 .dark-mode #signup-form button#signupBtn {
 
-    background-color: #222;
+    background-color: black;
     color: white;
 
 }
@@ -4573,4 +4574,53 @@ color:black
  background-color: grey;
  color: white;
      width: 100%;
+}
+
+.dark-mode #signup-form > div > div {
+color:white
+}
+
+.light-mode #signup-form > div > div {
+color:black
+}
+
+#signup-form > div > div {
+color:black
+}
+
+
+.light-mode #signup-form {
+  background-color: white;
+  color:black
+}
+
+
+.dark-mode #signup-form {
+  background-color: dimgrey;
+  color:white
+}
+
+ #signup-form {
+   background-color: white;
+  color:black;
+  font-size: 15px;
+  line-height: 1.5;
+  box-sizing: inherit;
+  max-width: 500px;
+  margin: auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-top: 150px;
+  max-height: 500px
+
+}
+
+#signup-form > div > label {
+  margin: 100px
+}
+
+#signup-email {
+  margin-top: 5px
 }

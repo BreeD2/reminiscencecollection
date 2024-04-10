@@ -4471,3 +4471,18 @@ light-mode .footer {
 .light-mode .copy {
 color:black
 }
+
+.dropdown-content button:hover{
+background-color: grey;
+color: white;
+  width: 100%;
+}
+
+#myTopnav > div.dropdown2 > div > a:hover {
+    width: 100%;
+    text-align: left;
+}
+
+#myTopnav > div.dropdown2 > div{
+  width: 100px;
+}
