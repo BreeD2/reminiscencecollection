@@ -4675,7 +4675,17 @@ h2 {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    max-width: 800px
+    max-width: 1000px;
+    margin-top:20px
+}
+.dark-mode #game-quiz {
+  background: dimgrey;
+  color: white;
+}
+
+.light-mode #game-quiz {
+  background: white;
+  color: black;
 }
 
 .quiz-btn {
@@ -4747,7 +4757,7 @@ h2 {
 }
 
 .play-now-btn:hover {
-    background-color: #0056b3;
+    background-color: blue;
 }
 
 /* Style for the game list container */
@@ -4811,7 +4821,7 @@ h2 {
     padding: 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Three equal-width columns */
-    gap: 20px; /* Adjust the gap between games */
+    gap: 20px; /* Adjust the gap between games */;
 }
 
 /* Style for alphabet sections */
@@ -4851,27 +4861,53 @@ h2 {
 
 /* Style for alphabet sections */
 .alphabet-section {
-
+  background-color: dodgerblue;
+    color:white;
   margin-top: 20px;
 
-  color:black;
+
 
 
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+/* Style for alphabet sections */
+.light-mode .alphabet-section {
+background-color: white;
+  color:black;
+
+
+
+}
+
+/* Style for alphabet sections */
+.dark-mode .alphabet-section {
+  background-color: dimgrey;
+    color:white;
+}
+
 #gamesContainer > li > a {
-  background-color: white;
-    color:black;
+  background-color: dodgerblue;
+    color:white;
       border: none;
-      background-color: white;
-      background-color: #f9f9f9;
-      border: 1px solid #ddd;
+
+      border: none;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 
 
 
+}
+
+.light-mode #gamesContainer > li > a {
+  background-color: white;
+    color:black;
+}
+
+.dark-mode #gamesContainer > li > a {
+  background-color: black;
+    color:white;
+    border: none
 }
 
 
@@ -4882,8 +4918,23 @@ h2 {
   color: black;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);;
       border: 1px solid #ccc;
+      background-color: dodgerblue;
+        color:white;
 
 }
+
+.light-mode #gamesContainer > li {
+  background-color: white;
+  color:black
+
+}
+
+.dark-mode #gamesContainer > li {
+  background-color: black;
+  color:white
+
+}
+
 
 
 
@@ -4917,12 +4968,12 @@ h2 {
 }
 
 #gamesContainer > li:hover {
-  background-color: dodgerblue;
+  background-color: blue;
   color:white
 }
 
 #gamesContainer > li > a:hover {
-    background-color: dodgerblue;
+    background-color: blue;
     color:white;
     border: none
 
@@ -4962,6 +5013,18 @@ h2 {
     font-weight: bolder;
       color:black
 }
+
+/* Base styles for the section */
+.light-mode #games-list2 {
+    background-color: white;
+    color:black
+}
+
+/* Base styles for the section */
+.dark-mode #games-list2 {
+    background-color: dimgrey;
+    color:white
+}
 /* Styles for the heading */
 .light-mode #games-list2 h2 {
   color:black
@@ -4982,11 +5045,12 @@ color:white
     }
 }
 #featured-game {
-max-width: 800px;
+max-width: 1000px;
 text-align: center;
 background-color: white;
 padding: 20px;
 border-radius: 8px;
 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-margin-top: 10px;
+margin-top: 20px;
+
 }
