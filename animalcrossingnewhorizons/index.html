@@ -4783,7 +4783,6 @@ async function addLikeActivity(gameId, gameName) {
       console.error('Logout Error:', error);
     });
   }
-
   auth.onAuthStateChanged(async user => {
       const dropdownContent = document.querySelector('.dropdown-content2');
       if (user) {
@@ -4791,9 +4790,14 @@ async function addLikeActivity(gameId, gameName) {
           console.log('User is logged in:', user);
 
           // Display user's display name or fallback to 'User'
-          document.getElementById('userName').textContent = user.displayName || 'User';
+          const userNameElement = document.getElementById('userName');
+          userNameElement.textContent = user.displayName || 'User';
 
+          // Calculate the width of the username element
+          const userNameWidth = userNameElement.offsetWidth;
 
+          // Set the width of the dropdown content to the width of the username
+          dropdownContent.style.width = userNameWidth + 'px';
 
           // Update dropdown content for logged-in users
           dropdownContent.innerHTML = `
@@ -4812,9 +4816,10 @@ async function addLikeActivity(gameId, gameName) {
               <a href="..//login/index.html">Login</a>
               <a href="..//signup/index.html">Signup</a>
           `;
+          // Reset the width of the dropdown content
+          dropdownContent.style.width = 'auto';
       }
   });
-
 
 </script>
 
