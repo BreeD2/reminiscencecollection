@@ -389,12 +389,13 @@ width: 108px;
   margin: 0;
 }
 
+@media (min-width: 1068px) {
 /* Style the dropdown content (hidden by default) */
 .dropdown-content2 {
   display: none;
   position: absolute;
   background-color: #555;
-
+width: 108px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   color:white

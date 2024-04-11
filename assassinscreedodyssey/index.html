@@ -3249,130 +3249,121 @@ Adventure
 
 
  <script>
-     // Called once the DOM is fully loaded
-     document.addEventListener('DOMContentLoaded', function() {
-         storeOriginalFontSizes(); // Store original font sizes for specified elements
-         // Add any other initialization code here...
-     });
+      // Called once the DOM is fully loaded
+      document.addEventListener('DOMContentLoaded', function() {
+          storeOriginalFontSizes(); // Store original font sizes for specified elements
+          // Add any other initialization code here...
+      });
 
-     // Store the original font sizes
-     function storeOriginalFontSizes() {
-         const selector = '.sidebar *, .game-container, .game-title, #h1, .game-container, .game-info, #likeButton, .footer, #commentButton, #rateButton, #likesCount,#ratingDisplay,#commentsSection > strong, .game-title';
-         document.querySelectorAll(selector).forEach(element => {
-             element.setAttribute('data-original-font-size', window.getComputedStyle(element).fontSize);
-         });
-     }
+      // Store the original font sizes
+      function storeOriginalFontSizes() {
+          const selector = '.sidebar *, .game-container, .game-title, #h1, .game-container, .game-info, #likeButton, .footer, #commentButton, #rateButton, #likesCount,#ratingDisplay,#commentsSection > strong, .game-title';
+          document.querySelectorAll(selector).forEach(element => {
+              element.setAttribute('data-original-font-size', window.getComputedStyle(element).fontSize);
+          });
+      }
 
-     // Reset font sizes to their original values
-     function resetFont() {
-         const selector = '.sidebar *, .game-container, .game-info, #likeButton, #commentButton,#commentsSection > strong, #rateButton, #likesCount,#ratingDisplay, .game-title, .footer';
-         document.querySelectorAll(selector).forEach(element => {
-             const originalFontSize = element.getAttribute('data-original-font-size');
-             if (originalFontSize) element.style.fontSize = originalFontSize;
-         });
-     }
+      // Reset font sizes to their original values
+      function resetFont() {
+          const selector = '.sidebar *, .game-container, .game-info, #likeButton, #commentButton,#commentsSection > strong, #rateButton, #likesCount,#ratingDisplay, .game-title, .footer';
+          document.querySelectorAll(selector).forEach(element => {
+              const originalFontSize = element.getAttribute('data-original-font-size');
+              if (originalFontSize) element.style.fontSize = originalFontSize;
+          });
+      }
 
-     // Adjust the font size of elements
-     function adjustFontSize(factor, selector) {
-         document.querySelectorAll(selector).forEach(element => {
-             const currentFontSize = parseFloat(window.getComputedStyle(element).fontSize);
-             element.style.fontSize = `${currentFontSize * factor}px`;
-         });
-     }
+      // Adjust the font size of elements
+      function adjustFontSize(factor, selector) {
+          document.querySelectorAll(selector).forEach(element => {
+              const currentFontSize = parseFloat(window.getComputedStyle(element).fontSize);
+              element.style.fontSize = `${currentFontSize * factor}px`;
+          });
+      }
 
-     // Increase font size
-     function increaseFont() {
-         adjustFontSize(1.1, '.sidebar *, .game-container, .game-info, #likeButton, #commentButton,#likesCount, #ratingDisplay, #rateButton, .game-title,#commentsSection > strong, .footer');
-     }
+      // Increase font size
+      function increaseFont() {
+          adjustFontSize(1.1, '.sidebar *, .game-container, .game-info, #likeButton, #commentButton,#likesCount, #ratingDisplay, #rateButton, .game-title,#commentsSection > strong, .footer');
+      }
 
-     // Decrease font size
-     function decreaseFont() {
-         adjustFontSize(0.9, '.sidebar *, .game-container, .game-info, #likeButton,#commentsSection > strong, #commentButton, #likesCount, #ratingDisplay, #rateButton, .game-title, .footer');
-     }
+      // Decrease font size
+      function decreaseFont() {
+          adjustFontSize(0.9, '.sidebar *, .game-container, .game-info, #likeButton,#commentsSection > strong, #commentButton, #likesCount, #ratingDisplay, #rateButton, .game-title, .footer');
+      }
 
-     // Reset settings including font sizes and other visual modifications
-     function resetSettings() {
-         resetFont(); // Resets font sizes
-         // Add other reset actions here (e.g., removing classes, resetting filters)
-         document.body.style.filter = '';
-         document.body.style.webkitFilter = '';
-         document.body.classList.remove('dark-mode');
-         document.body.classList.remove('invert-colors');
-         document.body.classList.remove('light-mode');
+      // Toggle Light Mode
+    function toggleLightMode() {
+        document.body.classList.remove('dark-mode');
+        document.body.classList.add('light-mode');
+        localStorage.setItem('theme', 'light'); // Persist theme choice
+        updateStylesBasedOnTheme();
+    }
 
-     }
- </script>
+    // Toggle Dark Mode
+    function toggleDarkMode() {
+        document.body.classList.remove('light-mode');
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark'); // Persist theme choice
+        updateStylesBasedOnTheme();
+    }
 
+    // Resets settings to default and clears theme preference
+    function resetSettings() {
+      resetFont(); // Resets font sizes
+    document.body.style.filter = '';
+    document.body.style.webkitFilter = '';
+    document.body.classList.remove('dark-mode', 'light-mode', 'invert-colors');
+    localStorage.removeItem('theme'); // Clear the stored theme preference
 
- <script>
-     function toggleLightMode() {
-         // Remove other classes that might affect the background
-         document.body.classList.remove('dark-mode');
-         document.body.classList.remove('invert-colors');
-         // Add or remove the 'light-mode' class based on the current state
-         document.body.classList.toggle('light-mode');
-         // Set button styles explicitly for light mode
-         if (document.body.classList.contains('light-mode')) {
-             document.getElementById('accessibility-dropup').style.backgroundColor = 'white';
-             document.getElementById('accessibility-dropup').style.color = 'black';
-         } else {
-             // Set button styles explicitly for dark mode
-             document.getElementById('accessibility-dropup').style.backgroundColor = 'dodgerblue';
-             document.getElementById('accessibility-dropup').style.color = 'white';
-         }
-     }
- </script>
+    }
 
- <!-- JavaScript -->
- <!-- JavaScript -->
- <script>
- function toggleLightMode() {
-     if (document.body.classList.contains('dark-mode')) {
-         document.body.classList.remove('dark-mode');
-     }
-     document.body.classList.toggle('light-mode');
-     updateAccessibilityDropupStyles();
-     updateOtherElementStylesForMode(); // Implement this function based on your needs
-     closeAccessibilityMenu();
+    function applyDefaultTheme() {
+        // Remove specific theme-related classes
+        document.body.classList.remove('dark-mode', 'light-mode');
+
+        // Revert styles of elements affected by theme changes
+        var dropup = document.getElementById('accessibility-dropup');
+        if (dropup) {
+            dropup.style.backgroundColor = ''; // Set this to your default background color
+            dropup.style.color = ''; // Set this to your default text color
+        }
+
+        // Update the UI elements to reflect the default theme
+        updateStylesBasedOnTheme();
+    }
+  function updateStylesBasedOnTheme() {
+    var dropup = document.getElementById('accessibility-dropup');
+    if (document.body.classList.contains('light-mode')) {
+        dropup.style.backgroundColor = 'white';
+        dropup.style.color = 'black';
+    } else if (document.body.classList.contains('dark-mode')) {
+        dropup.style.backgroundColor = 'dodgerblue';
+        dropup.style.color = 'white';
+    } else {
+        // Handle the default theme's styles here
+        dropup.style.backgroundColor = ''; // Your site's default background color
+        dropup.style.color = ''; // Your site's default text color
+    }
  }
 
- function toggleDarkMode() {
-     if (document.body.classList.contains('light-mode')) {
-         document.body.classList.remove('light-mode');
-     }
-     document.body.classList.toggle('dark-mode');
-     updateAccessibilityDropupStyles();
-     updateOtherElementStylesForMode(); // Implement this function based on your needs
- }
+    // Applies the saved theme or sets to default if none is saved
+  function applySavedTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light') {
+          document.body.classList.add('light-mode');
+          document.body.classList.remove('dark-mode');
+      } else if (savedTheme === 'dark') {
+          document.body.classList.add('dark-mode');
+          document.body.classList.remove('light-mode');
+      } else {
+          // Apply a default theme here if no preference is saved
+          applyDefaultTheme();
+      }
+      updateStylesBasedOnTheme();
+  }
+  // Ensure the saved theme is applied as soon as the document is fully loaded
+    document.addEventListener('DOMContentLoaded', applySavedTheme);
+  </script>
 
- function updateAccessibilityDropupStyles() {
-     var dropup = document.getElementById('accessibility-dropup');
-     if (document.body.classList.contains('light-mode')) {
-         dropup.style.backgroundColor = 'white';
-         dropup.style.color = 'black';
-     } else if (document.body.classList.contains('dark-mode')) {
-         dropup.style.backgroundColor = 'dodgerblue';
-         dropup.style.color = 'white';
-     } else {
-         // Define default styles if needed
-     }
- }
-
- // Assume this is the corrected function name for closing the menu
- function closeAccessibilityMenu() {
-     var dropdownContent = document.querySelector('.dropdown .dropdown-content');
-     if (dropdownContent) {
-         dropdownContent.style.display = 'none';
-     }
- }
-
- // Placeholder for a function to update other elements' styles based on the current mode
- function updateOtherElementStylesForMode() {
-     // Your implementation here
-     // This could involve setting or removing styles or classes on elements that need to change appearance between modes
- }
-
- </script>
 
 
 

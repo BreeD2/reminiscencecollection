@@ -108,7 +108,8 @@ body {
 
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Shadow for dropdown */
   z-index: 1;
-  outline:none
+  outline:none;
+  text-align: left
 }
 
 
@@ -420,8 +421,12 @@ width: 108px;
   display: block;
   text-align: left;
     outline:none;
-    background-color: transparent
+    background-color: transparent;
+      text-align: left;
 
+}
+#myTopnav > div.dropdown2 > div > a {
+  text-align: left
 }
 
 .dropdown-content2 a, .dropdown-content2 button {
@@ -4624,7 +4629,6 @@ color:black
 #signup-email {
   margin-top: 5px
 }
-
 
 
 
