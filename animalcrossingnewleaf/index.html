@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.css">
 
 
+
 <style>
 </style>
 </head>
@@ -44,7 +45,7 @@
         <img src="..//rpa.png" alt="Reminiscence Collection" style="height: 23px;">&ensp;<span class="title-text">Reminiscence&ensp;Collection</span>
 
    </a>
-   <a href="https://breed2.github.io/reminiscencecollection//index.html">Home</a>
+   <a href="..//index.html">Home</a>
        <a href="..//games/index.html"class="active">Games</a>
        <a href="..//about/index.html">About</a>
        <a href="..//contact/index.html">Contact</a>
@@ -77,7 +78,11 @@
            <button onclick="decreaseFont()">Decrease Font Size</button>
            <button onclick="toggleLightMode()">Toggle Light Mode</button>
            <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
-          <button id="toggleTextToSpeech" aria-label="Toggle text to speech">Read Selected Text</button>
+     <button id="toggleTextToSpeech" aria-label="Toggle text to speech">Read Selected Text</button>
+
+
+
+
          </div>
        </div>
 
@@ -445,6 +450,7 @@ Australia: June 15, 2013
         }
     });
     </script>
+
     <script>
       // Corrected Categories Data
       const publisherCategories = {
@@ -3128,27 +3134,6 @@ Australia: June 15, 2013
 
 
 
-    <!-- JavaScript -->
-    <script>
-    function toggleLightMode() {
-      // Ensure that 'dark-mode' is removed when 'light-mode' is toggled
-      document.body.classList.remove('dark-mode');
-      document.body.classList.toggle('light-mode');
-
-      closeAccessibilityDropup();
-  }
-
-  function toggleDarkMode() {
-      // Ensure that 'light-mode' is removed when 'dark-mode' is toggled
-      document.body.classList.remove('light-mode');
-      document.body.classList.toggle('dark-mode');
-
-      closeAccessibilityDropup();
-  }
-
-    </script>
-
-
         <!-- Contrast and Sepia control scripts -->
         <!-- Contrast and Sepia control scripts -->
         <!-- Contrast and Sepia control scripts -->
@@ -3157,23 +3142,7 @@ Australia: June 15, 2013
         <!-- Blue-Yellow Filter control scripts -->
         <!-- Blue-Yellow Filter control scripts -->
         <!-- Grayscale Filter control scripts -->
-        <script>
-          var grayscaleFilter = false;
 
-          function updateFilter() {
-            document.body.style.filter = grayscaleFilter ? "grayscale(100%)" : "none";
-          }
-
-          function toggleGrayscale() {
-            grayscaleFilter = !grayscaleFilter;
-            updateFilter();
-          }
-
-          function resetFilter() {
-            grayscaleFilter = false;
-            updateFilter();
-          }
-        </script>
 
 
 
@@ -3225,8 +3194,6 @@ Australia: June 15, 2013
                 }
             }
         </script>
-
-
 
 
 
@@ -3290,6 +3257,8 @@ Australia: June 15, 2013
 
     </script>
 
+
+
     <script>
         // Called once the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', function() {
@@ -3299,7 +3268,7 @@ Australia: June 15, 2013
 
         // Store the original font sizes
         function storeOriginalFontSizes() {
-            const selector = '.sidebar *, .game-container, .game-title, #h1, .game-container, .game-info, #likeButton, .footer, #commentButton, #rateButton, .game-title';
+            const selector = '.sidebar *, .game-container, .game-title, #h1, .game-container, .game-info, #likeButton, .footer, #commentButton, #rateButton, #likesCount,#ratingDisplay,#commentsSection > strong, .game-title';
             document.querySelectorAll(selector).forEach(element => {
                 element.setAttribute('data-original-font-size', window.getComputedStyle(element).fontSize);
             });
@@ -3307,7 +3276,7 @@ Australia: June 15, 2013
 
         // Reset font sizes to their original values
         function resetFont() {
-            const selector = '.sidebar *, .game-container, .game-info, #likeButton, #commentButton, #rateButton, .game-title, .footer';
+            const selector = '.sidebar *, .game-container, .game-info, #likeButton, #commentButton,#commentsSection > strong, #rateButton, #likesCount,#ratingDisplay, .game-title, .footer';
             document.querySelectorAll(selector).forEach(element => {
                 const originalFontSize = element.getAttribute('data-original-font-size');
                 if (originalFontSize) element.style.fontSize = originalFontSize;
@@ -3324,12 +3293,12 @@ Australia: June 15, 2013
 
         // Increase font size
         function increaseFont() {
-            adjustFontSize(1.1, '.sidebar *, .game-container, .game-info, #likeButton, #commentButton, #rateButton, .game-title, .footer');
+            adjustFontSize(1.1, '.sidebar *, .game-container, .game-info, #likeButton, #commentButton,#likesCount, #ratingDisplay, #rateButton, .game-title,#commentsSection > strong, .footer');
         }
 
         // Decrease font size
         function decreaseFont() {
-            adjustFontSize(0.9, '.sidebar *, .game-container, .game-info, #likeButton, #commentButton, #rateButton, .game-title, .footer');
+            adjustFontSize(0.9, '.sidebar *, .game-container, .game-info, #likeButton,#commentsSection > strong, #commentButton, #likesCount, #ratingDisplay, #rateButton, .game-title, .footer');
         }
 
         // Reset settings including font sizes and other visual modifications
@@ -3338,10 +3307,143 @@ Australia: June 15, 2013
             // Add other reset actions here (e.g., removing classes, resetting filters)
             document.body.style.filter = '';
             document.body.style.webkitFilter = '';
-            // Uncomment the line below if you have a function defined to close the accessibility menu
-            // closeAccessibilityDropup();
+            document.body.classList.remove('dark-mode');
+            document.body.classList.remove('invert-colors');
+            document.body.classList.remove('light-mode');
+
         }
     </script>
+
+
+    <script>
+        function toggleLightMode() {
+            // Remove other classes that might affect the background
+            document.body.classList.remove('dark-mode');
+            document.body.classList.remove('invert-colors');
+            // Add or remove the 'light-mode' class based on the current state
+            document.body.classList.toggle('light-mode');
+            // Set button styles explicitly for light mode
+            if (document.body.classList.contains('light-mode')) {
+                document.getElementById('accessibility-dropup').style.backgroundColor = 'white';
+                document.getElementById('accessibility-dropup').style.color = 'black';
+            } else {
+                // Set button styles explicitly for dark mode
+                document.getElementById('accessibility-dropup').style.backgroundColor = 'dodgerblue';
+                document.getElementById('accessibility-dropup').style.color = 'white';
+            }
+        }
+    </script>
+
+    <!-- JavaScript -->
+    <!-- JavaScript -->
+    <script>
+    function toggleLightMode() {
+        if (document.body.classList.contains('dark-mode')) {
+            document.body.classList.remove('dark-mode');
+        }
+        document.body.classList.toggle('light-mode');
+        updateAccessibilityDropupStyles();
+        updateOtherElementStylesForMode(); // Implement this function based on your needs
+        closeAccessibilityMenu();
+    }
+
+    function toggleDarkMode() {
+        if (document.body.classList.contains('light-mode')) {
+            document.body.classList.remove('light-mode');
+        }
+        document.body.classList.toggle('dark-mode');
+        updateAccessibilityDropupStyles();
+        updateOtherElementStylesForMode(); // Implement this function based on your needs
+    }
+
+    function updateAccessibilityDropupStyles() {
+        var dropup = document.getElementById('accessibility-dropup');
+        if (document.body.classList.contains('light-mode')) {
+            dropup.style.backgroundColor = 'white';
+            dropup.style.color = 'black';
+        } else if (document.body.classList.contains('dark-mode')) {
+            dropup.style.backgroundColor = 'dodgerblue';
+            dropup.style.color = 'white';
+        } else {
+            // Define default styles if needed
+        }
+    }
+
+    // Assume this is the corrected function name for closing the menu
+    function closeAccessibilityMenu() {
+        var dropdownContent = document.querySelector('.dropdown .dropdown-content');
+        if (dropdownContent) {
+            dropdownContent.style.display = 'none';
+        }
+    }
+
+    // Placeholder for a function to update other elements' styles based on the current mode
+    function updateOtherElementStylesForMode() {
+        // Your implementation here
+        // This could involve setting or removing styles or classes on elements that need to change appearance between modes
+    }
+
+    </script>
+
+
+
+    <script>
+    // Get the toggle button by its ID
+    const toggleBtn = document.getElementById('toggleTextToSpeech');
+
+    // Function to read the selected text
+    function speakSelectedText() {
+      if ('speechSynthesis' in window) {
+        // First, stop any ongoing speech
+        window.speechSynthesis.cancel();
+
+        // Get the user's selected text
+        const selectedText = window.getSelection().toString();
+
+        // Check if there is any text selected
+        if (selectedText.length > 0) {
+          // Create a new speech synthesis utterance instance with the selected text
+          const utterance = new SpeechSynthesisUtterance(selectedText);
+
+          // Optionally, customize the utterance properties
+          utterance.rate = 1; // Speed of speech
+          utterance.pitch = 1; // Pitch of speech
+          utterance.volume = 1; // Volume
+
+          // Speak the utterance
+          window.speechSynthesis.speak(utterance);
+        } else {
+          // Optional: Provide feedback when no text is selected
+          alert("Please select some text to read aloud.");
+        }
+      } else {
+        alert("Sorry, your browser doesn't support text to speech!");
+      }
+    }
+
+    // Function to stop speech synthesis
+    function stopSpeaking() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    }
+
+    // Enhance the button to toggle speech synthesis
+    toggleBtn.addEventListener('click', () => {
+      if (window.speechSynthesis.speaking) {
+        stopSpeaking();
+        toggleBtn.textContent = 'Read Selected Text'; // Reset button text
+      } else {
+        speakSelectedText();
+        // Optional: Change button text to indicate speech is active
+        // Note: This text won't revert automatically when speech ends
+        toggleBtn.textContent = 'Stop Reading';
+      }
+    });
+
+    </script>
+
+
 
 
 
@@ -3590,7 +3692,24 @@ Australia: June 15, 2013
     });
     </script>
 
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var dropdown = document.querySelector('.dropdown');
+      var button = dropdown.querySelector('.dropbtn2');
+      var dropdownContent = dropdown.querySelector('.dropdown-content2');
 
+      // Function to adjust dropdown width
+      var adjustDropdownWidth = function() {
+        dropdownContent.style.width = button.offsetWidth + 'px';
+      };
+
+      // Initial adjustment
+      adjustDropdownWidth();
+
+      // Adjust on window resize
+      window.addEventListener('resize', adjustDropdownWidth);
+    });
+    </script>
 
 
 
@@ -3697,6 +3816,7 @@ Australia: June 15, 2013
         { name: 'Cars', url: '..//cars/index.html' },
           { name: 'Contact', url: '..//contact/index.html' },
         { name: 'Dark Souls Remastered', url: '..//darksoulsremastered/index.html' },
+          { name: 'Dashboard', url: '..//dashboard/index.html' },
         { name: 'Deadpool', url: '..//deadpool/index.html' },
         { name: 'Despicable Me: Minion Mayhem', url: '..//despicablememinionmayhem/index.html' },
         { name: 'Disney Infinity', url: '..//disneyinfinity/index.html' },
@@ -3788,7 +3908,6 @@ Australia: June 15, 2013
       { name: 'Midnight Club: Street Racing', url: '..//midnightclubstreetracing/index.html' },
       { name: 'Midnight Club 3: Dub Edition', url: '..//midnightclub3dubedition/index.html' },
       { name: 'Mortal Kombat 11: Aftermath', url: '..//mortalkombat11aftermath/index.html' },
-        { name: 'My Profile', url: '..//myprofile/index.html' },
       { name: 'My Street', url: '..//mystreet/index.html' },
       { name: 'Mystery Masters MYSTERIES OF THE HEART COLLECTION 20 GAMES IN ALL Hidden Object PC Game', url: '..//mysterymastersmysteriesoftheheartcollection20gamesinallhiddenobjectpcgame/index.html' },
       { name: 'NBA 08', url: '..//nba08/index.html' },
@@ -3888,6 +4007,9 @@ Australia: June 15, 2013
     };
 
     </script>
+
+
+
     <script>
     // Firebase configuration
     const firebaseConfig = {
@@ -3946,41 +4068,79 @@ Australia: June 15, 2013
         setTimeout(() => document.body.removeChild(toast), 3000); // Remove after 3 seconds
     }
 
-    function isUserSignedIn() {
+    // Function to check if user is signed in
+      function isUserSignedIn() {
         return !!firebase.auth().currentUser;
-    }
+      }
 
-    async function handleLikeClick() {
+      document.addEventListener('DOMContentLoaded', function() {
+          // Define gameId and gameName here if they're not already defined globally
+          const gameId = 'animalcrossingnewleaf';
+          const gameName = 'Animal Crossing: New Leaf';
+
+          // Setup Like Button
+          const likeButton = document.getElementById('likeButton');
+          if (likeButton) {
+              // Attach the event listener using an arrow function that calls handleLikeClick with the correct arguments
+              likeButton.addEventListener('click', () => handleLikeClick(gameId, gameName));
+          }
+
+          const commentButton = document.getElementById('commentButton');
+          if (commentButton) {
+            commentButton.addEventListener('click', function() {
+              // Target the textarea by its ID "commentInput"
+              const commentInput = document.getElementById('commentInput');
+              if (commentInput) {
+                // Scrolls smoothly to the textarea
+                commentInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // Optionally, focus the textarea to allow immediate typing
+                commentInput.focus();
+                }
+            });
+        }
+
+          // Setup Rate Button
+          const rateButton = document.getElementById('rateButton');
+          if (rateButton) {
+              // Attach the event listener for rate button
+              rateButton.addEventListener('click', () => handleRateClick(gameId, gameName));
+          }
+      });
+
+
+
+
+
+    async function handleLikeClick(gameId, gameName) {
+        console.log(`handleLikeClick called with gameId: ${gameId}, gameName: ${gameName}`); // Debugging log
+
         if (!isUserSignedIn()) {
             showToast('You must be signed in to like.');
             return;
         }
 
         const userId = firebase.auth().currentUser.uid;
+        console.log(`Attempting to toggle like for userId: ${userId}, gameId: ${gameId}`); // Debugging log
+
         const likesRef = firestore.collection('likes').doc(gameId);
 
         try {
-            // Fetch the current likes document
             const doc = await likesRef.get();
-
-            // Toggle the like status based on the current state
             if (doc.exists && doc.data()[userId]) {
-                // If the user has already liked the game, remove their like
                 await likesRef.update({ [userId]: firebase.firestore.FieldValue.delete() });
                 showToast('Like removed.');
             } else {
-                // If the user hasn't liked the game yet, add their like
                 await likesRef.update({ [userId]: true });
                 showToast('Like added.');
+                await addLikeActivity(gameId, gameName).catch(console.error);
             }
-
-            // Refresh the displayed likes
-            fetchAndDisplayLikes(gameId);
+            fetchAndDisplayLikes(gameId); // Refresh likes display
         } catch (error) {
             console.error("Error toggling like status: ", error);
             showToast('Failed to update like status.');
         }
     }
+
 
 
 
@@ -3993,43 +4153,10 @@ Australia: June 15, 2013
 
 
 
-     async function handleCommentClick() {
-       const gameId = 'animalcrossingnewleaf'; // Example gameId, replace as needed
-       if (!isUserSignedIn()) {
-         showToast('You must be signed in to add comments.');
-         return;
-       }
-       const commentText = prompt("Enter your comment:");
-       if (commentText) {
-         try {
-           await firestore.collection('comments').add({
-
-             text: commentText,
-             userId: auth.currentUser.uid,
-             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-           });
-           showToast('Comment added successfully');
-           fetchAndDisplayComments(gameId);
-         } catch (error) {
-           console.error('Error adding comment:', error);
-           showToast('Failed to add comment');
-         }
-       }
-     }
 
 
 
 
-    // Now setup your event listeners
-    function setupEventListeners() {
-        const likeButton = document.getElementById('likeButton');
-        const commentButton = document.getElementById('commentButton');
-        const rateButton = document.getElementById('rateButton');
-
-        if (likeButton) likeButton.addEventListener('click', handleLikeClick);
-        if (commentButton) commentButton.addEventListener('click', handleCommentClick);
-        if (rateButton) rateButton.addEventListener('click', handleRateClick);
-    }
 
 
 
@@ -4063,6 +4190,14 @@ Australia: June 15, 2013
             }
         }
     }
+
+    // Ensures comments are fetched and displayed as soon as the page loads
+    document.addEventListener('DOMContentLoaded', async () => {
+        const gameId = 'animalcrossingnewleaf'; // Ensure this is correctly set
+        console.log('Page loaded, fetching comments...');
+        await fetchAndDisplayComments(gameId);
+    });
+
     async function fetchAndDisplayComments(gameId) {
         const commentsList = document.getElementById('commentsList');
         commentsList.innerHTML = ''; // Clear existing comments
@@ -4139,22 +4274,8 @@ Australia: June 15, 2013
                     .where('commentId', '==', doc.id)
                     .orderBy('timestamp', 'asc')
                     .get();
-                    // New function to edit a reply
-    async function editReply(replyId, currentText) {
-        const newText = prompt('Edit your reply:', currentText);
-        if (newText !== null && newText.trim() !== '') {
-            try {
-                await firestore.collection('replies').doc(replyId).update({
-                    text: newText.trim()
-                });
-                showToast('Reply updated successfully.');
-                fetchAndDisplayComments(gameId); // Refresh to show changes
-            } catch (error) {
-                console.error('Error updating reply:', error);
-                showToast('Failed to update reply.');
-            }
-        }
-    }
+
+
 
     // New function to edit a reply
     async function editReply(replyId, currentText) {
@@ -4231,23 +4352,63 @@ Australia: June 15, 2013
         }
     }
 
+    async function handleCommentSubmit() {
+        // Assuming you have already checked if the user is signed in and other preliminary checks
+        const gameId = 'animalcrossingnewleaf'; // Make sure to dynamically set or retrieve this value as necessary
+        const gameName = 'Animal Crossing: New Leaf'; // Dynamically set or retrieve this value as necessary
+        const commentInput = document.getElementById('commentInput');
+        const commentText = commentInput.value.trim();
 
-
-    function createElement(tag, options = {}) {
-        const element = document.createElement(tag);
-        Object.keys(options).forEach(prop => {
-            if (prop === 'events') {
-                Object.keys(options.events).forEach(event => {
-                    element.addEventListener(event, options.events[event]);
+        if (commentText) {
+            try {
+                // Add the comment to the 'comments' collection
+                const commentRef = await firestore.collection('comments').add({
+                    gameId: gameId,
+                    gameName: gameName,
+                    text: commentText,
+                    userId: firebase.auth().currentUser.uid,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 });
-            } else if (prop === 'textContent') {
-                element.textContent = options[prop];
-            } else {
-                element.setAttribute(prop, options[prop]);
+
+                showToast('Comment added successfully.');
+
+                // Log this comment activity in the 'userActivities' collection
+                const activity = {
+                    userId: firebase.auth().currentUser.uid,
+                    type: 'comment',
+                    gameId: gameId,
+                    gameName: gameName,
+                    commentId: commentRef.id, // Optionally store the comment ID for reference
+                    text: commentText, // Optionally store the comment text
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                };
+
+                await firestore.collection('userActivities').add(activity);
+                showToast('Comment activity recorded successfully.');
+
+                // Optionally, refresh comments display
+                fetchAndDisplayComments(gameId);
+
+                // Clear the input field after successful comment submission
+                commentInput.value = '';
+            } catch (error) {
+                console.error('Error submitting comment:', error);
+                showToast('Failed to submit comment.');
             }
-        });
-        return element;
+        } else {
+            showToast('Please enter a comment.');
+        }
     }
+
+    // Attach this function to the submit comment button
+    document.addEventListener('DOMContentLoaded', () => {
+        const submitCommentButton = document.getElementById('submitComment');
+        if (submitCommentButton) {
+            submitCommentButton.addEventListener('click', handleCommentSubmit);
+        }
+    });
+
+
 
     // This function is already defined in your script, included here to avoid the syntax error
     async function editComment(commentId, currentText) {
@@ -4320,41 +4481,54 @@ Australia: June 15, 2013
     document.getElementById('sendReply').addEventListener('click', sendReply);
 
 
+    async function handleSubmitComment() {
+        // First, check if the user is signed in
+        if (!isUserSignedIn()) {
+            showToast('Please sign in to add a comment.');
+            return; // Exit the function early if no user is signed in
+        }
 
-    document.addEventListener('DOMContentLoaded', function() {
+        const commentInput = document.getElementById('commentInput');
+        const commentText = commentInput.value.trim();
+        const gameId = 'animalcrossingnewleaf'; // Dynamically fetch this if necessary
+
+        // Disable the button to prevent multiple submissions
+        const submitCommentButton = document.getElementById('submitComment');
+        submitCommentButton.disabled = true;
+
+        if (commentText) {
+            try {
+                // Consider merging additional logic here if needed from handleCommentClick
+                await addComment(gameId, commentText);
+                commentInput.value = ''; // Clear the input field after successful comment submission
+                showToast('Comment added successfully.');
+                fetchAndDisplayComments(gameId); // Refresh comment display
+            } catch (error) {
+                console.error('Error adding comment:', error);
+                showToast('Failed to add comment.');
+            }
+        } else {
+            showToast('Please enter a comment.');
+        }
+
+        submitCommentButton.disabled = false; // Re-enable the submit button after processing
+    }
+
+    // Attach event listener once DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
         const submitCommentButton = document.getElementById('submitComment');
         if (submitCommentButton) {
-            submitCommentButton.addEventListener('click', async () => {
-                const commentText = document.getElementById('commentInput').value;
-                if (commentText) {
-                    // Assume addComment is a function that adds the comment to Firestore
-                    await addComment(gameId, commentText);
-                    document.getElementById('commentInput').value = ''; // Clear the textarea after submission
-                    // Optionally, refresh the displayed comments
-                    await fetchAndDisplayComments(gameId);
-                } else {
-                    showToast('Please enter a comment.');
-                }
-            });
-        } else {
-            console.error('Submit Comment button not found.');
+            submitCommentButton.addEventListener('click', handleSubmitComment);
         }
     });
 
-    document.getElementById('cancelReply').addEventListener('click', function() {
-        document.getElementById('replyPopup').style.display = 'none';
-        document.getElementById('replyText').value = ''; // Optionally clear the textarea
-    });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        // Setup other event listeners
-        setupEventListeners();
-        // Setup the cancel reply button
-        document.getElementById('cancelReply').addEventListener('click', function() {
-            document.getElementById('replyPopup').style.display = 'none';
-            document.getElementById('replyText').value = ''; // Optionally clear the textarea
-        });
-    });
+
+
+
+
+
+
     async function fetchAndDisplayLikes(gameId) {
         console.log(`Fetching likes for game ID: ${gameId}`);
         try {
@@ -4381,27 +4555,35 @@ Australia: June 15, 2013
 
 
 
-
-
     async function fetchAndDisplayRating(gameId) {
       try {
         console.log(`Fetching rating for game ID: ${gameId}`);
         const ratingDoc = await firestore.collection('ratings').doc(gameId).get();
         if (ratingDoc.exists) {
           const ratingData = ratingDoc.data();
-          const userRating = ratingData[auth.currentUser.uid]; // Make sure this UID matches how you've stored ratings
-          console.log(`Rating found: ${userRating}`);
-          document.getElementById('ratingDisplay').textContent = `Your Rating: ${userRating}`;
+          console.log('Rating Data:', ratingData); // Debug: log the entire rating data
+
+          // Ensure the user is signed in before trying to access their UID
+          if (isUserSignedIn()) {
+            const userRating = ratingData[auth.currentUser.uid];
+            console.log(`Rating found for user ${auth.currentUser.uid}: ${userRating}`); // Debug: log the fetched rating
+
+            // Update the display based on whether a rating was found
+            const displayText = userRating ? `Your Rating: ${userRating}` : "You haven't rated this game yet.";
+            document.getElementById('ratingDisplay').textContent = displayText;
+          } else {
+            console.log('No user is signed in to fetch rating.');
+            document.getElementById('ratingDisplay').textContent = "Sign in to see your rating.";
+          }
         } else {
           console.log('No rating found for this game.');
-          document.getElementById('ratingDisplay').textContent = "You haven't rated this game yet."; // Optionally handle the case where there's no rating
+          document.getElementById('ratingDisplay').textContent = "You haven't rated this game yet.";
         }
       } catch (error) {
         console.error('Error fetching rating:', error);
         showToast('Failed to fetch rating.');
       }
     }
-
 
 
     firebase.auth().onAuthStateChanged(user => {
@@ -4415,13 +4597,6 @@ Australia: June 15, 2013
     });
 
 
-    document.addEventListener('DOMContentLoaded', async function() {
-        const gameId = 'animalcrossingnewleaf'; // Replace with the actual game ID
-        await handleAuthStateChanges();
-        setupEventListeners();
-        await fetchAndDisplayComments(gameId);
-
-    });
 
 
 
@@ -4445,14 +4620,68 @@ Australia: June 15, 2013
         }
     }
 
-    async function saveRating(gameId, rating) {
-        // Replace this logic with your actual Firestore path and data structure
+    async function rateGame(gameId, rating) {
+        if (!isUserSignedIn()) {
+            showToast('You must be signed in to rate.');
+            return;
+        }
+
+        // Example: Logic to determine gameName based on gameId
+        // This could involve fetching game details from Firestore or another source
+        const gameDetails = await fetchGameDetails(gameId);
+        const gameName = gameDetails.name; // Assuming the fetched game details include a name
+
+        if (!gameName) {
+            console.error('Game name not found for gameId:', gameId);
+            showToast('Failed to find game name. Rating not saved.');
+            return;
+        }
+
+        // Call saveRating with gameId, rating, and the determined gameName
+        await saveRating(gameId, rating, gameName);
+    }
+
+    // Dummy function to represent fetching game details
+    // Replace this with your actual function to fetch game details based on gameId
+    async function fetchGameDetails(gameId) {
+        // Your logic to fetch game details
+        return { name: "animalcrossingnewleaf" }; // Example return value
+    }
+    async function saveRating(gameId, rating, gameName) {
+        // Check if user is signed in
+        if (!isUserSignedIn()) {
+            showToast('You must be signed in to rate.');
+            return;
+        }
+
+        // Assuming gameId, rating, and gameName are correctly passed
+        console.log(`Saving rating for gameId: ${gameId}, rating: ${rating}, gameName: ${gameName}`);
+
+        const userId = firebase.auth().currentUser.uid;
+
+        // Attempt to save the rating to the ratings collection
         try {
+            // Save the user's rating for the game
             await firestore.collection('ratings').doc(gameId).set({
-                [auth.currentUser.uid]: rating
+                [userId]: rating
             }, { merge: true });
+
+            // Log this activity in the userActivities collection
+            const activity = {
+                userId: userId,
+                type: 'rating',
+                gameId: gameId,
+                gameName: gameName, // Assuming this is dynamically determined based on gameId
+                rating: rating,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            // Save the activity
+            await firestore.collection('userActivities').add(activity);
+
             showToast('Rating saved successfully');
-            fetchAndDisplayRating(gameId, auth.currentUser.uid); // Refresh rating display
+            // Optionally, refresh the display of ratings here if needed
+            fetchAndDisplayRating(gameId); // Assuming this function refreshes the rating display
         } catch (error) {
             console.error('Error saving rating:', error);
             showToast('Failed to save rating');
@@ -4460,19 +4689,80 @@ Australia: June 15, 2013
     }
 
 
-    // Define the handleRateClick function
     async function handleRateClick() {
         if (!isUserSignedIn()) {
             showToast('You must be signed in to rate.');
             return;
         }
-        // Assuming you need the gameId to rate a game
-        const gameId = 'animalcrossingnewleaf'; // Replace with logic to obtain the actual gameId
-        const rating = prompt("Enter your rating (1-5):");
-        if (rating) {
-            await saveRating(gameId, rating);
+
+        const gameId = 'animalcrossingnewleaf'; // Ensure this is correctly set
+        const gameName = 'Animal Crossing: New Leaf'; // Ensure this is correctly set
+        let rating = parseInt(prompt("Enter your rating (1-5):"), 10);
+
+        // Validate the rating
+        if (!rating || rating < 1 || rating > 5) {
+            showToast('Please enter a valid rating between 1 and 5.');
+            return;
+        }
+
+        try {
+            // Call the function to save the rating
+            await saveRating(gameId, rating, gameName);
+            showToast('Rating saved successfully');
+        } catch (error) {
+            console.error('Error saving rating:', error);
+            showToast('Failed to save rating');
         }
     }
+
+    // Adjusted handleRateClick function to include gameName
+    async function handleRateClick() {
+        if (!isUserSignedIn()) {
+            showToast('You must be signed in to rate.');
+            return;
+        }
+
+        const gameId = 'animalcrossingnewleaf'; // Example gameId
+        const gameName = "Animal Crossing: New Leaf"; // You need to set this dynamically based on gameId
+
+        let rating = parseInt(prompt("Enter your rating (1-5):"), 10); // Convert string input to integer
+
+        // Validate rating
+        if (!rating || rating < 1 || rating > 5) {
+            showToast('Please enter a valid rating between 1 and 5.');
+            return;
+        }
+
+        try {
+            await saveRating(gameId, rating, gameName); // Pass gameName here
+        } catch (error) {
+            console.error('Error during rating:', error);
+            showToast('Failed to save rating');
+        }
+    }
+
+    async function addLikeActivity(gameId, gameName) {
+        if (!firebase.auth().currentUser) {
+            showToast('No user is signed in.');
+            return;
+        }
+
+        try {
+            const activity = {
+                userId: firebase.auth().currentUser.uid,
+                type: 'like',
+                gameName: gameName,
+                gameId: gameId,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            await firestore.collection('userActivities').add(activity);
+            showToast('Like activity recorded successfully');
+        } catch (error) {
+            console.error('Error recording like activity:', error);
+            showToast('Failed to record like activity');
+        }
+    }
+
 
 
 
@@ -4523,4 +4813,4 @@ Australia: June 15, 2013
 
 
 
-     </body>
+</body>
