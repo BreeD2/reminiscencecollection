@@ -4467,3 +4467,14 @@ color:white
 .light-mode .copy {
 color:black
 }
+
+#myTopnav > div.dropdown2 > div > a {
+  text-align: left;
+  background-color: #555555;
+  width:100%
+}
+
+#myTopnav > div.dropdown2 > div > a:hover {
+  text-align: left;
+  background-color: grey
+}

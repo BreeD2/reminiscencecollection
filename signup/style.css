@@ -426,7 +426,13 @@ width: 108px;
 
 }
 #myTopnav > div.dropdown2 > div > a {
-  text-align: left
+  text-align: left;
+  background-color: #555555
+}
+
+#myTopnav > div.dropdown2 > div > a:hover {
+  text-align: left;
+  background-color: grey
 }
 
 .dropdown-content2 a, .dropdown-content2 button {
