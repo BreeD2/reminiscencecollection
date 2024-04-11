@@ -1805,7 +1805,7 @@ Adventure
  title: "Midnight Club: Street Racing",
  publisher: [
  "Destination Software","Rockstar Games"],
- developer: ["Angel Studios","Rebellion Developments"],
+ developer: ["Angel Studio","Rebellion Developments"],
  series: ["Midnight Club"],
  platform: [
  "Game Boy Advance",
@@ -2220,29 +2220,6 @@ Adventure
 
  ],
  releasedDate: ["2011"],
-   genre: ["Minigame","Party"],
- mode: "Single-player & Multiplayer",
- },
- {
- title: "Shrek 2",
- publisher: ["Activision",
- "THQ"],
- developer: ["Aspyr",
- "Beenox",
- "Eurofun & DTR",
- "KnowWonder",
- "Luxoflux",
- "Vicarious Visions"],
- series: ["Shrek"],
- platform: ["Game Boy Advance",
- "Mac OS X",
- "Microsoft Windows",
- "Mobile",
- "Nintendo GameCube",
- "PlayStation 2",
- "Xbox"
- ],
- releasedDate: ["2004"],
    genre: ["Minigame","Party"],
  mode: "Single-player & Multiplayer",
  },
@@ -4032,7 +4009,7 @@ Adventure
  const storage = firebase.storage();
  const firestore = firebase.firestore();
  const db = firebase.firestore();
- const gameId = 'animalcrossingnewhorizons'; // Assume this is set appropriately elsewhere
+ const gameId = 'batmanarkhamcity'; // Assume this is set appropriately elsewhere
 
  // Use an auth state observer to wait for the auth state to be initialized
  firebase.auth().onAuthStateChanged((user) => {
@@ -4079,8 +4056,8 @@ Adventure
 
    document.addEventListener('DOMContentLoaded', function() {
        // Define gameId and gameName here if they're not already defined globally
-       const gameId = 'animalcrossingnewhorizons';
-       const gameName = 'Animal Crossing: New Horizons';
+       const gameId = 'batmanarkhamcity';
+       const gameName = 'Batman: Arkham City';
 
        // Setup Like Button
        const likeButton = document.getElementById('likeButton');
@@ -4151,7 +4128,7 @@ Adventure
 
 
  document.addEventListener('DOMContentLoaded', function() {
-   const gameId = "animalcrossingnewhorizons"; // Make sure this is set correctly
+   const gameId = "batmanarkhamcity"; // Make sure this is set correctly
    fetchAndDisplayLikes(gameId);
  });
 
@@ -4197,7 +4174,7 @@ Adventure
 
  // Ensures comments are fetched and displayed as soon as the page loads
  document.addEventListener('DOMContentLoaded', async () => {
-     const gameId = 'animalcrossingnewhorizons'; // Ensure this is correctly set
+     const gameId = 'batmanarkhamcity'; // Ensure this is correctly set
      console.log('Page loaded, fetching comments...');
      await fetchAndDisplayComments(gameId);
  });
@@ -4358,8 +4335,8 @@ Adventure
 
  async function handleCommentSubmit() {
      // Assuming you have already checked if the user is signed in and other preliminary checks
-     const gameId = 'animalcrossingnewhorizons'; // Make sure to dynamically set or retrieve this value as necessary
-     const gameName = 'Animal Crossing: New Horizons'; // Dynamically set or retrieve this value as necessary
+     const gameId = 'batmanarkhamcity'; // Make sure to dynamically set or retrieve this value as necessary
+     const gameName = 'Batman: Arkham City'; // Dynamically set or retrieve this value as necessary
      const commentInput = document.getElementById('commentInput');
      const commentText = commentInput.value.trim();
 
@@ -4494,7 +4471,7 @@ Adventure
 
      const commentInput = document.getElementById('commentInput');
      const commentText = commentInput.value.trim();
-     const gameId = 'animalcrossingnewhorizons'; // Dynamically fetch this if necessary
+     const gameId = 'batmanarkhamcity'; // Dynamically fetch this if necessary
 
      // Disable the button to prevent multiple submissions
      const submitCommentButton = document.getElementById('submitComment');
@@ -4593,7 +4570,7 @@ Adventure
  firebase.auth().onAuthStateChanged(user => {
    if (user) {
      // User is signed in, safe to fetch the rating
-     fetchAndDisplayRating('animalcrossingnewhorizons');
+     fetchAndDisplayRating('batmanarkhamcity');
    } else {
      // No user is signed in.
      console.log("No user signed in.");
@@ -4649,7 +4626,7 @@ Adventure
  // Replace this with your actual function to fetch game details based on gameId
  async function fetchGameDetails(gameId) {
      // Your logic to fetch game details
-     return { name: "animalcrossingnewhorizons" }; // Example return value
+     return { name: "batmanarkhamcity" }; // Example return value
  }
  async function saveRating(gameId, rating, gameName) {
      // Check if user is signed in
@@ -4699,8 +4676,8 @@ Adventure
          return;
      }
 
-     const gameId = 'animalcrossingnewhorizons'; // Ensure this is correctly set
-     const gameName = 'Animal Crossing: New Horizons'; // Ensure this is correctly set
+     const gameId = 'batmanarkhamcity'; // Ensure this is correctly set
+     const gameName = 'Batman: Arkham City'; // Ensure this is correctly set
      let rating = parseInt(prompt("Enter your rating (1-5):"), 10);
 
      // Validate the rating
@@ -4726,8 +4703,8 @@ Adventure
          return;
      }
 
-     const gameId = 'animalcrossingnewhorizons'; // Example gameId
-     const gameName = "Animal Crossing: New Horizons"; // You need to set this dynamically based on gameId
+     const gameId = 'batmanarkhamcity'; // Example gameId
+     const gameName = "Batman: Arkham City"; // You need to set this dynamically based on gameId
 
      let rating = parseInt(prompt("Enter your rating (1-5):"), 10); // Convert string input to integer
 
