@@ -4476,7 +4476,7 @@ margin: 10px;
  }
  .dark-mode #userDescriptionInput {
 
-   background-color: #222;
+   background-color: dimgrey;
    color:white
 
  }
@@ -4509,7 +4509,7 @@ margin: 10px;
 
  .dark-mode #newPasswordInput {
 
-   background-color: #222;
+   background-color: dimgrey;
    color:white
  }
 
@@ -4535,7 +4535,7 @@ margin: 10px;
 
 .dark-mode #updateProfileBtn {
 
-   background-color: #222;
+   background-color: dimgrey;
    color: white;
 }
 #saveDescriptionBtn {
@@ -4801,7 +4801,7 @@ margin: 10px;
 
 .dark-mode #emailDisplay {
 
-  background-color: #222; /* Use a blue background */
+  background-color:dimgrey; /* Use a blue background */
   color: white; /* White text color */
 
 }
@@ -4933,14 +4933,14 @@ element.style {
 }
 
 .light-mode #activityLog {
-  background: black;
-  color: white;
+  background: white;
+  color: black;
 
 }
 
 .dark-mode #activityLog {
-  background: white;
-  color: black;
+  background: black;
+  color: white;
 }
 
 
