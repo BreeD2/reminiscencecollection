@@ -13,14 +13,14 @@
  <meta name="theme-color" content="#ffffff">
    <center>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <link rel="stylesheet"href="style.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.css">
 
-  <script src="accessibility/index.html"></script>
-  <script src="script.js"></script>
+
+
 <style>
 </style>
 </head>
@@ -33,60 +33,68 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <body>
-
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script>
+  <!-- Correctly include Firebase Storage compat layer -->
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-storage-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
   <div class="read-aloud">
-<!-- Navigation Bar with Logo and Website Name -->
-<div class="topnav" id="myTopnav">
-  <a href="..//index.html" class="logo">
-    <img src="..//rpa.png" alt="Reminiscence Collection" style="height: 23px;">&ensp;<span class="title-text">Reminiscence&ensp;Collection</span>
+    <div class="topnav" id="myTopnav">
+      <a href="..//index.html" class="logo">
+        <img src="..//rpa.png" alt="Reminiscence Collection" style="height: 23px;">&ensp;<span class="title-text">Reminiscence&ensp;Collection</span>
 
-</a>
-<a href="index.html" class="active">Home</a>
-   <a href="games/index.html">Games</a>
-   <a href="about/index.html">About</a>
-   <a href="contact/index.html">Contact</a>
-   <!-- Accessibility Button and Dropdown -->
-   <!-- User Information Dropdown -->
-   <input type="text" id="searchInput2" placeholder="Search.." onkeyup="searchFunction()">
-     <!-- Other navigation items -->
-
-   <div class="dropdown2">
-     <button class="dropbtn2">
-       <i class="fa fa-user"></i> User
-       <i class="fa fa-caret-down"></i>
-     </button>
-     <div class="dropdown-content2">
-       <a href="..//signup/index.html">Signup</a>
-       <a href="..//login/index.html">Login</a>
-       <a href="..//myprofile/index.html">My Profile</a>
-       <a href="..//logout/index.html">Logout</a>
-     </div>
-   </div>
-   <div class="dropdown">
-     <button class="dropbtn">
-       <i class="fas fa-wheelchair"></i>
-Accessibility<i class="fa fa-caret-down"></i>
-
-     </button>
-     <div class="dropdown-content">
-       <div id="google_translate_element"></div>
-       <button onclick="resetSettings()">Reset Settings</button>
-       <button onclick="increaseFont()">Increase Font Size</button>
-       <button onclick="decreaseFont()">Decrease Font Size</button>
-       <button onclick="toggleLightMode()">Toggle Light Mode</button>
-       <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
-       <button id="speakSelectedText">Read Selected Text</button>
-       <button id="stopButton">Stop Reading</button>
-     </div>
-   </div>
-
-
-   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-     <i class="fa fa-bars"></i>
    </a>
- </div>
- <div id="searchResults2" class="search-results2"></div>
+   <a href="..//index.html">Home</a>
+       <a href="..//games/index.html"class="active">Games</a>
+       <a href="..//about/index.html">About</a>
+       <a href="..//contact/index.html">Contact</a>
+       <!-- Accessibility Button and Dropdown -->
+       <!-- User Information Dropdown -->
+       <input type="text" id="searchInput2" placeholder="Search.." onkeyup="searchFunction()">
+       <button id="clearSearch" onclick="clearSearchFunction()">X</button>
+         <!-- Other navigation items -->
 
+         <!-- User Information Dropdown -->
+         <div class="dropdown2">
+             <button class="dropbtn2">
+                 <i class="fa fa-user"></i> <span id="userName">User</span> <i class="fa fa-caret-down"></i>
+             </button>
+             <div class="dropdown-content2">
+                 <a href="..//dashboard/index.html">Dashboard</a>
+                <a href="javascript:void(0);" id="logoutBtn">Logout</a>
+             </div>
+         </div>
+       <div class="dropdown">
+         <button class="dropbtn">
+           <i class="fas fa-wheelchair"></i>
+  Accessibility<i class="fa fa-caret-down"></i>
+
+         </button>
+         <div class="dropdown-content">
+           <div id="google_translate_element"></div>
+           <button onclick="resetSettings()">Reset Settings</button>
+           <button onclick="increaseFont()">Increase Font Size</button>
+           <button onclick="decreaseFont()">Decrease Font Size</button>
+           <button onclick="toggleLightMode()">Toggle Light Mode</button>
+           <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+     <button id="toggleTextToSpeech" aria-label="Toggle text to speech">Read Selected Text</button>
+
+
+
+
+         </div>
+       </div>
+
+
+       <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+         <i class="fa fa-bars"></i>
+       </a>
+
+
+   </div>
+   <!-- Moved searchResults outside the topnav -->
+   <div id="searchResults2" class="search-results2"></div>
 
 
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
