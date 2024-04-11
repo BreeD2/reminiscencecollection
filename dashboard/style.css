@@ -4980,3 +4980,17 @@ element.style {
     color:white
 
     }
+
+
+
+
+    }
+    /* Style the links inside the dropdown */
+    .dropdown-content a {
+      float: none;
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }

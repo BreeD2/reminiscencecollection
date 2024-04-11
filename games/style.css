@@ -5054,3 +5054,17 @@ box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 margin-top: 20px;
 
 }
+
+
+
+
+}
+/* Style the links inside the dropdown */
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
