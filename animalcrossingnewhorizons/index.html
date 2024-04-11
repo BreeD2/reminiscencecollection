@@ -3286,62 +3286,45 @@ document.getElementById('filterCheckbox').addEventListener('change', function() 
         adjustFontSize(0.9, '.sidebar *, .game-container, .game-info, #likeButton,#commentsSection > strong, #commentButton, #likesCount, #ratingDisplay, #rateButton, .game-title, .footer');
     }
 
-    // Reset settings including font sizes and other visual modifications
     function resetSettings() {
-        resetFont(); // Resets font sizes
+        resetFont(); // Assuming this function resets font sizes
         // Add other reset actions here (e.g., removing classes, resetting filters)
         document.body.style.filter = '';
         document.body.style.webkitFilter = '';
-        document.body.classList.remove('dark-mode');
-        document.body.classList.remove('invert-colors');
-        document.body.classList.remove('light-mode');
+        document.body.classList.remove('dark-mode', 'invert-colors', 'light-mode');
 
+        // Clear the stored theme preference
+        localStorage.removeItem('theme');
+
+        // Optionally, apply default styles explicitly here
+        document.getElementById('accessibility-dropup').style.backgroundColor = ''; // Revert to CSS default
+        document.getElementById('accessibility-dropup').style.color = ''; // Revert to CSS default
+
+        // Additional reset actions for other elements' styles if needed
+        resetOtherElementStyles(); // Implement this based on your needs
     }
 </script>
 
 
 <script>
-    function toggleLightMode() {
-        // Remove other classes that might affect the background
-        document.body.classList.remove('dark-mode');
-        document.body.classList.remove('invert-colors');
-        // Add or remove the 'light-mode' class based on the current state
-        document.body.classList.toggle('light-mode');
-        // Set button styles explicitly for light mode
-        if (document.body.classList.contains('light-mode')) {
-            document.getElementById('accessibility-dropup').style.backgroundColor = 'white';
-            document.getElementById('accessibility-dropup').style.color = 'black';
-        } else {
-            // Set button styles explicitly for dark mode
-            document.getElementById('accessibility-dropup').style.backgroundColor = 'dodgerblue';
-            document.getElementById('accessibility-dropup').style.color = 'white';
-        }
-    }
-</script>
-
-<!-- JavaScript -->
-<!-- JavaScript -->
-<script>
+// Toggle Light Mode
 function toggleLightMode() {
-    if (document.body.classList.contains('dark-mode')) {
-        document.body.classList.remove('dark-mode');
-    }
-    document.body.classList.toggle('light-mode');
-    updateAccessibilityDropupStyles();
-    updateOtherElementStylesForMode(); // Implement this function based on your needs
-    closeAccessibilityMenu();
+    document.body.classList.remove('dark-mode');
+    document.body.classList.add('light-mode');
+    localStorage.setItem('theme', 'light'); // Persist theme choice
+    updateStylesBasedOnTheme();
 }
 
+// Toggle Dark Mode
 function toggleDarkMode() {
-    if (document.body.classList.contains('light-mode')) {
-        document.body.classList.remove('light-mode');
-    }
-    document.body.classList.toggle('dark-mode');
-    updateAccessibilityDropupStyles();
-    updateOtherElementStylesForMode(); // Implement this function based on your needs
+    document.body.classList.remove('light-mode');
+    document.body.classList.add('dark-mode');
+    localStorage.setItem('theme', 'dark'); // Persist theme choice
+    updateStylesBasedOnTheme();
 }
 
-function updateAccessibilityDropupStyles() {
+// Update the styles based on the current theme
+function updateStylesBasedOnTheme() {
     var dropup = document.getElementById('accessibility-dropup');
     if (document.body.classList.contains('light-mode')) {
         dropup.style.backgroundColor = 'white';
@@ -3349,27 +3332,40 @@ function updateAccessibilityDropupStyles() {
     } else if (document.body.classList.contains('dark-mode')) {
         dropup.style.backgroundColor = 'dodgerblue';
         dropup.style.color = 'white';
-    } else {
-        // Define default styles if needed
     }
 }
 
-// Assume this is the corrected function name for closing the menu
-function closeAccessibilityMenu() {
-    var dropdownContent = document.querySelector('.dropdown .dropdown-content');
-    if (dropdownContent) {
-        dropdownContent.style.display = 'none';
+// Resets settings to default and clears theme preference
+function resetSettings() {
+    // Resets font sizes and other specific settings here
+    document.body.classList.remove('dark-mode', 'light-mode');
+    localStorage.removeItem('theme'); // Clear the stored theme preference
+    // Optionally, apply default styles explicitly here
+    applyDefaultStyles();
+}
+
+// Applies default styles when resetting
+function applyDefaultStyles() {
+    var dropup = document.getElementById('accessibility-dropup');
+    dropup.style.backgroundColor = ''; // Default background color
+    dropup.style.color = ''; // Default text color
+    // Apply other default styles as needed
+}
+
+// Applies the saved theme or default if none is saved
+function applySavedTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-mode');
+    } else if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
     }
+    updateStylesBasedOnTheme();
 }
 
-// Placeholder for a function to update other elements' styles based on the current mode
-function updateOtherElementStylesForMode() {
-    // Your implementation here
-    // This could involve setting or removing styles or classes on elements that need to change appearance between modes
-}
-
+// Event listener to apply the saved theme on page load
+document.addEventListener('DOMContentLoaded', applySavedTheme);
 </script>
-
 
 
 <script>
