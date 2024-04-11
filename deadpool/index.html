@@ -334,7 +334,7 @@
 
              <div id="main-content" class="content">
 
- <div class="game-container">
+ <div class="game-container"data-game-id="deadpool">
        <img src="deadpool.png" alt="Deadpool" class="game-cover"download="Deadpool">
 
        <h1 class="game-title">Deadpool</h1>
@@ -451,6 +451,42 @@ Europe: November 20, 2015
        </div>
    </div>
 
+   <script>
+     // Get the modal
+   var modal = document.getElementById("myModal");
+
+   // Get the image and insert it inside the modal
+   var img = document.querySelector(".game-cover");
+   var modalImg = document.getElementById("img01");
+   img.onclick = function() {
+       modal.style.display = "block";
+       modalImg.src = this.src;
+   }
+
+   // Get the <span> element that closes the modal
+   var span = document.getElementsByClassName("close")[0];
+
+   // When the user clicks on <span>, close the modal
+   span.onclick = function() {
+       modal.style.display = "none";
+   }
+
+   // Zoom functionality
+   var zoomLevel = 1;
+   var zoomStep = 0.1;
+
+   document.getElementById("zoomIn").addEventListener("click", function() {
+       zoomLevel += zoomStep;
+       modalImg.style.transform = "scale(" + zoomLevel + ")";
+   });
+
+   document.getElementById("zoomOut").addEventListener("click", function() {
+       if (zoomLevel > zoomStep) {
+           zoomLevel -= zoomStep;
+           modalImg.style.transform = "scale(" + zoomLevel + ")";
+       }
+   });
+   </script>
    ​​<script>
      // Corrected Categories Data
      const publisherCategories = {
@@ -4780,3 +4816,4 @@ Europe: November 20, 2015
 
 
    </script>
+</body>
