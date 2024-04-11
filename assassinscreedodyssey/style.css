@@ -1292,10 +1292,6 @@ body.dark-mode .cog-icon * {
     background: #808080;
 }
 
-.light-mode .sidebar {
-    scrollbar-width: auto;
-    scrollbar-color: #a0a0a0 #e0e0e0;
-}
 
 /* Dark Mode Styles */
 .dark-mode .sidebar {
@@ -1316,10 +1312,7 @@ body.dark-mode .cog-icon * {
     background: #888;
 }
 
-.dark-mode .sidebar {
-    scrollbar-width: auto;
-    scrollbar-color: #555 #2c2c2c;
-}
+
 
 
    .sidebar a {
@@ -4772,11 +4765,7 @@ body::-webkit-scrollbar-thumb:hover {
     background: #808080;
 }
 
-/* Ensures scrollbar styles apply in Firefox and similar browsers */
-.light-mode body {
-    scrollbar-width: auto;
-    scrollbar-color: #a0a0a0 #e0e0e0;
-}
+
 
 /* Dark Mode Styles */
 .dark-mode body {
@@ -4797,11 +4786,7 @@ body::-webkit-scrollbar-thumb:hover {
     background: #888;
 }
 
-/* Ensures scrollbar styles apply in Firefox and similar browsers */
-.dark-mode body {
-    scrollbar-width: auto;
-    scrollbar-color: #555 #2c2c2c;
-}
+
 
 body::-webkit-scrollbar {
     width: 16px;

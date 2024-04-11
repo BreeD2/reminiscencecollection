@@ -1274,10 +1274,6 @@ body.dark-mode .cog-icon * {
 .sidebar::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
-/* Light Mode Styles */
-.light-mode .sidebar {
-    background-color: #f0f0f0; /* Light background for light mode */
-}
 
 .light-mode .sidebar::-webkit-scrollbar {
     width: 15px;
@@ -1293,15 +1289,8 @@ body.dark-mode .cog-icon * {
     background: #808080;
 }
 
-.light-mode .sidebar {
-    scrollbar-width: auto;
-    scrollbar-color: #a0a0a0 #e0e0e0;
-}
 
-/* Dark Mode Styles */
-.dark-mode .sidebar {
-    background-color: #1a1a1a; /* Dark background for dark mode */
-}
+
 
 .dark-mode .sidebar::-webkit-scrollbar {
     width: 15px;
@@ -1317,10 +1306,7 @@ body.dark-mode .cog-icon * {
     background: #888;
 }
 
-.dark-mode .sidebar {
-    scrollbar-width: auto;
-    scrollbar-color: #555 #2c2c2c;
-}
+
 
 
    .sidebar a {
@@ -4773,11 +4759,7 @@ body::-webkit-scrollbar-thumb:hover {
     background: #808080;
 }
 
-/* Ensures scrollbar styles apply in Firefox and similar browsers */
-.light-mode body {
-    scrollbar-width: auto;
-    scrollbar-color: #a0a0a0 #e0e0e0;
-}
+
 
 /* Dark Mode Styles */
 .dark-mode body {
@@ -4798,11 +4780,6 @@ body::-webkit-scrollbar-thumb:hover {
     background: #888;
 }
 
-/* Ensures scrollbar styles apply in Firefox and similar browsers */
-.dark-mode body {
-    scrollbar-width: auto;
-    scrollbar-color: #555 #2c2c2c;
-}
 
 body::-webkit-scrollbar {
     width: 16px;

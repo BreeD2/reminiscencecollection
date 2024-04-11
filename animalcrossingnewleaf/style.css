@@ -1303,10 +1303,7 @@ body.dark-mode .cog-icon * {
     background: #808080;
 }
 
-.light-mode .sidebar {
-    scrollbar-width: auto;
-    scrollbar-color: #a0a0a0 #e0e0e0;
-}
+
 
 /* Dark Mode Styles */
 .dark-mode .sidebar {
@@ -1327,10 +1324,7 @@ body.dark-mode .cog-icon * {
     background: #888;
 }
 
-.dark-mode .sidebar {
-    scrollbar-width: auto;
-    scrollbar-color: #555 #2c2c2c;
-}
+
 
 
    .sidebar a {
