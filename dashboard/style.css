@@ -4552,6 +4552,21 @@ margin: 10px;
   border: none;
   margin: 10px
 }
+.light-mode #saveDescriptionBtn {
+
+
+
+  background-color: white;
+  color:black
+}
+
+.dark-mode #saveDescriptionBtn {
+
+
+
+  background-color: black;
+  color:white
+}
 
 #changePasswordBtn {
 
@@ -4577,7 +4592,7 @@ margin: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   font-family: arial;
-  background-color: #007bff; /* Use a blue background */
+  background-color: black; /* Use a blue background */
   color: white; /* White text color */
   font-size: 16px; /* Increase font size */
   border: none;
@@ -4603,7 +4618,7 @@ margin: 10px;
 .dark-mode #updateEmailBtn {
 
 
-  background-color: #222; /* Use a blue background */
+  background-color: black ; /* Use a blue background */
   color: white; /* White text color */
 
 }
@@ -4653,7 +4668,7 @@ margin: 10px;
 .dark-mode #deleteAccountBtn {
 
 
-  background-color: #222; /* Use a blue background */
+  background-color: black; /* Use a blue background */
   color: white; /* White text color */
 
 }
@@ -4704,7 +4719,7 @@ margin: 10px;
 .dark-mode #usernameInput {
 
 
-  background-color: #222; /* Use a blue background */
+  background-color: dimgrey; /* Use a blue background */
   color:white
 }
 
@@ -4723,7 +4738,7 @@ margin: 10px;
 
 
 .dark-mode #emailInput {
-  background-color: #222;
+  background-color: dimgrey;
   color:white
 }
 
@@ -4892,3 +4907,76 @@ element.style {
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
+#displayedUsername {
+  background: #007bff;
+  color: white;
+  width: 80%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.light-mode #displayedUsername {
+  background: white;
+  color: black;
+
+}
+
+
+.dark-mode #displayedUsername {
+  background: dimgrey;
+  color: white;
+
+}
+
+.light-mode #activityLog {
+  background: black;
+  color: white;
+
+}
+
+.dark-mode #activityLog {
+  background: white;
+  color: black;
+}
+
+
+  .footer {
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    background-color: black;
+    margin-top: 100px;
+      color:white;
+  }
+
+  .light-mode .footer {
+
+    background-color: #f1f1f1;
+
+  }
+
+
+    .dark-mode .footer {
+
+      background-color: black;
+
+    }
+
+
+
+    .light-mode .copy {
+
+    color:black
+
+    }
+
+    .dark-mode .copy {
+
+    color:white
+
+    }
