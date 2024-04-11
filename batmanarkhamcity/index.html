@@ -393,8 +393,30 @@ Adventure
      <br> After experiencing my first foray into the Animal Crossing universe with "New Leaf," I've become quite the enthusiast. "Animal Crossing: New Horizons" elevates the series with its expansive customization options, allowing for a level of personal expression I hadn't encountered before in gaming. For the first time, I was able to craft a character who truly mirrored my appearance, adding a personal touch to my virtual escapade. The game's landscaping possibilities are impressive, offering endless creativity in designing one's island paradise. The ability to design and share unique clothing, hats, and art enhances this further, although I'm less thrilled about the restriction of one island per console — a limitation that feels unnecessarily binding without investing in additional hardware. While I yearn for richer dialogues from the animal inhabitants to enrich the world further, my overall experience has been profoundly positive. Acquiring the game in March 2020, amid the pandemic, it provided not just a delightful escape but a means to connect and share moments with others during isolation.
 
  </p>
+ <div class="game-info">
+  <!-- Comments Section -->
+  <!-- Add Comment Section -->
+  <div id="addCommentSection"><br>
+    <strong>Make a Comment</strong><br>
+      <textarea id="commentInput" placeholder="Write a comment..."></textarea><br>
+      <button id="submitComment">Submit Comment</button>
+      <!-- Reply Popup Structure (hidden by default) -->
+ <div id="replyPopup" style="display:none; position:fixed; left:50%; top:50%; transform:translate(-50%, -50%); background-color:white; padding:20px; border-radius:5px; box-shadow:0 2px 4px rgba(0,0,0,0.5);">
+ <textarea id="replyText" placeholder="Type your reply here..." style="width:100%;"></textarea>
+ <button id="sendReply">Send Reply</button>
+ <button id="cancelReply">Cancel</button>
+ </div>
 
-   </div>
+  </div>
+  <div id="commentsSection">
+       <strong>User's Comments</strong>
+      <div id="commentsList">
+          <!-- User comments will be appended here -->
+      </div>
+
+  </div>
+ </div>
+ </div>
    <div class="footer">
      <div class="copy">Copyright &copy; 2024 Reminiscence Collection. All rights reserved.</div>
    </div>
