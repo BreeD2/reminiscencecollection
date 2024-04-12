@@ -4507,6 +4507,18 @@ margin: 10px;
    color:white
  }
 
+ .dark-mode #newPasswordInput::placeholder {
+     color: white;
+ }
+
+ .dark-mode #userDescriptionInput::placeholder {
+    color: white;
+}
+
+ .dark-mode #usernameInput::placeholder {
+    color: white;
+}
+
  #updateProfileBtn {
 
    width:80%;
@@ -4578,6 +4590,10 @@ margin: 10px;
   margin: 10px;
 }
 
+#changePasswordBtn {
+  background-color: white;
+  color:black
+}
 
 .dark-mode #changePasswordBtn {
 
