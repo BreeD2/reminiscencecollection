@@ -78,7 +78,8 @@ body {
   display: block;
   text-align: left;
   border: none;
-  font-size: 15px
+  font-size: 15px;
+
 
 
 
@@ -117,10 +118,18 @@ body {
   padding: 12px 16px;
   text-decoration: none;
   display: block;
-  text-align: left;
+
     outline:none;
     background-color: transparent;
-    font-size: 15px
+    font-size: 15px;
+        width: 100%;
+
+}
+
+
+/* Style for links and buttons within the dropdown */
+.dropdown-content a:hover,.dropdown-content button:hover {
+        width: 100%;
 
 }
 
@@ -204,17 +213,7 @@ body {
 
 
 
-@media (min-width: 1068px) {
-/* Style the dropdown content (hidden by default) */
-.dropdown-content2 {
-  display: none;
-  position: absolute;
-  background-color: #555;
-width: 108px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  color:white
-}
+
 
 
 }
@@ -327,6 +326,7 @@ width: 108px;
 .dropdown-content2 a:hover {
   background-color: #ddd;
   color: black;
+
 }
 
 /* Show the dropdown menu when the user moves the mouse over the dropdown button */
@@ -389,12 +389,13 @@ width: 108px;
   margin: 0;
 }
 
+@media (min-width: 1068px) {
 /* Style the dropdown content (hidden by default) */
 .dropdown-content2 {
   display: none;
   position: absolute;
   background-color: #555;
-
+width: 108px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   color:white
@@ -418,7 +419,8 @@ width: 108px;
   display: block;
   text-align: left;
     outline:none;
-    background-color: transparent
+    background-color: transparent;
+
 
 }
 
@@ -430,7 +432,13 @@ width: 108px;
     text-align: left;
     outline: none;
     background-color: transparent;
-    font-size: 15px
+    font-size: 15px;
+
+}
+
+.dropdown-content2 a:hover, .dropdown-content2 button:hover {
+  width:100%;
+  text-align: left;
 }
 @media (max-width: 1060px) {
   .dropdown-content  {width:100%;
@@ -651,6 +659,7 @@ body.light-mode .topnav a:hover {
  .dropdown-content button:hover{
   background-color: grey;
   color: white;
+      width: 100%;
 }
 
 
@@ -1284,10 +1293,7 @@ body.dark-mode .cog-icon * {
     background: #808080;
 }
 
-.light-mode .sidebar {
-    scrollbar-width: auto;
-    scrollbar-color: #a0a0a0 #e0e0e0;
-}
+
 
 /* Dark Mode Styles */
 .dark-mode .sidebar {
@@ -1308,10 +1314,7 @@ body.dark-mode .cog-icon * {
     background: #888;
 }
 
-.dark-mode .sidebar {
-    scrollbar-width: auto;
-    scrollbar-color: #555 #2c2c2c;
-}
+
 
 
    .sidebar a {
@@ -2486,27 +2489,34 @@ border:2px solid white;
   }
 
 
+
   .footer {
-      width: 100%;
-      background-color: #f1f1f1;
-      text-align: center;
-      padding: 20px;
-      position: relative;
-      background-color: black;
-      margin-top: 100px;
-        color:white;
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    background-color: black;
+    margin-top: 100px;
+      color:white;
+  }
+
+  .light-mode .footer {
+
+    background-color: #f1f1f1;
+
+  }
+
+
+    .light-mode .copy {
+
+    color:black
+
     }
-    body.light-mode .footer, body.light-mode .footer * {
-        width: 100%;
-        background-color: #f1f1f1; /* Light grey background for the footer */
-        text-align: center;
-        padding: 20px;
-        color: #000; /* Dark text color for readability */
-        margin-top: auto; /* Ensures that the footer is pushed to the bottom */
-      }
+
       body.dark-mode #sort-section, body.sort-section * {
 
-    background-color: #f1f1f1; /* Light grey background for the footer */
+    background-color: #f1f1f1; /* Light grey background for the  */
 
     color: black; /* Dark text color for readability */
 
@@ -2563,14 +2573,7 @@ body.light-mode .featured-games-title {
 background-color: grey;
 color:white
 }
-body.dark-mode .footer, body.dark-mode .footer * {
-    width: 100%;
-    background-color: black; /* Light grey background for the footer */
-    text-align: center;
-    padding: 20px;
-    color: white; /* Dark text color for readability */
-    margin-top: auto; /* Ensures that the footer is pushed to the bottom */
-  }
+
 
 body.dark-mode h2, body.sort-section h2 * {
 
@@ -4204,26 +4207,74 @@ border:2px solid white;
     font-size: 10px
   }
   .game-info {
-    font-size: 10px
+    font-size: 14px
   }
   .footer {
-    font-size: 10px
+    font-size: 14px;
+
+  }
+
+
+
+  #likeButton, #commentButton, #rateButton {
+    font-size: 14px
+  }
+  #submitComment, #commentsSection, #sendReply{
+    font-size: 14px
+  }
+
+
+   #ratingDisplay {
+    font-size: 14px !important;
+  }
+  #likesCount, #commentsList, #cancelReply, {
+    font-size: 14px
+  }
+  #commentsList, #cancelReply, #commentInput  {
+    font-size: 14px
+  }
+  #likesCount {
+    font-size: 14px !important;
   }
   .game-title {
-    font-size: 18px
-  }
-  #likeButton, #commentButton, #rateButton {
-    font-size: 10px
+    font-size: 22px
   }
 
+  #commentsList > div> span {
+         font-size: 0.6rem; /* Even smaller font size for small screens */
+         padding: 0.3rem; /* Reduce padding further */
+         margin-top: 10px; /* Less vertical space on mobile */
+     }
 
+#commentsList > div > div > div > span {
+  font-size: 0.4rem; /* Even smaller font size for small screens */
+  padding: 0.6rem; /* Reduce padding further */
+  margin-top: 10px; /* Less vertical space on mobile */
+}
 
+  #commentsList > div > p {
+      font-size: 14px
+  }
+  .game-info p{
+    font-size: 6px;
 
 }
+.game-info strong {
+font-size: 15px
+}
+
+
+.game-info {
+font-size: 12px
+}
+}
+
+
 @media screen and (max-width: 350px) {
   #zoomIn {
 top: 10px;
 }
+
 
 #zoomOut {
 top: 10px;
@@ -4292,4 +4343,540 @@ margin-top: 20px;
    /* Existing CSS for game-container */
 .game-cover {
    cursor: pointer;
+}
+
+
+#commentInput {
+  max-width: 300px;
+  min-height: 50px;
+  margin: 10px;
+  margin-top: 20px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+
+}
+
+#submitComment {
+  margin: 10px;
+
+}
+
+/* Comments Section */
+#commentsSection {
+    background-color: #ffffff;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+#commentsList {
+    margin-top: 20px;
+    max-width: 100%;
+    padding: 10px;
+
+
+    border-radius: 5px;
+
+}
+
+/* Add Comment Section */
+#addCommentSection {
+    margin-top: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#commentInput {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+    resize: vertical; /* Allows the user to vertically resize the textarea */
+}
+
+#submitComment {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 10px;
+    border: none;
+    margin-bottom: 25px;
+    border-radius: 4px;
+    cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#submitComment:hover {
+    background-color: #0056b3;
+}
+
+/* Reply Popup */
+#replyPopup {
+    border: 1px solid #ccc;
+    z-index: 100; /* Ensure it sits above other content */;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#replyText {
+    width: calc(100% - 40px); /* Adjust width to account for padding */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#commentsList > div {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  max-width: 600px;
+  margin: 20px;
+  padding: 5px
+}
+
+
+#commentsList > div > span p{
+  top: 100px
+}
+
+
+
+#sendReply, #cancelReply {
+    background-color: black; /* Green for send */
+    color: #ffffff;
+    padding: 10px ;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#cancelReply {
+    background-color: red; /* Red for cancel */;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#sendReply:hover, #cancelReply:hover {
+    opacity: 0.8;
+}
+#commentsList > div > button {
+  border: none;
+  background-color: red;
+  padding: 5px;
+  border-radius: 10px; /* Softens the corners for a modern look */
+  overflow-y: auto; /* Allows scrolling within the comment if content exceeds max height */
+  line-height: 1.4; /* Adjusts line spacing for readability */;
+    border: 1px solid #e0e0e0; /* Adds a subtle border for definition */;
+
+}
+
+/* Ensure strong tags within the comments section are bold and slightly larger for emphasis */
+#commentsSection strong {
+    font-weight: bold;
+    font-size: 1.1rem;;
+
+}
+
+
+
+
+#commentsList > div > div > button {
+  color:red
+}
+
+#commentsList > div > div > div > button {
+    margin-top: 0px;
+    border: none
+}
+
+.replies-container {
+
+    max-height: 500px;
+    max-width: 600px;
+    margin: 0px;
+    padding: 5px;
+}
+
+#commentsList > div > div > div > span {
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    min-height: 200px;
+    max-width: 600px;
+    margin: 20px;
+    padding: 5px;
+}
+.reply {
+    max-width: 500px;
+    max-height: 500px;
+}
+
+
+#likesCount {
+  padding: 5px 10px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: white;
+  background-color: dodgerblue;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  max-width: 100px
+}
+
+#ratingDisplay {
+  padding: 5px 10px;
+  margin: 10px;
+  font-size: 14px;
+  color: white;
+  background-color: dodgerblue;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+    max-width: 100px
+}
+
+
+.dark-mode #commentsList > div > div > div > span,
+.dark-mode #commentsList > div > div > button,
+.dark-mode #commentsList > div > button,
+.dark-mode #cancelReply,
+.dark-mode #sendReply,
+.dark-mode #commentsList > div,
+
+
+{
+  color: white;
+  background-color: #222;
+}
+
+.dark-mode #submitComment {
+  background-color: dimgrey
+}
+
+.dark-mode #likesCount {
+  color: white;
+  background-color: #222;
+}
+
+.dark-mode #ratingDisplay {
+  color: white;
+  background-color: #222;
+}
+
+
+
+#commentsSection > strong {
+  color: black
+}
+
+
+
+
+
+
+
+
+
+.light-mode #ratingDisplay,
+.light-mode #likesCount,
+.light-mode #commentsList > div > div > div > span,
+.light-mode #commentsList > div > div > button,
+.light-mode #commentsList > div > button,
+.light-mode #cancelReply,
+.light-mode #sendReply,
+.light-mode #commentsList > div,
+
+
+{
+  color: black;
+  background-color: white;
+  background-color: #f9f9f9;
+    border: 1px solid #e0e0e0; /* Adds a subtle border for definition */;
+}
+
+.light-mode #submitComment {
+  background-color: #f9f9f9;
+    border: 1px solid #e0e0e0; /* Adds a subtle border for definition */;
+  color:black;
+  background-color: #f9f9f9;
+}
+
+
+
+.light-mode #commentsSection > strong {
+  color: black
+}
+
+
+.light-mode #ratingDisplay,
+.light-mode #likesCount {
+  color: black;
+  background-color: white;
+}
+
+.dark-mode #commentsList > div > button {
+    border: none;
+    background-color: black;
+    color:white
+
+}
+
+.dark-mode #commentsSection {
+    background-color: #222;
+    color:white
+
+}
+
+.dark-mode #commentsSection > strong {
+    color: white;
+}
+
+.light-mode #commentsList > div > button {
+    border: none;
+    background-color: whitesmoke;
+    padding: 5px;
+    color:black
+}
+
+.light-mode #commentsList > div > button  {
+  color:black
+}
+
+
+.dark-mode #commentsList > div {
+    background-color: dimgrey;
+    color:white
+}
+
+.dark-mode .replies-container {
+  background-color: dimgrey;
+  color:white
+}
+
+.reply {
+    max-width: 500px;
+    max-height: 500px;
+    margin: 20px auto; /* Centers the reply and adds space around it */
+    padding: 15px; /* Adds space inside the reply for the content */
+    background-color: #f9f9f9; /* Light background color for the reply */
+    border: 1px solid #ddd; /* Subtle border around the reply */
+    border-radius: 8px; /* Rounds the corners of the reply */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Adds a subtle shadow for depth */
+    overflow-y: auto; /* Allows vertical scrolling if content exceeds max height */
+    font-family: Arial, sans-serif; /* Sets a clean, readable font */
+    font-size: 16px; /* Sets a comfortable reading size */
+    color: #333; /* Dark color for contrast and readability */
+    line-height: 1.5; /* Spacing between lines for readability */
+}
+
+.dark-mode .reply {
+
+    background-color: grey; /* Light background color for the reply */
+    color:white
+}
+
+.light-mode .reply {
+
+    background-color: #f9f9f9; /* Light background color for the reply */
+    color:black
+}
+
+#commentsList > div {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+    max-height: 200px; /* Limits the height to keep the layout consistent */
+    max-width: 600px; /* Ensures comments don’t stretch too wide */
+    margin: 20px auto; /* Centers the comments and adds vertical spacing */
+    padding: 20px; /* Increases padding for better content spacing */
+    background-color: #ffffff; /* Sets a white background for contrast */
+    border-radius: 10px; /* Softens the corners for a modern look */
+    overflow-y: auto; /* Allows scrolling within the comment if content exceeds max height */
+    border: 1px solid #e0e0e0; /* Adds a subtle border for definition */
+
+    color: #333; /* Dark color for text for better readability */
+    line-height: 1.4; /* Adjusts line spacing for readability */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition for hover effects */
+}
+#commentsList p {
+  color:black;
+    background-color: #f9f9f9; /* Light background color for the reply */
+  border-radius: 10px; /* Softens the corners for a modern look */
+  overflow-y: auto; /* Allows scrolling within the comment if content exceeds max height */
+  line-height: 1.4; /* Adjusts line spacing for readability */;
+    border: 1px solid #e0e0e0; /* Adds a subtle border for definition */;
+      padding: 8px; /* Increases padding for better content spacing */
+}
+
+.dark-mode #commentsList p {
+
+    background-color: black;
+    color: white;
+    border:grey
+}
+
+.light-mode #commentsList p {
+
+    background-color: #f9f9f9;
+    color: black;
+
+}
+
+
+#commentsList span {
+  color:black;
+    background-color: #f9f9f9; /* Light background color for the reply */
+  border-radius: 10px; /* Softens the corners for a modern look */
+  overflow-y: auto; /* Allows scrolling within the comment if content exceeds max height */
+  line-height: 1.4; /* Adjusts line spacing for readability */;
+    border: 1px solid #e0e0e0; /* Adds a subtle border for definition */;
+      padding: 8px; /* Increases padding for better content spacing */
+}
+
+
+.dark-mode #commentsList span {
+  color:white;
+    background-color: black; /* Light background color for the reply */
+  border: 1px solid grey; /* Adds a subtle border for definition */;
+}
+
+
+.dark-mode #commentsList > div > div > div > button {
+  color:white;
+    background-color: black; /* Light background color for the reply */
+}
+
+.light-mode #commentsList > div > div > div > button {
+  color: white;
+  background-color: black;
+  border: 1px solid grey;
+}
+
+/* General Body Scrollbar Styles */
+body::-webkit-scrollbar {
+    width: 15px;
+    background: #e0e0e0;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Light Mode Styles */
+.light-mode body {
+    background-color: #f0f0f0; /* Light background for light mode */
+}
+
+.light-mode body::-webkit-scrollbar {
+    width: 15px;
+    background: #e0e0e0;
+}
+
+.light-mode body::-webkit-scrollbar-thumb {
+    background: #a0a0a0;
+    border-radius: 5px;
+}
+
+.light-mode body::-webkit-scrollbar-thumb:hover {
+    background: #808080;
+}
+
+
+
+/* Dark Mode Styles */
+.dark-mode body {
+    background-color: #1a1a1a; /* Dark background for dark mode */
+}
+
+.dark-mode body::-webkit-scrollbar {
+    width: 15px;
+    background: #2c2c2c;
+}
+
+.dark-mode body::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 5px;
+}
+
+.dark-mode body::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
+
+
+body::-webkit-scrollbar {
+    width: 16px;
+}
+
+
+
+
+
+
+body::-webkit-scrollbar-thumb {
+    background-color: #888; /* Dark grey thumb */
+    border-radius: 8px;
+
+}
+
+
+/* General styling for the select element */
+#languageSelection {
+  padding: 8px 16px; /* Add padding inside the dropdown */
+
+  border-radius: 4px; /* Rounded corners for the dropdown */
+  background-color: white; /* White background color */
+  font-size: 15px; /* Text size */
+  cursor: pointer; /* Changes the cursor to indicate it's clickable */
+  appearance: none; /* Removes default system styling */
+  -webkit-appearance: none; /* Also for Safari */
+  -moz-appearance: none; /* Also for Firefox */
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 4 5"><path fill="white" d="M2 0L0 2h4L2 0zm0 5L0 3h4l-2 2z"/></svg>'); /* Custom dropdown arrow */
+  background-repeat: no-repeat;
+  background-position: right 10px center; /* Position for the custom arrow */
+  background-size: 12px; /* Size of the custom arrow */;
+  width: 100%;
+  overflow: auto;
+ background-color: dodgerblue;
+  color:white;
+  border: none
+}
+
+/* General styling for the select element */
+.dark-mode #languageSelection {
+
+  background-color: slategrey; /* White background color */
+  color:white
+}
+
+/* General styling for the select element */
+.light-mode #languageSelection {
+
+  background-color: darkgrey; /* White background color */
+  color:white
+}
+
+
+/* Styling for hover effect */
+#languageSelection:hover {
+  border-color: #888; /* Darker border color on hover */
+}
+
+/* Styling for focus to improve accessibility */
+#languageSelection:focus {
+  outline: none; /* Removes the default focus outline */
+  border-color: #0056b3; /* Sets a blue border color for focus */
+  box-shadow: 0 0 0 2px rgba(0,86,179,0.25); /* Adds a soft blue glow */
+}
+
+/* This is optional, for styling options */
+#languageSelection option {
+  padding: 8px; /* Adds padding to options */
 }
