@@ -459,57 +459,6 @@ Adventure
        </div>
 
 
-       <script>
-         document.getElementById("rateButton").addEventListener("click", function() {
-          var ratingContainer = document.getElementById("ratingContainer");
-          ratingContainer.style.display = ratingContainer.style.display === "none" ? "block" : "none";
-        });
-
-         document.querySelectorAll('.star').forEach(star => {
-           star.addEventListener('mouseover', hoverStars);
-           star.addEventListener('mouseout', function() {
-             updateStars(this.parentElement);
-           });
-           star.addEventListener('click', setRating);
-         });
-
-         function hoverStars() {
-           this.classList.add('hover');
-           const hoverValue = this.dataset.value;
-           this.parentElement.querySelectorAll('.star').forEach(star => {
-             if (star.dataset.value <= hoverValue) {
-               star.classList.add('hover');
-             } else {
-               star.classList.remove('hover');
-             }
-           });
-         }
-
-         function setRating() {
-           const ratingValue = this.dataset.value;
-           const ratingContainer = this.parentElement;
-           if (!ratingContainer.dataset.hasRated) {
-             ratingContainer.dataset.rating = ratingValue;
-             ratingContainer.dataset.hasRated = "true";
-             updateStars(ratingContainer);
-             alert("You rated this " + ratingValue + " stars. Thank you for your feedback!");
-           }
-         }
-
-         function updateStars(ratingContainer) {
-           const ratingValue = ratingContainer.dataset.rating;
-           ratingContainer.querySelectorAll('.star').forEach(star => {
-             star.classList.remove('hover');
-             if (star.dataset.value <= ratingValue) {
-               star.classList.add('selected');
-             } else {
-               star.classList.remove('selected');
-             }
-           });
-         }
-       </script>
-
-
 
        <script>
          // Get the modal
@@ -548,39 +497,7 @@ Adventure
        });
        </script>
 
-       <script>
-         document.getElementById("likeButton").addEventListener("click", function() {
-           if (isUserSignedIn()) {
-               // Logic to handle liking the game
-               alert("Liked!");
-           } else {
-               alert("Please sign in to like this game.");
-           }
-       });
-
-       document.getElementById("commentButton").addEventListener("click", function() {
-           if (isUserSignedIn()) {
-               // Logic to handle commenting on the game
-               alert("Opening comment box..."); // Placeholder action
-           } else {
-               alert("Please sign in to comment on this game.");
-           }
-       });
-       document.getElementById("rateButton").addEventListener("click", function() {
-           if (isUserSignedIn()) {
-               // Logic to handle commenting on the game
-               alert("Opening comment box..."); // Placeholder action
-           } else {
-               alert("Please sign in to comment on this game.");
-           }
-       });
-
-       function isUserSignedIn() {
-           // Placeholder function: Implement your authentication check here
-           // Return true if user is signed in, false otherwise
-           return false; // Change this based on actual sign-in status
-       }
-       </script>
+      
 
        <script>
          document.addEventListener('DOMContentLoaded', function() {

@@ -4844,7 +4844,7 @@ body::-webkit-scrollbar-thumb {
   background-size: 12px; /* Size of the custom arrow */;
   width: 100%;
   overflow: auto;
-  background-color: dodgerblue;
+ background-color: dodgerblue;
   color:white;
   border: none
 }
