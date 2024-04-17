@@ -4478,3 +4478,46 @@ color:black
   text-align: left;
   background-color: grey
 }
+
+#contactForm input[type="email"]{
+  font-family: arial;
+  color: grey
+}
+#contactForm input[type="text"] {
+  font-family: arial;
+  color: grey
+}
+
+#name::placeholder {
+
+    font-style: italic;  /* Makes the placeholder text italic */
+    opacity: 1;
+    color:grey;
+    font-weight: normal;
+    font-size: 14px;
+    font-family: arial
+
+}
+
+#email::placeholder {
+
+    font-style: italic;  /* Makes the placeholder text italic */
+    opacity: 1;
+    color:grey;
+    font-weight: normal;
+    font-size: 14px;
+    font-family: arial
+
+}
+
+#message::placeholder {
+
+    font-style: italic;  /* Makes the placeholder text italic */
+    opacity: 1;
+    color:grey;
+    font-weight: normal;
+    font-size: 14px;
+    font-family: arial
+
+
+}

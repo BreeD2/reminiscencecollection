@@ -4695,7 +4695,7 @@ background-color: black;
   background-color: white;
     padding: 30px;
     border-radius: 8px;
-  
+
 
 }
 
@@ -4769,4 +4769,17 @@ color:grey;
 
 #main-content > main > section.user-responsibilities-section > ul > li{
   list-style: none
+}
+
+.light-mode #main-content > main > section> h2 {
+  color:black
+}
+
+#main-content > main > section> h2 {
+  color:black
+}
+
+
+.dark-mode #main-content > main > section> h2 {
+  color:white
 }
