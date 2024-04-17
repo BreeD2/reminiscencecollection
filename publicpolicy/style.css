@@ -4573,3 +4573,99 @@ color:grey;
 .light-mode #main-content > main > div > main > section.contact-information-section > p > a:hover {
   color:grey;
 }
+
+
+#main-content > main > section.contact-information-section {
+  background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+
+}
+
+.light-mode #main-content > main > section.contact-information-section {
+  background-color: white;
+
+}
+
+.dark-mode #main-content > main > section.contact-information-section {
+  background-color: black;
+
+}
+
+.terms-container {
+  max-width: 800px;
+  margin: auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-top:0px;
+
+}
+
+#main-content > main > section.privacy-policy {
+  background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.light-mode #main-content > main > section.privacy-policy {
+  background-color: white;
+
+}
+
+.dark-mode #main-content > main > section.privacy-policy {
+  background-color: black
+}
+
+#main-content > main > section.terms-of-service {
+  background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode #main-content > main > section.terms-of-service {
+  background-color: white;
+
+}
+
+.dark-mode #main-content > main > section.terms-of-service {
+  background-color: black;
+
+}
+
+#main-content > main > section.cookie-policy {
+  background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.light-mode #main-content > main > section.cookie-policy {
+  background-color: white;
+
+}
+
+.dark-mode #main-content > main > section.cookie-policy {
+  background-color: black;
+
+}
+
+
+.light-mode #main-content > main > section.privacy-policy > h2 {
+  color:black
+}
+
+.light-mode #main-content > main > section.terms-of-service > h2 {
+  color:black
+}
+
+.light-mode #main-content > main > section.cookie-policy > h2 {
+  color:black
+}
+
+.dark-mode h2 {
+  color:black
+}
