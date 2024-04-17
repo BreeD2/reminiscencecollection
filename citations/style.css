@@ -5084,6 +5084,19 @@ margin-top: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.light-mode .citations-container {
+
+  background-color: white;
+
+}
+.dark-mode #main-content > div.about-container > section.about-archive 
+
+.dark-mode .citations-container {
+
+  background-color: dimgrey;
+
+}
 p {
   white-space: nowrap;
   overflow: hidden;

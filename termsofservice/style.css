@@ -1523,10 +1523,7 @@ body.dark-mode .cog-icon * {
         }
 
 
-        h1 {
-            margin: 0.5em 0;
-            color: #333;
-        }
+
 
         p {
             color: #666;
@@ -4364,9 +4361,11 @@ color:black
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  top:100px;
-  position: relative;
+  margin-top:100px;
+
 }
+
+
 
 .light-mode .terms-container {
 
@@ -4499,17 +4498,7 @@ p {
     color:white
 }
 
-#main-content > main > div > header > h1 {
-  color:black
-}
 
-.light-mode #main-content > main > div > header > h1 {
-  color:black
-}
-
-.dark-mode #main-content > main > div > header > h1 {
-  color:white
-}
 
 a {
   color:grey
@@ -4574,4 +4563,210 @@ color:grey;
 
 .light-mode #main-content > main > div > main > section.contact-information-section > p > a:hover {
   color:grey;
+}
+#main-content > main > section.introduction-section{
+  background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.light-mode #main-content > main > section.introduction-section{
+  background-color: white;
+
+}
+
+#main-content > main > section {
+  background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.light-mode #main-content > main > section {
+    background-color: white;
+}
+
+.dark-mode #main-content > main > section {
+  background-color: black;
+}
+
+.dark-mode #main-content > main > section.introduction-section{
+  background-color: black;
+
+}
+
+#main-content > main > div > main > section.license-section{
+  background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.light-mode #main-content > main > div > main > section.license-section{
+  background-color: white;
+
+}
+
+.dark-mode #main-content > main > div > main > section.license-section{
+  background-color: black;
+
+}
+
+#main-content > main > section.user-responsibilities-section{
+  background-color: white;
+    padding: 30px;
+    gap:10px;
+    border-radius: 8px;
+
+}
+
+.light-mode #main-content > main > section.user-responsibilities-section{
+  background-color: white;
+
+}
+
+.dark-mode #main-content > main > section.user-responsibilities-section{
+  background-color: black;
+
+}
+
+#main-content > main > div > main > section.policies-section {
+  background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+
+}
+
+.light-mode #main-content > main > div > main > section.policies-section {
+  background-color: white;
+
+}
+
+#main-content > main > section.governing-law-section {
+  background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+
+}
+
+
+.dark-mode #main-content > main > section.governing-law-section {
+  background-color: black;
+
+}
+
+.light-mode #main-content > main > section.governing-law-section {
+  background-color: white;
+
+}
+
+#main-content > main > section.contact-information-section {
+  background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+
+}
+
+.light-mode #main-content > main > section.contact-information-section {
+  background-color: white;
+
+}
+
+.dark-mode #main-content > main > section.contact-information-section {
+  background-color: black;
+
+}
+#main-content > main > section.service-modifications-section {
+  background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+
+}
+
+.light-mode #main-content > main > section.service-modifications-section {
+  background-color: white;
+}
+
+.dark-mode #main-content > main > section.service-modifications-section {
+background-color: black;
+}
+
+#main-content > main > section.policies-section {
+  background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+  
+
+}
+
+.light-mode #main-content > main > section.policies-section {
+  background-color: white;
+}
+
+.dark-mode #main-content > main > section.policies-section {
+background-color: black;
+}
+
+#main-content > main > div > h1 {
+  background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.light-mode #main-content > main > div > h1 {
+  color:black;
+  background-color: white
+}
+
+.dark-mode #main-content > main > div > h1 {
+  color:white;
+  background-color: black
+}
+
+
+.light-mode #main-content > main > section.policies-section > p > a {
+  color:black;
+  text-decoration: underline;
+}
+
+.light-mode #main-content > main > section.policies-section > p > a:hover {
+color:grey;
+  text-decoration: underline;
+}
+
+
+
+#main-content > main > section > p > a {
+  color:dodgerblue;
+  text-decoration: underline;
+}
+
+.light-mode #main-content > main > section > p > a {
+  color:black;
+  text-decoration: underline;
+}
+
+.dark-mode #main-content > main > section > p > a {
+  color:white;
+  text-decoration: underline;
+}
+
+#main-content > main > section > p > a:hover {
+  color:blue;
+  text-decoration: underline;
+}
+
+.dark-mode #main-content > main > section > p > a:hover {
+  color:grey;
+  text-decoration: underline;
+}
+
+.light-mode #main-content > main > section > p > a:hover {
+  color:grey;
+  text-decoration: underline;
+}
+
+#main-content > main > section.user-responsibilities-section > ul > li{
+  list-style: none
 }
