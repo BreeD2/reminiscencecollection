@@ -1284,10 +1284,7 @@ body.dark-mode .cog-icon * {
     background: #808080;
 }
 
-.light-mode .sidebar {
-    scrollbar-width: auto;
-    scrollbar-color: #a0a0a0 #e0e0e0;
-}
+
 
 /* Dark Mode Styles */
 .dark-mode .sidebar {
@@ -1308,10 +1305,7 @@ body.dark-mode .cog-icon * {
     background: #888;
 }
 
-.dark-mode .sidebar {
-    scrollbar-width: auto;
-    scrollbar-color: #555 #2c2c2c;
-}
+
 
 
    .sidebar a {
@@ -1809,7 +1803,8 @@ select:hover {
     /* Styling for the heading within the about section */
 #about .what {
   color: white; /* Dark grey for readability */
-  font-size: 25px; /* Larger font size for heading */
+  font-size: 22px; /* Larger font size for heading */;
+  margin-top: 20px
 
 
 }
@@ -1894,7 +1889,7 @@ select:hover {
     }
 
     #about p {
-        font-size: 14px; /* Smaller font size for comfortable reading */
+        font-size: 10px; /* Smaller font size for comfortable reading */
     }
 }
 
@@ -1919,7 +1914,7 @@ select:hover {
     height: 1200px; /* Fixed height for large screens */
     margin-top: -8%;
   width: calc(100%); /* Adds back the 5% margin from both sides */
-    background: url('featured/p1.webp') no-repeat center center/cover;
+    background: url('featured/co.jpeg') no-repeat center center/cover;
     background-color: black;
     display: flex;
     flex-direction: column;
@@ -2493,17 +2488,10 @@ border:2px solid white;
       padding: 20px;
       position: relative;
       background-color: black;
-      margin-top: 100px;
+      margin-top: 159px;
         color:white;
     }
-    body.light-mode .footer, body.light-mode .footer * {
-        width: 100%;
-        background-color: #f1f1f1; /* Light grey background for the footer */
-        text-align: center;
-        padding: 20px;
-        color: #000; /* Dark text color for readability */
-        margin-top: auto; /* Ensures that the footer is pushed to the bottom */
-      }
+
       body.dark-mode #sort-section, body.sort-section * {
 
     background-color: #f1f1f1; /* Light grey background for the footer */
@@ -2563,14 +2551,6 @@ body.light-mode .featured-games-title {
 background-color: grey;
 color:white
 }
-body.dark-mode .footer, body.dark-mode .footer * {
-    width: 100%;
-    background-color: black; /* Light grey background for the footer */
-    text-align: center;
-    padding: 20px;
-    color: white; /* Dark text color for readability */
-    margin-top: auto; /* Ensures that the footer is pushed to the bottom */
-  }
 
 body.dark-mode h2, body.sort-section h2 * {
 
@@ -4248,6 +4228,7 @@ margin-top: 20px;
   background-color: black
 }
 
+
 .game-container {
        max-width: 800px;
        margin: auto;
@@ -4288,120 +4269,307 @@ margin-top: 20px;
    }
 
 
-   /* Existing CSS for game-container */
-.game-cover {
-   cursor: pointer;
+
+   .game-container {
+          max-width: 800px;
+          margin: auto;
+          background-color: white;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          margin-top:100px
+      }
+      .light-mode .game-container {
+
+          background-color: whitesmoke;
+
+      }
+
+      .game-cover {
+          width: 100%;
+          height: auto;
+          border-radius: 4px;
+      }
+
+      .game-title {
+          margin-top: 20px;
+          color: #333;
+      }
+
+      .game-info {
+          font-size: 16px;
+          line-height: 1.6;
+          color: #666;
+          background-color: white;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          font-family: Arial, sans-serif;
+      }
+
+
+      /* Existing CSS for game-container */
+   .game-cover {
+      cursor: pointer;
+   }
+
+   .dropdown-content button:hover{
+ background-color: grey;
+ color: white;
+     width: 100%;
 }
 
-#toggleFormBtn {
-  background-color: dodgerblue;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-#toggleFormBtn:hover {
-  background-color: cornflowerblue;
-}
-
-.contact-form {
-  max-width: 500px;
-  margin-top: 100px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-}
-
-.dark-mode .contact-form {
-  background-color: #555;
-  color:white
-
-}
 
 
+.light-mode .footer {
 
-.light-mode .contact-form {
-background-color: white;
-color:white
+  background-color: #f1f1f1;
 
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.form-group button[type="submit"] {
-  background-color: dodgerblue;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.dark-mode form button[type="submit"] {
-  background-color: black;
-  color: white;
 
 }
 
-.dark-mode form button[type="submit"]:hover {
-  background-color: grey;
-  color: white;
-
+.light-mode .copy {
+color:black
 }
 
-.light-mode form button[type="submit"] {
-  background-color: black;
-  color: white;
+
+
+
 
 }
-
-.light-mode form button[type="submit"]:hover {
-  background-color: grey;
-  color: white;
-
-}
-
-.light-mode .contact-form h2 {
-
+/* Style the links inside the dropdown */
+.dropdown-content a {
+  float: none;
   color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+#myTopnav > div.dropdown2 > div > a {
+  text-align: left;
+  background-color: #555555;
+  width:100%
+}
+
+#myTopnav > div.dropdown2 > div > a:hover {
+  text-align: left;
+  background-color: grey
+}
+
+.terms-container {
+  max-width: 800px;
+  margin: auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  top:100px;
+  position: relative;
+}
+
+.light-mode .terms-container {
+
+    background-color: whitesmoke;
 
 }
 
-.light-mode .form-group label {
+#privacy-policy > h2 {
   color:black
 }
 
-
-.form-group button[type="submit"]:hover {
-  background-color: cornflowerblue;
+.dark-mode #privacy-policy > h2 {
+  color:white
 }
 
-/* Styling for the privacy policy section */
-#privacy-policy {
-    margin-top:100px
+.light-mode #privacy-policy > h2 {
+  color:black
+}
+
+#privacy-policy > p {
+    color:black
+}
+
+.dark-mode #privacy-policy > p {
+    color:white
+}
+
+.light-mode #privacy-policy > p {
+    color:black
+}
+
+.dark-mode .terms-container{
+  background-color: dimgrey;
+  color:white
+}
+
+p {
+  color:black
+}
+
+.dark-mode p {
+  color:white
+}
+
+.light-mode p {
+  color:black
+}
+
+#terms-of-service > h2 {
+  list-style: none;
+}
+
+
+.light-mode #terms-of-service > h2 {
+  color:black
+}
+.dark-mode #terms-of-service > h2 {
+  color:white
+}
+
+#cookie-policy > h2 {
+    color:black
+}
+
+.light-mode #cookie-policy > h2 {
+    color:black
+}
+
+.dark-mode #cookie-policy > h2 {
+    color:white
+}
+
+#main-content > main > div > main > section.policies-section > h2 {
+  color:black
+}
+
+.light-mode #main-content > main > div > main > section.policies-section > h2 {
+  color:black
+}
+
+.dark-mode #main-content > main > div > main > section.policies-section > h2 {
+  color:white
+}
+
+#main-content > main > div > main > section.service-modifications-section > h2 {
+  color:black
+}
+
+.light-mode #main-content > main > div > main > section.service-modifications-section > h2 {
+  color:black
+}
+
+.dark-mode #main-content > main > div > main > section.service-modifications-section > h2 {
+  color:white
+}
+
+#main-content > main > div > main > section.contact-information-section > h2 {
+  color:black
+}
+
+.light-mode #main-content > main > div > main > section.contact-information-section > h2 {
+  color:black
+}
+
+.dark-mode #main-content > main > div > main > section.contact-information-section > h2 {
+  color:white
+}
+#main-content > main > div > main > section.governing-law-section > h2 {
+  color:black
+}
+
+.light-mode #main-content > main > div > main > section.governing-law-section > h2 {
+  color:black
+}
+.dark-mode #main-content > main > div > main > section.governing-law-section > h2 {
+  color:white
+}
+
+#main-content > main > div > main > section.user-responsibilities-section > h2 {
+    color:black
+}
+
+.light-mode #main-content > main > div > main > section.user-responsibilities-section > h2 {
+    color:black
+}
+
+.dark-mode #main-content > main > div > main > section.user-responsibilities-section > h2 {
+    color:white
+}
+
+#main-content > main > div > header > h1 {
+  color:black
+}
+
+.light-mode #main-content > main > div > header > h1 {
+  color:black
+}
+
+.dark-mode #main-content > main > div > header > h1 {
+  color:white
+}
+
+a {
+  color:grey
 }
 
 
 
-.site-header h1 {
-margin-top: 100px
+
+
+
+.light-mode #main-content > main > div > main > section.policies-section > p > a  {
+color:black;
+text-decoration: underline;
+}
+.light-mode #main-content > main > div > main > section.policies-section > p > a :hover {
+color:grey;
+
+}
+.dark-mode #main-content > main > div > main > section.policies-section > p > a {
+color:white;
+text-decoration: underline;
+}
+.dark-mode #main-content > main > div > main > section.policies-section > p > a:hover {
+color:grey;
+
+}
+
+#main-content > main > div > main > section.policies-section > p > a  {
+  color:dodgerblue;
+  text-decoration: underline;
+
+}
+
+#main-content > main > div > main > section.policies-section > p > a :hover {
+  color:blue;
+
+
+}
+
+#main-content > main > div > main > section.contact-information-section > p > a {
+  color:dodgerblue;
+  text-decoration: underline;
+}
+
+#main-content > main > div > main > section.contact-information-section > p > a:hover {
+  color:blue;
+}
+
+.light-mode #main-content > main > div > main > section.contact-information-section > p > a {
+  color:black;
+  text-decoration: underline;
+}
+
+.dark-mode #main-content > main > div > main > section.contact-information-section > p > a {
+  color:white;
+  text-decoration: underline;
+}
+
+.dark-mode #main-content > main > div > main > section.contact-information-section > p > a:hover {
+  color:grey;
+}
+
+.light-mode #main-content > main > div > main > section.contact-information-section > p > a:hover {
+  color:grey;
 }

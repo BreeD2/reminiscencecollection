@@ -1976,17 +1976,7 @@ select:hover {
     border-radius: 10px; /* Optional: Adds rounded corners to the images */
 }
 
-.game-info {
-    /* No need for position: absolute; */
-    text-align: center;
-    color: #fff; /* Text color */
-    background-color: black; /* Optional: Adds a semi-transparent background for readability */
-    padding: 10px 0; /* Padding for the info */
-    margin-top: 10px; /* Adds space between the image and the description */
-    border-radius: 10px; /* Rounded corners */
-    width: calc(100% - 20px); /* Adjust width to account for padding */
-    box-sizing: border-box; /* Ensures padding is included in the width */
-}
+
 
 .slideshow-container {
   position: relative;
@@ -2163,12 +2153,7 @@ select:hover {
     margin-top: 10px;
 }
 
-.game-description {
-    font-size: 14px;
-    color: #666; /* Adjust color based on your theme */;
-    width: 50%;
 
-}
 
 .games-grid {
     display: grid;
@@ -2198,17 +2183,6 @@ select:hover {
 
 
 
-.game-info {
-    /* No need for position: absolute; */
-    text-align: center;
-    color: #fff; /* Text color */
-    background-color: rgba(0, 0, 0, 0.7); /* Optional: Adds a semi-transparent background for readability */
-    padding: 10px 0; /* Padding for the info */
-    margin-top: 10px; /* Adds space between the image and the description */
-    border-radius: 10px; /* Rounded corners */
-    width: calc(100% - 20px); /* Adjust width to account for padding */
-    box-sizing: border-box; /* Ensures padding is included in the width */
-}
 
 .games-grid {
     display: grid;
@@ -2227,16 +2201,7 @@ select:hover {
     border-radius: 10px; /* Optional: Adds rounded corners to the images for aesthetics */
 }
 
-.game-info {
-    text-align: center; /* Ensures the game information text is centered */
-    color: #fff; /* Text color, adjust as needed */
-    background-color: rgba(0, 0, 0, 0.7); /* Optional: Adds a semi-transparent background for readability */
-    padding: 10px 0; /* Adds padding around the text for spacing */
-    margin-top: 10px; /* Adds space between the image and the description */
-    border-radius: 10px; /* Optional: Adds rounded corners to the background of the text */
-    width: 100%; /* Ensures the text container matches the width of the image above */
-    box-sizing: border-box; /* Ensures the width calculation includes padding */
-}
+
 
 #featuredGameContainer {
   margin-top: 20px;
@@ -2493,24 +2458,10 @@ border:2px solid white;
       padding: 20px;
       position: relative;
       background-color: black;
-      margin-top: 100px;
+      margin-top:160px;
         color:white;
-    }
-    body.light-mode .footer, body.light-mode .footer * {
-        width: 100%;
-        background-color: #f1f1f1; /* Light grey background for the footer */
-        text-align: center;
-        padding: 20px;
-        color: #000; /* Dark text color for readability */
-        margin-top: auto; /* Ensures that the footer is pushed to the bottom */
-      }
-      body.dark-mode #sort-section, body.sort-section * {
+}
 
-    background-color: #f1f1f1; /* Light grey background for the footer */
-
-    color: black; /* Dark text color for readability */
-
-  }
   body.dark-mode h2, body.sort-section h2 * {
 
 
@@ -2563,14 +2514,7 @@ body.light-mode .featured-games-title {
 background-color: grey;
 color:white
 }
-body.dark-mode .footer, body.dark-mode .footer * {
-    width: 100%;
-    background-color: black; /* Light grey background for the footer */
-    text-align: center;
-    padding: 20px;
-    color: white; /* Dark text color for readability */
-    margin-top: auto; /* Ensures that the footer is pushed to the bottom */
-  }
+
 
 body.dark-mode h2, body.sort-section h2 * {
 
@@ -2751,35 +2695,17 @@ body.dark-mode .next {
   height: auto;
 }
 
-.game-info {
-  padding: 15px;
-}
 
 .game-title {
   margin: 10px 0 5px;
 }
 
-.game-info {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #666;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-    font-style: normal;
-}
 
 p {
   font-style: normal;
 }
 
-.game-info {
-    line-height: 1.5; /* Adjust line height for better readability */
-    font-size: 15px; /* Adjust font size as needed */;
-    padding: 20px
 
-}
 
 /* The Modal (background) */
 .modal {
@@ -3648,6 +3574,7 @@ rgb(146, 172, 67)
   background-color: red;
   border:2px solid black
 }
+
 .auth-links {
     display: flex;
     align-items: center; /* Align items vertically */
@@ -3778,15 +3705,6 @@ form {
     margin-top: 20px;
 }
 
-form input[type="text"],
-form input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
 
 form button[type="submit"] {
     width: 100%;
@@ -3870,12 +3788,7 @@ button {
     vertical-align: middle;
 }
 
-.game-info {
-    line-height: 1.5; /* Adjust line height for better readability */
-    font-size: 15px; /* Adjust font size as needed */;
-    padding: 20px
 
-}
 
 .game-title {
     font-size: 30px; /* Default font size */
@@ -4248,7 +4161,6 @@ margin-top: 20px;
   background-color: black
 }
 
-
 .game-container {
        max-width: 800px;
        margin: auto;
@@ -4278,15 +4190,6 @@ margin-top: 20px;
        color: #333;
    }
 
-   .game-info {
-       font-size: 16px;
-       line-height: 1.6;
-       color: #666;
-       background-color: white;
-       border-radius: 8px;
-       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-       font-family: Arial, sans-serif;
-   }
 
 
    /* Existing CSS for game-container */
@@ -4295,145 +4198,894 @@ margin-top: 20px;
 }
 
 
-.header {
-  margin-top:100px;
-}
-
-
-.header1 {
-  font-size:30px;
-}
-
-.about-archive {
+#signupContainer {
+    max-width: 500px;
+    margin-top: 100px;
 
     padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0,0,0,0.1)
 }
-.development-story {
-    padding: 20px;
+.light-mode #signupContainer {
+  background-color: white;
+color:black
+}
+.dark-mode #signupContainer {
+  background-color: #555;
+color:white
 }
 
-.research-focus {
+#signupContainer h2 {
+    color: #333;
+    text-align: center;
+}
+.light-mode #signupContainer h2 {
+    color: black;
+
+}
+
+.dark-mode #signupContainer h2 {
+    color: white;
+
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button#signupButton {
+    width: 100%;
+    padding: 10px;
+    background-color: dodgerblue;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dark-mode button#signupButton {
+
+    background-color:black ;
+    color: white;
+}
+
+
+.light-mode button#signupButton {
+
+    background-color:grey ;
+    color: white;
+}
+.light-mode p a {
+    color: grey;
+
+}
+.dark-mode p a {
+    color: white;
+
+}
+
+
+button#signupButton:hover {
+    background-color: grey;
+}
+
+p {
+    text-align: center;
+}
+
+.dark-mode p {
+      color:white
+}
+
+.light-mode p {
+    color:black
+}
+
+form input[type="password"] {
+  width: calc(100% - 22px);
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color:grey;
+  font-family:arial
+}
+.form-group input {
+    font-family:arial
+}
+
+
+
+form input[type="text"] {
+  width: calc(100% - 22px);
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color:grey;
+  font-family:arial
+}
+
+/* Style placeholders */
+.form-group input::placeholder {
+    color: #888; /* Placeholder text color */
+    opacity: 1; /* Full opacity */
+}
+
+
+#games-list2 {
+  font-family: 'Arial', sans-serif;
+  max-width: 800px;
+  margin-top: 100px;
   padding: 20px;
 }
-.dark-mode .about-archive h2{
 
-    color:white
+
+.light-mode #games-list2 h2 {
+
+  color: black;
 }
-.dark-mode .development-story h2 {
+.dark-mode #games-list2 h2 {
+
+  color: white;
+}
+
+#gameSearch {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+#gamesContainer {
+  list-style: none;
+  padding: 0;
+}
+
+#gamesContainer li {
+  background: white;
+  color:black;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+}
+
+#gamesContainer li a{
+  color:black;
+
+}
+
+
+
+
+#gamesContainer a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+}
+
+#gamesContainer a br {
+  display: none;
+}
+
+#featured-game {
+  text-align: center;
+  padding: 20px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+.light-mode #featured-game {
+
+  background-color: white;
+color:black
+}
+.dark-mode #featured-game {
+  background-color: #555;
+color:white
+}
+
+.featured-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.featured-image {
+  max-width:300px;
+  margin-right: 20px;
+}
+
+.game-details h3 {
+  margin: 0;
+}
+
+.play-now-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  display: inline-block;
+}
+.light-mode .play-now-btn {
+  background-color: grey;
+  color: white;
+}
+.dark-mode .play-now-btn {
+  background-color: black;
+  color: white;
+}
+.light-mode .play-now-btn:hover {
+  background-color: black;
+
+
+}
+.dark-mode .play-now-btn:hover {
+  background-color: grey;
+
+
+}
+
+.play-now-btn:hover {
+  background-color: #0056b3;
+}
+
+
+#game-quiz {
+  text-align: center;
+  padding: 20px;
+}
+
+.quiz-btn {
+  background-color: dodgerblue;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.quiz-btn:hover {
+  background-color: cornflowerblue;
+}
+
+#showGamesBtn {
+  background-color: #007bff; /* Blue background */
+  color: white; /* White text */
+  border: none; /* Remove border */
+  padding: 10px 20px; /* Top and bottom padding: 10px, Left and right padding: 20px */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Change mouse cursor on hover */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s; /* Smooth background color change on hover */
+}
+.light-mode #showGamesBtn {
+  background-color: grey; /* Blue background */
+  color: white; /* White text */
+
+}
+
+.light-mode #showGamesBtn:hover {
+  background-color: black; /* Blue background */
+  color: white; /* White text */
+
+}
+
+.dark-mode #showGamesBtn {
+  background-color: black; /* Blue background */
+  color: white; /* White text */
+
+}
+
+.dark-mode #showGamesBtn:hover {
+  background-color: grey; /* Blue background */
+  color: white; /* White text */
+
+}
+
+#showGamesBtn:hover {
+  background-color: #0056b3; /* Darker blue background on hover */
+}
+
+#showGamesBtn:focus {
+  outline: none; /* Remove outline on focus for a clean look */
+}
+
+
+
+/* new */
+.featured-game-section {
+    background-color: red;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    max-width: 1200px; /* Max width for large screens */
+}
+
+
+.section-title{
+    color: black;
+    text-align: center;
+    margin-bottom: 20px;
+    z-index: 2;
+}
+.light-mode .section-title{
+    color: black;
+
+}
+.dark-mode .section-title{
+    color: white;
+
+}
+
+.featured-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+}
+
+.featured-image {
+    max-width: 500px; /* Fixed width for consistency */
+    height: auto;
+    border-radius: 8px;
+    order: -1; /* Ensure image always comes first */
+}
+
+.game-details {
+    flex-grow: 1;
+}
+
+.game-title, .game-description, .play-now-btn {
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    /* Adjustments for mobile screens */
+    .featured-content {
+        flex-direction: column; /* Stack items vertically */
+    }
+
+    .featured-image, .game-details {
+        width: 100%; /* Full width for small screens */
+        text-align: center; /* Center align the text for mobile */
+    }
+
+    .game-title{
+        text-align: center; /* Center-align text for better readability */;
+        font-size:25px
+    }
+    .game-description {
+        text-align: center; /* Center-align text for better readability */;
+          font-size:15px
+    }
+
+    .play-now-btn {
+        margin: 0 auto; /* Center the button */
+        display: block; /* Make the button block to fill width */
+    }
+}
+
+.light-mode .quiz-btn  {
+    background-color: grey;
+    color: white;
+
+}
+
+.light-mode .quiz-btn:hover {
+  background-color: black;
+  color: white;
+}
+
+.dark-mode .quiz-btn  {
+    background-color: black;
+    color: white;
+
+}
+
+.dark-mode .quiz-btn:hover {
+  background-color: grey;
+  color: white;
+}
+.dark-mode #game-quiz h2, {
+    color: red;
+}
+
+.dark-mode #game-quiz h2 {
+    color: white; /* Dark grey color for the title */
+
+}
+
+.light-mode #game-quiz h2 {
+    color: black; /* Dark grey color for the title */
+
+}
+#game-quiz h2 {
+    color: black; /* Dark grey color for the title */
+
+}
+
+
+
+h2 {
+    color: #333;
+}
+
+/* Styling for the Games List */
+#games-list2 {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-width: 1000px
+
+}
+
+#gamesContainer a:hover {
+    background-color: blue;
+}
+
+
+.featured-image {
+    width: 200px;
+    border-radius: 5px;
+}
+
+.game-details {
+    flex: 1;
+}
+
+.play-now-btn {
+    background: dodgerblue;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.play-now-btn:hover {
+    background-color: blue;
+}
+
+/* Styling for Game Quiz */
+#game-quiz {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-width: 1000px;
+    margin-top:20px
+}
+.dark-mode #game-quiz {
+  background: dimgrey;
+  color: white;
+}
+
+.light-mode #game-quiz {
+  background: white;
+  color: black;
+}
+
+.quiz-btn {
+    background: dodgerblue;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+.quiz-btn:hover {
+    background-color: blue;
+}
+
+#quiz-result p {
+    margin-top: 20px;
+    color: dodgerblue;
+}
+
+.featured-game-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    text-align: center; /* Centers the content */
+}
+
+
+
+.featured-content {
+    display: flex;
+    flex-direction: column; /* Stacks items vertically */
+    align-items: center; /* Centers items horizontally */
+    gap: 20px;
+}
+
+.featured-image {
+    max-width: 50%; /* Adjust based on desired size, ensures responsiveness */
+    height: auto;
+    border-radius: 5px;
+    /* Image automatically centered by flexbox */
+}
+
+.game-details {
+    /* Text alignment adjustments if necessary */
+}
+
+.game-title {
+    margin-top: 0;
+}
+
+.game-description {
+    margin: 16px auto 0; /* Centers the description with margin */
+    max-width: 80%; /* Limits width for readability */
+    /* Text automatically centered by container */
+}
+
+.play-now-btn {
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 16px; /* Adds space above the button */
+}
+
+.play-now-btn:hover {
+    background-color: blue;
+}
+
+/* Style for the game list container */
+.games-section {
+    padding: 20px;
+}
+
+/* Style for the game list */
+.games-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Style for individual game links */
+.game-link {
+    margin-bottom: 10px;
+}
+
+/* Style for game titles */
+.game-link a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Style for alphabet sections */
+.alphabet-section {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+/* Style for the game list container */
+.games-list {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three equal-width columns */
+    gap: 20px; /* Adjust the gap between games */
+}
+
+/* Style for alphabet sections */
+.alphabet-section {
+    font-size: 1.2em; /* Larger font size for the first letter */
+    font-weight: bold;
+    margin-bottom: 10px; /* Add bottom margin to separate sections */
+}
+
+/* Style for individual game links */
+.game-link {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    margin-bottom: 10px; /* Adjust spacing between games */
+    width: 100%; /* Each game link takes the full width of its column */
+}
+
+/* Style for the game list container */
+.games-list {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three equal-width columns */
+    gap: 20px; /* Adjust the gap between games */;
+}
+
+/* Style for alphabet sections */
+.alphabet-section {
+    font-size: 1.2em; /* Larger font size for the first letter */
+    font-weight: bold;
+    margin-bottom: 10px; /* Add bottom margin to separate sections */
+    grid-column: 1 / -1; /* Span across all columns */
+}
+
+/* Style for individual game links */
+.game-link {
+    text-decoration: none;
+    color: #333;
+    margin-bottom: 10px; /* Adjust spacing between games */
+    width: 100%; /* Each game link takes the full width of its column */
+}
+/* Style for game links */
+.game-link {
+  margin-bottom: 20px;
+}
+
+.game-link a {
+  text-decoration: none;
+  color: #333; /* Change the color as desired */
+  display: block;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.game-link a:hover {
+  background-color: dodgerblue;
+}
+
+/* Style for alphabet sections */
+.alphabet-section {
+  background-color: dodgerblue;
+    color:white;
+  margin-top: 20px;
+
+
+
+
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Style for alphabet sections */
+.light-mode .alphabet-section {
+background-color: white;
+  color:black;
+
+
+
+}
+
+/* Style for alphabet sections */
+.dark-mode .alphabet-section {
+  background-color: dimgrey;
+    color:white;
+}
+
+#gamesContainer > li > a {
+  background-color: dodgerblue;
+    color:white;
+      border: none;
+
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+
+
+}
+
+.light-mode #gamesContainer > li > a {
+  background-color: white;
+    color:black;
+}
+
+.dark-mode #gamesContainer > li > a {
+  background-color: black;
+    color:white;
+    border: none
+}
+
+
+#gamesContainer > li {
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  color: black;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);;
+      border: 1px solid #ccc;
+      background-color: dodgerblue;
+        color:white;
+
+}
+
+.light-mode #gamesContainer > li {
+  background-color: white;
+  color:black
+
+}
+
+
+
+.dark-mode #gamesContainer > li {
+  background-color: black;
   color:white
+
 }
 
-.dark-mode .research-focus h2 {
-    color:white
+
+
+
+/* CSS for desktop screens */
+.games-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
 }
 
-.dark-mode .about-archive p {
-
-    color:white
-}
-.dark-mode .development-story p {
-  color:white
-}
-
-.dark-mode .research-focus p {
-    color:white
+/* CSS for smaller screens */
+@media only screen and (max-width: 768px) {
+  .games-list {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
 }
 
-.dark-mode .about-archive h2{
+/* CSS for even smaller screens */
+@media only screen and (max-width: 480px) {
+  .games-list {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 
-    color:white
-}
-.dark-mode .development-story h2 {
-  color:white
-}
-
-.dark-mode .research-focus h2 {
-    color:white
+  }
 }
 
-.dark-mode .about-archive p {
-
-    color:white
-}
-.dark-mode .development-story p {
-  color:white
-}
-
-.dark-mode .research-focus p {
-    color:white
+/* Base styles for the section */
+#games-list2 {
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    margin-top: 100px;
+    border-radius: 8px
 }
 
-/* light-mode */
-.light-mode .about-archive h2{
 
+
+#gamesContainer > li > a:hover {
+    background-color: blue;
+    color:white;
+    border: none
+
+
+}
+
+
+.light-mode #gamesContainer > li > a:hover {
+    background-color: white;
+    color:black;
+    border: none
+
+
+}
+
+
+
+.dark-mode  #gamesContainer > li > a:hover {
+    background-color: grey;
+    color:white;
+    border: none
+
+
+}
+/* Styles for the heading */
+#games-list2 h2 {
+  margin-top: 100px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bolder;
+      color:black
+}
+
+/* Base styles for the section */
+.light-mode #games-list2 {
+    background-color: white;
     color:black
 }
-.light-mode .development-story h2 {
+
+/* Base styles for the section */
+.dark-mode #games-list2 {
+    background-color: dimgrey;
+    color:white
+}
+/* Styles for the heading */
+.light-mode #games-list2 h2 {
   color:black
 }
-
-.light-mode .research-focus h2 {
-    color:black
+/* Styles for the heading */
+.dark-mode #games-list2 h2 {
+color:white
 }
 
-.light-mode .about-archive p {
-
-    color:black
+/* Responsive styles */
+@media screen and (max-width: 600px) {
+    /* Adjust styles for smaller screens */
+    #games-list2 {
+        padding: 10px;
+    }
+    #games-list2 h2 {
+        font-size: 20px;
+    }
 }
-.light-mode .development-story p {
-  color:black
+#featured-game {
+max-width: 1000px;
+text-align: center;
+background-color: white;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+margin-top: 20px;
+
 }
 
-.light-mode .research-focus p {
-    color:black
+
+
+
 }
-
-.citations {
-
-  margin-top: 120px; /* Margin at the bottom */;
+/* Style the links inside the dropdown */
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
   text-align: left;
+}
+
+#myTopnav > div.dropdown2 > div > a {
+  text-align: left;
+  background-color: #555555;
+  width:100%
+}
+
+#myTopnav > div.dropdown2 > div > a:hover {
+  text-align: left;
+  background-color: grey
+}
+
+.citations-container {
+  max-width: 800px;
+  margin: auto;
+  background-color: white;
   padding: 20px;
-  text-overflow: auto
-
-
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  top: 100px;
+  position: relative;
+  overflow: auto;  /* Allows scrolling of the inner content if it exceeds the element's dimensions */;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
-.citations p{
-  padding: 10px
-
-}
-.citations h2{
-
-font-size: 25px
-
-}
-
-.dark-mode .citations h2{
-
-color:white
-}
-
-.dark-mode .citations p{
-
-color:white
-}
-
-.dark-mode .citations a{
-
-color:lightgrey
-}
-
-.light-mode .citations h2{
-
-color:black
-}
-
-.light-mode .citations p{
-
-color:black
-}
-
-.light-mode .citations a{
-
-color:grey
+p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -4368,9 +4368,7 @@ form input[type="text"] {
 }
 
 
-#gamesContainer li:hover {
-  background-color: #eaeaea;
-}
+
 
 #gamesContainer a {
   text-decoration: none;
@@ -4929,6 +4927,8 @@ background-color: white;
 
 }
 
+
+
 .dark-mode #gamesContainer > li {
   background-color: black;
   color:white
@@ -4967,10 +4967,7 @@ background-color: white;
     border-radius: 8px
 }
 
-#gamesContainer > li:hover {
-  background-color: blue;
-  color:white
-}
+
 
 #gamesContainer > li > a:hover {
     background-color: blue;
@@ -4980,10 +4977,6 @@ background-color: white;
 
 }
 
-.light-mode #gamesContainer > li:hover {
-  background-color: white;
-  color:black
-}
 
 .light-mode #gamesContainer > li > a:hover {
     background-color: white;
@@ -4993,10 +4986,7 @@ background-color: white;
 
 }
 
-.dark-mode #gamesContainer > li:hover {
-  background-color: grey;
-  color:white
-}
+
 
 .dark-mode  #gamesContainer > li > a:hover {
     background-color: grey;
