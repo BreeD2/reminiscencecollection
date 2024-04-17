@@ -2489,14 +2489,12 @@ border:2px solid white;
 
 
   .footer {
-    width: 100%;
-    background-color: #f1f1f1;
-    text-align: center;
-    padding: 20px;
-    position: relative;
-    background-color: black;
-    margin-top:190px;
-      color:white;
+      width: 100%;
+      background-color: black;
+      color: white;
+      text-align: center;
+      padding: 20px; /* Add padding for visual spacing */
+      /* No need for position or margin-top */
   }
 
       body.dark-mode #sort-section, body.sort-section * {
@@ -4954,16 +4952,14 @@ element.style {
 }
 
 
-  .footer {
+.footer {
     width: 100%;
-    background-color: #f1f1f1;
-    text-align: center;
-    padding: 20px;
-    position: relative;
     background-color: black;
-    margin-top: 100px;
-      color:white;
-  }
+    color: white;
+    text-align: center;
+    padding: 20px; /* Add padding for visual spacing */
+    /* No need for position or margin-top */
+}
 
   .light-mode .footer {
 

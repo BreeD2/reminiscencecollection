@@ -1522,11 +1522,7 @@ body.dark-mode .cog-icon * {
             #mainContent {margin-left: 0;}
             .w3-sidebar.w3-bar-block {float: none;}
         }
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
+      
 
 
         h1 {
@@ -2488,14 +2484,14 @@ border:2px solid white;
 
   .footer {
       width: 100%;
-      background-color: #f1f1f1;
-      text-align: center;
-      padding: 20px;
-      position: relative;
       background-color: black;
-      margin-top: 100px;
-        color:white;
-    }
+      color: white;
+      margin-top: 150px;
+      text-align: center;
+      padding: 20px; /* Add padding for visual spacing */
+      /* No need for position or margin-top */;
+
+  }
 
       body.dark-mode #sort-section, body.sort-section * {
 
@@ -3815,10 +3811,7 @@ p a:hover {
     cursor: pointer;
 }
 
-.modal-footer {
-    text-align: center;
-    padding: 20px;
-}
+
 
 
 button {
@@ -4397,6 +4390,11 @@ color:white
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 4px;
+
+}
+
+#contactForm textarea {
+    min-height: 100px;
 }
 
 #contactForm input[type="text"]:focus,
@@ -4419,6 +4417,7 @@ color:white
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #contactForm button[type="submit"]:hover {
@@ -4447,13 +4446,13 @@ color:white
 }
 
 .light-mode #contactForm button[type="submit"] {
-  background-color: #ddd;;
+  background-color: white;;
   color:black
 }
 
 .light-mode #contactForm button:hover[type="submit"] {
-  background-color: darkgrey;;
-  color:black
+  background-color: grey;
+  color:white
 }
 
 
@@ -4490,8 +4489,8 @@ color:black
 
 #name::placeholder {
 
-    font-style: italic;  /* Makes the placeholder text italic */
-    opacity: 1;
+
+
     color:grey;
     font-weight: normal;
     font-size: 14px;
@@ -4501,7 +4500,7 @@ color:black
 
 #email::placeholder {
 
-    font-style: italic;  /* Makes the placeholder text italic */
+
     opacity: 1;
     color:grey;
     font-weight: normal;
@@ -4512,7 +4511,7 @@ color:black
 
 #message::placeholder {
 
-    font-style: italic;  /* Makes the placeholder text italic */
+
     opacity: 1;
     color:grey;
     font-weight: normal;

@@ -4404,8 +4404,36 @@ form input[type="text"] {
 #loginForm label {
   display: block; /* Make the label take up the full width */
   margin-bottom: 5px; /* Space between the label and the input */
-  font-weight: bold; /* Make the label text a bit bolder */;
+  font-size: 14px;
   color:black
+}
+
+#loginForm input[type="email"]::placeholder {
+  color:grey;
+  font-size: 14px;
+}
+
+#loginForm input[type="password"]::placeholder  {
+  color:grey;
+  font-size: 14px;
+    font-weight: normal;
+}
+
+#loginForm input[type="password"]::placeholder  {
+  color:grey;
+  font-size: 14px;
+    font-weight: normal;
+}
+
+#loginForm input[type="text"]::placeholder {
+    color: grey;              /* Change the placeholder text color to a light grey */
+  
+}
+
+#submit::placeholder {
+  color:grey;
+  font-size: 14px;
+  font-weight: normal;
 }
 
 #loginForm input[type="email"],
@@ -4413,8 +4441,12 @@ form input[type="text"] {
   width: 100%; /* Make the input fields take up the full width */
   padding: 10px; /* Add some padding inside the input fields */
   border: 1px solid #ccc; /* Slightly darker border for the inputs */
-  border-radius: 4px; /* Round the corners of the input fields */
+  border-radius: 4px; /* Round the corners of the input fields */;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */;
+  color:grey;
+  font-size: 14px;
 }
+
 
 #loginForm button[type="submit"] {
   width: 100%; /* Make the button take up the full width */
@@ -4424,7 +4456,8 @@ form input[type="text"] {
   border: none; /* No border */
   border-radius: 4px; /* Round the corners of the button */
   cursor: pointer; /* Change mouse cursor to indicate clickable */
-  font-size: 16px; /* Increase font size */
+  font-size: 16px; /* Increase font size */;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */;
 }
 
 #loginForm button[type="submit"]:hover {
@@ -4477,7 +4510,10 @@ form input[type="text"] {
        padding: 8px;
        border: 1px solid #ddd;
        border-radius: 4px;
-       box-sizing: border-box; /* Ensures padding doesn't affect the input's width */
+       box-sizing: border-box; /* Ensures padding doesn't affect the input's width */;
+         font-weight: normal;
+         color: grey;
+         font-size: 14px
      }
 
      /* Style for the buttons */
@@ -4532,6 +4568,7 @@ form input[type="text"] {
      /* Add space between the login button and the forgot password link */
      #loginBtn {
        margin-bottom: 10px;
+
 
      }
 
@@ -4595,7 +4632,8 @@ color:black
 
 #loginForm button {
   background-color: dodgerblue;
-  color:white
+  color:white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #loginForm button:hover {
@@ -4604,7 +4642,7 @@ color:black
 }
 
 .light-mode #loginForm button {
-  background-color: whitesmoke;
+  background-color: white;
   color:black
 }
 
