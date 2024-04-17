@@ -327,10 +327,9 @@ Accessibility<i class="fa fa-caret-down"></i>
 
         <div id="main-content" class="content">
           <div id="signup-container">
-
               <form id="signup-form">
                   <div>
-                    <div class="signup">Sign Up</div>
+                      <div class="signup">Sign Up</div>
                       <label for="signup-email">Email:</label>
                       <input type="email" id="signup-email" required placeholder="Enter your email">
                   </div>
@@ -339,6 +338,7 @@ Accessibility<i class="fa fa-caret-down"></i>
                       <input type="password" id="signup-password" required placeholder="Create a password">
                   </div>
                   <button type="button" id="signupBtn">Sign Up</button>
+                  <button type="button" id="google-signup-btn">Sign Up with Google</button> <!-- Google Sign-Up Button -->
                   <p id="signup-error" style="color: red;"></p> <!-- To display signup errors -->
               </form>
           </div>
@@ -4113,38 +4113,38 @@ const searchFunction = () => {
         setTimeout(() => document.body.removeChild(toast), 3000);
       }
 
-      document.getElementById('signupBtn').addEventListener('click', async (e) => {
-          e.preventDefault();
+      // Email/password registration
+     document.getElementById('signupBtn').addEventListener('click', async (e) => {
+         e.preventDefault();
+         const email = document.getElementById('signup-email').value.trim();
+         const password = document.getElementById('signup-password').value;
 
-          const email = document.getElementById('signup-email').value.trim();
-          const password = document.getElementById('signup-password').value;
+         // Validate email format
+         if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+             showToast('Please enter a valid email address.', false);
+             return;
+         }
 
-          // Simple regex for basic email validation
-          if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-              showToast('Please enter a valid email address.', false);
-              return;
-          }
+         try {
+             const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+             await auth.sendEmailVerification(userCredential.user);
+             showToast('Verification email sent. Please check your inbox.', true);
+             window.location.href = '../dashboard/index.html';
+         } catch (error) {
+             console.error('Signup error:', error);
+             showToast(`Signup error: ${error.message}`, false);
+         }
+     });
 
-          try {
-              const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-              console.log('User created:', userCredential.user);
-
-              // Send an email verification
-              await auth.sendEmailVerification(userCredential.user);
-              showToast('Verification email sent. Please check your inbox.', true);
-
-              // Optionally redirect to another page
-              window.location.href = '../dashboard/index.html'; // Corrected path for consistency
-          } catch (error) {
-              console.error('Signup error:', error);
-              if (error.code === 'auth/email-already-in-use') {
-                  showToast('This email is already in use. Please log in or reset your password.', false);
-              } else {
-                  showToast(`Signup error: ${error.message}`, false);
-              }
-        }
-      });
-
+     // Google sign-in
+     document.getElementById('google-signup-btn').addEventListener('click', () => {
+         const provider = new firebase.auth.GoogleAuthProvider();
+         auth.signInWithPopup(provider).then((result) => {
+             window.location.href = '../dashboard/index.html';
+         }).catch((error) => {
+             showToast(`Error during Google sign-in: ${error.message}`, false);
+         });
+     });
 
       // Inside your login/signup page script
       firebase.auth().onAuthStateChanged(user => {
@@ -4157,7 +4157,7 @@ const searchFunction = () => {
           // Show the login/signup form if not already visible
         }
       });
-
+    
 
         auth.onAuthStateChanged(async user => {
             const dropdownContent = document.querySelector('.dropdown-content2');
