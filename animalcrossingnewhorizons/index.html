@@ -4378,13 +4378,15 @@ async function handleCommentSubmit() {
     }
 }
 
-// Attach this function to the submit comment button
 document.addEventListener('DOMContentLoaded', () => {
     const submitCommentButton = document.getElementById('submitComment');
     if (submitCommentButton) {
+        // Remove the listener in case it was previously added
+        submitCommentButton.removeEventListener('click', handleCommentSubmit);
         submitCommentButton.addEventListener('click', handleCommentSubmit);
     }
 });
+
 
 
 
