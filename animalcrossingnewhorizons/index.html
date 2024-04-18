@@ -4437,8 +4437,25 @@ async function sendReply() {
 document.getElementById('sendReply').addEventListener('click', sendReply);
 
 
+// Simplified addComment function
+async function addComment(gameId, commentText) {
+    try {
+        await firestore.collection('comments').add({
+            gameId: gameId,
+            text: commentText,
+            userId: auth.currentUser.uid,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        showToast('Comment added successfully');
+    } catch (error) {
+        console.error('Error adding comment:', error);
+        showToast('Failed to add comment');
+        throw new Error('Failed to add comment'); // Throw error to be caught in handleSubmitComment
+    }
+}
+
+// Updated handleSubmitComment function
 async function handleSubmitComment() {
-    // First, check if the user is signed in
     if (!isUserSignedIn()) {
         showToast('Please sign in to add a comment.');
         return; // Exit the function early if no user is signed in
@@ -4448,29 +4465,24 @@ async function handleSubmitComment() {
     const commentText = commentInput.value.trim();
     const gameId = 'animalcrossingnewhorizons'; // Dynamically fetch this if necessary
 
-    // Disable the button to prevent multiple submissions
     const submitCommentButton = document.getElementById('submitComment');
     submitCommentButton.disabled = true;
 
     if (commentText) {
         try {
-            // Consider merging additional logic here if needed from handleCommentClick
             await addComment(gameId, commentText);
             commentInput.value = ''; // Clear the input field after successful comment submission
-            showToast('Comment added successfully.');
-            fetchAndDisplayComments(gameId); // Refresh comment display
+            fetchAndDisplayComments(gameId); // Refresh comment display only here
         } catch (error) {
-            console.error('Error adding comment:', error);
-            showToast('Failed to add comment.');
+            console.error('Error during comment addition:', error.message);
         } finally {
             submitCommentButton.disabled = false; // Re-enable the submit button after processing
         }
     } else {
         showToast('Please enter a comment.');
-        submitCommentButton.disabled = false; // Re-enable the submit button if no comment is entered
+        submitCommentButton.disabled = false;
     }
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
     const submitCommentButton = document.getElementById('submitComment');
@@ -4479,29 +4491,6 @@ document.addEventListener('DOMContentLoaded', () => {
         submitCommentButton.addEventListener('click', handleSubmitComment);
     }
 });
-
-
-
-
-// Event listeners setup and other functions (omitted for brevity)
-
-async function addComment(gameId, commentText) {
-    // Replace this logic with your actual Firestore path and data structure
-    try {
-        await firestore.collection('comments').add({
-            gameId: gameId,
-            text: commentText,
-            // Include other fields as necessary, e.g., userId or timestamp
-            userId: auth.currentUser.uid,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        showToast('Comment added successfully');
-        fetchAndDisplayComments(gameId); // Refresh comments display
-    } catch (error) {
-        console.error('Error adding comment:', error);
-        showToast('Failed to add comment');
-    }
-}
 
 
 
