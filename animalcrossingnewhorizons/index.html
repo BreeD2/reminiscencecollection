@@ -4462,13 +4462,15 @@ async function handleSubmitComment() {
         } catch (error) {
             console.error('Error adding comment:', error);
             showToast('Failed to add comment.');
+        } finally {
+            submitCommentButton.disabled = false; // Re-enable the submit button after processing
         }
     } else {
         showToast('Please enter a comment.');
+        submitCommentButton.disabled = false; // Re-enable the submit button if no comment is entered
     }
-
-    submitCommentButton.disabled = false; // Re-enable the submit button after processing
 }
+
 
 // Attach event listener once DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
