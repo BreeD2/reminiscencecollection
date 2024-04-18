@@ -4455,7 +4455,7 @@ async function addComment(gameId, gameName, commentText) {
 }
 
 
-async function handleSubmitComment() {
+async function handleSubmitComment(gameId, gameName) {
     if (!isUserSignedIn()) {
         showToast('Please sign in to add a comment.');
         return;
@@ -4463,8 +4463,6 @@ async function handleSubmitComment() {
 
     const commentInput = document.getElementById('commentInput');
     const commentText = commentInput.value.trim();
-    const gameId = 'animalcrossingnewhorizons'; // Example game ID
-    const gameName = 'Animal Crossing: New Horizons'; // Example game name
 
     const submitCommentButton = document.getElementById('submitComment');
     submitCommentButton.disabled = true;
@@ -4474,8 +4472,10 @@ async function handleSubmitComment() {
             await addComment(gameId, gameName, commentText);
             commentInput.value = '';
             fetchAndDisplayComments(gameId);
+            showToast('Comment added successfully.');
         } catch (error) {
-            console.error('Error during comment addition:', error.message);
+            console.error('Error during comment addition:', error);
+            showToast('Failed to add comment.');
         } finally {
             submitCommentButton.disabled = false;
         }
@@ -4485,14 +4485,18 @@ async function handleSubmitComment() {
     }
 }
 
-
+// Setup the event listener
 document.addEventListener('DOMContentLoaded', () => {
     const submitCommentButton = document.getElementById('submitComment');
-    if (submitCommentButton && !submitCommentButton.getAttribute('listener')) {
-        submitCommentButton.setAttribute('listener', 'true');
-        submitCommentButton.addEventListener('click', handleSubmitComment);
+    if (submitCommentButton) {
+        // Example game data, ideally this should be dynamic
+        const gameId = 'animalcrossingnewhorizons'; // Retrieve this dynamically if possible
+        const gameName = 'Animal Crossing: New Horizons'; // Retrieve this dynamically if possible
+
+        submitCommentButton.addEventListener('click', () => handleSubmitComment(gameId, gameName));
     }
 });
+
 
 
 
