@@ -4472,10 +4472,10 @@ async function handleSubmitComment() {
 }
 
 
-// Attach event listener once DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     const submitCommentButton = document.getElementById('submitComment');
-    if (submitCommentButton) {
+    if (submitCommentButton && !submitCommentButton.getAttribute('listener')) {
+        submitCommentButton.setAttribute('listener', 'true');
         submitCommentButton.addEventListener('click', handleSubmitComment);
     }
 });
