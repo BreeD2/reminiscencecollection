@@ -4378,15 +4378,13 @@ async function handleCommentSubmit() {
     }
 }
 
+// Attach this function to the submit comment button
 document.addEventListener('DOMContentLoaded', () => {
     const submitCommentButton = document.getElementById('submitComment');
     if (submitCommentButton) {
-        // Remove the listener in case it was previously added
-        submitCommentButton.removeEventListener('click', handleCommentSubmit);
         submitCommentButton.addEventListener('click', handleCommentSubmit);
     }
 });
-
 
 
 
@@ -4493,17 +4491,6 @@ async function handleSubmitComment(gameId, gameName) {
     }
 }
 
-// Setup the event listener
-document.addEventListener('DOMContentLoaded', () => {
-    const submitCommentButton = document.getElementById('submitComment');
-    if (submitCommentButton) {
-        // Example game data, ideally this should be dynamic
-        const gameId = 'animalcrossingnewhorizons'; // Retrieve this dynamically if possible
-        const gameName = 'Animal Crossing: New Horizons'; // Retrieve this dynamically if possible
-
-        submitCommentButton.addEventListener('click', () => handleSubmitComment(gameId, gameName));
-    }
-});
 
 
 
