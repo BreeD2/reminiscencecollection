@@ -4151,50 +4151,17 @@ async function handleAuthStateChanges() {
     });
 }
 
-async function fetchAndDisplayComments() {
-    const commentsList = document.getElementById('commentsList');
-    commentsList.innerHTML = '';  // Clear existing comments
-
-    const querySnapshot = await firestore.collection('comments')
-        .where('gameId', '==', gameId)
-        .orderBy('timestamp', 'desc')
-        .get();
-
-    querySnapshot.forEach(doc => {
-        const comment = doc.data();
-        const commentElement = createCommentElement(doc.id, comment);
-        commentsList.appendChild(commentElement);
-    });
-}
-
-function createCommentElement(commentId, comment) {
-    const commentElement = document.createElement('div');
-    commentElement.classList.add('comment');
-    commentElement.innerHTML = `
-        <span>${comment.username} on ${new Date(comment.timestamp.seconds * 1000).toLocaleString()}:</span>
-        <p>${comment.text}</p>
-        <button onclick="editComment('${commentId}', '${comment.text}')">Edit</button>
-        <button onclick="deleteComment('${commentId}')">Delete</button>
-        <button onclick="showReplyForm('${commentId}')">Reply</button>
-    `;
-
-    // Container for replies will be populated later
-    const repliesContainer = document.createElement('div');
-    repliesContainer.id = `replies-for-${commentId}`;
-    commentElement.appendChild(repliesContainer);
-
-    fetchAndDisplayReplies(commentId, repliesContainer);
-
-    return commentElement;
-}
-
 async function editComment(commentId, currentText) {
+    console.log(`Editing comment ID: ${commentId} with text: ${currentText}`);
     const newText = prompt('Edit your comment:', currentText);
-    if (newText && newText.trim() !== '') {
+    if (newText !== null && newText.trim() !== '') {
         try {
-            await firestore.collection('comments').doc(commentId).update({ text: newText.trim() });
+            await firestore.collection('comments').doc(commentId).update({
+                text: newText.trim()
+            });
+            console.log('Comment updated successfully');
             showToast('Comment updated successfully.');
-            fetchAndDisplayComments();
+            fetchAndDisplayComments(gameId); // Refresh the comments display
         } catch (error) {
             console.error('Error updating comment:', error);
             showToast('Failed to update comment.');
@@ -4202,97 +4169,335 @@ async function editComment(commentId, currentText) {
     }
 }
 
-async function deleteComment(commentId) {
-    if (confirm("Are you sure you want to delete this comment?")) {
+// Ensures comments are fetched and displayed as soon as the page loads
+document.addEventListener('DOMContentLoaded', async () => {
+    const gameId = 'animalcrossingnewhorizons'; // Ensure this is correctly set
+    console.log('Page loaded, fetching comments...');
+    await fetchAndDisplayComments(gameId);
+});
+
+async function fetchAndDisplayComments(gameId) {
+    const commentsList = document.getElementById('commentsList');
+    commentsList.innerHTML = ''; // Clear existing comments
+
+    try {
+        const querySnapshot = await firestore.collection('comments')
+            .where('gameId', '==', gameId)
+            .orderBy('timestamp', 'desc')
+            .get();
+
+        querySnapshot.forEach(async (doc) => {
+            const comment = doc.data();
+            const userDoc = await firestore.collection('users').doc(comment.userId).get();
+            const username = userDoc.exists ? userDoc.data().username : "Anonymous";
+            const date = comment.timestamp ? comment.timestamp.toDate().toLocaleString() : "Unknown date";
+
+            const commentElement = document.createElement('div');
+            commentElement.classList.add('comment');
+            const usernameElement = document.createElement('span');
+            usernameElement.textContent = `${username} on ${date}: `;
+            const commentTextElement = document.createElement('p');
+            commentTextElement.textContent = comment.text;
+
+            // Create a container for replies
+            const repliesContainer = document.createElement('div');
+            repliesContainer.classList.add('replies-container');
+
+            // Append username and comment text first
+            commentElement.appendChild(usernameElement);
+            commentElement.appendChild(commentTextElement);
+
+            // Edit and Delete buttons for comment
+            if (auth.currentUser && auth.currentUser.uid === comment.userId) {
+                const editButton = document.createElement('button');
+                editButton.textContent = 'Edit';
+                editButton.onclick = () => editComment(doc.id, comment.text); // Add your editComment function
+                commentElement.appendChild(editButton);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = async () => {
+                    if (confirm("Are you sure you want to delete this comment?")) {
+                        try {
+                            await firestore.collection('comments').doc(doc.id).delete();
+                            showToast('Comment deleted successfully.');
+                            fetchAndDisplayComments(gameId);
+                        } catch (error) {
+                            console.error('Error deleting comment:', error);
+                            showToast('Failed to delete comment.');
+                        }
+                    }
+                };
+                commentElement.appendChild(deleteButton);
+            }
+
+            // Reply button
+            const replyButton = document.createElement('button');
+            replyButton.textContent = 'Reply';
+            replyButton.onclick = () => {
+                if (!isUserSignedIn()) {
+                    showToast('You must be signed in to reply.');
+                    return;
+                }
+                document.getElementById('replyPopup').style.display = 'block';
+                document.getElementById('sendReply').setAttribute('data-commentId', doc.id);
+            };
+            commentElement.appendChild(replyButton);
+
+            // Append the replies container before adding reply functionalities
+            commentElement.appendChild(repliesContainer);
+
+            // Fetch and display replies for the comment
+            const repliesQuerySnapshot = await firestore.collection('replies')
+                .where('commentId', '==', doc.id)
+                .orderBy('timestamp', 'asc')
+                .get();
+
+
+
+// New function to edit a reply
+async function editReply(replyId, currentText) {
+    const newText = prompt('Edit your reply:', currentText);
+    if (newText !== null && newText.trim() !== '') {
         try {
-            await firestore.collection('comments').doc(commentId).delete();
-            showToast('Comment deleted successfully.');
-            fetchAndDisplayComments();
+            await firestore.collection('replies').doc(replyId).update({
+                text: newText.trim()
+            });
+            showToast('Reply updated successfully.');
+            fetchAndDisplayComments(gameId); // Refresh to show changes
         } catch (error) {
-            console.error('Error deleting comment:', error);
-            showToast('Failed to delete comment.');
+            console.error('Error updating reply:', error);
+            showToast('Failed to update reply.');
+        }
+    }
+}
+/// Within fetchAndDisplayComments function, when fetching and displaying replies:
+repliesQuerySnapshot.forEach(async replyDoc => {
+    const reply = replyDoc.data();
+    const replyElement = document.createElement('div');
+    replyElement.classList.add('reply');
+
+    // Fetch username of the user who made the reply
+    const replyUserDoc = await firestore.collection('users').doc(reply.userId).get();
+    const replyUsername = replyUserDoc.exists ? replyUserDoc.data().username : "Anonymous";
+
+    // Format the timestamp
+    const replyDate = reply.timestamp ? reply.timestamp.toDate().toLocaleString() : "Unknown date";
+
+    // Create a span for displaying the reply username and date
+    const replyUserElement = document.createElement('span');
+    replyUserElement.textContent = `${replyUsername} on ${replyDate}: `;
+    replyElement.appendChild(replyUserElement);
+
+    // Create a span for displaying the reply text
+    const replyTextElement = document.createElement('span');
+    replyTextElement.textContent = reply.text;
+    replyElement.appendChild(replyTextElement);
+
+    // Only show edit and delete buttons for the user's own replies
+    if (auth.currentUser && auth.currentUser.uid === reply.userId) {
+        const editReplyButton = document.createElement('button');
+        editReplyButton.textContent = 'Edit';
+        editReplyButton.onclick = () => editReply(replyDoc.id, reply.text); // Adjust this to your actual editReply function
+        replyElement.appendChild(editReplyButton);
+
+        const deleteReplyButton = document.createElement('button');
+        deleteReplyButton.textContent = 'Delete';
+        deleteReplyButton.onclick = async () => {
+            if (confirm("Are you sure you want to delete this reply?")) {
+                try {
+                    await firestore.collection('replies').doc(replyDoc.id).delete();
+                    showToast('Reply deleted successfully.');
+                    fetchAndDisplayComments(gameId); // Refresh to show changes
+                } catch (error) {
+                    console.error('Error deleting reply:', error);
+                    showToast('Failed to delete reply.');
+                }
+            }
+        };
+        replyElement.appendChild(deleteReplyButton);
+    }
+
+    // Append the replyElement to its respective comment's repliesContainer
+    repliesContainer.appendChild(replyElement); // Ensure repliesContainer is defined in your fetchAndDisplayComments function
+});
+            // Append the comment element (with replies) to the comments list
+            commentsList.appendChild(commentElement);
+        });
+    } catch (error) {
+        console.error('Error fetching comments:', error);
+        showToast('Failed to fetch comments.');
+    }
+}
+
+async function handleCommentSubmit() {
+    // Assuming you have already checked if the user is signed in and other preliminary checks
+    const gameId = 'animalcrossingnewhorizons'; // Make sure to dynamically set or retrieve this value as necessary
+    const gameName = 'Animal Crossing: New Horizons'; // Dynamically set or retrieve this value as necessary
+    const commentInput = document.getElementById('commentInput');
+    const commentText = commentInput.value.trim();
+
+    if (commentText) {
+        try {
+            // Add the comment to the 'comments' collection
+            const commentRef = await firestore.collection('comments').add({
+                gameId: gameId,
+                gameName: gameName,
+                text: commentText,
+                userId: firebase.auth().currentUser.uid,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+
+            showToast('Comment added successfully.');
+
+            // Log this comment activity in the 'userActivities' collection
+            const activity = {
+                userId: firebase.auth().currentUser.uid,
+                type: 'comment',
+                gameId: gameId,
+                gameName: gameName,
+                commentId: commentRef.id, // Optionally store the comment ID for reference
+                text: commentText, // Optionally store the comment text
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            };
+
+            await firestore.collection('userActivities').add(activity);
+            showToast('Comment activity recorded successfully.');
+
+            // Optionally, refresh comments display
+            fetchAndDisplayComments(gameId);
+
+            // Clear the input field after successful comment submission
+            commentInput.value = '';
+        } catch (error) {
+            console.error('Error submitting comment:', error);
+            showToast('Failed to submit comment.');
+        }
+    } else {
+        showToast('Please enter a comment.');
+    }
+}
+
+
+
+
+
+
+
+
+
+
+async function replyToComment(commentId) {
+    const replyText = prompt("Enter your reply:");
+    if (replyText && replyText.trim() !== '') {
+        try {
+            await firestore.collection('replies').add({
+                commentId: commentId,
+                text: replyText,
+                userId: auth.currentUser.uid,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            showToast('Reply added successfully.');
+            // Refresh the comments to include the new reply
+            fetchAndDisplayComments(gameId);
+        } catch (error) {
+            console.error('Error adding reply:', error);
+            showToast('Failed to add reply.');
         }
     }
 }
 
-function showReplyForm(commentId) {
-    if (!auth.currentUser) {
-        showToast('You must be signed in to reply.');
-        return;
-    }
-    const replyText = prompt("Enter your reply:");
-    if (replyText && replyText.trim() !== '') {
-        addReply(commentId, replyText);
-    }
-}
 
-async function addReply(commentId, text) {
-    try {
-        await firestore.collection('replies').add({
-            commentId: commentId,
-            text: text,
-            userId: auth.currentUser.uid,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        showToast('Reply added successfully.');
-        fetchAndDisplayComments();
-    } catch (error) {
-        console.error('Error adding reply:', error);
-        showToast('Failed to add reply.');
-    }
-}
 
-async function fetchAndDisplayReplies(commentId, container) {
-    const repliesSnapshot = await firestore.collection('replies')
-        .where('commentId', '==', commentId)
-        .orderBy('timestamp', 'asc')
-        .get();
+// Adjusted replyToComment to work with the popup
+async function sendReply() {
+    const replyText = document.getElementById('replyText').value.trim();
+    const commentId = document.getElementById('sendReply').getAttribute('data-commentId');
 
-    repliesSnapshot.forEach(doc => {
-        const reply = doc.data();
-        const replyElement = document.createElement('div');
-        replyElement.innerHTML = `<span>${reply.userId} replied on ${new Date(reply.timestamp.seconds * 1000).toLocaleString()}: ${reply.text}</span>`;
-        container.appendChild(replyElement);
-    });
-}
-
-function showToast(message) {
-    const toast = document.createElement('div');
-    toast.textContent = message;
-    toast.style.position = 'fixed';
-    toast.style.bottom = '20px';
-    toast.style.left = '50%';
-    toast.style.transform = 'translateX(-50%)';
-    toast.style.backgroundColor = 'black';
-    toast.style.color = 'white';
-    toast.style.padding = '10px';
-    toast.style.borderRadius = '5px';
-    document.body.appendChild(toast);
-    setTimeout(() => document.body.removeChild(toast), 3000);
-}
-
-async function handleCommentSubmit() {
-    if (!auth.currentUser) {
-        showToast('Please sign in to add a comment.');
-        return;
-    }
-    const commentInput = document.getElementById('commentInput');
-    const text = commentInput.value.trim();
-    if (text) {
+    if (replyText) {
         try {
-            await firestore.collection('comments').add({
-                gameId: gameId,
-                text: text,
+            await firestore.collection('replies').add({
+                commentId: commentId,
+                text: replyText,
                 userId: auth.currentUser.uid,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
+            showToast('Reply added successfully.');
+            document.getElementById('replyPopup').style.display = 'none';
+            document.getElementById('replyText').value = ''; // Clear text area
+            fetchAndDisplayComments(gameId);
+        } catch (error) {
+            console.error('Error adding reply:', error);
+            showToast('Failed to add reply.');
+        }
+    }
+}
+
+// Attach event listener to send reply button
+document.getElementById('sendReply').addEventListener('click', sendReply);
+
+
+async function handleSubmitComment() {
+    // First, check if the user is signed in
+    if (!isUserSignedIn()) {
+        showToast('Please sign in to add a comment.');
+        return; // Exit the function early if no user is signed in
+    }
+
+    const commentInput = document.getElementById('commentInput');
+    const commentText = commentInput.value.trim();
+    const gameId = 'animalcrossingnewhorizons'; // Dynamically fetch this if necessary
+
+    // Disable the button to prevent multiple submissions
+    const submitCommentButton = document.getElementById('submitComment');
+    submitCommentButton.disabled = true;
+
+    if (commentText) {
+        try {
+            // Consider merging additional logic here if needed from handleCommentClick
+            await addComment(gameId, commentText);
+            commentInput.value = ''; // Clear the input field after successful comment submission
             showToast('Comment added successfully.');
-            commentInput.value = '';
-            fetchAndDisplayComments();
+            fetchAndDisplayComments(gameId); // Refresh comment display
         } catch (error) {
             console.error('Error adding comment:', error);
             showToast('Failed to add comment.');
         }
+    } else {
+        showToast('Please enter a comment.');
+    }
+
+    submitCommentButton.disabled = false; // Re-enable the submit button after processing
+}
+
+// Attach event listener once DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const submitCommentButton = document.getElementById('submitComment');
+    if (submitCommentButton) {
+        submitCommentButton.addEventListener('click', handleSubmitComment);
+    }
+});
+
+
+
+
+// Event listeners setup and other functions (omitted for brevity)
+
+async function addComment(gameId, commentText) {
+    // Replace this logic with your actual Firestore path and data structure
+    try {
+        await firestore.collection('comments').add({
+            gameId: gameId,
+            text: commentText,
+            // Include other fields as necessary, e.g., userId or timestamp
+            userId: auth.currentUser.uid,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        showToast('Comment added successfully');
+        fetchAndDisplayComments(gameId); // Refresh comments display
+    } catch (error) {
+        console.error('Error adding comment:', error);
+        showToast('Failed to add comment');
     }
 }
 
