@@ -4437,11 +4437,11 @@ async function sendReply() {
 document.getElementById('sendReply').addEventListener('click', sendReply);
 
 
-// Simplified addComment function
-async function addComment(gameId, commentText) {
+async function addComment(gameId, gameName, commentText) {
     try {
         await firestore.collection('comments').add({
             gameId: gameId,
+            gameName: gameName, // Include the game name if necessary
             text: commentText,
             userId: auth.currentUser.uid,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
@@ -4450,39 +4450,41 @@ async function addComment(gameId, commentText) {
     } catch (error) {
         console.error('Error adding comment:', error);
         showToast('Failed to add comment');
-        throw new Error('Failed to add comment'); // Throw error to be caught in handleSubmitComment
+        throw new Error('Failed to add comment');
     }
 }
 
-// Updated handleSubmitComment function
+
 async function handleSubmitComment() {
     if (!isUserSignedIn()) {
         showToast('Please sign in to add a comment.');
-        return; // Exit the function early if no user is signed in
+        return;
     }
 
     const commentInput = document.getElementById('commentInput');
     const commentText = commentInput.value.trim();
-    const gameId = 'animalcrossingnewhorizons'; // Dynamically fetch this if necessary
+    const gameId = 'animalcrossingnewhorizons'; // Example game ID
+    const gameName = 'Animal Crossing: New Horizons'; // Example game name
 
     const submitCommentButton = document.getElementById('submitComment');
     submitCommentButton.disabled = true;
 
     if (commentText) {
         try {
-            await addComment(gameId, commentText);
-            commentInput.value = ''; // Clear the input field after successful comment submission
-            fetchAndDisplayComments(gameId); // Refresh comment display only here
+            await addComment(gameId, gameName, commentText);
+            commentInput.value = '';
+            fetchAndDisplayComments(gameId);
         } catch (error) {
             console.error('Error during comment addition:', error.message);
         } finally {
-            submitCommentButton.disabled = false; // Re-enable the submit button after processing
+            submitCommentButton.disabled = false;
         }
     } else {
         showToast('Please enter a comment.');
         submitCommentButton.disabled = false;
     }
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const submitCommentButton = document.getElementById('submitComment');
