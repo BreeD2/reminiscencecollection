@@ -5303,3 +5303,27 @@ p {
 .dark-mode #main-content > div.citations-container > section > h2 {
   color:white
 }
+
+.dark-mode #main-content > div.citations-container > section > p > a {
+  color:white
+}
+
+.light-mode #main-content > div.citations-container > section > p > a {
+  color:black
+}
+
+.dark-mode #main-content > div.citations-container > section > p > a:hover {
+  color:grey
+}
+
+.light-mode #main-content > div.citations-container > section > p > a:hover {
+  color:grey
+}
+
+.light-mode #main-content > div.citations-container > section > p {
+  color:black
+}
+
+.dark-mode #main-content > div.citations-container > section > p {
+  color:white
+}
