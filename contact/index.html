@@ -3192,7 +3192,7 @@
 
               // Store the original font sizes
               function storeOriginalFontSizes() {
-                  const selector = '.sidebar *, .game-container, .game-title, #h1, .game-container, .game-info, #likeButton, .footer, #commentButton, #rateButton, #likesCount,#ratingDisplay,#commentsSection > strong, .game-title';
+                  const selector = '.sidebar *, .game-container, .game-title, #h1, .game-container, .game-info, #likeButton, #contactForm, .footer, #main-content > div.contact-form > h2, #commentButton, #rateButton, #likesCount,#ratingDisplay, #contactForm > button, #commentsSection > strong, .game-title';
                   document.querySelectorAll(selector).forEach(element => {
                       element.setAttribute('data-original-font-size', window.getComputedStyle(element).fontSize);
                   });
@@ -3200,7 +3200,7 @@
 
               // Reset font sizes to their original values
               function resetFont() {
-                  const selector = '.sidebar *, .game-container, .game-info, #likeButton, #commentButton,#commentsSection > strong, #rateButton, #likesCount,#ratingDisplay, .game-title, .footer';
+                  const selector = '.sidebar *, .game-container, .game-info, #likeButton, #commentButton, #main-content > div.contact-form > h2,#contactForm > button,  #commentsSection > strong, #rateButton, #contactForm, #likesCount,#ratingDisplay, .game-title, .footer';
                   document.querySelectorAll(selector).forEach(element => {
                       const originalFontSize = element.getAttribute('data-original-font-size');
                       if (originalFontSize) element.style.fontSize = originalFontSize;
@@ -3217,12 +3217,12 @@
 
               // Increase font size
               function increaseFont() {
-                  adjustFontSize(1.1, '.sidebar *, .game-container, .game-info, #likeButton, #commentButton,#likesCount, #ratingDisplay, #rateButton, .game-title,#commentsSection > strong, .footer');
+                  adjustFontSize(1.1, '.sidebar *, .game-container, .game-info, #likeButton, #commentButton,#likesCount, #contactForm, #contactForm > button, #ratingDisplay, #rateButton, .game-title,#commentsSection > strong, #main-content > div.contact-form > h2, .footer');
               }
 
               // Decrease font size
               function decreaseFont() {
-                  adjustFontSize(0.9, '.sidebar *, .game-container, .game-info, #likeButton,#commentsSection > strong, #commentButton, #likesCount, #ratingDisplay, #rateButton, .game-title, .footer');
+                  adjustFontSize(0.9, '.sidebar *, .game-container, .game-info, #likeButton,#commentsSection > strong, #commentButton, #contactForm, #contactForm > button, #main-content > div.contact-form > h2, #likesCount, #ratingDisplay, #rateButton, .game-title, .footer');
               }
 
               // Toggle Light Mode
