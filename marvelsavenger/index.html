@@ -272,11 +272,12 @@
   <a href="..//supermario3dallstars/index.html" data-game="Super Mario 3D All-Stars">Super Mario <br>3D All-Stars</a>
   <a href="..//supermario3dland/index.html" data-game="Super Mario 3D Land">Super Mario <br>3D Land</a>
   <a href="..//supermario3dworld/index.html" data-game="Super Mario 3D World">Super Mario <br>3D World</a>
+    <a href="..//supermariobroswonder/index.html" data-game="Super Mario Bros. Wonder">Super Mario Bros.<br> Wonder</a>
   <a href="..//supermariogalaxy2/index.html" data-game="Super Mario Galaxy 2">Super Mario <br>Galaxy 2</a>
   <a href="..//supermariomaker/index.html" data-game="Super Mario Maker">Super Mario Maker</a>
   <a href="..//supermariomaker2/index.html" data-game="Super Mario Maker 2">Super Mario Maker 2</a>
   <a href="..//supermarioodyssey/index.html" data-game="Super Mario Odyssey">Super Mario Odyssey</a>
-  <a href="..//supermariobroswonder/index.html" data-game="Super Mario Bros. Wonder">Super Mario Bros.<br> Wonder</a>
+
   <a href="..//supersmashbrosfornintendo3ds/index.html" data-game="Super Smash Bros. for Nintendo 3DS">Super Smash Bros. <br>for Nintendo 3DS</a>
   <a href="..//supersmashbrosforwiiu/index.html" data-game="Super Smash Bros. for Wii U">Super Smash Bros.<br> for Wii U</a>
   <a href="..//theamazingrace/index.html" data-game="The Amazing Race">The Amazing Race</a>
@@ -317,7 +318,7 @@
 
   <!-- Sidebar Toggle Button -->
   <!-- Sidebar Toggle Button -->
-  <div class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle Sidebar">
+  <div class="menu-toggle" aria-label="Toggle Sidebar">
    <i class="fa fa-gamepad"></i><br>
   </div>
 
@@ -435,13 +436,13 @@ Fighting
 
        <p class="game-info">
      <strong>Bree's Review:</strong><br><span class="star-rating">
-         <i class="fas fa-star"></i> <!-- 1st star -->
-         <i class="fas fa-star"></i> <!-- 2nd star -->
-         <i class="fas fa-star"></i> <!-- 3rd star -->
-         <i class="fas fa-star"></i> <!-- 4th star -->
+         <i class="far fa-star"></i> <!-- 1st star -->
+         <i class="far fa-star"></i> <!-- 2nd star -->
+         <i class="far fa-star"></i> <!-- 3rd star -->
+         <i class="far fa-star"></i> <!-- 4th star -->
          <i class="far fa-star"></i> <!-- 5th star (empty) -->
      </span>
-     <br> After experiencing my first foray into the Animal Crossing universe with "New Leaf," I've become quite the enthusiast. "Animal Crossing: New Horizons" elevates the series with its expansive customization options, allowing for a level of personal expression I hadn't encountered before in gaming. For the first time, I was able to craft a character who truly mirrored my appearance, adding a personal touch to my virtual escapade. The game's landscaping possibilities are impressive, offering endless creativity in designing one's island paradise. The ability to design and share unique clothing, hats, and art enhances this further, although I'm less thrilled about the restriction of one island per console — a limitation that feels unnecessarily binding without investing in additional hardware. While I yearn for richer dialogues from the animal inhabitants to enrich the world further, my overall experience has been profoundly positive. Acquiring the game in March 2020, amid the pandemic, it provided not just a delightful escape but a means to connect and share moments with others during isolation.
+     <br> Not Reviewed
 
  </p>
  <div class="game-info">
@@ -3845,1024 +3846,1011 @@ Fighting
               </script>
 
 
-              <script>
-              const searchFunction = () => {
-                  const input = document.getElementById('searchInput2').value.toLowerCase();
-                  const resultsContainer = document.getElementById('searchResults2');
-
-                  // Make the results container visible only if there's input
-                  if (input) {
-                      resultsContainer.style.display = 'block';
-                  } else {
-                      resultsContainer.style.display = 'none';
-                      return; // Exit the function early if there's no input
-                  }
-
-                  resultsContainer.innerHTML = ''; // Clear previous results
-
-                  const searchData = [
-                      { name: 'About', url: '..//about/index.html' },
-                    { name: 'Animal Crossing: New Horizons', url: '..//animalcrossingnewhorizons/index.html' },
-                  { name: 'Animal Crossing: New Leaf', url: '..//animalcrossingnewleaf/index.html' },
-                  { name: 'Assassin’s Creed Odyssey', url: '..//assassinscreedodyssey/index.html' },
-                  { name: 'Batman: Arkham City', url: '..//batmanarkhamcity/index.html' },
-                  { name: 'Big Brain Academy: Wii Degree', url: '..//bigbrainacademywiidegree/index.html' },
-                  { name: 'Blur', url: '..//blur/index.html' },
-                  { name: 'Cars', url: '..//cars/index.html' },
-                    { name: 'Contact', url: '..//contact/index.html' },
-                  { name: 'Dark Souls Remastered', url: '..//darksoulsremastered/index.html' },
-                    { name: 'Dashboard', url: '..//dashboard/index.html' },
-                  { name: 'Deadpool', url: '..//deadpool/index.html' },
-                  { name: 'Despicable Me: Minion Mayhem', url: '..//despicablememinionmayhem/index.html' },
-                  { name: 'Disney Infinity', url: '..//disneyinfinity/index.html' },
-                  { name: 'Disney Infinity 3.0.', url: '..//disneyinfinity30/index.html' },
-                  { name: 'Disney Universe', url: '..//disneyuniverse/index.html' },
-                  { name: 'DJ Hero 2', url: '..//djhero2/index.html' },
-                  { name: 'Donkey Kong Country Returns', url: '..//donkeykongcountryreturns/index.html' },
-                  { name: 'Donkey Kong Country: Tropical Freeze', url: '..//donkeykongcountrytropicalfreeze/index.html' },
-                  { name: 'Dragon Age Inquisition', url: '..//dragonageinquisition/index.html' },
-                  { name: 'Dragon Dogma: Dark Arisen', url: '..//dragondogmadarkarisen/index.html' },
-                  { name: 'Driven', url: '..//driven/index.html' },
-                  { name: 'EA Sports: Personal Trainer', url: '..//easportspersonaltrainer/index.html' },
-                  { name: 'Epic Mickey 2: The Power of Two', url: '..//epicmickey2thepoweroftwo/index.html' },
-                  { name: 'ESPN NBA 2K5', url: '..//espnnba2K5/index.html' },
-                  { name: 'FaceBreaker K.O. Party', url: '..//facebreakerkoparty/index.html' },
-                  { name: 'Fallout 3', url: '..//fallout3/index.html' },
-                  { name: 'Fallout 4', url: '..//fallout4/index.html' },
-                  { name: 'FAQ', url: '..//faq/index.html' },
-                  { name: 'Forgot Password', url: '..//forgot/index.html' },
-                  { name: 'Fortune Street', url: '..//fortunestreet/index.html' },
-                  { name: 'Friday the 13th: The Game', url: '..//fridaythe13ththegame/index.html' },
-                  { name: 'Frogger 2: Swampy’s Revenge', url: '..//frogger2swampysrevenge/index.html' },
-                    { name: 'Games', url: '..//games/index.html' },
-                  { name: 'Game Party', url: '..//gameparty/index.html' },
-                  { name: 'Gran Turismo', url: '..//granturismo/index.html' },
-                  { name: 'Grand Theft Auto IV', url: '..//grandtheftautoiv/index.html' },
-                  { name: 'Grand Theft Auto V', url: '..//grandtheftautov/index.html' },
-                  { name: 'Hell’s Kitchen: The Game', url: '..//hellskitchenthegame/index.html' },
-                  { name: 'Home', url: '..//index.html' },
-                  { name: 'Hello Kitty: Big City Dreams', url: '..//hellokittybigcitydreams/index.html' },
-                  { name: 'Hotel Transylvania', url: '..//hoteltransylvania/index.html' },
-                  { name: 'Hyrule Warriors: Age of Calamity', url: '..//hyrulewarriorsageofcalamity/index.html' },
-                  { name: 'Injustice: Gods Among Us', url: '..//injusticegodsamongus/index.html' },
-                  { name: 'Injustice 2', url: '..//injustice2/index.html' },
-                  { name: 'Lego Batman 2: DC Super Heroes', url: '..//legobatman2dcsuperheroes/index.html' },
-                  { name: 'Lego Batman 3: Beyond Gotham', url: '..//legobatman3beyondgotham/index.html' },
-                  { name: 'Lego City Undercover', url: '..//legocityundercover/index.html' },
-                  { name: 'Lego DC Super Villains', url: '..//legodcsupervillains/index.html' },
-                  { name: 'Lego Jurassic World', url: '..//legojurassicworld/index.html' },
-                  { name: 'Lego Marvel Super Heroes', url: '..//legomarvelsuperheroes/index.html' },
-                  { name: 'Lego Marvel Super Heroes 2', url: '..//legomarvelsuperheroes2/index.html' },
-                  { name: 'Lego Marvel’s Avengers', url: '..//legomarvelsavengers/index.html' },
-                  { name: 'Lego Pirates of the Caribbean', url: '..//legopiratesoftheCaribbean/index.html' },
-                  { name: 'Lego Star Wars: The Force Awakens', url: '..//legostarwarstheforceawakens/index.html' },
-                  { name: 'Lego The Incredibles', url: '..//legotheincredibles/index.html' },
-                  { name: 'Life is Strange', url: '..//lifeisstrange/index.html' },
-                  { name: 'Life is Strange 2', url: '..//lifeisstrange2/index.html' },
-                  { name: 'Life Is Strange: Before the Storm', url: '..//lifeisstrangebeforethestorm/index.html' },
-                  { name: 'Life Is Strange: True Colors', url: '..//lifeisstrangetruecolors/index.html' },
-                  { name: 'LittleBigPlanet', url: '..//littlebigplanet/index.html' },
-                  { name: 'LittleBigPlanet 2', url: '..//littlebigplanet2/index.html' },
-                  { name: 'LittleBigPlanet 3', url: '..//littlebigplanet3/index.html' },
-                  { name: 'LittleBigPlanet Karting', url: '..//littlebigplanetkarting/index.html' },
-                    { name: 'Login', url: '..//login/index.html' },
-                      { name: 'Logout', url: '..//logout/index.html' },
-                  { name: 'Luigi\'s Mansion: Dark Moon', url: '..//luigismansiondarkmoon/index.html' },
-                  { name: 'M&M’s Adventure', url: '..//mandmsadventure/index.html' },
-                  { name: 'Madagascar 3: The Video Game', url: '..//madagascar3thevideogame/index.html' },
-                  { name: 'Madden NFL 07', url: '..//maddennfl07/index.html' },
-                  { name: 'Madden NFL 09', url: '..//maddennfl09/index.html' },
-                  { name: 'Madden NFL 12', url: '..//maddennfl12/index.html' },
-                  { name: 'Madden NFL 15', url: '..//maddennfl15/index.html' },
-                  { name: 'Madden NFL 16', url: '..//maddennfl16/index.html' },
-                  { name: 'Madden NFL 17', url: '..//maddennfl17/index.html' },
-                  { name: 'Madden NFL 18', url: '..//maddennfl18/index.html' },
-                  { name: 'Madden NFL 19', url: '..//maddennfl19/index.html' },
-                  { name: 'Madden NFL 20', url: '..//maddennfl20/index.html' },
-                  { name: 'Madden NFL 25', url: '..//maddennfl25/index.html' },
-                  { name: 'Mario & Luigi: Bowser\'s Inside Story', url: '..//marioandluigibowsersinsidestory/index.html' },
-                  { name: 'Mario & Sonic at the Olympic Games', url: '..//marioandsonicattheolympicgames/index.html' },
-                  { name: 'Mario & Sonic at the London 2012 Olympic Games', url: '..//marioandsonicatthelondon2012olympicgames/index.html' },
-                  { name: 'Mario & Sonic at the Rio 2016 Olympic Games', url: '..//marioandsonicattherio2016olympicgames/index.html' },
-                  { name: 'Mario Kart 7', url: '..//mariokart7/index.html' },
-                  { name: 'Mario Kart 8', url: '..//mariokart8/index.html' },
-                  { name: 'Mario Kart 8 Deluxe', url: '..//mariokart8deluxe/index.html' },
-                  { name: 'Mario Kart DS', url: '..//mariokartds/index.html' },
-                  { name: 'Mario Kart Wii', url: '..//mariokartwii/index.html' },
-                  { name: 'Mario Party 8', url: '..//marioparty8/index.html' },
-                { name: 'Mario Party 10', url: '..//marioparty10/index.html' },
-                { name: 'Mario Party DS', url: '..//mariopartyds/index.html' },
-                { name: 'Mario Power Tennis', url: '..//mariopowertennis/index.html' },
-                { name: 'Mario Sports Mix', url: '..//mariosportsmix/index.html' },
-                { name: 'Mario Super Sluggers', url: '..//..//mariosupersluggers/index.html' },
-                { name: 'Mario Tennis: Ultra Smash', url: '..//mariotennisultrasmash/index.html' },
-                { name: 'Mario vs. Donkey Kong: Mini-Land', url: '..//mariovsdonkeykongminiland/index.html' },
-                { name: 'Marvel’s Avenger', url: '..//marvelsavenger/index.html' },
-                { name: 'Marvel’s Spider-Man', url: '..//marvelsspiderman/index.html' },
-                { name: 'Mass Effect Legendary Edition', url: '..//masseffectlegendaryedition/index.html' },
-                { name: 'Midnight Club: Street Racing', url: '..//midnightclubstreetracing/index.html' },
-                { name: 'Midnight Club 3: Dub Edition', url: '..//midnightclub3dubedition/index.html' },
-                { name: 'Mortal Kombat 11: Aftermath', url: '..//mortalkombat11aftermath/index.html' },
-                { name: 'My Street', url: '..//mystreet/index.html' },
-                { name: 'Mystery Masters MYSTERIES OF THE HEART COLLECTION 20 GAMES IN ALL Hidden Object PC Game', url: '..//mysterymastersmysteriesoftheheartcollection20gamesinallhiddenobjectpcgame/index.html' },
-                { name: 'NBA 08', url: '..//nba08/index.html' },
-                { name: 'NBA 2K8', url: '..//nba2k8/index.html' },
-                { name: 'NBA 2K9', url: '..//nba2k9/index.html' },
-                { name: 'NBA 2K10', url: '..//nba2k10/index.html' },
-                { name: 'NBA 2K11', url: '..//nba2k11/index.html' },
-                { name: 'NBA 2K12', url: '..//nba2k12/index.html' },
-                { name: 'NBA 2K14', url: '..//nba2k14/index.html' },
-                { name: 'NBA 2K15', url: '..//nba2k15/index.html' },
-                { name: 'NBA 2K16', url: '..//nba2k16/index.html' },
-                { name: 'NBA 2K17', url: '..//nba2k17/index.html' },
-                { name: 'NBA 2K18', url: '..//nba2k18/index.html' },
-                { name: 'NBA 2K19', url: '..//nba2k19/index.html' },
-                { name: 'NBA 2K20', url: '..//nba2k20/index.html' },
-                { name: 'NBA 2K21', url: '..//nba2k21/index.html' },
-                { name: 'NBA 2K22', url: '..//nba2k22/index.html' },
-                { name: 'NBA Live 08', url: '..//nbalive08/index.html' },
-                { name: 'NBA Street', url: '..//nbastreet/index.html' },
-                { name: 'Need for Speed: Carbon', url: '..//needforspeedcarbon/index.html' },
-                { name: 'New Super Mario Bros.', url: '..//newsupermariobros/index.html' },
-                  { name: 'New Super Mario Bros. 2', url: '..//newsupermariobros2/index.html' },
-                  { name: 'New Super Mario Bros. U', url: '..//newsupermariobrosu/index.html' },
-                  { name: 'New Super Mario Bros. Wii', url: '..//newsupermariobroswii/index.html' },
-                  { name: 'NHL 2K10', url: '..//nhl2k10/index.html' },
-                  { name: 'Nintendo Land', url: '..//nintendoland/index.html' },
-                  { name: 'Phineas and Ferb: Across the 2nd Dimension', url: '..//phineasandferbacrossthe2nddimension/index.html' },
-                  { name: 'Pinkie Pie’s Party', url: '..//pinkiepiesparty/index.html' },
-                  { name: 'PlayStation All-Stars Battle Royale', url: '..//playstationallstarsbattleroyale/index.html' },
-                    { name: 'Public Policy', url: '..//publicpolicy/index.html' },
-                  { name: 'Rio', url: '..//rio/index.html' },
-                  { name: 'Shrek Forever After', url: '..//shrekforeverafter/index.html' },
-                  { name: 'Signup', url: '..//signup/index.html' },
-                  { name: 'Skate It', url: '..//skateit/index.html' },
-                  { name: 'Sonic & Sega All-Stars Racing', url: '..//sonicandsegaallstarsracing/index.html' },
-                  { name: 'Sonic Riders: Zero Gravity', url: '..//sonicriderszerogravity/index.html' },
-                  { name: 'SpongeBob Squigglepants', url: '..//spongebobsquigglepants/index.html' },
-                  { name: 'Sports Champions', url: '..//sportschampions/index.html' },
-                  { name: 'Stardew Valley', url: '..//stardewvalley/index.html' },
-                  { name: 'Stuntman', url: '..//stuntman/index.html' },
-                  { name: 'Sunset Overdrive', url: '..//sunsetoverdrive/index.html' },
-                  { name: 'Super Mario 3D All-Stars', url: '..//supermario3dallstars/index.html' },
-                  { name: 'Super Mario 3D Land', url: '..//supermario3dland/index.html' },
-                  { name: 'Super Mario 3D World', url: '..//supermario3dworld/index.html' },
-                  { name: 'Super Mario Galaxy 2', url: '..//supermariogalaxy2/index.html' },
-                  { name: 'Super Mario Maker', url: '..//supermariomaker/index.html' },
-                  { name: 'Super Mario Maker 2', url: '..//supermariomaker2/index.html' },
-                  { name: 'Super Mario Odyssey', url: '..//supermarioodyssey/index.html' },
-                  { name: 'Super Mario Bros. Wonder', url: '..//supermariobroswonder/index.html' },
-                  { name: 'Super Smash Bros. for Nintendo 3DS', url: '..//supersmashbrosfornintendo3ds/index.html' },
-                  { name: 'Super Smash Bros. for Wii U', url: '..//supersmashbrosforwiiu/index.html' },
-                  { name: 'The Amazing Race', url: '..//theamazingrace/index.html' },
-                  { name: 'The Amazing Spider-Man 2', url: '..//theamazingspiderman2/index.html' },
-                  { name: 'The Awesome Adventures of Captain Spirit', url: '..//theawesomeadventuresofcaptainspirit/index.html' },
-                  { name: 'The Elder Scrolls V: Skyrim', url: '..//theelderscrollsvskyrim/index.html' },
-                  { name: 'The Fairly OddParents: Shadow Showdown', url: '..//thefairlyoddparentsshadowshowdown/index.html' },
-                  { name: 'The Incredibles', url: '..//theincredibles/index.html' },
-                  { name: 'The Legend of Zelda: Breath of the Wild', url: '..//thelegendofzeldabreathofthewild/index.html' },
-                  { name: 'The Lego Movie Videogame', url: '..//thelegomovievideogame/index.html' },
-                  { name: 'The Oregon Trail', url: '..//theoregontrail/index.html' },
-                  { name: 'The Sims 3', url: '..//thesims3/index.html' },
-                  { name: 'The Sims 3: Starter Pack', url: '..//thesims3starterpack/index.html' },
-                 { name: 'The Sims 4', url: '..//thesims4/index.html' },
-                 { name: 'The Smurfs', url: '..//thesmurfs/index.html' },
-                 { name: 'The Smurfs 2', url: '..//thesmurfs2/index.html' },
-                 { name: 'The SpongeBob SquarePants Movie', url: '..//thespongebobsquarepantsmovie/index.html' },
-                 { name: 'The Walking Dead: Survival Instinct', url: '..//thewalkingdeadsurvivalinstinct/index.html' },
-                 { name: 'Tomodachi Life', url: '..//tomodachilife/index.html' },
-                 { name: 'Tony Hawk’s Pro Skater 4', url: '..//tonyhawksproskater4/index.html' },
-                 { name: 'Toy Story 3', url: '..//toystory3/index.html' },
-                 { name: 'Transformers: Rise of the Dark Spark', url: '..//transformersriseofthedarkspark/index.html' },
-                 { name: 'uDraw Studio', url: '..//udrawstudio/index.html' },
-                 { name: 'Ultimate NES Remix', url: '..//ultimatenesremix/index.html' },
-                 { name: 'Uncharted: Drake’s Fortune', url: '..//uncharteddrakesfortune/index.html' },
-                 { name: 'Uncharted 4: A Thief’s End', url: '..//uncharted4athiefsend/index.html' },
-                 { name: 'Watch Dogs', url: '..//watchdogs/index.html' },
-                 { name: 'Watch Dogs 2', url: '..//watchdogs2/index.html' },
-                 { name: 'Watch Dogs: Legion', url: '..//watchdogslegion/index.html' },
-                 { name: 'Wii Play', url: '..//wiiplay/index.html' },
-                 { name: 'Wii Sports', url: '..//wiisports/index.html' },
-                 { name: 'Wipeout', url: '..//wipeout/index.html' },
-                 { name: 'Wipeout 2', url: '..//wipeout2/index.html' }
-
-                      // Add more results as needed
-                  ];
-
-                  const filteredData = searchData.filter(item => item.name.toLowerCase().includes(input));
-
-                  filteredData.forEach(item => {
-                      const div = document.createElement('div');
-                      const a = document.createElement('a');
-                      a.textContent = item.name;
-                      a.href = item.url;
-
-                      div.appendChild(a);
-                      resultsContainer.appendChild(div);
-                  });
-              };
-
-              </script>
-
-
-
-              <script>
-              // Firebase configuration
-              const firebaseConfig = {
-                apiKey: "AIzaSyAMEkIdecNerz3qFFa1uWdIfNlXgK4siTM",
-                authDomain: "thereminiscencecollection.firebaseapp.com",
-                projectId: "thereminiscencecollection",
-                storageBucket: "thereminiscencecollection.appspot.com",
-                messagingSenderId: "1092408379840",
-                appId: "1:1092408379840:web:6e5d0ba1c7d4d8100fa025",
-                measurementId: "G-3B8XEPCE0T"
-              };
-
-              // Initialize Firebase
-              firebase.initializeApp(firebaseConfig);
-              const auth = firebase.auth();
-              const storage = firebase.storage();
-              const firestore = firebase.firestore();
-              const db = firebase.firestore();
-              const gameId = 'marvelsavenger'; // Assume this is set appropriately elsewhere
-
-              // Use an auth state observer to wait for the auth state to be initialized
-              firebase.auth().onAuthStateChanged((user) => {
-                if (user) {
-                  // User is signed in, now you can safely use user.uid
-                  const userId = user.uid;
-
-                  db.collection('games').doc(gameId).collection('likes').doc(userId).set({
-                    liked: true, // or current timestamp
-                  }).then(() => {
-                    console.log("Like status set successfully.");
-                  }).catch((error) => {
-                    console.error("Error setting like status: ", error);
-                  });
-                } else {
-                  // No user is signed in.
-                  console.log("No user signed in.");
-                }
-              });
-
-
-
-
-
-              function showToast(message) {
-                  const toast = document.createElement('div');
-                  toast.textContent = message;
-                  toast.style.position = 'fixed';
-                  toast.style.bottom = '20px';
-                  toast.style.left = '50%';
-                  toast.style.transform = 'translateX(-50%)';
-                  toast.style.backgroundColor = 'black';
-                  toast.style.color = 'white';
-                  toast.style.padding = '10px';
-                  toast.style.borderRadius = '5px';
-                  document.body.appendChild(toast);
-                  setTimeout(() => document.body.removeChild(toast), 3000); // Remove after 3 seconds
-              }
-
-              // Function to check if user is signed in
-                function isUserSignedIn() {
-                  return !!firebase.auth().currentUser;
-                }
-
-                document.addEventListener('DOMContentLoaded', function() {
-                    // Define gameId and gameName here if they're not already defined globally
-                    const gameId = 'marvelsavenger';
-                    const gameName = 'Marvel’s Avenger';
-
-                    // Setup Like Button
-                    const likeButton = document.getElementById('likeButton');
-                    if (likeButton) {
-                        // Attach the event listener using an arrow function that calls handleLikeClick with the correct arguments
-                        likeButton.addEventListener('click', () => handleLikeClick(gameId, gameName));
-                    }
-
-                    const commentButton = document.getElementById('commentButton');
-                    if (commentButton) {
-                      commentButton.addEventListener('click', function() {
-                        // Target the textarea by its ID "commentInput"
-                        const commentInput = document.getElementById('commentInput');
-                        if (commentInput) {
-                          // Scrolls smoothly to the textarea
-                          commentInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                          // Optionally, focus the textarea to allow immediate typing
-                          commentInput.focus();
-                          }
-                      });
-                  }
-
-                    // Setup Rate Button
-                    const rateButton = document.getElementById('rateButton');
-                    if (rateButton) {
-                        // Attach the event listener for rate button
-                        rateButton.addEventListener('click', () => handleRateClick(gameId, gameName));
-                    }
-                });
-
-
-
-
-
-              async function handleLikeClick(gameId, gameName) {
-                  console.log(`handleLikeClick called with gameId: ${gameId}, gameName: ${gameName}`); // Debugging log
-
-                  if (!isUserSignedIn()) {
-                      showToast('You must be signed in to like.');
-                      return;
-                  }
-
-                  const userId = firebase.auth().currentUser.uid;
-                  console.log(`Attempting to toggle like for userId: ${userId}, gameId: ${gameId}`); // Debugging log
-
-                  const likesRef = firestore.collection('likes').doc(gameId);
-
-                  try {
-                      const doc = await likesRef.get();
-                      if (doc.exists && doc.data()[userId]) {
-                          await likesRef.update({ [userId]: firebase.firestore.FieldValue.delete() });
-                          showToast('Like removed.');
-                      } else {
-                          await likesRef.update({ [userId]: true });
-                          showToast('Like added.');
-                          await addLikeActivity(gameId, gameName).catch(console.error);
-                      }
-                      fetchAndDisplayLikes(gameId); // Refresh likes display
-                  } catch (error) {
-                      console.error("Error toggling like status: ", error);
-                      showToast('Failed to update like status.');
-                  }
-              }
-
-
-
-
-
-
-              document.addEventListener('DOMContentLoaded', function() {
-                const gameId = "marvelsavenger"; // Make sure this is set correctly
-                fetchAndDisplayLikes(gameId);
-              });
-
-
-
-
-
-
-
-
-
-
-
-              async function handleAuthStateChanges() {
-                  auth.onAuthStateChanged(async user => {
-                      if (user) {
-                          // Logic when the user is logged in
-                          console.log('User is logged in.');
-                      } else {
-                          // Logic when the user is logged out
-                          console.log('User is logged out.');
-                      }
-                  });
-              }
-
-              async function editComment(commentId, currentText) {
-                  console.log(`Editing comment ID: ${commentId} with text: ${currentText}`);
-                  const newText = prompt('Edit your comment:', currentText);
-                  if (newText !== null && newText.trim() !== '') {
-                      try {
-                          await firestore.collection('comments').doc(commentId).update({
-                              text: newText.trim()
-                          });
-                          console.log('Comment updated successfully');
-                          showToast('Comment updated successfully.');
-                          fetchAndDisplayComments(gameId); // Refresh the comments display
-                      } catch (error) {
-                          console.error('Error updating comment:', error);
-                          showToast('Failed to update comment.');
-                      }
-                  }
-              }
-
-              // Ensures comments are fetched and displayed as soon as the page loads
-              document.addEventListener('DOMContentLoaded', async () => {
-                  const gameId = 'marvelsavenger'; // Ensure this is correctly set
-                  console.log('Page loaded, fetching comments...');
-                  await fetchAndDisplayComments(gameId);
-              });
-
-              async function fetchAndDisplayComments(gameId) {
-                  const commentsList = document.getElementById('commentsList');
-                  commentsList.innerHTML = ''; // Clear existing comments
-
-                  try {
-                      const querySnapshot = await firestore.collection('comments')
-                          .where('gameId', '==', gameId)
-                          .orderBy('timestamp', 'desc')
-                          .get();
-
-                      querySnapshot.forEach(async (doc) => {
-                          const comment = doc.data();
-                          const userDoc = await firestore.collection('users').doc(comment.userId).get();
-                          const username = userDoc.exists ? userDoc.data().username : "Anonymous";
-                          const date = comment.timestamp ? comment.timestamp.toDate().toLocaleString() : "Unknown date";
-
-                          const commentElement = document.createElement('div');
-                          commentElement.classList.add('comment');
-                          const usernameElement = document.createElement('span');
-                          usernameElement.textContent = `${username} on ${date}: `;
-                          const commentTextElement = document.createElement('p');
-                          commentTextElement.textContent = comment.text;
-
-                          // Create a container for replies
-                          const repliesContainer = document.createElement('div');
-                          repliesContainer.classList.add('replies-container');
-
-                          // Append username and comment text first
-                          commentElement.appendChild(usernameElement);
-                          commentElement.appendChild(commentTextElement);
-
-                          // Edit and Delete buttons for comment
-                          if (auth.currentUser && auth.currentUser.uid === comment.userId) {
-                              const editButton = document.createElement('button');
-                              editButton.textContent = 'Edit';
-                              editButton.onclick = () => editComment(doc.id, comment.text); // Add your editComment function
-                              commentElement.appendChild(editButton);
-
-                              const deleteButton = document.createElement('button');
-                              deleteButton.textContent = 'Delete';
-                              deleteButton.onclick = async () => {
-                                  if (confirm("Are you sure you want to delete this comment?")) {
-                                      try {
-                                          await firestore.collection('comments').doc(doc.id).delete();
-                                          showToast('Comment deleted successfully.');
-                                          fetchAndDisplayComments(gameId);
-                                      } catch (error) {
-                                          console.error('Error deleting comment:', error);
-                                          showToast('Failed to delete comment.');
-                                      }
-                                  }
-                              };
-                              commentElement.appendChild(deleteButton);
-                          }
-
-                          // Reply button
-                          const replyButton = document.createElement('button');
-                          replyButton.textContent = 'Reply';
-                          replyButton.onclick = () => {
-                              if (!isUserSignedIn()) {
-                                  showToast('You must be signed in to reply.');
-                                  return;
-                              }
-                              document.getElementById('replyPopup').style.display = 'block';
-                              document.getElementById('sendReply').setAttribute('data-commentId', doc.id);
-                          };
-                          commentElement.appendChild(replyButton);
-
-                          // Append the replies container before adding reply functionalities
-                          commentElement.appendChild(repliesContainer);
-
-                          // Fetch and display replies for the comment
-                          const repliesQuerySnapshot = await firestore.collection('replies')
-                              .where('commentId', '==', doc.id)
-                              .orderBy('timestamp', 'asc')
-                              .get();
-
-
-
-              // New function to edit a reply
-              async function editReply(replyId, currentText) {
-                  const newText = prompt('Edit your reply:', currentText);
-                  if (newText !== null && newText.trim() !== '') {
-                      try {
-                          await firestore.collection('replies').doc(replyId).update({
-                              text: newText.trim()
-                          });
-                          showToast('Reply updated successfully.');
-                          fetchAndDisplayComments(gameId); // Refresh to show changes
-                      } catch (error) {
-                          console.error('Error updating reply:', error);
-                          showToast('Failed to update reply.');
-                      }
-                  }
-              }
-              /// Within fetchAndDisplayComments function, when fetching and displaying replies:
-              repliesQuerySnapshot.forEach(async replyDoc => {
-                  const reply = replyDoc.data();
-                  const replyElement = document.createElement('div');
-                  replyElement.classList.add('reply');
-
-                  // Fetch username of the user who made the reply
-                  const replyUserDoc = await firestore.collection('users').doc(reply.userId).get();
-                  const replyUsername = replyUserDoc.exists ? replyUserDoc.data().username : "Anonymous";
-
-                  // Format the timestamp
-                  const replyDate = reply.timestamp ? reply.timestamp.toDate().toLocaleString() : "Unknown date";
-
-                  // Create a span for displaying the reply username and date
-                  const replyUserElement = document.createElement('span');
-                  replyUserElement.textContent = `${replyUsername} on ${replyDate}: `;
-                  replyElement.appendChild(replyUserElement);
-
-                  // Create a span for displaying the reply text
-                  const replyTextElement = document.createElement('span');
-                  replyTextElement.textContent = reply.text;
-                  replyElement.appendChild(replyTextElement);
-
-                  // Only show edit and delete buttons for the user's own replies
-                  if (auth.currentUser && auth.currentUser.uid === reply.userId) {
-                      const editReplyButton = document.createElement('button');
-                      editReplyButton.textContent = 'Edit';
-                      editReplyButton.onclick = () => editReply(replyDoc.id, reply.text); // Adjust this to your actual editReply function
-                      replyElement.appendChild(editReplyButton);
-
-                      const deleteReplyButton = document.createElement('button');
-                      deleteReplyButton.textContent = 'Delete';
-                      deleteReplyButton.onclick = async () => {
-                          if (confirm("Are you sure you want to delete this reply?")) {
-                              try {
-                                  await firestore.collection('replies').doc(replyDoc.id).delete();
-                                  showToast('Reply deleted successfully.');
-                                  fetchAndDisplayComments(gameId); // Refresh to show changes
-                              } catch (error) {
-                                  console.error('Error deleting reply:', error);
-                                  showToast('Failed to delete reply.');
-                              }
-                          }
-                      };
-                      replyElement.appendChild(deleteReplyButton);
-                  }
-
-                  // Append the replyElement to its respective comment's repliesContainer
-                  repliesContainer.appendChild(replyElement); // Ensure repliesContainer is defined in your fetchAndDisplayComments function
-              });
-                          // Append the comment element (with replies) to the comments list
-                          commentsList.appendChild(commentElement);
-                      });
-                  } catch (error) {
-                      console.error('Error fetching comments:', error);
-                      showToast('Failed to fetch comments.');
-                  }
-              }
-
-              async function handleCommentSubmit() {
-                  // Assuming you have already checked if the user is signed in and other preliminary checks
-                  const gameId = 'marvelsavenger'; // Make sure to dynamically set or retrieve this value as necessary
-                  const gameName = 'Marvel’s Avenger'; // Dynamically set or retrieve this value as necessary
-                  const commentInput = document.getElementById('commentInput');
-                  const commentText = commentInput.value.trim();
-
-                  if (commentText) {
-                      try {
-                          // Add the comment to the 'comments' collection
-                          const commentRef = await firestore.collection('comments').add({
-                              gameId: gameId,
-                              gameName: gameName,
-                              text: commentText,
-                              userId: firebase.auth().currentUser.uid,
-                              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                          });
-
-                          showToast('Comment added successfully.');
-
-                          // Log this comment activity in the 'userActivities' collection
-                          const activity = {
-                              userId: firebase.auth().currentUser.uid,
-                              type: 'comment',
-                              gameId: gameId,
-                              gameName: gameName,
-                              commentId: commentRef.id, // Optionally store the comment ID for reference
-                              text: commentText, // Optionally store the comment text
-                              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                          };
-
-                          await firestore.collection('userActivities').add(activity);
-                          showToast('Comment activity recorded successfully.');
-
-                          // Optionally, refresh comments display
-                          fetchAndDisplayComments(gameId);
-
-                          // Clear the input field after successful comment submission
-                          commentInput.value = '';
-                      } catch (error) {
-                          console.error('Error submitting comment:', error);
-                          showToast('Failed to submit comment.');
-                      }
-                  } else {
-                      showToast('Please enter a comment.');
-                  }
-              }
-
-              // Attach this function to the submit comment button
-              document.addEventListener('DOMContentLoaded', () => {
-                  const submitCommentButton = document.getElementById('submitComment');
-                  if (submitCommentButton) {
-                      submitCommentButton.addEventListener('click', handleCommentSubmit);
-                  }
-              });
-
-
-
-              // This function is already defined in your script, included here to avoid the syntax error
-              async function editComment(commentId, currentText) {
-                  const newText = prompt('Edit your comment:', currentText);
-                  if (newText !== null && newText.trim() !== '') {
-                      try {
-                          await firestore.collection('comments').doc(commentId).update({
-                              text: newText.trim()
-                          });
-                          showToast('Comment updated successfully.');
-                          fetchAndDisplayComments(gameId);
-                      } catch (error) {
-                          console.error('Error updating comment:', error);
-                          showToast('Failed to update comment.');
-                      }
-                  }
-              }
-
-
-
-
-
-              async function replyToComment(commentId) {
-                  const replyText = prompt("Enter your reply:");
-                  if (replyText && replyText.trim() !== '') {
-                      try {
-                          await firestore.collection('replies').add({
-                              commentId: commentId,
-                              text: replyText,
-                              userId: auth.currentUser.uid,
-                              timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                          });
-                          showToast('Reply added successfully.');
-                          // Refresh the comments to include the new reply
-                          fetchAndDisplayComments(gameId);
-                      } catch (error) {
-                          console.error('Error adding reply:', error);
-                          showToast('Failed to add reply.');
-                      }
-                  }
-              }
-
-
-
-              // Adjusted replyToComment to work with the popup
-              async function sendReply() {
-                  const replyText = document.getElementById('replyText').value.trim();
-                  const commentId = document.getElementById('sendReply').getAttribute('data-commentId');
-
-                  if (replyText) {
-                      try {
-                          await firestore.collection('replies').add({
-                              commentId: commentId,
-                              text: replyText,
-                              userId: auth.currentUser.uid,
-                              timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                          });
-                          showToast('Reply added successfully.');
-                          document.getElementById('replyPopup').style.display = 'none';
-                          document.getElementById('replyText').value = ''; // Clear text area
-                          fetchAndDisplayComments(gameId);
-                      } catch (error) {
-                          console.error('Error adding reply:', error);
-                          showToast('Failed to add reply.');
-                      }
-                  }
-              }
-
-              // Attach event listener to send reply button
-              document.getElementById('sendReply').addEventListener('click', sendReply);
-
-
-              async function handleSubmitComment() {
-                  // First, check if the user is signed in
-                  if (!isUserSignedIn()) {
-                      showToast('Please sign in to add a comment.');
-                      return; // Exit the function early if no user is signed in
-                  }
-
-                  const commentInput = document.getElementById('commentInput');
-                  const commentText = commentInput.value.trim();
-                  const gameId = 'marvelsavenger'; // Dynamically fetch this if necessary
-
-                  // Disable the button to prevent multiple submissions
-                  const submitCommentButton = document.getElementById('submitComment');
-                  submitCommentButton.disabled = true;
-
-                  if (commentText) {
-                      try {
-                          // Consider merging additional logic here if needed from handleCommentClick
-                          await addComment(gameId, commentText);
-                          commentInput.value = ''; // Clear the input field after successful comment submission
-                          showToast('Comment added successfully.');
-                          fetchAndDisplayComments(gameId); // Refresh comment display
-                      } catch (error) {
-                          console.error('Error adding comment:', error);
-                          showToast('Failed to add comment.');
-                      }
-                  } else {
-                      showToast('Please enter a comment.');
-                  }
-
-                  submitCommentButton.disabled = false; // Re-enable the submit button after processing
-              }
-
-              // Attach event listener once DOM is fully loaded
-              document.addEventListener('DOMContentLoaded', () => {
-                  const submitCommentButton = document.getElementById('submitComment');
-                  if (submitCommentButton) {
-                      submitCommentButton.addEventListener('click', handleSubmitComment);
-                  }
-              });
-
-
-
-
-
-
-
-
-              async function fetchAndDisplayLikes(gameId) {
-                  console.log(`Fetching likes for game ID: ${gameId}`);
-                  try {
-                      const likesDoc = await firestore.collection('likes').doc(gameId).get();
-                      if (likesDoc.exists) {
-                          const likesData = likesDoc.data();
-                          let likeCount = 0;
-                          // Assuming each key in likesData with a true value represents a like
-                          Object.values(likesData).forEach(value => {
-                              if (value === true) likeCount++;
-                          });
-                          console.log(`Likes found: ${likeCount}`);
-                          document.getElementById('likesCount').textContent = `Likes: ${likeCount}`;
-                      } else {
-                          console.log('No likes data found for this game.');
-                          document.getElementById('likesCount').textContent = "Likes: 0";
-                      }
-                  } catch (error) {
-                      console.error('Error fetching likes:', error);
-                      // Assuming showToast is a function to display messages to the user
-                      showToast('Failed to fetch likes.');
-                  }
-              }
-
-
-
-              async function fetchAndDisplayRating(gameId) {
-                try {
-                  console.log(`Fetching rating for game ID: ${gameId}`);
-                  const ratingDoc = await firestore.collection('ratings').doc(gameId).get();
-                  if (ratingDoc.exists) {
-                    const ratingData = ratingDoc.data();
-                    console.log('Rating Data:', ratingData); // Debug: log the entire rating data
-
-                    // Ensure the user is signed in before trying to access their UID
-                    if (isUserSignedIn()) {
-                      const userRating = ratingData[auth.currentUser.uid];
-                      console.log(`Rating found for user ${auth.currentUser.uid}: ${userRating}`); // Debug: log the fetched rating
-
-                      // Update the display based on whether a rating was found
-                      const displayText = userRating ? `Your Rating: ${userRating}` : "You haven't rated this game yet.";
-                      document.getElementById('ratingDisplay').textContent = displayText;
-                    } else {
-                      console.log('No user is signed in to fetch rating.');
-                      document.getElementById('ratingDisplay').textContent = "Sign in to see your rating.";
-                    }
-                  } else {
-                    console.log('No rating found for this game.');
-                    document.getElementById('ratingDisplay').textContent = "You haven't rated this game yet.";
-                  }
-                } catch (error) {
-                  console.error('Error fetching rating:', error);
-                  showToast('Failed to fetch rating.');
-                }
-              }
-
-
-              firebase.auth().onAuthStateChanged(user => {
-                if (user) {
-                  // User is signed in, safe to fetch the rating
-                  fetchAndDisplayRating('marvelsavenger');
-                } else {
-                  // No user is signed in.
-                  console.log("No user signed in.");
-                }
-              });
-
-
-
-
-
-              // Event listeners setup and other functions (omitted for brevity)
-
-              async function addComment(gameId, commentText) {
-                  // Replace this logic with your actual Firestore path and data structure
-                  try {
-                      await firestore.collection('comments').add({
-                          gameId: gameId,
-                          text: commentText,
-                          // Include other fields as necessary, e.g., userId or timestamp
-                          userId: auth.currentUser.uid,
-                          timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                      });
-                      showToast('Comment added successfully');
-                      fetchAndDisplayComments(gameId); // Refresh comments display
-                  } catch (error) {
-                      console.error('Error adding comment:', error);
-                      showToast('Failed to add comment');
-                  }
-              }
-
-              async function rateGame(gameId, rating) {
-                  if (!isUserSignedIn()) {
-                      showToast('You must be signed in to rate.');
-                      return;
-                  }
-
-                  // Example: Logic to determine gameName based on gameId
-                  // This could involve fetching game details from Firestore or another source
-                  const gameDetails = await fetchGameDetails(gameId);
-                  const gameName = gameDetails.name; // Assuming the fetched game details include a name
-
-                  if (!gameName) {
-                      console.error('Game name not found for gameId:', gameId);
-                      showToast('Failed to find game name. Rating not saved.');
-                      return;
-                  }
-
-                  // Call saveRating with gameId, rating, and the determined gameName
-                  await saveRating(gameId, rating, gameName);
-              }
-
-              // Dummy function to represent fetching game details
-              // Replace this with your actual function to fetch game details based on gameId
-              async function fetchGameDetails(gameId) {
-                  // Your logic to fetch game details
-                  return { name: "marvelsavenger" }; // Example return value
-              }
-              async function saveRating(gameId, rating, gameName) {
-                  // Check if user is signed in
-                  if (!isUserSignedIn()) {
-                      showToast('You must be signed in to rate.');
-                      return;
-                  }
-
-                  // Assuming gameId, rating, and gameName are correctly passed
-                  console.log(`Saving rating for gameId: ${gameId}, rating: ${rating}, gameName: ${gameName}`);
-
-                  const userId = firebase.auth().currentUser.uid;
-
-                  // Attempt to save the rating to the ratings collection
-                  try {
-                      // Save the user's rating for the game
-                      await firestore.collection('ratings').doc(gameId).set({
-                          [userId]: rating
-                      }, { merge: true });
-
-                      // Log this activity in the userActivities collection
-                      const activity = {
-                          userId: userId,
-                          type: 'rating',
-                          gameId: gameId,
-                          gameName: gameName, // Assuming this is dynamically determined based on gameId
-                          rating: rating,
-                          timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                      };
-
-                      // Save the activity
-                      await firestore.collection('userActivities').add(activity);
-
-                      showToast('Rating saved successfully');
-                      // Optionally, refresh the display of ratings here if needed
-                      fetchAndDisplayRating(gameId); // Assuming this function refreshes the rating display
-                  } catch (error) {
-                      console.error('Error saving rating:', error);
-                      showToast('Failed to save rating');
-                  }
-              }
-
-
-              async function handleRateClick() {
-                  if (!isUserSignedIn()) {
-                      showToast('You must be signed in to rate.');
-                      return;
-                  }
-
-                  const gameId = 'marvelsavenger'; // Ensure this is correctly set
-                  const gameName = 'Marvel’s Avenger'; // Ensure this is correctly set
-                  let rating = parseInt(prompt("Enter your rating (1-5):"), 10);
-
-                  // Validate the rating
-                  if (!rating || rating < 1 || rating > 5) {
-                      showToast('Please enter a valid rating between 1 and 5.');
-                      return;
-                  }
-
-                  try {
-                      // Call the function to save the rating
-                      await saveRating(gameId, rating, gameName);
-                      showToast('Rating saved successfully');
-                  } catch (error) {
-                      console.error('Error saving rating:', error);
-                      showToast('Failed to save rating');
-                  }
-              }
-
-              // Adjusted handleRateClick function to include gameName
-              async function handleRateClick() {
-                  if (!isUserSignedIn()) {
-                      showToast('You must be signed in to rate.');
-                      return;
-                  }
-
-                  const gameId = 'marvelsavenger'; // Example gameId
-                  const gameName = "Marvel’s Avenger"; // You need to set this dynamically based on gameId
-
-                  let rating = parseInt(prompt("Enter your rating (1-5):"), 10); // Convert string input to integer
-
-                  // Validate rating
-                  if (!rating || rating < 1 || rating > 5) {
-                      showToast('Please enter a valid rating between 1 and 5.');
-                      return;
-                  }
-
-                  try {
-                      await saveRating(gameId, rating, gameName); // Pass gameName here
-                  } catch (error) {
-                      console.error('Error during rating:', error);
-                      showToast('Failed to save rating');
-                  }
-              }
-
-              async function addLikeActivity(gameId, gameName) {
-                  if (!firebase.auth().currentUser) {
-                      showToast('No user is signed in.');
-                      return;
-                  }
-
-                  try {
-                      const activity = {
-                          userId: firebase.auth().currentUser.uid,
-                          type: 'like',
-                          gameName: gameName,
-                          gameId: gameId,
-                          timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                      };
-                      await firestore.collection('userActivities').add(activity);
-                      showToast('Like activity recorded successfully');
-                  } catch (error) {
-                      console.error('Error recording like activity:', error);
-                      showToast('Failed to record like activity');
-                  }
-              }
-
-
-
-
-                // Define the logoutUser function
-                function logoutUser() {
-                  auth.signOut().then(() => {
-                    console.log('User logged out');
-                    // Optionally redirect the user to login page or home page after logout
-                    window.location.href = '..//index.html';
-                  }).catch((error) => {
-                    console.error('Logout Error:', error);
-                  });
-                }
-
-                auth.onAuthStateChanged(async user => {
-                    const dropdownContent = document.querySelector('.dropdown-content2');
-                    if (user) {
-                        // User is signed in
-                        console.log('User is logged in:', user);
-
-                        // Display user's display name or fallback to 'User'
-                        document.getElementById('userName').textContent = user.displayName || 'User';
-
-
-
-                        // Update dropdown content for logged-in users
-                        dropdownContent.innerHTML = `
-                            <a href="..//dashboard/index.html">Dashboard</a>
-                            <a href="javascript:void(0);" id="logoutBtn">Logout</a>
-                        `;
-
-                        // Attach event listener to the logout button again if necessary
-                        document.getElementById('logoutBtn').addEventListener('click', logoutUser);
-
-                    } else {
-                        // No user is signed in
-                        console.log('User is logged out.');
-                        // Update dropdown content for guests
-                        dropdownContent.innerHTML = `
-                            <a href="..//login/index.html">Login</a>
-                            <a href="..//signup/index.html">Signup</a>
-                        `;
-                    }
-                });
-
-
-              </script>
+               <script>
+               const searchFunction = () => {
+                   const input = document.getElementById('searchInput2').value.toLowerCase();
+                   const resultsContainer = document.getElementById('searchResults2');
+
+                   // Make the results container visible only if there's input
+                   if (input) {
+                       resultsContainer.style.display = 'block';
+                   } else {
+                       resultsContainer.style.display = 'none';
+                       return; // Exit the function early if there's no input
+                   }
+
+                   resultsContainer.innerHTML = ''; // Clear previous results
+
+                   const searchData = [
+                       { name: 'About', url: '..//about/index.html' },
+                     { name: 'Animal Crossing: New Horizons', url: '..//animalcrossingnewhorizons/index.html' },
+                   { name: 'Animal Crossing: New Leaf', url: '..//animalcrossingnewleaf/index.html' },
+                   { name: 'Assassin’s Creed Odyssey', url: '..//assassinscreedodyssey/index.html' },
+                   { name: 'Batman: Arkham City', url: '..//batmanarkhamcity/index.html' },
+                   { name: 'Big Brain Academy: Wii Degree', url: '..//bigbrainacademywiidegree/index.html' },
+                   { name: 'Blur', url: '..//blur/index.html' },
+                   { name: 'Cars', url: '..//cars/index.html' },
+                   { name: 'Citations', url: '..//citations/index.html' },
+                     { name: 'Contact', url: '..//contact/index.html' },
+                   { name: 'Dark Souls Remastered', url: '..//darksoulsremastered/index.html' },
+                     { name: 'Dashboard', url: '..//dashboard/index.html' },
+                   { name: 'Deadpool', url: '..//deadpool/index.html' },
+                   { name: 'Despicable Me: Minion Mayhem', url: '..//despicablememinionmayhem/index.html' },
+                   { name: 'Disney Infinity', url: '..//disneyinfinity/index.html' },
+                   { name: 'Disney Infinity 3.0.', url: '..//disneyinfinity30/index.html' },
+                   { name: 'Disney Universe', url: '..//disneyuniverse/index.html' },
+                   { name: 'DJ Hero 2', url: '..//djhero2/index.html' },
+                   { name: 'Donkey Kong Country Returns', url: '..//donkeykongcountryreturns/index.html' },
+                   { name: 'Donkey Kong Country: Tropical Freeze', url: '..//donkeykongcountrytropicalfreeze/index.html' },
+                   { name: 'Dragon Age Inquisition', url: '..//dragonageinquisition/index.html' },
+                   { name: 'Dragon Dogma: Dark Arisen', url: '..//dragondogmadarkarisen/index.html' },
+                   { name: 'Driven', url: '..//driven/index.html' },
+                   { name: 'EA Sports: Personal Trainer', url: '..//easportspersonaltrainer/index.html' },
+                   { name: 'Epic Mickey 2: The Power of Two', url: '..//epicmickey2thepoweroftwo/index.html' },
+                   { name: 'ESPN NBA 2K5', url: '..//espnnba2K5/index.html' },
+                   { name: 'FaceBreaker K.O. Party', url: '..//facebreakerkoparty/index.html' },
+                   { name: 'Fallout 3', url: '..//fallout3/index.html' },
+                   { name: 'Fallout 4', url: '..//fallout4/index.html' },
+                   { name: 'FAQ', url: '..//faq/index.html' },
+                   { name: 'Forgot Password', url: '..//forgot/index.html' },
+                   { name: 'Fortune Street', url: '..//fortunestreet/index.html' },
+                   { name: 'Friday the 13th: The Game', url: '..//fridaythe13ththegame/index.html' },
+                   { name: 'Frogger 2: Swampy’s Revenge', url: '..//frogger2swampysrevenge/index.html' },
+                     { name: 'Games', url: '..//games/index.html' },
+                   { name: 'Game Party', url: '..//gameparty/index.html' },
+                   { name: 'Gran Turismo', url: '..//granturismo/index.html' },
+                   { name: 'Grand Theft Auto IV', url: '..//grandtheftautoiv/index.html' },
+                   { name: 'Grand Theft Auto V', url: '..//grandtheftautov/index.html' },
+                   { name: 'Hell’s Kitchen: The Game', url: '..//hellskitchenthegame/index.html' },
+                   { name: 'Home', url: '..//index.html' },
+                   { name: 'Hello Kitty: Big City Dreams', url: '..//hellokittybigcitydreams/index.html' },
+                   { name: 'Hotel Transylvania', url: '..//hoteltransylvania/index.html' },
+                   { name: 'Hyrule Warriors: Age of Calamity', url: '..//hyrulewarriorsageofcalamity/index.html' },
+                   { name: 'Injustice: Gods Among Us', url: '..//injusticegodsamongus/index.html' },
+                   { name: 'Injustice 2', url: '..//injustice2/index.html' },
+                   { name: 'Lego Batman 2: DC Super Heroes', url: '..//legobatman2dcsuperheroes/index.html' },
+                   { name: 'Lego Batman 3: Beyond Gotham', url: '..//legobatman3beyondgotham/index.html' },
+                   { name: 'Lego City Undercover', url: '..//legocityundercover/index.html' },
+                   { name: 'Lego DC Super Villains', url: '..//legodcsupervillains/index.html' },
+                   { name: 'Lego Jurassic World', url: '..//legojurassicworld/index.html' },
+                   { name: 'Lego Marvel Super Heroes', url: '..//legomarvelsuperheroes/index.html' },
+                   { name: 'Lego Marvel Super Heroes 2', url: '..//legomarvelsuperheroes2/index.html' },
+                   { name: 'Lego Marvel’s Avengers', url: '..//legomarvelsavengers/index.html' },
+                   { name: 'Lego Pirates of the Caribbean', url: '..//legopiratesoftheCaribbean/index.html' },
+                   { name: 'Lego Star Wars: The Force Awakens', url: '..//legostarwarstheforceawakens/index.html' },
+                   { name: 'Lego The Incredibles', url: '..//legotheincredibles/index.html' },
+                   { name: 'Life is Strange', url: '..//lifeisstrange/index.html' },
+                   { name: 'Life is Strange 2', url: '..//lifeisstrange2/index.html' },
+                   { name: 'Life Is Strange: Before the Storm', url: '..//lifeisstrangebeforethestorm/index.html' },
+                   { name: 'Life Is Strange: True Colors', url: '..//lifeisstrangetruecolors/index.html' },
+                   { name: 'LittleBigPlanet', url: '..//littlebigplanet/index.html' },
+                   { name: 'LittleBigPlanet 2', url: '..//littlebigplanet2/index.html' },
+                   { name: 'LittleBigPlanet 3', url: '..//littlebigplanet3/index.html' },
+                   { name: 'LittleBigPlanet Karting', url: '..//littlebigplanetkarting/index.html' },
+                     { name: 'Login', url: '..//login/index.html' },
+
+                   { name: 'Luigi\'s Mansion: Dark Moon', url: '..//luigismansiondarkmoon/index.html' },
+                   { name: 'M&M’s Adventure', url: '..//mandmsadventure/index.html' },
+                   { name: 'Madagascar 3: The Video Game', url: '..//madagascar3thevideogame/index.html' },
+                   { name: 'Madden NFL 07', url: '..//maddennfl07/index.html' },
+                   { name: 'Madden NFL 09', url: '..//maddennfl09/index.html' },
+                   { name: 'Madden NFL 12', url: '..//maddennfl12/index.html' },
+                   { name: 'Madden NFL 15', url: '..//maddennfl15/index.html' },
+                   { name: 'Madden NFL 16', url: '..//maddennfl16/index.html' },
+                   { name: 'Madden NFL 17', url: '..//maddennfl17/index.html' },
+                   { name: 'Madden NFL 18', url: '..//maddennfl18/index.html' },
+                   { name: 'Madden NFL 19', url: '..//maddennfl19/index.html' },
+                   { name: 'Madden NFL 20', url: '..//maddennfl20/index.html' },
+                   { name: 'Madden NFL 25', url: '..//maddennfl25/index.html' },
+                   { name: 'Mario & Luigi: Bowser\'s Inside Story', url: '..//marioandluigibowsersinsidestory/index.html' },
+                   { name: 'Mario & Sonic at the Olympic Games', url: '..//marioandsonicattheolympicgames/index.html' },
+                   { name: 'Mario & Sonic at the London 2012 Olympic Games', url: '..//marioandsonicatthelondon2012olympicgames/index.html' },
+                   { name: 'Mario & Sonic at the Rio 2016 Olympic Games', url: '..//marioandsonicattherio2016olympicgames/index.html' },
+                   { name: 'Mario Kart 7', url: '..//mariokart7/index.html' },
+                   { name: 'Mario Kart 8', url: '..//mariokart8/index.html' },
+                   { name: 'Mario Kart 8 Deluxe', url: '..//mariokart8deluxe/index.html' },
+                   { name: 'Mario Kart DS', url: '..//mariokartds/index.html' },
+                   { name: 'Mario Kart Wii', url: '..//mariokartwii/index.html' },
+                   { name: 'Mario Party 8', url: '..//marioparty8/index.html' },
+                 { name: 'Mario Party 10', url: '..//marioparty10/index.html' },
+                 { name: 'Mario Party DS', url: '..//mariopartyds/index.html' },
+                 { name: 'Mario Power Tennis', url: '..//mariopowertennis/index.html' },
+                 { name: 'Mario Sports Mix', url: '..//mariosportsmix/index.html' },
+                 { name: 'Mario Super Sluggers', url: '..//..//mariosupersluggers/index.html' },
+                 { name: 'Mario Tennis: Ultra Smash', url: '..//mariotennisultrasmash/index.html' },
+                 { name: 'Mario vs. Donkey Kong: Mini-Land', url: '..//mariovsdonkeykongminiland/index.html' },
+                 { name: 'Marvel’s Avenger', url: '..//marvelsavenger/index.html' },
+                 { name: 'Marvel’s Spider-Man', url: '..//marvelsspiderman/index.html' },
+                 { name: 'Mass Effect Legendary Edition', url: '..//masseffectlegendaryedition/index.html' },
+                 { name: 'Midnight Club: Street Racing', url: '..//midnightclubstreetracing/index.html' },
+                 { name: 'Midnight Club 3: Dub Edition', url: '..//midnightclub3dubedition/index.html' },
+                 { name: 'Mortal Kombat 11: Aftermath', url: '..//mortalkombat11aftermath/index.html' },
+                 { name: 'My Street', url: '..//mystreet/index.html' },
+                 { name: 'Mystery Masters MYSTERIES OF THE HEART COLLECTION 20 GAMES IN ALL Hidden Object PC Game', url: '..//mysterymastersmysteriesoftheheartcollection20gamesinallhiddenobjectpcgame/index.html' },
+                 { name: 'NBA 08', url: '..//nba08/index.html' },
+                 { name: 'NBA 2K8', url: '..//nba2k8/index.html' },
+                 { name: 'NBA 2K9', url: '..//nba2k9/index.html' },
+                 { name: 'NBA 2K10', url: '..//nba2k10/index.html' },
+                 { name: 'NBA 2K11', url: '..//nba2k11/index.html' },
+                 { name: 'NBA 2K12', url: '..//nba2k12/index.html' },
+                 { name: 'NBA 2K14', url: '..//nba2k14/index.html' },
+                 { name: 'NBA 2K15', url: '..//nba2k15/index.html' },
+                 { name: 'NBA 2K16', url: '..//nba2k16/index.html' },
+                 { name: 'NBA 2K17', url: '..//nba2k17/index.html' },
+                 { name: 'NBA 2K18', url: '..//nba2k18/index.html' },
+                 { name: 'NBA 2K19', url: '..//nba2k19/index.html' },
+                 { name: 'NBA 2K20', url: '..//nba2k20/index.html' },
+                 { name: 'NBA 2K21', url: '..//nba2k21/index.html' },
+                 { name: 'NBA 2K22', url: '..//nba2k22/index.html' },
+                 { name: 'NBA Live 08', url: '..//nbalive08/index.html' },
+                 { name: 'NBA Street', url: '..//nbastreet/index.html' },
+                 { name: 'Need for Speed: Carbon', url: '..//needforspeedcarbon/index.html' },
+                 { name: 'New Super Mario Bros.', url: '..//newsupermariobros/index.html' },
+                   { name: 'New Super Mario Bros. 2', url: '..//newsupermariobros2/index.html' },
+                   { name: 'New Super Mario Bros. U', url: '..//newsupermariobrosu/index.html' },
+                   { name: 'New Super Mario Bros. Wii', url: '..//newsupermariobroswii/index.html' },
+                   { name: 'NHL 2K10', url: '..//nhl2k10/index.html' },
+                   { name: 'Nintendo Land', url: '..//nintendoland/index.html' },
+                   { name: 'Phineas and Ferb: Across the 2nd Dimension', url: '..//phineasandferbacrossthe2nddimension/index.html' },
+                   { name: 'Pinkie Pie’s Party', url: '..//pinkiepiesparty/index.html' },
+                   { name: 'PlayStation All-Stars Battle Royale', url: '..//playstationallstarsbattleroyale/index.html' },
+                     { name: 'Public Policy', url: '..//publicpolicy/index.html' },
+                   { name: 'Rio', url: '..//rio/index.html' },
+                   { name: 'Shrek Forever After', url: '..//shrekforeverafter/index.html' },
+                   { name: 'Signup', url: '..//signup/index.html' },
+                   { name: 'Skate It', url: '..//skateit/index.html' },
+                   { name: 'Sonic & Sega All-Stars Racing', url: '..//sonicandsegaallstarsracing/index.html' },
+                   { name: 'Sonic Riders: Zero Gravity', url: '..//sonicriderszerogravity/index.html' },
+                   { name: 'SpongeBob Squigglepants', url: '..//spongebobsquigglepants/index.html' },
+                   { name: 'Sports Champions', url: '..//sportschampions/index.html' },
+                   { name: 'Stardew Valley', url: '..//stardewvalley/index.html' },
+                   { name: 'Stuntman', url: '..//stuntman/index.html' },
+                   { name: 'Sunset Overdrive', url: '..//sunsetoverdrive/index.html' },
+                   { name: 'Super Mario 3D All-Stars', url: '..//supermario3dallstars/index.html' },
+                   { name: 'Super Mario 3D Land', url: '..//supermario3dland/index.html' },
+                   { name: 'Super Mario 3D World', url: '..//supermario3dworld/index.html' },
+                     { name: 'Super Mario Bros. Wonder', url: '..//supermariobroswonder/index.html' },
+                   { name: 'Super Mario Galaxy 2', url: '..//supermariogalaxy2/index.html' },
+                   { name: 'Super Mario Maker', url: '..//supermariomaker/index.html' },
+                   { name: 'Super Mario Maker 2', url: '..//supermariomaker2/index.html' },
+                   { name: 'Super Mario Odyssey', url: '..//supermarioodyssey/index.html' },
+
+                   { name: 'Super Smash Bros. for Nintendo 3DS', url: '..//supersmashbrosfornintendo3ds/index.html' },
+                   { name: 'Super Smash Bros. for Wii U', url: '..//supersmashbrosforwiiu/index.html' },
+                       { name: 'Terms of Service', url: '..//termsofservice/index.html' },
+                   { name: 'The Amazing Race', url: '..//theamazingrace/index.html' },
+                   { name: 'The Amazing Spider-Man 2', url: '..//theamazingspiderman2/index.html' },
+                   { name: 'The Awesome Adventures of Captain Spirit', url: '..//theawesomeadventuresofcaptainspirit/index.html' },
+                   { name: 'The Elder Scrolls V: Skyrim', url: '..//theelderscrollsvskyrim/index.html' },
+                   { name: 'The Fairly OddParents: Shadow Showdown', url: '..//thefairlyoddparentsshadowshowdown/index.html' },
+                   { name: 'The Incredibles', url: '..//theincredibles/index.html' },
+                   { name: 'The Legend of Zelda: Breath of the Wild', url: '..//thelegendofzeldabreathofthewild/index.html' },
+                   { name: 'The Lego Movie Videogame', url: '..//thelegomovievideogame/index.html' },
+                   { name: 'The Oregon Trail', url: '..//theoregontrail/index.html' },
+                   { name: 'The Sims 3', url: '..//thesims3/index.html' },
+                   { name: 'The Sims 3: Starter Pack', url: '..//thesims3starterpack/index.html' },
+                  { name: 'The Sims 4', url: '..//thesims4/index.html' },
+                  { name: 'The Smurfs', url: '..//thesmurfs/index.html' },
+                  { name: 'The Smurfs 2', url: '..//thesmurfs2/index.html' },
+                  { name: 'The SpongeBob SquarePants Movie', url: '..//thespongebobsquarepantsmovie/index.html' },
+                  { name: 'The Walking Dead: Survival Instinct', url: '..//thewalkingdeadsurvivalinstinct/index.html' },
+                  { name: 'Tomodachi Life', url: '..//tomodachilife/index.html' },
+                  { name: 'Tony Hawk’s Pro Skater 4', url: '..//tonyhawksproskater4/index.html' },
+                  { name: 'Toy Story 3', url: '..//toystory3/index.html' },
+                  { name: 'Transformers: Rise of the Dark Spark', url: '..//transformersriseofthedarkspark/index.html' },
+                  { name: 'uDraw Studio', url: '..//udrawstudio/index.html' },
+                  { name: 'Ultimate NES Remix', url: '..//ultimatenesremix/index.html' },
+                  { name: 'Uncharted: Drake’s Fortune', url: '..//uncharteddrakesfortune/index.html' },
+                  { name: 'Uncharted 4: A Thief’s End', url: '..//uncharted4athiefsend/index.html' },
+                  { name: 'Watch Dogs', url: '..//watchdogs/index.html' },
+                  { name: 'Watch Dogs 2', url: '..//watchdogs2/index.html' },
+                  { name: 'Watch Dogs: Legion', url: '..//watchdogslegion/index.html' },
+                  { name: 'Wii Play', url: '..//wiiplay/index.html' },
+                  { name: 'Wii Sports', url: '..//wiisports/index.html' },
+                  { name: 'Wipeout', url: '..//wipeout/index.html' },
+                  { name: 'Wipeout 2', url: '..//wipeout2/index.html' }
+
+                       // Add more results as needed
+                   ];
+
+                   const filteredData = searchData.filter(item => item.name.toLowerCase().includes(input));
+
+                   filteredData.forEach(item => {
+                       const div = document.createElement('div');
+                       const a = document.createElement('a');
+                       a.textContent = item.name;
+                       a.href = item.url;
+
+                       div.appendChild(a);
+                       resultsContainer.appendChild(div);
+                   });
+               };
+
+               </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+               <script>
+               // Firebase configuration
+               const firebaseConfig = {
+                 apiKey: "AIzaSyAMEkIdecNerz3qFFa1uWdIfNlXgK4siTM",
+                 authDomain: "thereminiscencecollection.firebaseapp.com",
+                 projectId: "thereminiscencecollection",
+                 storageBucket: "thereminiscencecollection.appspot.com",
+                 messagingSenderId: "1092408379840",
+                 appId: "1:1092408379840:web:6e5d0ba1c7d4d8100fa025",
+                 measurementId: "G-3B8XEPCE0T"
+               };
+
+               // Initialize Firebase
+               firebase.initializeApp(firebaseConfig);
+               const auth = firebase.auth();
+               const storage = firebase.storage();
+               const firestore = firebase.firestore();
+               const db = firebase.firestore();
+               const gameId = 'marvelsavenger'; // Assume this is set appropriately elsewhere
+
+               // Use an auth state observer to wait for the auth state to be initialized
+               firebase.auth().onAuthStateChanged((user) => {
+                 if (user) {
+                   // User is signed in, now you can safely use user.uid
+                   const userId = user.uid;
+
+                   db.collection('games').doc(gameId).collection('likes').doc(userId).set({
+                     liked: true, // or current timestamp
+                   }).then(() => {
+                     console.log("Like status set successfully.");
+                   }).catch((error) => {
+                     console.error("Error setting like status: ", error);
+                   });
+                 } else {
+                   // No user is signed in.
+                   console.log("No user signed in.");
+                 }
+               });
+
+
+
+
+
+               function showToast(message) {
+                   const toast = document.createElement('div');
+                   toast.textContent = message;
+                   toast.style.position = 'fixed';
+                   toast.style.bottom = '20px';
+                   toast.style.left = '50%';
+                   toast.style.transform = 'translateX(-50%)';
+                   toast.style.backgroundColor = 'black';
+                   toast.style.color = 'white';
+                   toast.style.padding = '10px';
+                   toast.style.borderRadius = '5px';
+                   document.body.appendChild(toast);
+                   setTimeout(() => document.body.removeChild(toast), 3000); // Remove after 3 seconds
+               }
+
+               // Function to check if user is signed in
+                 function isUserSignedIn() {
+                   return !!firebase.auth().currentUser;
+                 }
+
+                 document.addEventListener('DOMContentLoaded', function() {
+                     // Define gameId and gameName here if they're not already defined globally
+                     const gameId = 'marvelsavenger';
+                     const gameName = 'Marvel’s Avenger';
+
+                     // Setup Like Button
+                     const likeButton = document.getElementById('likeButton');
+                     if (likeButton) {
+                         // Attach the event listener using an arrow function that calls handleLikeClick with the correct arguments
+                         likeButton.addEventListener('click', () => handleLikeClick(gameId, gameName));
+                     }
+
+                     const commentButton = document.getElementById('commentButton');
+                     if (commentButton) {
+                       commentButton.addEventListener('click', function() {
+                         // Target the textarea by its ID "commentInput"
+                         const commentInput = document.getElementById('commentInput');
+                         if (commentInput) {
+                           // Scrolls smoothly to the textarea
+                           commentInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                           // Optionally, focus the textarea to allow immediate typing
+                           commentInput.focus();
+                           }
+                       });
+                   }
+
+                     // Setup Rate Button
+                     const rateButton = document.getElementById('rateButton');
+                     if (rateButton) {
+                         // Attach the event listener for rate button
+                         rateButton.addEventListener('click', () => handleRateClick(gameId, gameName));
+                     }
+                 });
+
+
+
+
+
+               async function handleLikeClick(gameId, gameName) {
+                   console.log(`handleLikeClick called with gameId: ${gameId}, gameName: ${gameName}`); // Debugging log
+
+                   if (!isUserSignedIn()) {
+                       showToast('You must be signed in to like.');
+                       return;
+                   }
+
+                   const userId = firebase.auth().currentUser.uid;
+                   console.log(`Attempting to toggle like for userId: ${userId}, gameId: ${gameId}`); // Debugging log
+
+                   const likesRef = firestore.collection('likes').doc(gameId);
+
+                   try {
+                       const doc = await likesRef.get();
+                       if (doc.exists && doc.data()[userId]) {
+                           await likesRef.update({ [userId]: firebase.firestore.FieldValue.delete() });
+                           showToast('Like removed.');
+                       } else {
+                           await likesRef.update({ [userId]: true });
+                           showToast('Like added.');
+                           await addLikeActivity(gameId, gameName).catch(console.error);
+                       }
+                       fetchAndDisplayLikes(gameId); // Refresh likes display
+                   } catch (error) {
+                       console.error("Error toggling like status: ", error);
+                       showToast('Failed to update like status.');
+                   }
+               }
+
+
+
+
+
+
+               document.addEventListener('DOMContentLoaded', function() {
+                 const gameId = "marvelsavenger"; // Make sure this is set correctly
+                 fetchAndDisplayLikes(gameId);
+               });
+
+
+
+
+
+
+
+
+
+
+
+               async function handleAuthStateChanges() {
+                   auth.onAuthStateChanged(async user => {
+                       if (user) {
+                           // Logic when the user is logged in
+                           console.log('User is logged in.');
+                       } else {
+                           // Logic when the user is logged out
+                           console.log('User is logged out.');
+                       }
+                   });
+               }
+
+               async function editComment(commentId, currentText) {
+                   console.log(`Editing comment ID: ${commentId} with text: ${currentText}`);
+                   const newText = prompt('Edit your comment:', currentText);
+                   if (newText !== null && newText.trim() !== '') {
+                       try {
+                           await firestore.collection('comments').doc(commentId).update({
+                               text: newText.trim()
+                           });
+                           console.log('Comment updated successfully');
+                           showToast('Comment updated successfully.');
+                           fetchAndDisplayComments(gameId); // Refresh the comments display
+                       } catch (error) {
+                           console.error('Error updating comment:', error);
+                           showToast('Failed to update comment.');
+                       }
+                   }
+               }
+
+               // Ensures comments are fetched and displayed as soon as the page loads
+               document.addEventListener('DOMContentLoaded', async () => {
+                   const gameId = 'marvelsavenger'; // Ensure this is correctly set
+                   console.log('Page loaded, fetching comments...');
+                   await fetchAndDisplayComments(gameId);
+               });
+
+               async function fetchAndDisplayComments(gameId) {
+                   const commentsList = document.getElementById('commentsList');
+                   commentsList.innerHTML = ''; // Clear existing comments
+
+                   try {
+                       const querySnapshot = await firestore.collection('comments')
+                           .where('gameId', '==', gameId)
+                           .orderBy('timestamp', 'desc')
+                           .get();
+
+                       querySnapshot.forEach(async (doc) => {
+                           const comment = doc.data();
+                           const userDoc = await firestore.collection('users').doc(comment.userId).get();
+                           const username = userDoc.exists ? userDoc.data().username : "Anonymous";
+                           const date = comment.timestamp ? comment.timestamp.toDate().toLocaleString() : "Unknown date";
+
+                           const commentElement = document.createElement('div');
+                           commentElement.classList.add('comment');
+                           const usernameElement = document.createElement('span');
+                           usernameElement.textContent = `${username} on ${date}: `;
+                           const commentTextElement = document.createElement('p');
+                           commentTextElement.textContent = comment.text;
+
+                           // Create a container for replies
+                           const repliesContainer = document.createElement('div');
+                           repliesContainer.classList.add('replies-container');
+
+                           // Append username and comment text first
+                           commentElement.appendChild(usernameElement);
+                           commentElement.appendChild(commentTextElement);
+
+                           // Edit and Delete buttons for comment
+                           if (auth.currentUser && auth.currentUser.uid === comment.userId) {
+                               const editButton = document.createElement('button');
+                               editButton.textContent = 'Edit';
+                               editButton.onclick = () => editComment(doc.id, comment.text); // Add your editComment function
+                               commentElement.appendChild(editButton);
+
+                               const deleteButton = document.createElement('button');
+                               deleteButton.textContent = 'Delete';
+                               deleteButton.onclick = async () => {
+                                   if (confirm("Are you sure you want to delete this comment?")) {
+                                       try {
+                                           await firestore.collection('comments').doc(doc.id).delete();
+                                           showToast('Comment deleted successfully.');
+                                           fetchAndDisplayComments(gameId);
+                                       } catch (error) {
+                                           console.error('Error deleting comment:', error);
+                                           showToast('Failed to delete comment.');
+                                       }
+                                   }
+                               };
+                               commentElement.appendChild(deleteButton);
+                           }
+
+                           // Reply button
+                           const replyButton = document.createElement('button');
+                           replyButton.textContent = 'Reply';
+                           replyButton.onclick = () => {
+                               if (!isUserSignedIn()) {
+                                   showToast('You must be signed in to reply.');
+                                   return;
+                               }
+                               document.getElementById('replyPopup').style.display = 'block';
+                               document.getElementById('sendReply').setAttribute('data-commentId', doc.id);
+                           };
+                           commentElement.appendChild(replyButton);
+
+                           // Append the replies container before adding reply functionalities
+                           commentElement.appendChild(repliesContainer);
+
+                           // Fetch and display replies for the comment
+                           const repliesQuerySnapshot = await firestore.collection('replies')
+                               .where('commentId', '==', doc.id)
+                               .orderBy('timestamp', 'asc')
+                               .get();
+
+
+
+               // New function to edit a reply
+               async function editReply(replyId, currentText) {
+                   const newText = prompt('Edit your reply:', currentText);
+                   if (newText !== null && newText.trim() !== '') {
+                       try {
+                           await firestore.collection('replies').doc(replyId).update({
+                               text: newText.trim()
+                           });
+                           showToast('Reply updated successfully.');
+                           fetchAndDisplayComments(gameId); // Refresh to show changes
+                       } catch (error) {
+                           console.error('Error updating reply:', error);
+                           showToast('Failed to update reply.');
+                       }
+                   }
+               }
+               /// Within fetchAndDisplayComments function, when fetching and displaying replies:
+               repliesQuerySnapshot.forEach(async replyDoc => {
+                   const reply = replyDoc.data();
+                   const replyElement = document.createElement('div');
+                   replyElement.classList.add('reply');
+
+                   // Fetch username of the user who made the reply
+                   const replyUserDoc = await firestore.collection('users').doc(reply.userId).get();
+                   const replyUsername = replyUserDoc.exists ? replyUserDoc.data().username : "Anonymous";
+
+                   // Format the timestamp
+                   const replyDate = reply.timestamp ? reply.timestamp.toDate().toLocaleString() : "Unknown date";
+
+                   // Create a span for displaying the reply username and date
+                   const replyUserElement = document.createElement('span');
+                   replyUserElement.textContent = `${replyUsername} on ${replyDate}: `;
+                   replyElement.appendChild(replyUserElement);
+
+                   // Create a span for displaying the reply text
+                   const replyTextElement = document.createElement('span');
+                   replyTextElement.textContent = reply.text;
+                   replyElement.appendChild(replyTextElement);
+
+                   // Only show edit and delete buttons for the user's own replies
+                   if (auth.currentUser && auth.currentUser.uid === reply.userId) {
+                       const editReplyButton = document.createElement('button');
+                       editReplyButton.textContent = 'Edit';
+                       editReplyButton.onclick = () => editReply(replyDoc.id, reply.text); // Adjust this to your actual editReply function
+                       replyElement.appendChild(editReplyButton);
+
+                       const deleteReplyButton = document.createElement('button');
+                       deleteReplyButton.textContent = 'Delete';
+                       deleteReplyButton.onclick = async () => {
+                           if (confirm("Are you sure you want to delete this reply?")) {
+                               try {
+                                   await firestore.collection('replies').doc(replyDoc.id).delete();
+                                   showToast('Reply deleted successfully.');
+                                   fetchAndDisplayComments(gameId); // Refresh to show changes
+                               } catch (error) {
+                                   console.error('Error deleting reply:', error);
+                                   showToast('Failed to delete reply.');
+                               }
+                           }
+                       };
+                       replyElement.appendChild(deleteReplyButton);
+                   }
+
+                   // Append the replyElement to its respective comment's repliesContainer
+                   repliesContainer.appendChild(replyElement); // Ensure repliesContainer is defined in your fetchAndDisplayComments function
+               });
+                           // Append the comment element (with replies) to the comments list
+                           commentsList.appendChild(commentElement);
+                       });
+                   } catch (error) {
+                       console.error('Error fetching comments:', error);
+                       showToast('Failed to fetch comments.');
+                   }
+               }
+
+               async function handleCommentSubmit() {
+                   // Assuming you have already checked if the user is signed in and other preliminary checks
+                   const gameId = 'marvelsavenger'; // Make sure to dynamically set or retrieve this value as necessary
+                   const gameName = 'Marvel’s Avenger'; // Dynamically set or retrieve this value as necessary
+                   const commentInput = document.getElementById('commentInput');
+                   const commentText = commentInput.value.trim();
+
+                   if (commentText) {
+                       try {
+                           // Add the comment to the 'comments' collection
+                           const commentRef = await firestore.collection('comments').add({
+                               gameId: gameId,
+                               gameName: gameName,
+                               text: commentText,
+                               userId: firebase.auth().currentUser.uid,
+                               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                           });
+
+                           showToast('Comment added successfully.');
+
+                           // Log this comment activity in the 'userActivities' collection
+                           const activity = {
+                               userId: firebase.auth().currentUser.uid,
+                               type: 'comment',
+                               gameId: gameId,
+                               gameName: gameName,
+                               commentId: commentRef.id, // Optionally store the comment ID for reference
+                               text: commentText, // Optionally store the comment text
+                               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                           };
+
+                           await firestore.collection('userActivities').add(activity);
+                           showToast('Comment activity recorded successfully.');
+
+                           // Optionally, refresh comments display
+                           fetchAndDisplayComments(gameId);
+
+                           // Clear the input field after successful comment submission
+                           commentInput.value = '';
+                       } catch (error) {
+                           console.error('Error submitting comment:', error);
+                           showToast('Failed to submit comment.');
+                       }
+                   } else {
+                       showToast('Please enter a comment.');
+                   }
+               }
+
+               // Attach this function to the submit comment button
+               document.addEventListener('DOMContentLoaded', () => {
+                   const submitCommentButton = document.getElementById('submitComment');
+                   if (submitCommentButton) {
+                       submitCommentButton.addEventListener('click', handleCommentSubmit);
+                   }
+               });
+
+
+
+
+
+
+
+
+               async function replyToComment(commentId) {
+                   const replyText = prompt("Enter your reply:");
+                   if (replyText && replyText.trim() !== '') {
+                       try {
+                           await firestore.collection('replies').add({
+                               commentId: commentId,
+                               text: replyText,
+                               userId: auth.currentUser.uid,
+                               timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                           });
+                           showToast('Reply added successfully.');
+                           // Refresh the comments to include the new reply
+                           fetchAndDisplayComments(gameId);
+                       } catch (error) {
+                           console.error('Error adding reply:', error);
+                           showToast('Failed to add reply.');
+                       }
+                   }
+               }
+
+
+
+               // Adjusted replyToComment to work with the popup
+               async function sendReply() {
+                   const replyText = document.getElementById('replyText').value.trim();
+                   const commentId = document.getElementById('sendReply').getAttribute('data-commentId');
+
+                   if (replyText) {
+                       try {
+                           await firestore.collection('replies').add({
+                               commentId: commentId,
+                               text: replyText,
+                               userId: auth.currentUser.uid,
+                               timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                           });
+                           showToast('Reply added successfully.');
+                           document.getElementById('replyPopup').style.display = 'none';
+                           document.getElementById('replyText').value = ''; // Clear text area
+                           fetchAndDisplayComments(gameId);
+                       } catch (error) {
+                           console.error('Error adding reply:', error);
+                           showToast('Failed to add reply.');
+                       }
+                   }
+               }
+
+               // Attach event listener to send reply button
+               document.getElementById('sendReply').addEventListener('click', sendReply);
+
+
+               async function addComment(gameId, gameName, commentText) {
+                   try {
+                       await firestore.collection('comments').add({
+                           gameId: gameId,
+                           gameName: gameName, // Include the game name if necessary
+                           text: commentText,
+                           userId: auth.currentUser.uid,
+                           timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                       });
+                       showToast('Comment added successfully');
+                   } catch (error) {
+                       console.error('Error adding comment:', error);
+                       showToast('Failed to add comment');
+                       throw new Error('Failed to add comment');
+                   }
+               }
+
+
+               async function handleSubmitComment(gameId, gameName) {
+                   if (!isUserSignedIn()) {
+                       showToast('Please sign in to add a comment.');
+                       return;
+                   }
+
+                   const commentInput = document.getElementById('commentInput');
+                   const commentText = commentInput.value.trim();
+
+                   const submitCommentButton = document.getElementById('submitComment');
+                   submitCommentButton.disabled = true;
+
+                   if (commentText) {
+                       try {
+                           await addComment(gameId, gameName, commentText);
+                           commentInput.value = '';
+                           fetchAndDisplayComments(gameId);
+                           showToast('Comment added successfully.');
+                       } catch (error) {
+                           console.error('Error during comment addition:', error);
+                           showToast('Failed to add comment.');
+                       } finally {
+                           submitCommentButton.disabled = false;
+                       }
+                   } else {
+                       showToast('Please enter a comment.');
+                       submitCommentButton.disabled = false;
+                   }
+               }
+
+
+
+
+
+
+
+               async function fetchAndDisplayLikes(gameId) {
+                   console.log(`Fetching likes for game ID: ${gameId}`);
+                   try {
+                       const likesDoc = await firestore.collection('likes').doc(gameId).get();
+                       if (likesDoc.exists) {
+                           const likesData = likesDoc.data();
+                           let likeCount = 0;
+                           // Assuming each key in likesData with a true value represents a like
+                           Object.values(likesData).forEach(value => {
+                               if (value === true) likeCount++;
+                           });
+                           console.log(`Likes found: ${likeCount}`);
+                           document.getElementById('likesCount').textContent = `Likes: ${likeCount}`;
+                       } else {
+                           console.log('No likes data found for this game.');
+                           document.getElementById('likesCount').textContent = "Likes: 0";
+                       }
+                   } catch (error) {
+                       console.error('Error fetching likes:', error);
+                       // Assuming showToast is a function to display messages to the user
+                       showToast('Failed to fetch likes.');
+                   }
+               }
+
+
+
+               async function fetchAndDisplayRating(gameId) {
+                 try {
+                   console.log(`Fetching rating for game ID: ${gameId}`);
+                   const ratingDoc = await firestore.collection('ratings').doc(gameId).get();
+                   if (ratingDoc.exists) {
+                     const ratingData = ratingDoc.data();
+                     console.log('Rating Data:', ratingData); // Debug: log the entire rating data
+
+                     // Ensure the user is signed in before trying to access their UID
+                     if (isUserSignedIn()) {
+                       const userRating = ratingData[auth.currentUser.uid];
+                       console.log(`Rating found for user ${auth.currentUser.uid}: ${userRating}`); // Debug: log the fetched rating
+
+                       // Update the display based on whether a rating was found
+                       const displayText = userRating ? `Your Rating: ${userRating}` : "You haven't rated this game yet.";
+                       document.getElementById('ratingDisplay').textContent = displayText;
+                     } else {
+                       console.log('No user is signed in to fetch rating.');
+                       document.getElementById('ratingDisplay').textContent = "Sign in to see your rating.";
+                     }
+                   } else {
+                     console.log('No rating found for this game.');
+                     document.getElementById('ratingDisplay').textContent = "You haven't rated this game yet.";
+                   }
+                 } catch (error) {
+                   console.error('Error fetching rating:', error);
+                   showToast('Failed to fetch rating.');
+                 }
+               }
+
+
+               firebase.auth().onAuthStateChanged(user => {
+                 if (user) {
+                   // User is signed in, safe to fetch the rating
+                   fetchAndDisplayRating('marvelsavenger');
+                 } else {
+                   // No user is signed in.
+                   console.log("No user signed in.");
+                 }
+               });
+
+
+
+
+
+               async function rateGame(gameId, rating) {
+                   if (!isUserSignedIn()) {
+                       showToast('You must be signed in to rate.');
+                       return;
+                   }
+
+                   // Example: Logic to determine gameName based on gameId
+                   // This could involve fetching game details from Firestore or another source
+                   const gameDetails = await fetchGameDetails(gameId);
+                   const gameName = gameDetails.name; // Assuming the fetched game details include a name
+
+                   if (!gameName) {
+                       console.error('Game name not found for gameId:', gameId);
+                       showToast('Failed to find game name. Rating not saved.');
+                       return;
+                   }
+
+                   // Call saveRating with gameId, rating, and the determined gameName
+                   await saveRating(gameId, rating, gameName);
+               }
+
+               // Dummy function to represent fetching game details
+               // Replace this with your actual function to fetch game details based on gameId
+               async function fetchGameDetails(gameId) {
+                   // Your logic to fetch game details
+                   return { name: "marvelsavenger" }; // Example return value
+               }
+               async function saveRating(gameId, rating, gameName) {
+                   // Check if user is signed in
+                   if (!isUserSignedIn()) {
+                       showToast('You must be signed in to rate.');
+                       return;
+                   }
+
+                   // Assuming gameId, rating, and gameName are correctly passed
+                   console.log(`Saving rating for gameId: ${gameId}, rating: ${rating}, gameName: ${gameName}`);
+
+                   const userId = firebase.auth().currentUser.uid;
+
+                   // Attempt to save the rating to the ratings collection
+                   try {
+                       // Save the user's rating for the game
+                       await firestore.collection('ratings').doc(gameId).set({
+                           [userId]: rating
+                       }, { merge: true });
+
+                       // Log this activity in the userActivities collection
+                       const activity = {
+                           userId: userId,
+                           type: 'rating',
+                           gameId: gameId,
+                           gameName: gameName, // Assuming this is dynamically determined based on gameId
+                           rating: rating,
+                           timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                       };
+
+                       // Save the activity
+                       await firestore.collection('userActivities').add(activity);
+
+                       showToast('Rating saved successfully');
+                       // Optionally, refresh the display of ratings here if needed
+                       fetchAndDisplayRating(gameId); // Assuming this function refreshes the rating display
+                   } catch (error) {
+                       console.error('Error saving rating:', error);
+                       showToast('Failed to save rating');
+                   }
+               }
+
+
+               async function handleRateClick() {
+                   if (!isUserSignedIn()) {
+                       showToast('You must be signed in to rate.');
+                       return;
+                   }
+
+                   const gameId = 'marvelsavenger'; // Ensure this is correctly set
+                   const gameName = 'Marvel’s Avenger'; // Ensure this is correctly set
+                   let rating = parseInt(prompt("Enter your rating (1-5):"), 10);
+
+                   // Validate the rating
+                   if (!rating || rating < 1 || rating > 5) {
+                       showToast('Please enter a valid rating between 1 and 5.');
+                       return;
+                   }
+
+                   try {
+                       // Call the function to save the rating
+                       await saveRating(gameId, rating, gameName);
+                       showToast('Rating saved successfully');
+                   } catch (error) {
+                       console.error('Error saving rating:', error);
+                       showToast('Failed to save rating');
+                   }
+               }
+
+               // Adjusted handleRateClick function to include gameName
+               async function handleRateClick() {
+                   if (!isUserSignedIn()) {
+                       showToast('You must be signed in to rate.');
+                       return;
+                   }
+
+                   const gameId = 'marvelsavenger'; // Example gameId
+                   const gameName = "Marvel’s Avenger"; // You need to set this dynamically based on gameId
+
+                   let rating = parseInt(prompt("Enter your rating (1-5):"), 10); // Convert string input to integer
+
+                   // Validate rating
+                   if (!rating || rating < 1 || rating > 5) {
+                       showToast('Please enter a valid rating between 1 and 5.');
+                       return;
+                   }
+
+                   try {
+                       await saveRating(gameId, rating, gameName); // Pass gameName here
+                   } catch (error) {
+                       console.error('Error during rating:', error);
+                       showToast('Failed to save rating');
+                   }
+               }
+
+               async function addLikeActivity(gameId, gameName) {
+                   if (!firebase.auth().currentUser) {
+                       showToast('No user is signed in.');
+                       return;
+                   }
+
+                   try {
+                       const activity = {
+                           userId: firebase.auth().currentUser.uid,
+                           type: 'like',
+                           gameName: gameName,
+                           gameId: gameId,
+                           timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                       };
+                       await firestore.collection('userActivities').add(activity);
+                       showToast('Like activity recorded successfully');
+                   } catch (error) {
+                       console.error('Error recording like activity:', error);
+                       showToast('Failed to record like activity');
+                   }
+               }
+
+
+
+
+                 // Define the logoutUser function
+                 function logoutUser() {
+                   auth.signOut().then(() => {
+                     console.log('User logged out');
+                     // Optionally redirect the user to login page or home page after logout
+                     window.location.href = '..//index.html';
+                   }).catch((error) => {
+                     console.error('Logout Error:', error);
+                   });
+                 }
+
+                 auth.onAuthStateChanged(async user => {
+                     const dropdownContent = document.querySelector('.dropdown-content2');
+                     if (user) {
+                         // User is signed in
+                         console.log('User is logged in:', user);
+
+                         // Display user's display name or fallback to 'User'
+                         document.getElementById('userName').textContent = user.displayName || 'User';
+
+
+
+                         // Update dropdown content for logged-in users
+                         dropdownContent.innerHTML = `
+                             <a href="..//dashboard/index.html">Dashboard</a>
+                             <a href="javascript:void(0);" id="logoutBtn">Logout</a>
+                         `;
+
+                         // Attach event listener to the logout button again if necessary
+                         document.getElementById('logoutBtn').addEventListener('click', logoutUser);
+
+                     } else {
+                         // No user is signed in
+                         console.log('User is logged out.');
+                         // Update dropdown content for guests
+                         dropdownContent.innerHTML = `
+                             <a href="..//login/index.html">Login</a>
+                             <a href="..//signup/index.html">Signup</a>
+                         `;
+                     }
+                 });
+
+
+               </script>
+
+
+
+</body>
