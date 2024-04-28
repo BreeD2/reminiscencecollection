@@ -4665,7 +4665,7 @@ margin: 10px;
 #deleteAccountBtn {
 
   width:80%;
-  background-color: white;
+  background-color: red;
   padding: 8px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -4680,16 +4680,16 @@ margin: 10px;
 .dark-mode #deleteAccountBtn {
 
 
-  background-color: black; /* Use a blue background */
-  color: white; /* White text color */
+  background-color: white; /* Use a blue background */
+  color: black; /* White text color */
 
 }
 
 .light-mode #deleteAccountBtn {
 
 
-  background-color: white; /* Use a blue background */
-  color: black; /* White text color */
+  background-color: black; /* Use a blue background */
+  color: white; /* White text color */
 
 }
 
