@@ -4229,22 +4229,38 @@ document.getElementById('changePasswordBtn').addEventListener('click', async () 
   }
 });
 
-
-// Update User Email
 document.getElementById('updateEmailBtn').addEventListener('click', async () => {
   const newEmail = document.getElementById('emailInput').value;
+  const currentUser = firebase.auth().currentUser;
+
+  const reauthenticate = async (currentPassword) => {
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      currentUser.email, currentPassword
+    );
+    return currentUser.reauthenticateWithCredential(credential);
+  };
+
   if (newEmail) {
     try {
-      await firebase.auth().currentUser.updateEmail(newEmail);
-      showToast('Email updated successfully.');
+      // Prompt the user to enter their current password
+      const currentPassword = prompt("Please enter your current password for verification:");
+      if (currentPassword) {
+        await reauthenticate(currentPassword);
+
+        // Proceed with updating the email after re-authentication
+        await currentUser.updateEmail(newEmail);
+        showToast('Email updated successfully.');
+      } else {
+        showToast('Current password not provided.');
+      }
     } catch (error) {
-      console.error('Error updating email:', error);
-      showToast('Failed to update email.');
+      handleAuthError(error);
     }
   } else {
     showToast('Please enter a new email.');
   }
 });
+
 
 
 
