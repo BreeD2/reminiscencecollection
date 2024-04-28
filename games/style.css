@@ -4979,8 +4979,8 @@ background-color: white;
 
 
 .light-mode #gamesContainer > li > a:hover {
-    background-color: white;
-    color:black;
+    background-color: grey;
+    color:white;
     border: none
 
 
@@ -5071,7 +5071,7 @@ margin-top: 20px;
 }
 
 .light-mode #quiz-result p {
-  
+
     color: black;
 }
 
