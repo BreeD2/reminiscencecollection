@@ -4492,7 +4492,8 @@ margin: 10px;
    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
    border:none;
    font-family: arial;
-   font-size: 16px; /* Increase font size */
+   font-size: 16px; /* Increase font size */;
+   text-align: center;
  }
 
  .light-mode #newPasswordInput {
@@ -4535,13 +4536,13 @@ margin: 10px;
  }
  .light-mode #updateProfileBtn {
 
-    background-color: white;
-    color: black;
+    background-color: grey;
+    color: white;
 }
 
 .dark-mode #updateProfileBtn {
 
-   background-color: dimgrey;
+   background-color: black;
    color: white;
 }
 #saveDescriptionBtn {
@@ -4709,7 +4710,7 @@ margin: 10px;
 }
 #usernameInput {
   width:80%;
-
+  text-align: center;
   padding: 8px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -4738,6 +4739,7 @@ margin: 10px;
   width:80%;
   background-color: white;
   padding: 8px;
+  text-align: center;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   font-family: arial;
@@ -4760,7 +4762,7 @@ margin: 10px;
 }
 
 #userDescriptionDisplay {
-
+  text-align: center;
     width: 80%;
     padding: 10px; /* Add padding inside the button */
     background-color: #007bff; /* Use a blue background */
@@ -4920,8 +4922,8 @@ element.style {
 }
 
 #displayedUsername {
-  background: #007bff;
-  color: white;
+  background: white;
+  color: gray;
   width: 80%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -4939,6 +4941,7 @@ element.style {
 .dark-mode #displayedUsername {
   background: dimgrey;
   color: white;
+  border:none
 
 }
 
@@ -4951,6 +4954,7 @@ element.style {
 .dark-mode #activityLog {
   background: black;
   color: white;
+  border:none
 }
 
 
