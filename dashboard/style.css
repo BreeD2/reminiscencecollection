@@ -2494,7 +2494,9 @@ border:2px solid white;
       color: white;
       text-align: center;
       padding: 20px; /* Add padding for visual spacing */
-      /* No need for position or margin-top */
+      /* No need for position or margin-top */;
+      margin-top: 100px
+
   }
 
       body.dark-mode #sort-section, body.sort-section * {
@@ -5001,3 +5003,8 @@ element.style {
       display: block;
       text-align: left;
     }
+
+
+.dark-mode #emailInput::placeholder {
+    color: white;
+}

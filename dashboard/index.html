@@ -51,7 +51,7 @@
        <!-- Accessibility Button and Dropdown -->
        <!-- User Information Dropdown -->
        <input type="text" id="searchInput2" placeholder="Search.." onkeyup="searchFunction()">
-       
+
 
          <!-- User Information Dropdown -->
          <div class="dropdown2">
@@ -333,7 +333,7 @@
 
           <!-- Input for Updating Username -->
           <input type="text" id="usernameInput" placeholder="New username">
-          <div id="displayedUsername">Update Username Will Display Here</div>
+          <div id="displayedUsername">Username Update Will Appear Here</div>
   <button id="updateProfileBtn">Update Username</button>
           <!-- Input for User Description -->
           <textarea id="userDescriptionInput" placeholder="Write your description here"></textarea>
@@ -3332,17 +3332,17 @@
 
         // Increase font size
         function increaseFont() {
-            adjustFontSize(1.1, '.sidebar *, #signupContainer, .underwelcome, .opening-screen button, #newPasswordInput, #userDescriptionDisplay, #updateProfileBtn, p, #emailInput, #emailDisplay, #saveDescriptionBtn, #deleteAccountBtn, .featured-games-title, #userDescriptionInput, #activityLog, .footer, .featured-games, #usernameInput, .dropdown-content, #enter-site-button');
+            adjustFontSize(1.1, '.sidebar *, #signupContainer, .underwelcome, .opening-screen button, p, #newPasswordInput, #userDescriptionDisplay, #updateProfileBtn, p, #emailInput, #emailDisplay, #saveDescriptionBtn, #deleteAccountBtn, .featured-games-title, #userDescriptionInput, #activityLog, .footer, .featured-games, #usernameInput, .dropdown-content, #enter-site-button');
         }
 
         // Decrease font size
         function decreaseFont() {
-            adjustFontSize(0.9, '.sidebar *, #signupContainer, .underwelcome, .dropdown-content, #newPasswordInput, #userDescriptionDisplay, #updateProfileBtn, #deleteAccountBtn, #emailDisplay, #activityLog, .dropdown, .opening-screen button, #userDescriptionInput,#saveDescriptionBtn,  #emailDisplay, #usernameInput, #emailInput, .featured-games, .featured-games-title, p, .footer, #enter-site-button');
+            adjustFontSize(0.9, '.sidebar *, #signupContainer, .underwelcome, .opening-screen button, p, #newPasswordInput, #userDescriptionDisplay, #updateProfileBtn, p, #emailInput, #emailDisplay, #saveDescriptionBtn, #deleteAccountBtn, .featured-games-title, #userDescriptionInput, #activityLog, .footer, .featured-games, #usernameInput, .dropdown-content, #enter-site-button');
         }
 
         // Reset font sizes to their original values
         function resetFont() {
-            const selector = '.sidebar *, #signupContainer, .underwelcome, .opening-screen button, #deleteAccountBtn, #activityLog, #newPasswordInput, #emailInput, #userDescriptionDisplay, #usernameInput, .featured-games, #saveDescriptionBtn, .featured-games-title, p, #userDescriptionInput, #updateProfileBtn, .footer, #enter-site-button';
+            const selector = '.sidebar *, #signupContainer, .underwelcome, .opening-screen button, p, #newPasswordInput, #userDescriptionDisplay, #updateProfileBtn, p, #emailInput, #emailDisplay, #saveDescriptionBtn, #deleteAccountBtn, .featured-games-title, #userDescriptionInput, #activityLog, .footer, .featured-games, #usernameInput, .dropdown-content, #enter-site-button';
             document.querySelectorAll(selector).forEach(element => {
                 const originalFontSize = element.getAttribute('data-original-font-size');
                 if (originalFontSize) element.style.fontSize = originalFontSize;
@@ -3381,12 +3381,12 @@
       }
       // Increase font size
         function increaseFont() {
-            adjustFontSize(1.1, '.sidebar *, .game-container, .game-info, #likeButton, #commentButton,#likesCount, #ratingDisplay, #rateButton, .game-title,#commentsSection > strong, .footer');
+            adjustFontSize(1.1, '.sidebar *, #signupContainer, .underwelcome, .opening-screen button, p, #newPasswordInput, #userDescriptionDisplay, #updateProfileBtn, p, #emailInput, #emailDisplay, #saveDescriptionBtn, #deleteAccountBtn, .featured-games-title, #userDescriptionInput, #activityLog, .footer, .featured-games, #usernameInput, .dropdown-content, #enter-site-button');
         }
 
         // Decrease font size
         function decreaseFont() {
-            adjustFontSize(0.9, '.sidebar *, .game-container, .game-info, #likeButton,#commentsSection > strong, #commentButton, #likesCount, #ratingDisplay, #rateButton, .game-title, .footer');
+            adjustFontSize(0.9, '.sidebar *, #signupContainer, .underwelcome, .opening-screen button, p, #newPasswordInput, #userDescriptionDisplay, #updateProfileBtn, p, #emailInput, #emailDisplay, #saveDescriptionBtn, #deleteAccountBtn, .featured-games-title, #userDescriptionInput, #activityLog, .footer, .featured-games, #usernameInput, .dropdown-content, #enter-site-button');
         }
 
         // Toggle Light Mode
