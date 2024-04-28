@@ -5069,3 +5069,13 @@ margin-top: 20px;
   text-align: left;
   background-color: grey
 }
+
+.light-mode #quiz-result p {
+  
+    color: black;
+}
+
+.dark-mode #quiz-result p {
+
+    color: white;
+}
