@@ -4450,6 +4450,7 @@ margin: 10px;
    border-radius: 8px;
    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
    border:none;
+   text-align: center;
    font-family: arial;
    font-size: 16px; /* Increase font size */
 
@@ -4564,8 +4565,8 @@ margin: 10px;
 
 
 
-  background-color: white;
-  color:black
+  background-color: grey;
+  color:white
 }
 
 .dark-mode #saveDescriptionBtn {
@@ -4785,7 +4786,7 @@ margin: 10px;
 .dark-mode #userDescriptionDisplay {
 
 
-    background-color: black; /* Use a blue background */
+    background-color: dimgrey; /* Use a blue background */
     color: white; /* White text color */
 }
 
