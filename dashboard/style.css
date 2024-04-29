@@ -4594,7 +4594,7 @@ margin: 10px;
 
 #changePasswordBtn {
   background-color: white;
-  color:black
+  color:grey
 }
 
 .dark-mode #changePasswordBtn {
@@ -4766,8 +4766,8 @@ margin: 10px;
   text-align: center;
     width: 80%;
     padding: 10px; /* Add padding inside the button */
-    background-color: #007bff; /* Use a blue background */
-    color: white; /* White text color */
+    background-color: white; /* Use a blue background */
+    color: grey; /* White text color */
     border: none; /* No border */
     border-radius: 4px; /* Round the corners of the button */
     cursor: pointer; /* Change mouse cursor to indicate clickable */
@@ -4927,7 +4927,7 @@ element.style {
   color: gray;
   width: 80%;
   padding: 10px;
-  border: 1px solid #ccc;
+  
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
