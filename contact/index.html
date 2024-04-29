@@ -3988,28 +3988,36 @@
       document.getElementById('contactForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
+        // Retrieve values from the form fields
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const message = document.getElementById('message').value;
 
-        // Add a new document with a generated ID to "contacts" collection
-        db.collection("contacts").add({
-          name: name,
-          email: email,
-          message: message,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp() // Optional: add a timestamp
-        })
-        .then(function() {
-          console.log("Document successfully written!");
-          showToast("Your message has been sent successfully!", true);
-          // Optionally clear the form here if you'd like
-          document.getElementById('contactForm').reset();
-        })
-        .catch(function(error) {
-          console.error("Error writing document: ", error);
-          showToast("Failed to send your message, please try again.", false);
-        });
+        // Check if the required fields are not empty
+        if (name && email && message) {
+          // Add a new document with a generated ID to "contacts" collection
+          db.collection("contacts").add({
+            name: name,
+            email: email,
+            message: message,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp() // Optional: add a timestamp
+          })
+          .then(function() {
+            console.log("Document successfully written!");
+            showToast("Your message has been sent successfully!", true);
+            // Optionally clear the form here if you'd like
+            document.getElementById('contactForm').reset();
+          })
+          .catch(function(error) {
+            console.error("Error writing document: ", error);
+            showToast("Failed to send your message, please try again.", false);
+          });
+        } else {
+          // If any required field is empty, display an error message
+          showToast("Please fill out all required fields.", false);
+        }
       });
+
 
       auth.onAuthStateChanged(async user => {
           const dropdownContent = document.querySelector('.dropdown-content2');

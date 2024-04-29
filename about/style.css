@@ -2490,16 +2490,6 @@ border:2px solid white;
 
 
 
-  .footer {
-    width: 100%;
-    background-color: #f1f1f1;
-    text-align: center;
-    padding: 20px;
-    position: relative;
-    background-color: black;
-    margin-top: 100px;
-      color:white;
-  }
 
   .light-mode .footer {
 
@@ -5319,3 +5309,18 @@ color:grey;
   display: block;
   text-align: left;
 }
+
+
+  /* Your existing CSS code */
+
+  .footer {
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    background-color: black;
+    margin-top: 100px;
+    color: white;
+    margin-top: 100px
+  }
