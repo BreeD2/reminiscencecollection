@@ -1119,6 +1119,7 @@ body {
   body {
     background-color: white;
     color: #000;
+    font-family: arial
   }
 
 
@@ -4444,6 +4445,7 @@ form input[type="text"] {
  #userDescriptionInput {
    min-width: 200px;
    width:80%;
+   min-height: 40px;
 margin: 10px;
    background-color: white;
    padding: 8px;
@@ -4592,20 +4594,20 @@ margin: 10px;
   margin: 10px;
 }
 
-#changePasswordBtn {
-  background-color: white;
+.light-mode #changePasswordBtn {
+  background-color: grey;
   color:grey
 }
 
 .dark-mode #changePasswordBtn {
 
   width:80%;
-  background-color: white;
+  background-color: grey;
   padding: 8px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   font-family: arial;
-  background-color: black; /* Use a blue background */
+  background-color: white; /* Use a blue background */
   color: white; /* White text color */
   font-size: 16px; /* Increase font size */
   border: none;
@@ -4631,7 +4633,7 @@ margin: 10px;
 .dark-mode #updateEmailBtn {
 
 
-  background-color: black ; /* Use a blue background */
+  background-color: grey ; /* Use a blue background */
   color: white; /* White text color */
 
 }
@@ -4717,7 +4719,7 @@ margin: 10px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   font-family: arial;
   background-color: white; /* Use a blue background */
-  color: gray; /* White text color */
+  color: #999; /* White text color */
   font-size: 16px; /* Increase font size */
   border: none;
     margin: 10px
@@ -4917,7 +4919,7 @@ element.style {
     color: white;
     width: 80%;
     padding: 10px;
-    border: 1px solid #ccc;
+
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
@@ -4927,7 +4929,7 @@ element.style {
   color: gray;
   width: 80%;
   padding: 10px;
-  
+
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
@@ -5012,4 +5014,11 @@ element.style {
 
 .dark-mode #emailInput::placeholder {
     color: white;
+}
+
+#activityLog > li {
+    /* list-style: auto; */
+    list-style: none;
+    display: flex;
+    flex-direction: column-reverse;
 }
