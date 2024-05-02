@@ -4642,8 +4642,8 @@ margin: 10px;
 .light-mode #updateEmailBtn {
 
 
-  background-color: white; /* Use a blue background */
-  color: black; /* White text color */
+  background-color: grey; /* Use a blue background */
+  color: white; /* White text color */
 
 }
 
@@ -4719,7 +4719,7 @@ margin: 10px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   font-family: arial;
   background-color: white; /* Use a blue background */
-  color: #999; /* White text color */
+  color: grey; /* White text color */
   font-size: 16px; /* Increase font size */
   border: none;
     margin: 10px
@@ -4920,7 +4920,7 @@ element.style {
     width: 80%;
     padding: 10px;
 
-    border-radius: 4px;
+    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
@@ -5027,4 +5027,28 @@ element.style {
 #main-content {
   font-family: arial;
   font-size: 16px
+}
+
+::placeholder {
+    color: grey;
+}
+
+#usernameInput::placeholder {
+    color: grey;
+}
+
+.dark-mode ::placeholder {
+    color: white;
+}
+
+.dark-mode #usernameInput::placeholder {
+    color: white;
+}
+
+.light-mode ::placeholder {
+    color: grey;
+}
+
+.light-mode #usernameInput::placeholder {
+    color: grey;
 }
