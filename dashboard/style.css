@@ -4596,18 +4596,18 @@ margin: 10px;
 
 .light-mode #changePasswordBtn {
   background-color: grey;
-  color:grey
+  color:white
 }
 
 .dark-mode #changePasswordBtn {
 
   width:80%;
-  background-color: grey;
+  background-color: black;
   padding: 8px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   font-family: arial;
-  background-color: white; /* Use a blue background */
+
   color: white; /* White text color */
   font-size: 16px; /* Increase font size */
   border: none;
@@ -4633,7 +4633,7 @@ margin: 10px;
 .dark-mode #updateEmailBtn {
 
 
-  background-color: grey ; /* Use a blue background */
+  background-color: black ; /* Use a blue background */
   color: white; /* White text color */
 
 }
@@ -5021,4 +5021,10 @@ element.style {
     list-style: none;
     display: flex;
     flex-direction: column-reverse;
+}
+
+
+#main-content {
+  font-family: arial;
+  font-size: 16px
 }
