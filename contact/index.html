@@ -40,6 +40,8 @@
   <!-- Correctly include Firebase Storage compat layer -->
   <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-storage-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
+  <script type="text/javascript" src="https://cdn.emailjs.com/dist/emailjs.min.js"></script>
+
   <div class="read-aloud">
     <!-- Navigation Bar with Logo and Website Name -->
     <div class="topnav" id="myTopnav">
@@ -4050,6 +4052,23 @@
           }
       });
     </script>
+
+    <script>
+  document.getElementById('contactForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var form = this;
+
+    // Use the actual service ID and template ID from your EmailJS account
+    emailjs.sendForm('service_pfsnwfx', 'template_contact', form)
+      .then(function() {
+        alert('Message sent successfully!');
+        form.reset();
+      }, function(error) {
+        alert('Failed to send the message, please try again later.');
+      });
+  });
+  </script>
+
 
      </body>
      </html>
