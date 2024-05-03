@@ -4669,3 +4669,76 @@ color:grey;
 .dark-mode h2 {
   color:black
 }
+
+
+/* General Body Scrollbar Styles */
+body::-webkit-scrollbar {
+    width: 15px;
+    background: #e0e0e0;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Light Mode Styles */
+.light-mode body {
+    background-color: #f0f0f0; /* Light background for light mode */
+}
+
+.light-mode body::-webkit-scrollbar {
+    width: 15px;
+    background: #e0e0e0;
+}
+
+.light-mode body::-webkit-scrollbar-thumb {
+    background: #a0a0a0;
+    border-radius: 5px;
+}
+
+.light-mode body::-webkit-scrollbar-thumb:hover {
+    background: #808080;
+}
+
+
+
+/* Dark Mode Styles */
+.dark-mode body {
+    background-color: #1a1a1a; /* Dark background for dark mode */
+}
+
+.dark-mode body::-webkit-scrollbar {
+    width: 15px;
+    background: #2c2c2c;
+}
+
+.dark-mode body::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 5px;
+}
+
+.dark-mode body::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
+
+
+body::-webkit-scrollbar {
+    width: 16px;
+}
+
+
+
+
+
+
+body::-webkit-scrollbar-thumb {
+    background-color: #888; /* Dark grey thumb */
+    border-radius: 8px;
+
+}
