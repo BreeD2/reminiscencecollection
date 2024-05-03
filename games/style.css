@@ -4888,7 +4888,7 @@ background-color: white;
   background-color: dodgerblue;
     color:white;
       border: none;
-
+      font-weight: normal;
       border: none;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -4997,10 +4997,10 @@ background-color: white;
 }
 /* Styles for the heading */
 #games-list2 h2 {
-  margin-top: 100px;
+  margin-top: 30px;
     text-align: center;
-    font-size: 24px;
-    font-weight: bolder;
+    font-size: 30px;
+
       color:black
 }
 
