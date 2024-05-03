@@ -3202,7 +3202,7 @@
 
               // Reset font sizes to their original values
               function resetFont() {
-                  const selector = '.sidebar *, .game-container, .game-info, #likeButton, #commentButton, #main-content > div.contact-form > h2,#contactForm > button,  #commentsSection > strong, #rateButton, #contactForm, #likesCount,#ratingDisplay, .game-title, .footer';
+                  const selector = '.sidebar *, .game-container, .game-title, #h1, .game-container, .game-info, #likeButton, #contactForm, .footer, #main-content > div.contact-form > h2, #commentButton, #rateButton, #likesCount,#ratingDisplay, #contactForm > button, #commentsSection > strong, .game-title';
                   document.querySelectorAll(selector).forEach(element => {
                       const originalFontSize = element.getAttribute('data-original-font-size');
                       if (originalFontSize) element.style.fontSize = originalFontSize;
@@ -3219,12 +3219,12 @@
 
               // Increase font size
               function increaseFont() {
-                  adjustFontSize(1.1, '.sidebar *, .game-container, .game-info, #likeButton, #commentButton,#likesCount, #contactForm, #contactForm > button, #ratingDisplay, #rateButton, .game-title,#commentsSection > strong, #main-content > div.contact-form > h2, .footer');
+                  adjustFontSize(1.1, '.sidebar *, .game-container, .game-title, #h1, .game-container, .game-info, #likeButton, #contactForm, .footer, #main-content > div.contact-form > h2, #commentButton, #rateButton, #likesCount,#ratingDisplay, #contactForm > button, #commentsSection > strong, .game-title');
               }
 
               // Decrease font size
               function decreaseFont() {
-                  adjustFontSize(0.9, '.sidebar *, .game-container, .game-info, #likeButton,#commentsSection > strong, #commentButton, #contactForm, #contactForm > button, #main-content > div.contact-form > h2, #likesCount, #ratingDisplay, #rateButton, .game-title, .footer');
+                  adjustFontSize(0.9, '.sidebar *, .game-container, .game-title, #h1, .game-container, .game-info, #likeButton, #contactForm, .footer, #main-content > div.contact-form > h2, #commentButton, #rateButton, #likesCount,#ratingDisplay, #contactForm > button, #commentsSection > strong, .game-title');
               }
 
               // Toggle Light Mode
