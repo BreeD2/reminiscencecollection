@@ -589,38 +589,49 @@
 <div class="footer">
   <div class="copy">Copyright &copy; 2024 Reminiscence Collection. All rights reserved.</div>
 </div></div>
-
 <script>
 document.querySelectorAll('.quiz-btn').forEach(button => {
     button.addEventListener('click', function() {
         const genre = this.dataset.genre;
-        let gameName = ""; // Initialize the variable to hold the game suggestion
+        let gameNames = []; // Initialize the variable to hold the game suggestions array
 
-        // Suggest a game based on the genre
         switch(genre) {
             case 'Action':
-                gameName = "The Legend of Zelda: Breath of the Wild";
+                gameNames = ["The Legend of Zelda: Breath of the Wild", "Grand Theft Auto V", "Uncharted 4: A Thief’s End"];
                 break;
             case 'Puzzle':
-                gameName = "LittleBigPlanet 2";
+                gameNames = ["LittleBigPlanet 2", "Mario vs. Donkey Kong: Mini-Land"];
                 break;
             case 'Role-playing':
-                gameName = "Fallout 4";
+                gameNames = ["Dragon Age Inquisition", "Fallout 4", "The Elder Scrolls V: Skyrim"];
                 break;
             case 'Adventure':
-                gameName = "Uncharted 4: A Thief’s End";
+                gameNames = ["Epic Mickey 2: The Power of Two", "Lego City Undercover", "The Legend of Zelda: Breath of the Wild"];
                 break;
-            // Add more cases for additional genres
+
+            case 'Sports':
+                gameNames = ["Madden NFL 20", "NBA 2K23", "Wii Sports"];
+                break;
+            case 'Racing':
+                gameNames = ["Blur", "Mario Kart 8 Deluxe", "Midnight Club 3: Dub Edition"];
+                break;
+            case 'Simulation':
+                gameNames = ["Animal Crossing: New Horizons", "Stardew Valley", "The Sims 3"];
+                break;
+
+            case 'Shooter':
+                gameNames = ["Sunset Overdrive", "The Walking Dead: Survival Instinct", "Watch Dogs 2"];
+                break;
+            // You can add additional cases and genres here as needed
             default:
-                gameName = "a game";
+                gameNames = ["a game"];
         }
 
-        // Display the suggestion
+        // Display the suggestions
         document.getElementById('quiz-result').style.display = 'block';
-        document.getElementById('suggested-game').querySelector('span').textContent = gameName;
+        document.getElementById('suggested-game').querySelector('span').textContent = gameNames.join(", "); // Joining all games as a string separated by commas
     });
 });
-
 </script>
 
 
